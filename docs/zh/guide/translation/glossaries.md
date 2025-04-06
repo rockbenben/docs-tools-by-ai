@@ -1,0 +1,16 @@
+# 管理词汇表
+
+> 将某些固定文本翻译成统一的英文版本，创建一个字典，将固定文本映射为对应的英文版本。
+
+注意：词汇表为 NEXT 功能，以下仅为设计思路，参考：https://developers.deepl.com/docs/api-reference/glossaries
+
+初步设计：只有完全符合的文本才会按指定内容翻译，无视翻译规则。如果是想将指定文本进行翻译，就需要将指定词汇再进行切割？
+
+key 结构为 `源条目_targetlanguage_目标条目`，词汇表保存为本地文件，之后翻译自动从中读取。也就是用 t_glossarieskey 来查找，找不到才进行翻译。完整的结构为 `t_${SparkMD5.hash(text)}_${targetLanguage}_${sourceLanguage}_${translationMethod}_${llmConfigHash}`。
+
+## 词汇表格式的常见限制
+
+- 不允许重复的源条目
+- 源条目和目标条目都不能为空
+- 目标条目不得包含任何 C0 或 C1 控制字符（包括“\t”或“\n”）或任何 Unicode 换行符
+- 目标条目不得包含任何前导或尾随 Unicode 空白字符

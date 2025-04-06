@@ -1,0 +1,16 @@
+name: 'IndexNow'
+on:
+  schedule:
+    # 每3天的 UTC 时间 04:00 运行一次
+    - cron: '0 4 */3 * *'
+
+jobs:
+  check-and-submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: indexnow-action
+        uses: bojieyang/indexnow-action@v2
+        with:
+          sitemap-location: 'https://docs.newzone.top/sitemap.xml'
+          since: 3
+          key: ${{ secrets.INDEXNOW_KEY }}

@@ -1,0 +1,13 @@
+[
+  "index",
+  {
+    "type": "dir",
+    "name": "translation/subtitle-translator",
+    "label": "Subtitle Translator"
+  },
+  {
+    "type": "dir",
+    "name": "others",
+    "label": "others"
+  }
+]
