@@ -1,0 +1,55 @@
+# JSON Node Edit Tool
+
+[JSON Node Edit Tool](https://tools.newzone.top/en/json-node-edit) allows you to batch find specific nodes in JSON data and perform editing operations on their values. You can add prefixes, suffixes, replace text, directly replace entire node values, or perform multilingual replacements and other advanced operations.
+
+## Features Overview
+
+- **Batch Editing**: Simultaneously find and edit multiple JSON nodes (separated by commas)
+- **Complex Paths**: Support for nested key access (e.g., `zh.title`) and JSONPath syntax
+- **Multiple Operations**: Add prefix/suffix, find and replace, directly replace node values
+- **Multilingual Support**: Automatically recognize language codes and replace with corresponding language names
+- **Capitalize First Letter**: Optionally capitalize the first letter of node values
+- **File Operations**: Support for file upload, download, and clipboard copying
+
+## How to Use
+
+### 1. Input JSON Data
+
+- Paste JSON data into the left text box, or
+- Use the drag-and-drop area to upload JSON or TXT files
+
+### 2. Specify JSONPath
+
+- Enter the node paths you want to find in the "🔍 JSONPaths" input field
+- Separate multiple paths with commas, e.g., `title,description` or `zh.name,en.name`
+
+### 3. Configure Editing Operations
+
+You can choose one or more of the following operations:
+
+- **Add Prefix/Suffix**: Add specific text before/after the node value
+- **Find and Replace**: Search for specific text within node values and replace it with new text
+- **Direct Value Replacement**: Replace the entire node value with a specified new value
+
+### 4. Advanced Settings
+
+- **Capitalize First Letter**: Automatically capitalize the first letter of node values (only applies to strings that begin with lowercase letters)
+- **Multilingual Replacement**: Based on language codes in the node path (e.g., zh, en, ja), automatically replace search text with corresponding language names
+- **Large Mode**: Provides better performance when processing large JSON files
+
+### 5. Execute and View Results
+
+- Click the "Start Process" button to apply edits
+- Processed JSON data will display on the right side
+- Use the "Copy", "Copy Node", or "Export File" buttons to save results
+
+## Tips and Tricks
+
+- When processing multilingual JSON, enable the "Multilingual Replacement" feature to automatically replace specified text with language names corresponding to the path
+- Use "Replace Node Value" to completely replace found node values, ignoring other editing operations
+- Check "Large Mode" to improve performance when processing large JSON files
+- Use commas to separate multiple JSONPaths to edit nodes in different locations simultaneously
+
+## Supported Language Codes
+
+The tool supports the following language codes in multilingual replacement mode: Chinese (zh), English (en), Japanese (ja), Korean (ko), Spanish (es), French (fr), German (de), Italian (it), Russian (ru), Portuguese (pt), Hindi (hi), Arabic (ar), Bengali (bn).

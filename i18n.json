@@ -19,6 +19,10 @@
     "en": "Tools",
     "zh": "工具"
   },
+  "json": {
+    "en": "JSON Processor",
+    "zh": "JSON 处理器"
+  },
   "others": {
     "en": "Others",
     "zh": "其他"

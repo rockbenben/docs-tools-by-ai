@@ -24,5 +24,10 @@
     "type": "dir",
     "name": "others",
     "label": "others"
+  },
+  {
+    "type": "dir",
+    "name": "json",
+    "label": "json"
   }
 ]

@@ -1,0 +1,80 @@
+# JSON Data Matching Tool
+
+[JSON match update tool](https://tools.newzone.top/en/json-match-update) is designed to update values from a count dataset to corresponding fields in an original dataset. It works by matching ID fields between two JSON data sources to perform precise data updates.
+
+## Usage Steps
+
+1. **Prepare Your Data**:
+   - **Original Data**: The complete JSON dataset that needs to be updated
+   - **Target Data**: The JSON dataset containing the count values
+
+2. **Input Data**:
+   - Paste or upload your original JSON data in the left text box
+   - Paste your target JSON data (with count values) in the right text box
+   - You can also drag and drop `.txt` or `.json` files
+
+3. **Configure Matching Fields**:
+   - **Original ID Field**: The unique identifier field in your original data (default: `id`)
+   - **Target ID Field**: The corresponding ID field in your target data (default: `card_id`)
+   - **Original Weight Field**: The field in original data to be updated (default: `weight`)
+   - **Target Weight Field**: The field in target data containing new values (default: `count`)
+
+4. **Process Data**:
+   - Click the "Start Process" button to execute the data matching and update
+
+5. **View Results**:
+   - Updated data will display in the result area below
+   - Options to copy the complete result, copy only the JSON node content, or download the updated file
+
+## Special Rules
+
+- If an item in the original data has a Chinese title (`zh.title`) containing "失效" (invalid), its weight will automatically be set to 0
+- If no corresponding item is found in the target data for an original data ID, that item remains unchanged
+
+## Additional Features
+
+- **Large File Mode**: Check this option when processing larger datasets to hide the left text box and use file upload only
+- **Reset Upload**: Clear uploaded files and text box contents
+
+## Data Format Examples
+
+Original data format:
+
+```json
+[
+  {
+    "id": 12345,
+    "weight": 10,
+    "zh": {
+      "title": "Example Title"
+    },
+    // Other fields...
+  }
+]
+```
+
+Target data format:
+
+```json
+[
+  {
+    "card_id": 12345,
+    "count": 25
+  }
+]
+```
+
+Result data:
+
+```json
+[
+  {
+    "id": 12345,
+    "weight": 25, // Updated from count value
+    "zh": {
+      "title": "Example Title"
+    },
+    // Other fields remain unchanged...
+  }
+]
+```

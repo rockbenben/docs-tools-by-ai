@@ -19,5 +19,10 @@
     "type": "dir",
     "name": "tools",
     "label": "tools"
+  },
+  {
+    "type": "dir",
+    "name": "json",
+    "label": "json"
   }
 ]

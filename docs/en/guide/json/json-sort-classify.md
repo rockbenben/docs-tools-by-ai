@@ -1,0 +1,54 @@
+# JSON Sort & Classify
+
+[JSON Sort & Classify](https://tools.newzone.top/en/json-sort-classify) helps you reorganize JSON data according to specific rules. It offers two main functions:
+
+## Sorting Function
+
+Perfect for when you need to arrange data in a custom order.
+
+**Example scenario:**
+
+```json
+[{"name": "Apple"}, {"name": "Banana"}, {"name": "Orange"}]
+```
+
+If you want to display them in the order "Banana, Apple, Orange":
+
+- Enter your desired order in the sort text box (one item per line)
+- Type "name" in the sort field input (indicating you're sorting by the name property)
+- Click "Sort JSON"
+
+**Additional sorting options:**
+
+- Custom order: Arrange items exactly as specified in your list
+- Numeric ascending: Sort numbers from smallest to largest
+- Numeric descending: Sort numbers from largest to smallest
+
+## Classification Function
+
+Useful when you need to group data first, then sort within groups.
+
+**Example scenario:**
+
+```json
+[
+  {"type": "Fruit", "attribute": "Color", "value": "Red"}, 
+  {"type": "Beverage", "attribute": "Brand"}, 
+  {"type": "Fruit", "attribute": "Price"}
+]
+```
+
+To group by type first, then arrange by attribute:
+
+- Enter "type" in the main key field (for primary grouping)
+- Enter "attribute" in the sub key field (for ordering within groups)
+- Click "Classify JSON"
+
+## Other Features
+
+- **File Upload:** Drag and drop JSON files instead of copying/pasting
+- **Large Mode:** For handling very large JSON datasets
+- **Export Options:** Copy or download your sorted results
+- **JSONPath Support:** Use dot notation or bracket notation for accessing nested properties
+
+This tool simplifies organizing complex JSON data structures according to your specific requirements.
