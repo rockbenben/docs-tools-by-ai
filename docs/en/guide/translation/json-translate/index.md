@@ -68,7 +68,7 @@ i18n mode is designed for multilingual scenarios, allowing the aggregation of mu
 - Uses the selected source language as the source field. For example, if the source language is `zh`, the source field is `zh`. If the source language is set to `auto`, the default source field is `en`.
 - Traverses all objects in the JSON that contain the source language field and adds a target language field (at the same level as the source field) for each object.
 - If the target language field already exists, translation is skipped to avoid overwriting existing content.
-- When multilingual mode is enabled in i18n mode, the system can translate the source language content into multiple target languages at once and output them in a unified structure.
+- When both i18n mode and multilingual mode are enabled, the system generates a unified JSON structure that includes the source language and all target languages. This is especially useful for internationalization projects.
 
 #### Example
 
@@ -98,9 +98,9 @@ If the target languages are set to `zh` and `fr`, the translation result is:
 
 ### Mapped Translation
 
-![](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "Mapped Translation Example")
+When using the specified key name mode, you can switch between the single key mode and the mapped translation mode using the toggle button in the result area. In single key mode, the same node is used for both translation input and output. In mapped translation mode, however, translations involve different nodes—for example, the value of node A is translated to node B, and the value of node C is translated to node D.
 
-On the right side of the results interface, there is a gray button to switch between translation node modes, including single key name mode and mapped translation mode. In single key name mode, the translation input and output use the same node, while mapped translation mode involves translating between different nodes. For example, the value of node A will be translated to node B, and the value of node C will be translated to node D.
+![](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "Mapped Translation Example")
 
 <Info />
 
