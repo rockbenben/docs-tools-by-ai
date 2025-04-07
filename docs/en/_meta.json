@@ -7,6 +7,11 @@
   {
     "text": "app",
     "link": "https://tools.newzone.top/en",
-    "activeMatch": "/app/en"
+    "activeMatch": "app"
+  },
+  {
+    "text": "feedback",
+    "link": "https://tools.newzone.top/en/feedback",
+    "activeMatch": "feedback"
   }
 ]

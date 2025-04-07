@@ -2,7 +2,22 @@
   "index",
   {
     "type": "dir",
+    "name": "translation/json-translate",
+    "label": "Json Translate"
+  },
+  {
+    "type": "dir",
     "name": "translation/subtitle-translator",
     "label": "Subtitle Translator"
+  },
+  {
+    "type": "dir",
+    "name": "translation/md-translator",
+    "label": "Markdown Translator"
+  },
+  {
+    "type": "dir",
+    "name": "tools",
+    "label": "tools"
   }
 ]

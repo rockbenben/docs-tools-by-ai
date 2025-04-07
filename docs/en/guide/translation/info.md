@@ -6,6 +6,8 @@ This tool introduces an optional local translation cache to improve translation 
 - Cache hit condition: The local cache result is used only when the parameters match exactly, ensuring accuracy.
 - Cache purpose: Avoid repeated translations, reduce API calls, and improve translation speed.
 
+To disable the use of translation cache, you can uncheck "Use translation cache" or click "Clear translation cache" in the API settings.
+
 ### Multilingual Translation
 
 Supports translating the same file into multiple languages at once, which is especially suitable for international video content:

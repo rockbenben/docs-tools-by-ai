@@ -15,8 +15,16 @@
     "en": "Application",
     "zh": "应用"
   },
+  "tools": {
+    "en": "Tools",
+    "zh": "工具"
+  },
   "others": {
     "en": "Others",
     "zh": "其他"
+  },
+  "feedback": {
+    "en": "Feedback",
+    "zh": "反馈"
   }
 }
