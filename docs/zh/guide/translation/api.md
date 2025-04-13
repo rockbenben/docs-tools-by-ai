@@ -24,31 +24,24 @@ import SupportedLanguages from "./supported-languages.md"
 
 ### LLM 翻译（AI 大模型）
 
-本工具还支持 5 种 AI LLM 模型进行翻译，包括 OpenAI、DeepSeek、Siliconflow、Groq 等。  
+本工具提供了 5 种主流 AI 大语言模型（LLM）或接口，分别为：**OpenAI**、**DeepSeek**、**Siliconflow**、**Groq** 以及 **自定义模型（Custom LLM）**。
 
-- **适用场景**：适合更复杂的语言理解需求，如文学作品、技术文档等。  
-- **可定制性**：支持自定义系统提示词（System Prompt）和用户提示词（User Prompt），让翻译风格更加符合预期。  
-- **温度控制（temperature）**：可以调整 AI 翻译的随机性，数值越高，翻译越有创意，但可能会降低稳定性。
+- **适用场景**：适合处理语言理解要求较高的内容，如文学作品、技术文档、多语种资料等。
+- **可定制性**：支持自定义系统提示词（System Prompt）与用户提示词（User Prompt），可灵活调整翻译风格和术语偏好，更好地满足不同使用场景的需求。
+- **温度参数（temperature）**：可控制翻译结果的随机性。数值越高，生成内容越具创意，但可能影响一致性与准确性。
 
-自定义 LLM 建议使用 qwen2.5-14b-instruct 或以上的模型。
+自定义模型（Custom LLM）支持通过配置 API 接口和模型名称，接入第三方服务或本地推理平台（如 **ollama**）。例如，默认本地 ollama 的 API 地址为：
+
+```yml
+http://127.0.0.1:11434/v1/chat/completions
+```
+
+默认使用模型为 `llama3.2`。如使用 **LM Studio**，本地接口地址为：
+
+```yml
+http://localhost:61234/v1/chat/completions
+```
+
+为获得更优的翻译质量，推荐在自定义模型中使用 `qwen2.5-14b-instruct` 或性能更高的模型。
 
 <SupportedLanguages />
-
-## API 参数
-
-### 翻译速率
-
-速率过高可能导致 API 返回空值，请适当降低速率。
-
-### 分割翻译
-
-为加快翻译速度，我将多行字幕打包在一起翻译，而这里的分割翻译字符数就是每个打包块的上限。以下是每个翻译服务的最大字符数限制：
-
-- **DeepL API**：每个请求最大字符数为 128K。
-- **DeepLX Free**：每个请求最大字符数为 1000。
-- **Azure Translate**：每个请求最大字符数为 10K。
-- **Google Translate**: Google Translate 网页界面每次翻译最多 5000 个字符，Google Cloud Translation API 每个请求最大字符数为 30K 个字符。（由于 Google 翻译会破坏换行符，因此未使用分割翻译。）
-
-### 延迟时间
-
-延迟时间主要针对 Azure Translate 的免费套餐，其他翻译 API 可以不修改。在我的测试中，Azure Translate Free 的延迟时间设为 5000 毫秒以上为佳。大量字幕需要翻译时，可以多设些延迟，避免出现大量空白字幕。

@@ -1,4 +1,5 @@
 import Api from '../api.md';
+import Parameters from '../api-parameters.md';
 import Info from '../info.md';
 
 # Markdown Translator
@@ -22,5 +23,9 @@ md-translator currently supports parsing the following Markdown syntax and retai
 Additionally, md-translator can **extract plain text content**, stripping away Markdown syntax and optionally hiding elements like links and code blocks, making it suitable for other purposes.
 
 <Api />
+
+<Parameters />
+
+## Feature Description
 
 <Info />

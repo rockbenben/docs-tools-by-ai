@@ -23,31 +23,24 @@ For higher translation speed and quality, you can apply for an API Key from [Goo
 
 ### LLM Translation (AI Large Models)
 
-This tool also supports translation using 5 AI LLM models, including OpenAI, DeepSeek, Siliconflow, Groq, and others.
+This tool provides access to five mainstream AI large models (LLMs) or interfaces: **OpenAI**, **DeepSeek**, **Siliconflow**, **Groq**, and **Custom LLM**.
 
-- **Suitable Scenarios**: Ideal for more complex language comprehension needs, such as literary works and technical documents.
-- **Customizability**: Supports customizable System Prompts and User Prompts to tailor the translation style.
-- **Temperature Control**: Allows adjustment of the AI translation’s randomness. A higher value yields more creative translations but may reduce stability.
+- **Use Cases**: Ideal for handling content that requires high-level language understanding, such as literary works, technical documents, and multilingual materials.  
+- **Customizability**: Supports custom system prompts and user prompts, allowing flexible adjustments to translation style and terminology preferences to better suit different scenarios.  
+- **Temperature Parameter**: Controls the randomness of translation results. Higher values produce more creative outputs but may affect consistency and accuracy.
 
-For custom LLM, it is recommended to use the qwen2.5-14b-instruct model or above.
+The **Custom LLM** option allows integration with third-party services or local inference platforms (such as **ollama**) by configuring the API endpoint and model name. For example, the default API endpoint for a local ollama setup is:
+
+```yml
+http://127.0.0.1:11434/v1/chat/completions
+```
+
+The default model used is `llama3.2`. For **LM Studio**, the local API endpoint is:
+
+```yml
+http://localhost:61234/v1/chat/completions
+```
+
+To achieve better translation quality, it is recommended to use `qwen2.5-14b-instruct` or a higher-performing model in the Custom LLM setup.
 
 <SupportedLanguages />
-
-## API Parameters
-
-### Translation Rate
-
-Excessive translation rate may cause the API to return null values; please reduce the rate appropriately.
-
-### Segmented Translation
-
-To speed up translation, multiple subtitle lines are grouped together for translation. The character limit specified here is the maximum number of characters per group. Below are the maximum character limits for each translation service:
-
-- **DeepL API**: Maximum of 128K characters per request.
-- **DeepLX Free**: Maximum of 1000 characters per request.
-- **Azure Translate**: Maximum of 10K characters per request.
-- **Google Translate**: The Google Translate web interface supports up to 5000 characters per translation, while the Google Cloud Translation API allows up to 30K characters per request. (Segmented translation is not used for Google Translate because it may disrupt line breaks.)
-
-### Delay Time
-
-The delay setting mainly applies to the free tier of Azure Translate; other translation APIs do not require modification. In testing, setting the delay for Azure Translate Free to over 5000 milliseconds is ideal. When translating a large volume of subtitles, increasing the delay can help prevent numerous blank subtitles.

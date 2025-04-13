@@ -1,4 +1,5 @@
 import Api from '../api.md';
+import Parameters from '../api-parameters.md';
 import Info from '../info.md';
 
 # Introduction
@@ -22,6 +23,8 @@ To address issues with existing subtitle translation tools such as slow speed, l
 Subtitle Translator provides a wide range of parameter options to suit different user needs. Below is a detailed explanation of each parameter:
 
 <Api />
+
+<Parameters />
 
 ## Feature Description
 

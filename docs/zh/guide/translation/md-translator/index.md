@@ -1,4 +1,5 @@
 import Api from '../api.md';
+import Parameters from '../api-parameters.md';
 import Info from '../info.md';
 
 # Markdown 翻译器
@@ -22,5 +23,9 @@ md-translator 目前已支持解析以下 Markdown 语法，并在翻译时保�
 此外，md-translator **可提取纯文本内容**，去除 Markdown 标记，同时隐藏链接和代码块等元素，以便用于其他用途。
 
 <Api />
+
+<Parameters />
+
+## 功能说明
 
 <Info />

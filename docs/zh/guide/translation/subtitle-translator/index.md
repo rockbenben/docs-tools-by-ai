@@ -1,5 +1,6 @@
 
 import Api from '../api.md';
+import Parameters from '../api-parameters.md';
 import Info from '../info.md';
 
 # 介绍
@@ -23,6 +24,8 @@ import Info from '../info.md';
 Subtitle Translator 提供了丰富的参数选项，以适应不同用户的需求。以下是各项参数的详细说明：
 
 <Api />
+
+<Parameters />
 
 ## 功能说明
 
