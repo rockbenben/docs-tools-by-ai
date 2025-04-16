@@ -54,3 +54,31 @@ You can start editing the page by modifying `src/app/[locale]/page.tsx`. The pag
 5. 点击部署！
 
 🎉 完成后即可访问你的字幕翻译器页面！
+
+## Docker 部署
+
+如果你更倾向于在容器环境中运行应用程序，可以使用以下方法通过 Docker 容器运行 Subtitle Translator：
+
+```bash
+# 从 ghcr.io 拉取并运行
+docker run -d -p 3000:3000 --name subtitle-translator ghcr.io/rockbenben/subtitle-translator:latest
+
+# 或者从 Docker Hub 拉取并运行
+docker run -d -p 3000:3000 --name subtitle-translator rockben/subtitle-translator:latest
+```
+
+运行后，访问 [http://localhost:3000](http://localhost:3000) 即可使用。
+
+也可以通过 `docker-compose.yml` 来部署：
+
+```yaml
+services:
+  subtitle-translator:
+    image: ghcr.io/rockbenben/subtitle-translator:latest
+    container_name: subtitle-translator
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+```
+
+执行 `docker-compose up -d` 命令即可启动服务。
