@@ -8,19 +8,21 @@ Markdown is the text format I use most frequently in my daily work, but existing
 
 ## Supported Markdown Elements
 
-md-translator currently supports parsing the following Markdown syntax and retains their formatting during translation:
+md-translator currently supports parsing the following Markdown syntax and retains formatting during translation:
 
-- **FrontMatter metadata (`---`)**  
-- **Headings (`#`)**  
-- **Links (`[text](url)`)**  
-- **Unordered lists (`-` / `*` / `+`)**  
-- **Ordered lists (`1. 2. 3.`)**  
-- **Emphasis (`**bold**`, `_italic_`)**  
-- **Code blocks (```)**  
-- **Inline code (\`code\`)**  
-- **Blockquotes (`> quote`)**
+- FrontMatter metadata (`---`)  
+- Headings (`#`)  
+- Blockquotes (`> quote`)  
+- Links (`[text](url)`)  
+- Unordered lists (`-` / `*` / `+`)  
+- Ordered lists (`1.` `2.` `3.`)  
+- Emphasized text (`**bold**`, `_italic_`)  
+- Code blocks (```)  
+- Inline code (`\`code\``)  
+- Inline LaTeX formulas (`$formula$`)  
+- Block-level LaTeX formulas (`$$formula$$`)
 
-Additionally, md-translator can **extract plain text content**, stripping away Markdown syntax and optionally hiding elements like links and code blocks, making it suitable for other purposes.
+Additionally, md-translator can extract plain text content by removing Markdown syntax, while hiding elements such as links and code blocks for alternative uses.
 
 <Api />
 
