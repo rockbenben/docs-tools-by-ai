@@ -3,7 +3,7 @@ import SupportedLanguages from "./supported-languages.md"
 
 ## 翻译 API
 
-本工具支持 5 种翻译 API 和 5 种 LLM（大语言模型）接口，用户可根据需求选择合适的翻译方式：  
+本工具支持 5 种翻译 API 和 6 种 LLM（大语言模型）接口，用户可根据需求选择合适的翻译方式：  
 
 ### 翻译 API 对比
 
@@ -24,11 +24,12 @@ import SupportedLanguages from "./supported-languages.md"
 
 ### LLM 翻译（AI 大模型）
 
-本工具提供了 5 种主流 AI 大语言模型（LLM）或接口，分别为：**OpenAI**、**DeepSeek**、**Siliconflow**、**Groq** 以及 **自定义模型（Custom LLM）**。
+本工具提供了 6 种主流 AI 大语言模型（LLM）或接口，包括：DeepSeek、OpenAI、Azure OpenAI、Siliconflow、Groq，以及可自由配置的 Custom LLM。
 
 - **适用场景**：适合处理语言理解要求较高的内容，如文学作品、技术文档、多语种资料等。
-- **可定制性**：支持自定义系统提示词（System Prompt）与用户提示词（User Prompt），可灵活调整翻译风格和术语偏好，更好地满足不同使用场景的需求。
-- **温度参数（temperature）**：可控制翻译结果的随机性。数值越高，生成内容越具创意，但可能影响一致性与准确性。
+- **高度可定制**：支持配置系统提示词（System Prompt）与用户提示词（User Prompt），可灵活控制翻译风格、术语偏好等，满足多样化的翻译需求。
+- **LLM 模型**：一般情况下填写所选接口提供的模型名称；若使用 Azure OpenAI，则需填写对应的部署名称。
+- **温度参数（temperature）**：用于控制翻译结果的创造性与稳定性。数值越高，生成内容越具多样性和创造性，但可能降低准确性；数值越低，输出更稳定、一致，适合正式或技术性较强的场景。
 
 自定义模型（Custom LLM）支持通过配置 API 接口和模型名称，接入第三方服务或本地推理平台（如 **ollama**）。例如，默认本地 ollama 的 API 地址为：
 

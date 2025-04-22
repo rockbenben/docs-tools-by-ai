@@ -2,7 +2,7 @@ import SupportedLanguages from "./supported-languages.md"
 
 ## Translation API
 
-This tool supports 5 translation APIs and 5 LLM (large language model) interfaces, allowing users to choose the appropriate translation method based on their needs:
+This tool supports 5 translation APIs and 6 LLM (large language model) interfaces, allowing users to choose the appropriate translation method based on their needs:
 
 ### Comparison of Translation APIs
 
@@ -23,11 +23,12 @@ For higher translation speed and quality, you can apply for an API Key from [Goo
 
 ### LLM Translation (AI Large Models)
 
-This tool provides access to five mainstream AI large models (LLMs) or interfaces: **OpenAI**, **DeepSeek**, **Siliconflow**, **Groq**, and **Custom LLM**.
+This tool offers access to six mainstream AI large language models (LLMs) or interfaces, including: DeepSeek, OpenAI, Azure OpenAI, Siliconflow, Groq, and a customizable Custom LLM option.
 
-- **Use Cases**: Ideal for handling content that requires high-level language understanding, such as literary works, technical documents, and multilingual materials.  
-- **Customizability**: Supports custom system prompts and user prompts, allowing flexible adjustments to translation style and terminology preferences to better suit different scenarios.  
-- **Temperature Parameter**: Controls the randomness of translation results. Higher values produce more creative outputs but may affect consistency and accuracy.
+- **Applicable Scenarios**: Ideal for tasks that demand high levels of language comprehension, such as literary works, technical documentation, and multilingual materials.  
+- **Highly Customizable**: Allows configuration of system prompts and user prompts, enabling flexible control over translation style, terminology preferences, and more—catering to a wide range of translation needs.  
+- **LLM Model**: Typically, this field should contain the model name provided by the selected interface; for Azure OpenAI, the corresponding deployment name should be entered.  
+- **Temperature Parameter**: Controls the creativity and consistency of translation results. Higher values yield more diverse and creative outputs but may reduce accuracy; lower values produce more stable and consistent results, making them suitable for formal or highly technical content.
 
 The **Custom LLM** option allows integration with third-party services or local inference platforms (such as **ollama**) by configuring the API endpoint and model name. For example, the default API endpoint for a local ollama setup is:
 
