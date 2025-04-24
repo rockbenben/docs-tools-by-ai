@@ -39,19 +39,20 @@ You can start editing the page by modifying `src/app/[locale]/page.tsx`. The pag
 
 ## Cloudflare Pages 部署
 
-点击下方按钮或链接，Fork 本项目后，按说明在 Cloudflare Pages 上部署：
+点击下方按钮或链接 Fork 本项目，然后按照以下步骤在 Cloudflare Pages 上部署：
 
 👉 [Fork 本项目](https://github.com/rockbenben/subtitle-translator/fork)
 
 部署步骤：
 
-1. 登录 [Cloudflare](https://pages.cloudflare.com/)
-2. 选择 **"Create a project"**
-3. 绑定你刚刚 Fork 的仓库
-4. 配置构建命令：
-   - Build command: `npm run build`
-   - Output directory: `out` 或根据项目不同填写
-5. 点击部署！
+1. 登录 [Cloudflare Pages](https://pages.cloudflare.com/)
+2. 点击 **"Create a project"**
+3. 绑定你刚刚 Fork 的 GitHub 仓库
+4. 配置构建和部署参数：
+   - **构建命令**：`npm run build`
+   - **构建输出目录**：`out`
+   - **环境变量**：添加变量 `NODE_VERSION`，值设为 `22.14.0`
+5. 点击部署按钮，开始构建！
 
 🎉 完成后即可访问你的字幕翻译器页面！
 

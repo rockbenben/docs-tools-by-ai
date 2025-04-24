@@ -39,21 +39,22 @@ With Vercel, you can quickly host your project, and it automatically handles bui
 
 ## Cloudflare Pages Deployment
 
-Click the button or link below to fork this project and deploy it on Cloudflare Pages following the instructions:
+Click the button or link below to fork this project, then follow the steps to deploy it on Cloudflare Pages:
 
 👉 [Fork this project](https://github.com/rockbenben/subtitle-translator/fork)
 
-**Deployment Steps:**
+Deployment steps:
 
-1. Log in to [Cloudflare](https://pages.cloudflare.com/)
-2. Select **"Create a project"**
-3. Connect the repository you just forked.
-4. Configure the build command:
-   - Build command: `npm run build`
-   - Output directory: `out` (or the directory specified by your project)
-5. Click deploy!
+1. Log in to [Cloudflare Pages](https://pages.cloudflare.com/)
+2. Click **"Create a project"**
+3. Connect the GitHub repository you just forked
+4. Configure the build and deployment settings:
+   - **Build command**: `npm run build`
+   - **Build output directory**: `out`
+   - **Environment variable**: Add `NODE_VERSION` with the value `22.14.0`
+5. Click the deploy button to start building!
 
-🎉 Once deployment is complete, you can access your Subtitle Translator page!
+🎉 Once completed, you’ll be able to access your subtitle translator page!
 
 ## Docker Deployment
 
