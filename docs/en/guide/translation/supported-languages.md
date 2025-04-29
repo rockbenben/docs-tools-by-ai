@@ -1,9 +1,9 @@
 ### Language Support
 
-In terms of multilingual translation capabilities, Google, Azure, and large language models (LLMs) support translation between hundreds of languages, while DeepL currently supports only 30 mainstream languages. Therefore, in terms of language coverage, DeepL is relatively weaker.
+This tool supports translation between over 50 languages, encompassing a broad range of European, Asian, and some African languages. It is suitable for various multilingual content processing scenarios. Supported languages include: English, Chinese, Traditional Chinese, Portuguese, Italian, German, Russian, Spanish, French, Japanese, Korean, Arabic, Turkish, Polish, Ukrainian, Dutch, Greek, Hungarian, Swedish, Danish, Finnish, Czech, Slovak, Bulgarian, Slovenian, Lithuanian, Latvian, Romanian, Estonian, Indonesian, Hindi, Bengali, Vietnamese, Norwegian, Hebrew, Thai, Filipino (Tagalog), Uzbek, Kyrgyz, Turkmen, Kazakh, Bhojpuri, Kannada, Amharic, Gujarati, Javanese, Persian, Tamil, Swahili, Hausa, Telugu, and Marathi.
 
-For a detailed list of supported languages, please refer to the official documentation:
+For detailed information on supported languages, refer to the official documentation of each service:
 
-- [Languages supported by DeepL](https://developers.deepl.com/docs/resources/supported-languages)
-- [Languages supported by Google Translate](https://cloud.google.com/translate/docs/languages?hl=zh-cn)
+- [Languages supported by DeepL](https://developers.deepl.com/docs/resources/supported-languages)  
+- [Languages supported by Google Translate](https://cloud.google.com/translate/docs/languages?hl=zh-cn)  
 - [Languages supported by Azure Translator](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/language-support)
