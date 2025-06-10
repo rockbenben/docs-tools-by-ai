@@ -21,7 +21,7 @@ Supports translating the same file into multiple languages at once, which is esp
 
 This issue may be caused by one of the following reasons:
 
-- The API Key is incorrect or the account balance has been exhausted;
+- The API Key is incorrect, or your account has run out of credits/tokens;
 - There is an error in the API settings, preventing the request from being sent properly;
 - The translation rate is set too high, or the API service is temporarily unstable.
 
