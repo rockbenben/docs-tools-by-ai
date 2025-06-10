@@ -18,7 +18,7 @@ To address issues with existing subtitle translation tools such as slow speed, l
 - **Format Compatibility**: Automatically matches mainstream subtitle formats (.srt / .ass / .vtt / .lrc) with the exported file keeping the original filename, so no manual adjustments are needed.
 - **Subtitle Extraction**: Supports extracting subtitle text for later use in AI summarization, secondary creation, and other applications.
 - **Multiple Interface Options**: Offers 3 free translation methods, 3 commercial-grade translation APIs, and 5 AI LLM (large model) interfaces to meet different needs.
-- **Multilingual Support & Internationalization**: Supports 35 mainstream languages (including English, Chinese, Japanese, Korean, French, German, Spanish, etc.), and can translate the same subtitle file into multiple languages simultaneously to meet international requirements.
+- **Multilingual Support & Internationalization**: Supports 50 mainstream languages (including English, Chinese, Japanese, Korean, French, German, Spanish, etc.), and can translate the same subtitle file into multiple languages simultaneously to meet international requirements.
 
 Subtitle Translator provides a wide range of parameter options to suit different user needs. Below is a detailed explanation of each parameter:
 

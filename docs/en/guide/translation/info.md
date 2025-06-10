@@ -13,13 +13,34 @@ To disable the use of translation cache, you can uncheck "Use translation cache"
 Supports translating the same file into multiple languages at once, which is especially suitable for international video content:
 
 - For example: Translate an English file simultaneously into Chinese, Japanese, German, and French for the convenience of global users.
-- Supports 35 mainstream languages and will continue to expand.
+- Supports 50 major languages, with more to be added continually.
 
-## Usage Notice
+## FAQ
 
-When using this tool, please note the following:
+### Why is the translation result empty or showing as null?
 
-- DeepL support: Since the DeepL API does not support direct calls from the web, a server-side forwarding interface is provided solely for data transmission, and **it will not collect user data**. For better stability, users can also choose to deploy this interface themselves.
-- Using the DeepLX free interface may sometimes return null. Please wait a moment and try again, or use your own API KEY or deploy your own forwarding interface.
-- API Key security: This tool does not store your API key; all configuration data is saved in your local browser.
-- GTX Web interface: This interface places considerable load on the server, so it is recommended to enable it manually only when deploying locally. Please avoid using it in networks with a global proxy enabled to prevent translation errors.
+This issue may be caused by one of the following reasons:
+
+- The API Key is incorrect or the account balance has been exhausted;
+- There is an error in the API settings, preventing the request from being sent properly;
+- The translation rate is set too high, or the API service is temporarily unstable.
+
+You can use your browser's developer tools (press **F12 → switch to the Network tab**) to inspect the API response and further troubleshoot the issue.
+
+If only part of the content failed to translate, try clicking the “Translate” button again. When translation caching is enabled, the system will skip already translated content to avoid duplicate charges or requests.
+
+### Why use a third-party interface to access DeepL?
+
+DeepL's official service does not allow direct access via web pages, so we use an intermediate gateway to send your request.
+
+This relay interface **only transmits data and does not collect any personal information**, so you can use it with confidence. If you require greater stability, you may set up your own gateway.
+
+### Will my API Key be saved?
+
+No! Your API Key and other settings **are stored only in your own browser**. We do not upload or record any of your information.
+
+### Why isn’t the GTX Web interface enabled?
+
+GTX Web puts significant load on the server, so it is disabled by default.
+
+If you're using this tool on your own computer, you can enable it manually. Please avoid using it under a global proxy network, as this may cause translation issues.

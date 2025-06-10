@@ -14,4 +14,4 @@ Workflow: Choose a translation API → Set the source and target languages → S
 
 - **Translation Cache**: Automatically caches translation results locally to avoid duplicate API calls, saving time and reducing API costs.
 - **Multiple Interface Options**: Offers 3 free translation methods, 3 commercial-grade translation APIs, and 5 AI LLM (large model) interfaces to meet different needs.
-- **Multilingual Support & Internationalization**: Supports 35 mainstream languages (including English, Chinese, Japanese, Korean, French, German, Spanish, etc.), and can translate the same subtitle file into multiple languages simultaneously to meet international requirements.
+- **Multilingual Support & Internationalization**: Supports 50 mainstream languages (including English, Chinese, Japanese, Korean, French, German, Spanish, etc.), and can translate the same subtitle file into multiple languages simultaneously to meet international requirements.
