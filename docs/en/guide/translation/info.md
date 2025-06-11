@@ -25,7 +25,7 @@ This issue may be caused by one of the following reasons:
 - There is an error in the API settings, preventing the request from being sent properly;
 - The translation rate is set too high, or the API service is temporarily unstable.
 
-You can use your browser's developer tools (press **F12 → switch to the Network tab**) to inspect the API response and further troubleshoot the issue.
+You can check the specific error message in the API response through your browser's developer tools (press F12 → switch to the Network tab).
 
 If only part of the content failed to translate, try clicking the “Translate” button again. When translation caching is enabled, the system will skip already translated content to avoid duplicate charges or requests.
 
