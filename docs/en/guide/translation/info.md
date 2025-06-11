@@ -21,11 +21,11 @@ Supports translating the same file into multiple languages at once, which is esp
 
 This issue may be caused by one of the following reasons:
 
-- The API Key is incorrect, or your account has run out of credits/tokens;
-- There is an error in the API settings, preventing the request from being sent properly;
+- The API Key or related settings are incorrect;
+- Your account has run out of available credits/tokens;
 - The translation rate is set too high, or the API service is temporarily unstable.
 
-You can check the specific error message in the API response through your browser's developer tools (press F12 → switch to the Network tab).
+You can press F12 to open the browser's Developer Tools, switch to the "Network" tab, and check the specific error message in the API response.
 
 If only part of the content failed to translate, try clicking the “Translate” button again. When translation caching is enabled, the system will skip already translated content to avoid duplicate charges or requests.
 
