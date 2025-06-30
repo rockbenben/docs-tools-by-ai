@@ -15,9 +15,19 @@ Supports translating the same file into multiple languages at once, which is esp
 - For example: Translate an English file simultaneously into Chinese, Japanese, German, and French for the convenience of global users.
 - Supports 50 major languages, with more to be added continually.
 
+### Export and Import Settings
+
+Supports one-click export and import of current settings, making it easy to migrate data when switching devices or moving to a custom domain.
+
+Please note:
+
+- The exported file will contain all configuration information, including sensitive data such as API keys;
+- Keep the exported file secure to prevent data leaks or misuse;
+- Importing settings will overwrite existing configurations—please double-check before proceeding.
+
 ## FAQ
 
-### Why is the translation result empty or showing as null?
+### Why is the translation result empty, showing only the original text, or displaying as null?
 
 This issue may be caused by one of the following reasons:
 

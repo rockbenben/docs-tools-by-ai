@@ -1,6 +1,6 @@
 {
   "name": "docs-tools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "build": "rspress build",
@@ -11,8 +11,8 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^1.43.11",
-    "rspress-plugin-sitemap": "^1.1.1"
+    "rspress": "^1.44.0",
+    "rspress-plugin-sitemap": "^1.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
