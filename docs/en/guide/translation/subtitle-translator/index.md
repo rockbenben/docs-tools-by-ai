@@ -15,6 +15,7 @@ To address issues with existing subtitle translation tools such as slow speed, l
 - **Second-Level Translation**: Uses chunk compression and parallel processing of subtitle text to translate an episode of a TV series in just 1 second (the GTX interface is slightly slower).
 - **Batch Translation**: Supports processing hundreds of subtitle files at once, greatly boosting efficiency.
 - **Translation Cache**: Automatically caches translation results locally to avoid duplicate API calls, saving both time and costs.
+- **Context-Aware Translation** (AI Model Only): The AI will translate by considering contextual information to improve the coherence and accuracy of subtitle dialogues.
 - **Format Compatibility**: Automatically matches mainstream subtitle formats (.srt / .ass / .vtt / .lrc) with the exported file keeping the original filename, so no manual adjustments are needed.
 - **Subtitle Extraction**: Supports extracting subtitle text for later use in AI summarization, secondary creation, and other applications.
 - **Multiple Interface Options**: Offers 3 free translation methods, 3 commercial-grade translation APIs, and 5 AI LLM (large model) interfaces to meet different needs.

@@ -2,6 +2,7 @@
 
 Upcoming Features: Local clientization; AI refinement of translated subtitles.
 
+- 2025.07.29: Context-aware translation is now supported in AI mode.
 - 2025.03.20: Completed i18n; fixed known bugs such as cache key issues; project open-sourced.
 - 2025.02.28: Added support for custom system prompts and user prompts for LLM model translations.
 - 2025.02.27: Enhanced timeline compatibility for bilingual subtitles, supporting omission of default hours, time formats exceeding 100 hours, and millisecond displays with 1 to 3 digits.
