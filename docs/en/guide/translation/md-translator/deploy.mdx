@@ -1,0 +1,57 @@
+# Project Deployment
+
+System Requirements:
+
+  - [Node.js 18.18](https://nodejs.org/) or later.
+  - macOS, Windows (including WSL), and Linux are supported.
+
+## Local Deployment
+
+Ensure you have [Node.js](https://nodejs.org/) installed.
+
+```shell
+# Installation
+yarn
+
+# Local Development
+yarn dev
+
+# build and start
+yarn build && yarn start
+
+# Deploy for a single language
+yarn build:lang en
+yarn build:lang zh
+yarn build:lang zh-hant
+```
+
+Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `src/app/[locale]/page.tsx`. The page auto-updates as you edit the file.
+
+## Vercel Deployment
+
+Click the button below to deploy MD Translator to the Vercel platform with one click:
+
+[](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fmd-translator%2Ftree%2Fmain)
+
+With Vercel, you can quickly host the project, and it will automatically handle the build and deployment process. This is ideal for users who do not have complex server configuration needs.
+
+## Cloudflare Pages Deployment
+
+Click the button or link below to Fork this project, and then follow the steps below to deploy on Cloudflare Pages:
+
+👉 [Fork this project](https://www.google.com/search?q=https.github.com/rockbenben/md-translator/fork)
+
+Deployment steps:
+
+1.  Log in to [Cloudflare Pages](https://pages.cloudflare.com/)
+2.  Click **"Create a project"**
+3.  Connect the GitHub repository you just forked
+4.  Configure build and deployment settings:
+      - **Build command**: `npm run build`
+      - **Build output directory**: `out`
+      - **Environment variables**: Add the variable `NODE_VERSION` with the value `22.14.0`
+5.  Click the deploy button to start building\!
+
+🎉 Once completed, you can access your MD Translator page\!

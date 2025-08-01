@@ -1,11 +1,11 @@
 
 import SupportedLanguages from "./supported-languages.mdx"
 
-## 翻译 API
+# 翻译 API
 
 本工具集成了 5 种翻译 API 和 6 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：  
 
-### 翻译 API 对比
+## 翻译 API 对比
 
 | API 类型 | 翻译质量 | 稳定性 | 适用场景 | 免费额度 |  
 |----------|----------|----------|----------|----------|  
@@ -22,7 +22,7 @@ import SupportedLanguages from "./supported-languages.mdx"
 
 如果对翻译速度和质量有更高要求，可自行申请 API Key：[Google Translate](https://cloud.google.com/translate/docs/setup?hl=zh-cn)、[Azure Translate](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/reference/v3-0-translate)、[DeepL Translate](https://www.deepl.com/your-account/keys)。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
-### LLM 翻译（AI 大模型）
+## LLM 翻译（AI 大模型）
 
 除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、OpenAI、Azure OpenAI、Siliconflow、Groq，以及可自由配置的 Custom LLM。
 
@@ -31,11 +31,11 @@ import SupportedLanguages from "./supported-languages.mdx"
 - **LLM 模型**：一般情况下填写所选接口提供的模型名称；若使用 Azure OpenAI，则需填写对应的部署名称。
 - **温度参数（temperature）**：用于控制翻译结果的创造性与稳定性。数值越高，生成内容越具多样性和创造性，但可能降低准确性；数值越低，输出更稳定、一致，适合正式或技术性较强的场景。
 
-### 本地模型连接说明
+## 本地模型连接说明
 
 对于希望在本地部署大模型的用户（如 Ollama、LM Studio），可通过以下方式完成本工具的连接配置。为获得更优的翻译质量，推荐在自定义模型中使用 `qwen2.5-14b-instruct` 或性能更高的模型。
 
-#### 默认接口地址示例
+### 默认接口地址示例
 
 - Ollama：
 
@@ -49,7 +49,7 @@ http://127.0.0.1:11434/v1/chat/completions
 http://localhost:61234/v1/chat/completions
 ```
 
-#### 跨域访问配置方法（CORS）
+### 跨域访问配置方法（CORS）
 
 如果在浏览器中调用本地部署的模型时出现连接失败，可能是由于浏览器的跨域策略导致。解决方式如下：
 

@@ -1,5 +1,4 @@
-import Api from '../api.mdx';
-import Info from '../info.mdx';
+import Info from "../interface.mdx"
 
 # JSON 翻译器
 
@@ -92,9 +91,7 @@ i18n 模式专为多语言场景设计，能在原有 JSON 结构中聚合多语
 }
 ```
 
-<Api />
-
-## 功能说明
+## 功能介绍
 
 ### 映射翻译
 
@@ -102,9 +99,7 @@ i18n 模式专为多语言场景设计，能在原有 JSON 结构中聚合多语
 
 ![](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "映射翻译示例")
 
-<Info />
-
-### JSON 键名及其局限性
+### 如何使用 JSON 键名
 
 JSON 数据是以键值对的形式存储的，其中“键”（也称为“名称”）是一个字符串，用于唯一标识数据记录中的特定项目或元素，是数据检索和操作的基础。JsonTranslate 正是利用了 JSON 键名的标识作用来实现精准化识别翻译。
 
@@ -145,3 +140,5 @@ JSON 数据是以键值对的形式存储的，其中“键”（也称为“名
 ```
 
 目前，JsonTranslate 无法处理包含点（`.`）的 JSON 键名。这是因为点号在 JSONPath 中用于区分嵌套对象的键名，使得含点的键名可能被误解为多层嵌套对象。为避免这一问题，建议使用不含点的键名。
+
+<Info />

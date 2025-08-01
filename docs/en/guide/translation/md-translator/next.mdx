@@ -1,11 +1,10 @@
+## Directory Translation
 
-## 目录翻译
+If you need to preserve the directory structure of files, you must use the directory upload method (e.g., by setting the `directory` attribute). This allows you to obtain the relative path information via the file's `webkitRelativePath`. You can leverage this attribute in the `beforeUpload` hook to pass the file's path information to the backend. For example, you can change the file's `name` attribute to `file.webkitRelativePath`, so that the complete directory structure information is included during the upload.
 
-如果你需要记录文件的目录结构，则必须使用目录上传方式（例如设置 directory 属性），这样才能通过文件的 webkitRelativePath 获取相对路径信息。你可以在 beforeUpload 钩子中利用这个属性，将文件的路径信息传递给后端。比如，你可以把文件的 name 属性修改为 file.webkitRelativePath，这样在上传时就能携带完整的目录结构信息。
+## Why Develop md-translator?
 
-## 为什么开发 md-translator？
+Before developing md-translator, I tested the following tools. However, they failed to meet my needs due to their respective limitations. Here is a brief summary of their characteristics for your reference.
 
-在开发 md-translator 之前，我测试过以下工具，但由于各自的局限性，未能满足我的需求，这里简单记录它们的特点，供参考。  
-
-- **[GT4T](https://www.gt4t.cn/)**：支持 Markdown 批量翻译，用户可将整个文件夹拖入 GT4T 文件翻译器，自动翻译其中的所有 Markdown 文件。然而，该工具只能商用，即使添加自定义 API，仍要求付费，因此对个人用户不太友好。
-- **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**：一款开源免费的 Markdown 翻译工具，基于网页版接口进行翻译。然而，翻译速度较慢，且在长文本处理中容易发生中断。
+* **[GT4T](https://www.gt4t.cn/)**: Supports batch translation of Markdown. Users can drag an entire folder into the GT4T file translator to automatically translate all the Markdown files within it. However, the tool is for commercial use only. Even when adding a custom API, payment is still required, making it less friendly for individual users.
+* **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**: An open-source and free Markdown translation tool that performs translations using a web-based interface. However, the translation speed is slow, and it is prone to interruptions when processing long texts.

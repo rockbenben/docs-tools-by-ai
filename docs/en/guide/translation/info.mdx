@@ -1,56 +1,70 @@
-### Translation Cache
+# Feature Description
 
-This tool introduces an optional local translation cache to improve translation efficiency and reduce resource consumption:
+This tool is suitable for multilingual translation tasks for files such as subtitles and text. It supports various scenarios including batch processing, cache optimization, and multi-language export to help you complete localization work efficiently.
 
-- Cache rules: Each translation result is stored with a unique key formatted as `source text_target language_source language_translation API_model settings`.
-- Cache hit condition: The local cache result is used only when the parameters match exactly, ensuring accuracy.
-- Cache purpose: Avoid repeated translations, reduce API calls, and improve translation speed.
+## Multi-Language Translation: Translate Once, Output Multiple Languages
 
-To disable the use of translation cache, you can uncheck "Use translation cache" or click "Clear translation cache" in the API settings.
+You can translate the same file into multiple languages simultaneously, which is ideal for multilingual subtitles or internationalization projects:
 
-### Multilingual Translation
+- **Example**: Translate English subtitles into Chinese, Japanese, German, French, etc.
+- Currently supports 50+ languages, with more to be added in the future.
 
-Supports translating the same file into multiple languages at once, which is especially suitable for international video content:
+## Translation Cache: Reduce Redundant Translations, Improve Efficiency
 
-- For example: Translate an English file simultaneously into Chinese, Japanese, German, and French for the convenience of global users.
-- Supports 50 major languages, with more to be added continually.
+To avoid redundant requests to the translation API, this tool introduces a **local caching mechanism**:
 
-### Export and Import Settings
+- **Cache Rule**: Each translated segment is stored using a unique key composed of: `Source Text_Target Language_Source Language_Translation API_Model Settings`.
+- **Cache Hit Condition**: The cache is only used when all parameters match exactly.
+- **Purpose of Cache**: Avoids re-translating content, reduces the number of API calls, and improves translation speed.
 
-Supports one-click export and import of current settings, making it easy to migrate data when switching devices or moving to a custom domain.
+If you do not wish to use the cache, you can disable it in the settings by unchecking "Use Translation Cache," or you can manually clear it by clicking the "Clear Translation Cache" button in the API settings.
 
-Please note:
+## Translation Modes: Automatic Mode Selection
 
-- The exported file will contain all configuration information, including sensitive data such as API keys;
-- Keep the exported file secure to prevent data leaks or misuse;
-- Importing settings will overwrite existing configurations—please double-check before proceeding.
+The tool automatically switches translation modes based on your upload action, requiring no manual selection:
 
-## FAQ
+- **Batch Mode (Default)**: Supports uploading multiple files simultaneously, suitable for large-scale translation tasks. Translated results are automatically downloaded and saved.
+- **Single-File Mode**: When you upload only one file or paste text, the tool enters single-file mode, which is ideal for quick previews or testing translation results. Note: In single-file mode, each new upload will overwrite the previous one.
 
-### Why is the translation result empty, showing only the original text, or displaying as null?
+:::tip Tip
+JSON Translate currently only supports single-file mode.
+:::
 
-This issue may be caused by one of the following reasons:
+## Settings Import/Export
 
-- The API Key or related settings are incorrect;
-- Your account has run out of available credits/tokens;
-- The translation rate is set too high, or the API service is temporarily unstable.
+Supports one-click export/import of current settings, making it easy to move between devices or migrate deployments:
 
-You can press F12 to open the browser's Developer Tools, switch to the "Network" tab, and check the specific error message in the API response.
+- **Exported Content**: Includes all configurations (including sensitive information like API keys).
+- **Importing**: Will overwrite your current configuration. Please be sure to back up your settings before proceeding.
 
-If only part of the content failed to translate, try clicking the “Translate” button again. When translation caching is enabled, the system will skip already translated content to avoid duplicate charges or requests.
+## Detailed Translation API Parameters
 
-### Why use a third-party interface to access DeepL?
+To balance context with API limitations, you can customize the following key parameters:
 
-DeepL's official service does not allow direct access via web pages, so we use an intermediate gateway to send your request.
+### Chunk Translation Size
 
-This relay interface **only transmits data and does not collect any personal information**, so you can use it with confidence. If you require greater stability, you may set up your own gateway.
+For non-AI translation APIs, the tool automatically splits text into chunks before translation to handle long documents or subtitles. The **Chunk Translation Size** refers to the maximum character count for each chunk. Below are the maximum character limits for common APIs:
 
-### Will my API Key be saved?
+| Translation Service       | Max Characters per Request |
+| ------------------------- | -------------------------- |
+| DeepL API                 | 128,000 characters         |
+| DeepLX Free               | 1,000 characters           |
+| Azure Translate           | 10,000 characters          |
+| Google Translate (Web)    | 5,000 characters           |
+| Google Cloud API          | 30,000 characters          |
 
-No! Your API Key and other settings **are stored only in your own browser**. We do not upload or record any of your information.
+⚠️ Note: The web version of Google Translate can break line breaks, so chunked translation is not used for it.
 
-### Why isn’t the GTX Web interface enabled?
+### Delay Time (ms)
 
-GTX Web puts significant load on the server, so it is disabled by default.
+This controls the interval between requests for chunked translations, helping to avoid frequent request failures:
 
-If you're using this tool on your own computer, you can enable it manually. Please avoid using it under a global proxy network, as this may cause translation issues.
+- It is recommended to set a higher delay when on a **poor network or using a free API**.
+- For example: When using the free Azure Translate tier, a setting of **5000ms** or more is recommended.
+
+### Translation Rate
+
+Setting the request frequency too high can trigger rate limiting or return null values (e.g., an HTTP 429 error):
+
+- Please adjust the rate according to the specific service you are using.
+- If you frequently encounter errors, it is recommended to **lower the rate or increase the delay**.

@@ -1,0 +1,33 @@
+# Frequently Asked Questions
+
+## Why is the translation result empty, showing only the original text, or displaying as null?
+
+This can happen for several reasons:
+
+-   The API Key or related settings are incorrect.
+-   The available credits/tokens for your account have been used up.
+-   The translation rate is set too high, or the API itself is temporarily unstable.
+
+You can press F12 to open your browser's developer tools, switch to the "Network" tab, and check the API response for specific error messages.
+
+If only some content failed to translate, simply try clicking the "Translate" button again. When the translation cache is enabled, the system will skip already translated content, avoiding duplicate charges or requests.
+
+## Why is the translation speed slow?
+
+Besides the response time of the translation API, the translation rate setting also affects the speed. If the rate is set too low, it may cause slower requests. It is recommended to adjust the rate according to your actual needs.
+
+## Why does this use a third-party interface to access DeepL?
+
+Because DeepL's official service does not allow direct calls from a webpage, we use a "proxy channel" to send the requests for you.
+
+This proxy interface **is only used to transmit data and will not collect any of your information**, so you can use it with confidence. If you have higher stability requirements, you can also set up this channel yourself.
+
+## Will my API Key be saved?
+
+No! Your API Key and other settings **are only saved in your own browser**. We do not upload or record any of your information.
+
+## Why isn't the GTX Web interface enabled?
+
+The GTX Web interface puts significant pressure on the server, so it is not enabled by default.
+
+If you are using this tool on your own computer, you can enable it manually. Please avoid using this interface in a network environment with a global proxy enabled, as it may cause translation anomalies.

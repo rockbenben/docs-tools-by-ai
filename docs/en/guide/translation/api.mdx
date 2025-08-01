@@ -1,75 +1,69 @@
 import SupportedLanguages from "./supported-languages.mdx"
 
-## Translation APIs
+# Translation APIs
 
-This toolkit integrates **5 translation APIs** and **6 mainstream Large Language Model (LLM) interfaces**, allowing users to choose the most suitable translation method based on their needs:
+This tool integrates 5 translation APIs and 6 major Large Language Model (LLM) interfaces, allowing users to choose the appropriate translation method based on their needs.
 
-### Translation API Comparison
+## Translation API Comparison
 
-| API Type         | Translation Quality | Stability | Best Use Case                               | Free Quota                                                |
-| ---------------- | ------------------- | --------- | ------------------------------------------- | --------------------------------------------------------- |
-| DeepL (X)        | ★★★★★               | ★★★★☆     | Ideal for long texts, smoother translations | 500,000 characters/month                                  |
-| Google Translate | ★★★★☆               | ★★★★★     | Great for UI texts and common sentences     | 500,000 characters/month                                  |
-| Azure Translate  | ★★★★☆               | ★★★★★     | Broadest language support                   | **First 12 months**: 2 million characters/month           |
-| GTX API (Free)   | ★★★☆☆               | ★★★☆☆     | General-purpose translation                 | Rate-limited (e.g., \~5 million characters every 3 hours) |
-| GTX Web (Free)   | ★★★☆☆               | ★★☆☆☆     | Suitable for small-scale translations       | Free                                                      |
+| API Type | Translation Quality | Stability | Use Case | Free Tier |
+|---|---|---|---|---|
+| DeepL(X) | ★★★★★ | ★★★★☆ | Ideal for long texts, more fluent translations | 500,000 characters/month |
+| Google Translate | ★★★★☆ | ★★★★★ | Suitable for UI and common sentences | 500,000 characters/month |
+| Azure Translate | ★★★★☆ | ★★★★★ | Widest language support | 2 million characters/month **for the first 12 months** |
+| GTX API (Free) | ★★★☆☆ | ★★★☆☆ | General text translation | Rate limited (e.g., \~5M chars per 3 hours) |
+| GTX Web (Free) | ★★★☆☆ | ★★☆☆☆ | Suitable for small-scale translations | Free |
 
-* **DeepL**: Best for long-form text with natural and fluent output. Does not support web-based API; must be used via local or server-side proxy.
-* **Google Translate**: Offers stable quality, suitable for short phrases and UI content. Supports web-based calls.
-* **Azure Translate**: Supports the most languages, ideal for multilingual translation needs.
-* **GTX API/Web**: Free options suitable for lightweight use. However, they have limited stability and rate caps. For instance, when *mrfragger* attempted to translate a \~2MB subtitle file (\~2 million characters), the GTX API hit its limit after just two translation attempts.
+- **DeepL**: Best for long-form text, providing more natural and fluent translations. It does not support a web-based API and requires a local or server-side proxy to be called.
+- **Google Translate**: Offers stable translation quality, suitable for short sentences and interface text, and supports web-based calls.
+- **Azure Translate**: Has the most extensive language support, making it ideal for multilingual translation needs.
+- **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and rate limits. For example, when user `mrfragger` translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after only two translation runs.
 
-If you require higher speed or quality, you can apply for an API Key here:
-[Google Translate](https://cloud.google.com/translate/docs/setup?hl=zh-cn),
-[Azure Translate](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/reference/v3-0-translate),
-[DeepL Translate](https://www.deepl.com/your-account/keys).
-Refer to the corresponding [API Application Guide](https://ttime.timerecord.cn/service/translate/google.html) for instructions.
+If you have higher requirements for translation speed and quality, you can apply for your own API Key: [Google Translate](https://cloud.google.com/translate/docs/setup), [Azure Translate](https://www.google.com/search?q=https://learn.microsoft.com/en-us/azure/ai-services/translator/reference/v3-0-translate), [DeepL Translate](https://www.deepl.com/your-account/keys). For the application process, refer to the relevant [API application tutorial](https://ttime.timerecord.cn/service/translate/google.html).
 
-### LLM Translation (AI Language Models)
+## LLM Translation (AI Large Models)
 
-In addition to traditional APIs, this tool also supports intelligent translation via various LLMs, including: DeepSeek, OpenAI, Azure OpenAI, Siliconflow, Groq, and customizable **Custom LLM** options.
+In addition to traditional translation APIs, this tool also supports calling various LLMs for intelligent translation, including DeepSeek, OpenAI, Azure OpenAI, Siliconflow, Groq, and a freely configurable Custom LLM.
 
-* **Use Cases**: Ideal for content requiring deeper language understanding, such as literary works, technical documents, or multilingual material.
-* **Highly Customizable**: Supports configuration of system and user prompts, allowing for control over translation style, terminology preferences, and more.
-* **LLM Models**: Typically requires specifying the model name provided by the selected service; for Azure OpenAI, enter the deployment name instead.
-* **Temperature Parameter**: Controls creativity vs. stability of the translation output. Higher values yield more diverse and creative results but may reduce accuracy. Lower values ensure stable, consistent output—suitable for formal or technical content.
+- **Use Case**: Suitable for content that requires a high degree of language understanding, such as literary works, technical documents, and multilingual materials.
+- **Highly Customizable**: Supports configuring a System Prompt and a User Prompt, allowing for flexible control over translation style, terminology preferences, and more to meet diverse translation needs.
+- **LLM Model**: In general, enter the model name provided by the selected interface. If using Azure OpenAI, you must enter the corresponding deployment name.
+- **Temperature**: Controls the creativity and stability of the translation results. A higher value generates more diverse and creative content but may reduce accuracy. A lower value produces more stable and consistent output, suitable for formal or highly technical scenarios.
 
-### Local Model Integration Guide
+## Local Model Connection Guide
 
-For users deploying LLMs locally (e.g., via **Ollama** or **LM Studio**), the following setup instructions apply. For optimal translation quality, we recommend using models such as `qwen2.5-14b-instruct` or higher-performance alternatives in your custom configuration.
+For users who wish to deploy large models locally (e.g., using Ollama, LM Studio), you can configure the connection to this tool as follows. To achieve better translation quality, it is recommended to use `qwen2.5-14b-instruct` or a higher-performance model in your custom configuration.
 
-#### Sample Default Endpoint URLs
+### Default Endpoint Address Examples
 
-* Ollama:
+- Ollama:
 
 ```yml
 http://127.0.0.1:11434/v1/chat/completions
 ```
 
-* LM Studio:
+- LM Studio:
 
 ```yml
 http://localhost:61234/v1/chat/completions
 ```
 
-#### CORS Configuration (Cross-Origin Resource Sharing)
+### Cross-Origin Access Configuration (CORS)
 
-If you're encountering connection failures when accessing your local model from a browser, it may be due to cross-origin policy restrictions. Here’s how to fix it:
+If you encounter a connection failure when calling a locally deployed model from a browser, it may be due to the browser's cross-origin policy. Here is how to resolve it:
 
-* **Ollama**: Start the service with the following command to allow all origins:
+- Ollama: You need to start the service with the following command to allow access from all origins:
 
 ```bash
 OLLAMA_ORIGINS="*" ollama serve
 ```
 
-* **LM Studio**:
+- LM Studio:
 
-  1. Open the left-hand menu in the app and click the **Developer** icon.
-  2. Go to the local server settings page and click **Settings** at the top.
-  3. Check the **Enable CORS** box.
+    1. Open the left-side menu in the software and click the "Developer" icon.
+    2. Go to the local server settings page and click "Settings" at the top.
+    3. Check the "Enable CORS" checkbox.
 
-  ![LM Studio CORS Configuration Screenshot](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
-
-Once configured, this tool will be able to access your local LLM models successfully. (Special thanks to *mrfragger* for sharing this setup guide.)
+After completing the above configuration, the tool will be able to successfully call your local LLM. (Special thanks to `mrfragger` for sharing this configuration advice.)
 
 <SupportedLanguages />

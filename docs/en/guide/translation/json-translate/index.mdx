@@ -1,74 +1,73 @@
-import Api from '../api.mdx';
-import Info from '../info.mdx';
+import Info from "../interface.mdx"
 
-# JSON Translate
+# JSON Translator
 
-[JsonTranslate](https://tools.newzone.top/en/json-translate) is a multilingual JSON translation tool designed for developers and content creators. It supports Google Translate, Azure, and DeepL(X) translation APIs to help with project internationalization and localization. Whether you are developing a multilingual website, app, or managing multilingual datasets, JsonTranslate offers a simple solution to easily translate JSON file content into multiple target languages.
+[JsonTranslate](https://tools.newzone.top/en/json-translate) is a multilingual JSON translation tool designed specifically for developers and content creators. It supports translation APIs from Google Translate, Azure, and DeepL(X), helping streamline internationalization and localization processes. Whether you're building multilingual websites, applications, or working with multilingual datasets, JsonTranslate provides a simple and efficient solution to translate content in JSON files into multiple target languages.
 
-![](https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp "JsonTranslate Usage Example")
+![](https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp "JsonTranslate usage demo")
 
-## Translation Modes
+## Translation Modes Overview
 
 ### Global Translation
 
-Global translation recursively traverses the entire JSON structure, translating all string values while preserving the original hierarchy and structure of the JSON.
+This mode recursively traverses the entire JSON structure and translates all string-type values while preserving the original JSON hierarchy and structure.
 
-**Suitable for:**
+**Best for:**
 
-- Translating all text in an entire JSON file
-- One-click translation without complex configurations
+* Translating all textual content in a full JSON file
+* One-click translation without complex configurations
 
-### Specific Node
+### Targeted Nodes
 
-Using a JSONPath expression, you can precisely target one or more nodes and translate only the string content within those nodes. Multiple paths can be specified, separated by commas.
+Use JSONPath expressions to precisely locate one or more nodes and translate only the string values within them. Multiple paths can be separated by commas.
 
-**Suitable for:**
+**Best for:**
 
-- JSON data with a clear hierarchy where only specific parts need translation
-- Reducing the translation scope for large JSON files to improve efficiency
+* Translating only specific sections in a well-structured JSON dataset
+* Improving efficiency by narrowing the translation scope in large files
 
-### Specific Key Names
+### Specific Keys
 
-In this mode, you can specify particular key names to translate. Two input methods are supported:
+In this mode, you can specify particular key names for translation. Two input options are supported:
 
-- **Simple Mode:** Enter the key names to be translated directly in the input box, separated by commas (in either English or Chinese), and the program will translate the content of those keys.
-- **Advanced Mode:** Set the mapping between input and output keys using the key mapping component. The translation result will be written to a new field while keeping the original field unchanged.
+* **Simple Mode**: Enter key names separated by commas (English or Chinese), and the corresponding values will be translated.
+* **Advanced Mode**: Use a key mapping component to define input-output key pairs. Translations are written to new keys, preserving the original fields.
 
-**Suitable for:**
+**Best for:**
 
-- Translating only specific fields, such as `title` or `description`
-- Outputting translation results to different fields to avoid overwriting the original data
+* Translating specific fields like `title` or `description`
+* Keeping original data intact by outputting translations to separate keys
 
 **Notes:**
 
-- Key names are case-sensitive
-- If the JSON contains arrays, avoid using pure numbers as key names to prevent them from being interpreted as indices
-- The number of input and output keys must match
+* Key names are case-sensitive
+* Avoid using numeric-only key names in arrays to prevent misinterpretation as indices
+* Input and output keys must be provided in equal numbers
 
 ### Selective Translation
 
-This mode is suitable for flat JSON structures. You can specify a starting node and the field names to be translated. The system will search from the specified node for target fields in all objects and translate them.
+Ideal for flat JSON structures, this mode lets you specify a starting node and target field names. The system will search from the starting point and translate all matching fields in nested objects.
 
 **Configuration Options:**
 
-- **Starting Key** (optional): Specify the key from which to begin the search, suitable for scenarios where key order matters
-- **Fields to Translate:** The specific field names to translate, separated by commas if there are multiple
+* **Start Key** (optional): Indicates where to begin the search—useful when key order matters
+* **Fields to Translate**: Specify target field names; separate multiple fields with commas
 
-**Suitable for:**
+**Best for:**
 
-- Translating only specific fields in a flat structure, such as the "message" field in logs or error messages
-- JSON files with simple structures where fields appear repeatedly but only need selective translation
+* Translating fields like `"message"` in flattened data structures such as logs or error reports
+* Simple JSON files with recurring field names requiring partial translation
 
 ### i18n Mode
 
-i18n mode is designed for multilingual scenarios, allowing the aggregation of multiple language fields within the original JSON structure. It is ideal for building translation files for multilingual websites or apps, or managing multilingual configurations under a unified structure.
+Designed specifically for multilingual scenarios, this mode aggregates translations under the same field structure, making it ideal for managing multilingual content for websites or apps.
 
 #### How It Works
 
-- Uses the selected source language as the source field. For example, if the source language is `zh`, the source field is `zh`. If the source language is set to `auto`, the default source field is `en`.
-- Traverses all objects in the JSON that contain the source language field and adds a target language field (at the same level as the source field) for each object.
-- If the target language field already exists, translation is skipped to avoid overwriting existing content.
-- When both i18n mode and multilingual mode are enabled, the system generates a unified JSON structure that includes the source language and all target languages. This is especially useful for internationalization projects.
+* The selected source language becomes the source field (e.g., `zh` as the source language means the source field is `zh`). If set to `auto`, the default source is `en`.
+* It scans all objects containing the source field and adds new fields for each target language at the same level.
+* If a target language field already exists, it is skipped to avoid overwriting.
+* When both i18n and multi-language modes are enabled, the system creates a unified JSON structure with the source and all target languages—perfect for internationalized projects.
 
 #### Example
 
@@ -80,7 +79,7 @@ i18n mode is designed for multilingual scenarios, allowing the aggregation of mu
 }
 ```
 
-If the target languages are set to `zh` and `fr`, the translation result is:
+If the target languages are `zh` and `fr`, the translated result would be:
 
 ```json
 {
@@ -92,27 +91,23 @@ If the target languages are set to `zh` and `fr`, the translation result is:
 }
 ```
 
-<Api />
-
-## Feature Description
+## Features Overview
 
 ### Mapped Translation
 
-When using the specified key name mode, you can switch between the single key mode and the mapped translation mode using the toggle button in the result area. In single key mode, the same node is used for both translation input and output. In mapped translation mode, however, translations involve different nodes—for example, the value of node A is translated to node B, and the value of node C is translated to node D.
+When using the Specific Keys mode, you can toggle between single-key and mapped translation modes in the results panel. In single-key mode, input and output use the same node. In mapped translation mode, translations are written to different nodes (e.g., values from Node A are translated into Node B, Node C to Node D).
 
-![](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "Mapped Translation Example")
+![](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "Mapped translation example")
 
-<Info />
+### How JSON Key Names Work
 
-### JSON Key Names and Their Limitations
+JSON stores data in key-value pairs. The “key” (or “name”) is a string that uniquely identifies each data item or element, making it fundamental for data access and manipulation. JsonTranslate leverages these key names for accurate translation targeting.
 
-JSON data is stored as key-value pairs, where a "key" (also known as a "name") is a string that uniquely identifies a specific item or element in the data record, forming the basis for data retrieval and manipulation. JsonTranslate leverages the identifying function of JSON key names to achieve precise translation.
+Here’s an explanation of several sample key names:
 
-Below is an explanation of several key names in the example:
-
-- `downvote.message`: This is a nested key name. `downvote` is the key of the outer object, and `message` is a key within the `downvote` object.
-- `提示词.message`: Here, `提示词` is a key that contains an object, which in turn has a key named `message`.
-- `share.owner`: This key contains a dot (`.`) and is treated as a single key rather than indicating a nested relationship. In this case, if you want to access the `name` within the `share.owner` object, you cannot use `share.owner.name` because it would be mistakenly interpreted as looking for a `name` key within an `owner` object. In reality, `share.owner` is a complete key name.
+* `downvote.message`: A nested key name. `downvote` is a top-level key, and `message` is a key within that object.
+* `提示词.message`: `提示词` is a key that contains an object, within which `message` is another key.
+* `share.owner`: This key includes a dot (`.`), but it's treated as a single key name, not a nested path. So `share.owner.name` would incorrectly imply `owner` is a nested object, when in fact `share.owner` is one complete key.
 
 ```json
 {
@@ -144,4 +139,6 @@ Below is an explanation of several key names in the example:
 }
 ```
 
-Currently, JsonTranslate cannot process JSON key names that contain a dot (`.`). This is because the dot in JSONPath is used to distinguish nested object keys, which can lead to keys with dots being misinterpreted as multiple levels of nested objects. To avoid this issue, it is recommended to use key names without dots.
+Currently, JsonTranslate does not support JSON keys that contain dots (`.`). This is because dots are interpreted as delimiters in JSONPath, which may lead to misinterpretation of such keys as nested paths. To avoid this issue, it's recommended to use keys without dots.
+
+<Info />

@@ -1,14 +1,14 @@
-import Api from '../api.mdx';
-import Parameters from '../api-parameters.mdx';
-import Info from '../info.mdx';
+import Info from "../interface.mdx"
 
-# Markdown 翻译器
+# 项目介绍
 
 技术文档、开源项目、博客创作等领域，Markdown 已成为最常用的文本标记语言。然而，现有大多数翻译工具在处理 Markdown 内容时，容易破坏其原始格式，尤其在涉及代码块、LaTeX 公式或结构化元数据时，常常出现格式错乱、语义丢失的问题。
 
 [md-translator](https://tools.newzone.top/zh/md-translator) 正是为了解决这一痛点而设计的一款智能翻译工具。它不仅在保留 Markdown 结构的同时实现高质量翻译，还通过“纯文本翻译模式”，支持翻译任意类型的文本文档，让格式保留与自由翻译兼得。
 
-## 核心特性一：原生支持 Markdown 元素
+## 特色功能
+
+### 原生支持 Markdown 元素
 
 md-translator 针对 Markdown 文档进行了深度优化，支持识别并还原以下常见语法元素：
 
@@ -26,13 +26,13 @@ md-translator 针对 Markdown 文档进行了深度优化，支持识别并还�
 
 其中，FrontMatter、代码块和 LaTeX 公式均支持可选翻译，你可以根据实际需求决定是否进行处理。
 
-## 核心特性二：支持任意文档的纯文本翻译
+### 支持任意文档的纯文本翻译
 
 除了对 Markdown 的结构化支持，md-translator 还提供 **“纯文本翻译模式”**，该模式可跳过格式识别，直接对任意文本内容进行翻译。无论是 Markdown、TXT、HTML、日志文件，甚至是未经格式化的技术笔记，都可以通过该模式获得准确、高效的语言转换结果。
 
 此外，用户还可通过自定义 AI 提示词，进一步提升术语一致性、上下文连贯性以及翻译风格的统一。
 
-## 扩展功能：提取纯净文本
+### 扩展功能：提取纯净文本
 
 md-translator 还具备将 Markdown 内容转换为纯文本的能力，方便你进行二次处理或语义分析：
 
@@ -49,11 +49,5 @@ md-translator 还具备将 Markdown 内容转换为纯文本的能力，方便�
 - Markdown 博客内容的中英双语同步  
 - 代码注释、公式说明等混合文档的格式保留翻译  
 - 任何结构化/非结构化文本的语义翻译与提取  
-
-<Api />
-
-<Parameters />
-
-## 功能说明
 
 <Info />
