@@ -2908,7 +2908,7 @@ rspress-plugin-sitemap@^1.2.0:
   resolved "https://registry.npmmirror.com/rspress-plugin-sitemap/-/rspress-plugin-sitemap-1.2.0.tgz#5902e7acbec4909ab251ad09093a193ffe90ef1a"
   integrity sha512-fX5i0GLvrxRibKbL9rcBXA8PFDkhoB51bNrFpAuW0mkHg39Ji92SFzzURKvROpuwaGLZ+EP039zJNhx3kYYezA==
 
-rspress@^1.40.2:
+rspress@^1.45.0:
   version "1.45.0"
   resolved "https://registry.npmmirror.com/rspress/-/rspress-1.45.0.tgz#bcc2f7e539fb01d31858128e153be7b04227823f"
   integrity sha512-sQb3u+E3D/5mrquKj9AKz1gVIK+Nk6NqrNuS7ZixzxZY+1u7uVES1WW8hhEbHXq/eDN+vRVhj0kEs5b66ed4ow==
