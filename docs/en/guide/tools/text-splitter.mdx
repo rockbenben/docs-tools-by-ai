@@ -1,40 +1,74 @@
 # Text Splitter
 
-[Text Splitter](https://tools.newzone.top/en/text-splitter) is a highly efficient tool for processing long texts, ideal for optimizing ChatGPT inputs, AI model preprocessing, document editing, and other text management scenarios. It can intelligently split extremely long texts based on a specified character count or custom symbols, and it supports various export and copy options to help users process, manage, and reuse textual content with ease.
+The [Text Splitter](https://tools.newzone.top/en/text-splitter) is a powerful tool for processing long text, ideal for use cases like optimizing input for AI models such as ChatGPT and DeepSeek, document editing, and social media content management. It supports **three splitting modes**: by character count, by custom delimiters, and by Chinese paragraph segmentation. Advanced features such as escape character support, batch export, and ZIP packaging make text processing more efficient and user-friendly.
 
-## Splitting Settings
+## Three Splitting Modes
 
-### Set Character Limit
+### 1. Character Count Split Mode
 
-In the "Character Limit" input box, you can set the maximum number of characters per text segment (the default is 2000). The system will initially split the text based on this limit, which is suitable for standardizing lengthy content.
+Set the maximum number of characters per text segment in the “Split Character Count” input box (default: 2000 characters). The system will split the text based on the specified length, suitable for scenarios that require control over text size.
 
-### Custom Symbol Splitting
+**Special Feature**: If the input is left empty or set to 0, and custom delimiter splitting is enabled, the system will **only split by delimiter** with no character limit.
 
-- **Enable Custom Splitting**: By selecting the "Custom Symbol Splitting" option, the system will search backward within each segment for the symbols you specify, ensuring that the segments end at more natural sentence boundaries.
-- **Set Splitting Symbols**: Enter one or more splitting symbols in the input field (separate multiple symbols with a space). The tool provides shortcut buttons for common Chinese ending symbols (e.g., `。 ！ ？`) and English ending symbols (e.g., `. ! ?`), which you can click to auto-fill the field.
+### 2. Custom Delimiter Split Mode
 
-### Large File Optimization
+* **Mixed Splitting**: Combines character count limits with delimiter-based splitting, searching for appropriate delimiters near the split point to preserve semantic integrity.
+* **Pure Delimiter Splitting**: If character count is left empty, the system will split only by delimiter with no character limit.
+* **Smart Recognition**: Supports single-character delimiters (e.g., `。`) and multi-character delimiters (e.g., `\n\n`).
+* **Delimiter Retention**: Each split segment retains the delimiter at the end of the paragraph.
 
-To avoid performance issues when processing large files, the tool offers the following optimization options:
+**Quick Settings**:
 
-- **Large File Optimization**: When uploading larger text files (recommended for files over 5M), check this option to disable the source text preview, which improves page responsiveness.
-- **Hide Result Preview**: This option is useful when there are too many split segments. Enabling it will hide the individual segment previews, leaving only the export functions available.
+* **Chinese Sentence Endings**: One-click fill with `。 ？ ！`
+* **English Sentence Endings**: One-click fill with `. ? !`
+
+**Escape Character Support**: `\n` (newline), `\r` (carriage return), `\t` (tab), `\s` (space), `\\` (backslash)
+
+### 3. Chinese Paragraph Split Mode
+
+Click the “Split by Chinese Paragraph” button to use an intelligent paragraph recognition algorithm to split Chinese text naturally by line breaks. Designed for Chinese articles, blog content, and other texts where paragraph integrity is important.
+
+## Advanced Feature Settings
+
+### Performance Optimization Options
+
+* **Large File Optimization**: For files larger than 5MB. When enabled, it hides the source text preview to prevent page lag.
+* **Hide Result Preview**: Useful when there are too many split segments. Hides the content preview and only keeps the export functionality.
 
 ### Export File Name
 
-You can customize the base name for the output files in the "Export File Name" input box. If left unspecified, the system will default to using the original name of the uploaded file or generate a default name, making it easier to identify and manage the files.
+You can customize the base name of the output file in the “Export File Name” input box. File names can include extensions (e.g., `document.txt`) or be extensionless. If left blank, the original upload file name or a default name will be used.
 
-## Exporting and Copying Split Results
+## Export and Copy Functions
 
-### Export as a Single Merged File
+### Smart Batch Export
 
-Click the "Export Merged Text" button, and the system will combine all the split segments into one complete text file, automatically appending the appropriate file extension (e.g., `.txt`).
+**Merge Export**: Click the “Export Merged Text” button to combine all split segments into a single file, separated by double newlines.
 
-### Batch Export as Multiple Files
+**Individual Export**: Click the “Batch Export Text” button to export in bulk:
 
-- **Individual Download**: When the number of segments does not exceed 10, the system will generate individual files for each segment, using a naming format of `[filename]_[number]`.
-- **Automatic ZIP Packaging**: If there are more than 10 segments, the system will automatically package all the files into a ZIP archive for download, preventing any issues caused by having too many separate files.
+* **≤10 segments**: Downloaded individually, named as `[filename]_[index].txt`
+* **>10 segments**: Automatically packaged into a ZIP file to avoid excessive downloads
 
-### Copying Individual Segments
+### Quick Copy Function
 
-In the results preview area, each segment is accompanied by a "Copy" button. Clicking the button copies the segment's content to the clipboard, with a color change indicating that the operation was successful.
+The tool allows setting a custom base name for exported files in the “Export File Name” input box. Each segment includes a dedicated “Copy” button. Clicking it copies the content to the clipboard and changes the button color to confirm success. Real-time statistics such as character count, line count, and number of segments are also displayed.
+
+## Use Cases & Recommendations
+
+### AI Model Input Optimization
+
+* **ChatGPT/Claude**: Character limit 4000–8000, recommended to use Chinese sentence endings `。 ？ ！`
+* **Code Processing**: Character limit 2000–3000, use delimiters like `\n\n`
+
+### Social Media Content
+
+* **Weibo/Twitter**: Character limit 140–280, use sentence-ending delimiters
+* **WeChat Official Articles**: Use Chinese paragraph split mode to preserve structure
+
+### Document Editing
+
+* **Academic Papers**: Character limit 5000–8000, split by `\n\n` to separate sections
+* **Translation Prep**: Use paragraph or custom delimiter splitting to maintain unit completeness
+
+The tool uses pure front-end processing. All data is handled locally in the browser, ensuring privacy and security. It supports real-time preview, intelligent caching, and responsive design, allowing efficient text splitting without relying on a server.
