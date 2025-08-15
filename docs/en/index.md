@@ -3,7 +3,7 @@ pageType: home
 
 hero:
   name: Tools By AI Docs
-  text: 
+  text:
   tagline: Documentation fo Tools By AI toolkit
   actions:
     - theme: brand

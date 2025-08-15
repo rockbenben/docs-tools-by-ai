@@ -3,7 +3,7 @@ pageType: home
 
 hero:
   name: Tools By AI Docs
-  text: 
+  text:
   tagline: 为 Tools By AI 工具集提供具体的说明文档
   actions:
     - theme: brand

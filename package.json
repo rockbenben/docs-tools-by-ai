@@ -11,7 +11,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^1.45.0",
+    "rspress": "^1.45.1",
     "rspress-plugin-sitemap": "^1.2.0"
   },
   "devDependencies": {
@@ -21,6 +21,7 @@
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "prettier": "^3.4.2",
+    "typescript": "^5.9.2",
     "typescript-eslint": "^8.22.0"
   }
 }

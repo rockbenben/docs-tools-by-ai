@@ -1,3 +1,11 @@
+---
+head:
+  - - meta
+    - property: og:title
+      content: Subtitle Translator Deployment - Vercel, Docker & Local Setup | Tools By AI
+description: Want to self-host the Subtitle Translator? This page offers detailed guides for one-click Vercel deployment, Docker images, and local setup to get you running.
+---
+
 # Project Deployment
 
 **System Requirements:**
@@ -78,7 +86,7 @@ services:
     image: ghcr.io/rockbenben/subtitle-translator:latest
     container_name: subtitle-translator
     ports:
-      - "3000:3000"
+      - '3000:3000'
     restart: unless-stopped
 ```
 

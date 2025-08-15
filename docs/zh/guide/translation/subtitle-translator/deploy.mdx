@@ -1,3 +1,11 @@
+---
+head:
+  - - meta
+    - property: og:title
+      content: 字幕翻译工具部署 - Vercel, Docker, 本地部署指南 | Tools By AI
+description: 需要私有化部署字幕翻译工具？本页提供 Vercel 一键部署、Docker 镜像及本地部署等多种方式的详细指南，帮助您快速搭建稳定、高效的个人字幕翻译服务。
+---
+
 # 项目部署
 
 System Requirements:
@@ -78,7 +86,7 @@ services:
     image: ghcr.io/rockbenben/subtitle-translator:latest
     container_name: subtitle-translator
     ports:
-      - "3000:3000"
+      - '3000:3000'
     restart: unless-stopped
 ```
 

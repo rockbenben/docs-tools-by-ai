@@ -1,6 +1,6 @@
 import * as path from 'node:path';
-import { defineConfig } from 'rspress/config';
 import sitemap from 'rspress-plugin-sitemap';
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -15,17 +15,16 @@ export default defineConfig({
       lang: 'en',
       label: 'English',
       title:
-        'Tools By AI Docs - Multilingual Translation, Text Processing & JSON Editing | Essential for Efficient Development & Office Work',
+        'Tools By AI Docs - AI-Powered Tools for Translation, Text & JSON Processing',
       description:
-        'Tools By AI Docs, featuring subtitle translation, i18n JSON translation, Markdown text translation, text splitting, Chinese conversion, regex matching, JSON value extraction, node editing, key replacement, data match & update, bookmark parsing, and data conversion. Perfect for developers and creators handling multilingual translation and text processing tasks.',
+        'Struggling with multilingual translation, text processing, or complex JSON edits? Tools By AI offers a suite of AI-powered tools for subtitle translation, i18n localization, and more, boosting your development and office productivity.',
     },
     {
       lang: 'zh',
       label: '简体中文',
-      title:
-        'Tools By AI Docs - 多语言翻译、文本处理与 JSON 编辑 | 高效开发与办公必备',
+      title: 'Tools By AI 中文文档 - AI 驱动的翻译、文本与 JSON 处理工具',
       description:
-        'Tools By AI Docs，包括字幕翻译、i18n JSON 翻译、Markdown 文本翻译、文本分割、简繁转换、正则匹配、JSON 值提取、节点编辑、键值替换、数据匹配更新、书签与数据解析等，助力开发者与创作者高效解决多语言翻译和文本处理需求。',
+        '还在为多语言翻译、文本处理或复杂的 JSON 编辑烦恼吗？Tools By AI 提供一站式 AI 工具集，助您轻松完成字幕翻译、i18n 本地化等任务，大幅提升开发与办公效率。',
     },
   ],
   themeConfig: {

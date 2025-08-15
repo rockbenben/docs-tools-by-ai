@@ -1,23 +1,30 @@
+---
+head:
+  - - meta
+    - property: og:title
+      content: 翻译 API 与大语言模型(LLM)接口对比 | Tools By AI
+description: 如何选择最适合您的翻译接口？本页详细对比 DeepL、Google、Azure 等翻译 API 及多种 LLM 的优劣、免费额度和适用场景，助您做出最佳选择。
+---
 
-import SupportedLanguages from "./supported-languages.mdx"
+import SupportedLanguages from './supported-languages.mdx';
 
 # 翻译 API
 
-本工具集成了 5 种翻译 API 和 6 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：  
+本工具集成了 5 种翻译 API 和 6 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：
 
 ## 翻译 API 对比
 
-| API 类型 | 翻译质量 | 稳定性 | 适用场景 | 免费额度 |  
-|----------|----------|----------|----------|----------|  
-| DeepL(X) | ★★★★★ | ★★★★☆ | 适合长文本，翻译更流畅 | 每月 50 万字符 |  
-| Google Translate | ★★★★☆ | ★★★★★ | 适合 UI 界面、常见句子 | 每月 50 万字符 |  
-| Azure Translate | ★★★★☆ | ★★★★★ | 语言支持最广泛 | **前 12 个月** 每月 200 万字符 |  
-| GTX API（免费） | ★★★☆☆ | ★★★☆☆ | 一般文本翻译 | 有调用频率限制（例如，每 3 小时约 500 万字符） |  
-| GTX Web（免费） | ★★★☆☆ | ★★☆☆☆ | 适合小规模翻译 | 免费 |  
+| API 类型         | 翻译质量 | 稳定性 | 适用场景               | 免费额度                                       |
+| ---------------- | -------- | ------ | ---------------------- | ---------------------------------------------- |
+| DeepL(X)         | ★★★★★    | ★★★★☆  | 适合长文本，翻译更流畅 | 每月 50 万字符                                 |
+| Google Translate | ★★★★☆    | ★★★★★  | 适合 UI 界面、常见句子 | 每月 50 万字符                                 |
+| Azure Translate  | ★★★★☆    | ★★★★★  | 语言支持最广泛         | **前 12 个月** 每月 200 万字符                 |
+| GTX API（免费）  | ★★★☆☆    | ★★★☆☆  | 一般文本翻译           | 有调用频率限制（例如，每 3 小时约 500 万字符） |
+| GTX Web（免费）  | ★★★☆☆    | ★★☆☆☆  | 适合小规模翻译         | 免费                                           |
 
-- **DeepL**：适用于长篇文本，翻译更加流畅自然，但不支持网页端 API，需本地或服务器代理调用。  
-- **Google Translate**：翻译质量稳定，适用于短句、界面文本，支持网页端调用。  
-- **Azure Translate**：支持语言最多，适合多语言翻译需求。  
+- **DeepL**：适用于长篇文本，翻译更加流畅自然，但不支持网页端 API，需本地或服务器代理调用。
+- **Google Translate**：翻译质量稳定，适用于短句、界面文本，支持网页端调用。
+- **Azure Translate**：支持语言最多，适合多语言翻译需求。
 - **GTX API/Web**：免费翻译选项，适合轻量级使用，但稳定性和调用频率有限。例如，mrfragger 在翻译一个约 200 万字符的字幕文件（约 2MB）时，仅执行两次翻译即触发了 GTX API 限制。
 
 如果对翻译速度和质量有更高要求，可自行申请 API Key：[Google Translate](https://cloud.google.com/translate/docs/setup?hl=zh-cn)、[Azure Translate](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/reference/v3-0-translate)、[DeepL Translate](https://www.deepl.com/your-account/keys)。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
@@ -60,7 +67,6 @@ OLLAMA_ORIGINS="*" ollama serve
 ```
 
 - LM Studio：
-
   1. 打开软件左侧菜单，点击「Developer」图标；
   2. 进入本地服务器设置页面，点击顶部「Settings」；
   3. 勾选“Enable CORS”复选框。

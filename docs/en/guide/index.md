@@ -1,3 +1,11 @@
+---
+head:
+  - - meta
+    - property: og:title
+      content: Guide to Tools By AI - Philosophy of AI-Assisted Tooling
+description: Learn the core philosophy behind Tools By AI. We focus on AI as a powerful assistant to build controllable, reliable, and custom tools, not on full AI autonomy.
+---
+
 # Tools By AI
 
 > The age of AI has arrived, and everyone can now customize their own exclusive tools.

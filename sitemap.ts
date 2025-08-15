@@ -1,5 +1,5 @@
-import { defineConfig } from 'rspress/config';
 import sitemap from 'rspress-plugin-sitemap';
+import { defineConfig } from 'rspress/config';
 
 export default defineConfig({
   plugins: [
