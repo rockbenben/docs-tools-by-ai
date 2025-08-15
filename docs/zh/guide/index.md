@@ -1,3 +1,11 @@
+---
+head:
+  - - meta
+    - property: og:title
+      content: Tools By AI 指南 - AI 辅助工具开发的理念与实践
+description: 了解 Tools By AI 背后的核心理念。我们不追求完全自主的 AI，而是将 AI 作为强大辅助，帮您打造可控、可靠的定制化工具，真正实现“任务工具化”，提升效率。
+---
+
 # Tools By AI
 
 > AI 时代已经来临，每个人都能定制属于自己的专属工具。

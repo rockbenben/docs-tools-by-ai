@@ -6,7 +6,7 @@
 
 初步设计：只有完全符合的文本才会按指定内容翻译，无视翻译规则。如果是想将指定文本进行翻译，就需要将指定词汇再进行切割？
 
-key 结构为 `源条目_targetlanguage_目标条目`，词汇表保存为本地文件，之后翻译自动从中读取。也就是用 t_glossarieskey 来查找，找不到才进行翻译。完整的结构为 `t_${SparkMD5.hash(text)}_${targetLanguage}_${sourceLanguage}_${translationMethod}_${llmConfigHash}`。
+key 结构为 `源条目_targetlanguage_目标条目`，词汇表保存为本地文件，之后翻译自动从中读取。也就是用 t*glossarieskey 来查找，找不到才进行翻译。完整的结构为 `t*${SparkMD5.hash(text)}_${targetLanguage}_${sourceLanguage}_${translationMethod}_${llmConfigHash}`。
 
 ## 词汇表格式的常见限制
 

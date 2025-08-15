@@ -1,4 +1,12 @@
-import SupportedLanguages from "./supported-languages.mdx"
+---
+head:
+  - - meta
+    - property: og:title
+      content: Translation API & LLM Comparison | Tools By AI
+description: How to choose the best translation service? This page compares APIs like DeepL, Google, and Azure, plus various LLMs, detailing their free tiers and ideal use cases.
+---
+
+import SupportedLanguages from './supported-languages.mdx';
 
 # Translation APIs
 
@@ -6,13 +14,13 @@ This tool integrates 5 translation APIs and 6 major Large Language Model (LLM) i
 
 ## Translation API Comparison
 
-| API Type | Translation Quality | Stability | Use Case | Free Tier |
-|---|---|---|---|---|
-| DeepL(X) | ★★★★★ | ★★★★☆ | Ideal for long texts, more fluent translations | 500,000 characters/month |
-| Google Translate | ★★★★☆ | ★★★★★ | Suitable for UI and common sentences | 500,000 characters/month |
-| Azure Translate | ★★★★☆ | ★★★★★ | Widest language support | 2 million characters/month **for the first 12 months** |
-| GTX API (Free) | ★★★☆☆ | ★★★☆☆ | General text translation | Rate limited (e.g., \~5M chars per 3 hours) |
-| GTX Web (Free) | ★★★☆☆ | ★★☆☆☆ | Suitable for small-scale translations | Free |
+| API Type         | Translation Quality | Stability | Use Case                                       | Free Tier                                              |
+| ---------------- | ------------------- | --------- | ---------------------------------------------- | ------------------------------------------------------ |
+| DeepL(X)         | ★★★★★               | ★★★★☆     | Ideal for long texts, more fluent translations | 500,000 characters/month                               |
+| Google Translate | ★★★★☆               | ★★★★★     | Suitable for UI and common sentences           | 500,000 characters/month                               |
+| Azure Translate  | ★★★★☆               | ★★★★★     | Widest language support                        | 2 million characters/month **for the first 12 months** |
+| GTX API (Free)   | ★★★☆☆               | ★★★☆☆     | General text translation                       | Rate limited (e.g., \~5M chars per 3 hours)            |
+| GTX Web (Free)   | ★★★☆☆               | ★★☆☆☆     | Suitable for small-scale translations          | Free                                                   |
 
 - **DeepL**: Best for long-form text, providing more natural and fluent translations. It does not support a web-based API and requires a local or server-side proxy to be called.
 - **Google Translate**: Offers stable translation quality, suitable for short sentences and interface text, and supports web-based calls.
@@ -59,10 +67,9 @@ OLLAMA_ORIGINS="*" ollama serve
 ```
 
 - LM Studio:
-
-    1. Open the left-side menu in the software and click the "Developer" icon.
-    2. Go to the local server settings page and click "Settings" at the top.
-    3. Check the "Enable CORS" checkbox.
+  1. Open the left-side menu in the software and click the "Developer" icon.
+  2. Go to the local server settings page and click "Settings" at the top.
+  3. Check the "Enable CORS" checkbox.
 
 After completing the above configuration, the tool will be able to successfully call your local LLM. (Special thanks to `mrfragger` for sharing this configuration advice.)
 

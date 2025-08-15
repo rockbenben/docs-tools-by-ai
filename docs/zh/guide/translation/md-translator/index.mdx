@@ -1,4 +1,12 @@
-import Info from "../interface.mdx"
+---
+head:
+  - - meta
+    - property: og:title
+      content: Markdown 文档翻译工具 - 保持格式精准翻译 | Tools By AI
+description: 翻译 Markdown 文档时格式总错乱？这款工具专为技术文档设计，能精准保留原始格式，支持多种 AI 翻译引擎，是翻译开源项目文档的理想选择。
+---
+
+import Info from '../interface.mdx';
 
 # 项目介绍
 
@@ -12,17 +20,17 @@ import Info from "../interface.mdx"
 
 md-translator 针对 Markdown 文档进行了深度适配，能够识别并还原以下常见语法：
 
-* FrontMatter 元数据（`---`）
-* 标题（`#`）
-* 引用块（`> 引用`）
-* 链接（`[text](URL)`）
-* 无序列表（`-` / `*` / `+`）
-* 有序列表（`1. 2. 3.`）
-* 强调文本（`**加粗**`，`_斜体_`）
-* 代码块（` ``` `）
-* 内联代码（`` `code` ``）
-* 行内 LaTeX 公式（`$公式$`）
-* 块级 LaTeX 公式（`$$公式$$`）
+- FrontMatter 元数据（`---`）
+- 标题（`#`）
+- 引用块（`> 引用`）
+- 链接（`[text](URL)`）
+- 无序列表（`-` / `*` / `+`）
+- 有序列表（`1. 2. 3.`）
+- 强调文本（`**加粗**`，`_斜体_`）
+- 代码块（` ``` `）
+- 内联代码（`` `code` ``）
+- 行内 LaTeX 公式（`$公式$`）
+- 块级 LaTeX 公式（`$$公式$$`）
 
 其中，FrontMatter、代码块以及 LaTeX 公式均支持可选翻译，用户可根据实际需求灵活配置是否处理。
 

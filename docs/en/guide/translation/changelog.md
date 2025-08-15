@@ -1,3 +1,11 @@
+---
+head:
+  - - meta
+    - property: og:title
+      content: Translation Tools Changelog - Feature Updates & Bug Fixes | Tools By AI
+description: See the complete update history for our translation tools. This page logs all new features, optimizations, and bug fixes, including major milestones like AI context translation.
+---
+
 # Changelog
 
 Upcoming features: Create a local desktop client; add AI polishing for translated subtitles.
