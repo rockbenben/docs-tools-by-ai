@@ -20,9 +20,15 @@ You can press F12 to open your browser's developer tools, switch to the "Network
 
 If only some content failed to translate, simply try clicking the "Translate" button again. When the translation cache is enabled, the system will skip already translated content, avoiding duplicate charges or requests.
 
-## Why is the translation speed slow?
+## Why is the translation speed slower? Why does the free GTX interface seem faster?
 
-Besides the response time of the translation API, the translation rate setting also affects the speed. If the rate is set too low, it may cause slower requests. It is recommended to adjust the rate according to your actual needs.
+When using translation services, the speed is influenced not only by the **API response time** but also by the **translation rate settings**.
+
+- **GTX Interface**: Generally more stable, with a higher default translation rate, which makes it appear faster in most cases.
+- **AI Interface**: Has a relatively lower default translation rate. If users don’t adjust this setting, it may feel slower.
+
+If you find the translation taking too long, you can adjust the “translation rate” in the settings.
+For example, increasing it from the default value of 20 to 50 could theoretically make it about 2.5 times faster. However, keep in mind that this will also increase the number of tokens processed per translation and may even trigger the maximum token limit of the model. It’s recommended to balance speed and stability according to your actual needs.
 
 ## Why does this use a third-party interface to access DeepL?
 
