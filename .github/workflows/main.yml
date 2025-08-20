@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           # 获取所有标记和分支的所有历史记录（updatetime 必须，否则每次都会变化）
           fetch-depth: 0
@@ -38,13 +38,3 @@ jobs:
           # 这是文档部署到的分支名称
           branch: gh-pages
           folder: doc_build
-
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          local-dir: doc_build/
-          server: ${{ secrets.ftp_host }}
-          username: ${{ secrets.ftp_username }}
-          password: ${{ secrets.ftp_password }}
-          port: ${{ secrets.ftp_port }} # 建议更改默认的 21 端口
-          timeout: 600000
