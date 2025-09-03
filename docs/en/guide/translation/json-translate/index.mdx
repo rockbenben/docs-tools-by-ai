@@ -48,9 +48,10 @@ In this mode, you can specify particular key names for translation. Two input op
 
 **Notes:**
 
-- Key names are case-sensitive
-- Avoid using numeric-only key names in arrays to prevent misinterpretation as indices
-- Input and output keys must be provided in equal numbers
+- Keys are case-sensitive.
+- The number of input and output keys must match; mappings will ignore nonexistent keys. At least one valid mapping is required to proceed.
+- Pure numeric keys can conflict with array indices — this issue has been fixed, but avoid numeric-only keys to reduce ambiguity.
+- Keys containing dots (.) are interpreted as nested paths; avoid dots in key names or rename them to prevent misinterpretation.
 
 ### Selective Translation
 
