@@ -20,6 +20,18 @@ You can press F12 to open your browser's developer tools, switch to the "Network
 
 If only some content failed to translate, simply try clicking the "Translate" button again. When the translation cache is enabled, the system will skip already translated content, avoiding duplicate charges or requests.
 
+## What if AI translation quality isn’t ideal?
+
+Troubleshoot in this order:
+
+- Reset to defaults: In “Translation Settings”, reset and retest with a short sample.
+- Tune temperature (default 0.7):
+  - 0–0.3: technical/strict terminology (stable/consistent)
+  - 0.4–0.7: general content (balanced)
+  - 0.8–1.0: more creative (marketing/paraphrasing)
+
+Note: Most mainstream online 70B+ models are fine; issues are commonly due to inappropriate temperature.
+
 ## Why is the translation speed slower? Why does the free GTX interface seem faster?
 
 When using translation services, the speed is influenced not only by the **API response time** but also by the **translation rate settings**.
