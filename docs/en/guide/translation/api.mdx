@@ -27,7 +27,7 @@ This tool integrates 5 translation APIs and 6 major Large Language Model (LLM) i
 - **Azure Translate**: Has the most extensive language support, making it ideal for multilingual translation needs.
 - **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and rate limits. For example, when user `mrfragger` translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after only two translation runs.
 
-If you have higher requirements for translation speed and quality, you can apply for your own API Key: [Google Translate](https://cloud.google.com/translate/docs/setup), [Azure Translate](https://www.google.com/search?q=https://learn.microsoft.com/en-us/azure/ai-services/translator/reference/v3-0-translate), [DeepL Translate](https://www.deepl.com/your-account/keys). For the application process, refer to the relevant [API application tutorial](https://ttime.timerecord.cn/service/translate/google.html).
+If you have higher requirements for translation speed and quality, you can apply for your own API Key: [Google Translate](https://cloud.google.com/translate/docs/setup), [Google Gemini](https://aistudio.google.com/app/apikey), [Azure Translate](https://www.google.com/search?q=https://learn.microsoft.com/en-us/azure/ai-services/translator/reference/v3-0-translate), [DeepL Translate](https://www.deepl.com/your-account/keys). For the application process, refer to the relevant [API application tutorial](https://ttime.timerecord.cn/service/translate/google.html).
 
 ## LLM Translation (AI Large Models)
 
@@ -36,7 +36,7 @@ In addition to traditional translation APIs, this tool also supports calling var
 - **Use Case**: Suitable for content that requires a high degree of language understanding, such as literary works, technical documents, and multilingual materials.
 - **Highly Customizable**: Supports configuring a System Prompt and a User Prompt, allowing for flexible control over translation style, terminology preferences, and more to meet diverse translation needs.
 - **LLM Model**: In general, enter the model name provided by the selected interface. If using Azure OpenAI, you must enter the corresponding deployment name.
-- **Temperature**: Controls the creativity and stability of the translation results. A higher value generates more diverse and creative content but may reduce accuracy. A lower value produces more stable and consistent output, suitable for formal or highly technical scenarios.
+- **Temperature**: Controls creativity vs. stability. Default 0.7. Guidance: 0–0.3 for technical/strict terminology; 0.4–0.7 for general content; 0.8–1.0 for more creative outputs (e.g., marketing/paraphrasing).
 
 ## Local Model Connection Guide
 

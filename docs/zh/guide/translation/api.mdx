@@ -27,7 +27,7 @@ import SupportedLanguages from './supported-languages.mdx';
 - **Azure Translate**：支持语言最多，适合多语言翻译需求。
 - **GTX API/Web**：免费翻译选项，适合轻量级使用，但稳定性和调用频率有限。例如，mrfragger 在翻译一个约 200 万字符的字幕文件（约 2MB）时，仅执行两次翻译即触发了 GTX API 限制。
 
-如果对翻译速度和质量有更高要求，可自行申请 API Key：[Google Translate](https://cloud.google.com/translate/docs/setup?hl=zh-cn)、[Azure Translate](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/reference/v3-0-translate)、[DeepL Translate](https://www.deepl.com/your-account/keys)。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
+如果对翻译速度和质量有更高要求，可自行申请 API Key：[Google Translate](https://cloud.google.com/translate/docs/setup?hl=zh-cn)、[Google Gemini](https://aistudio.google.com/app/apikey)、[Azure Translate](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/reference/v3-0-translate)、[DeepL Translate](https://www.deepl.com/your-account/keys)。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
 ## LLM 翻译（AI 大模型）
 
@@ -36,7 +36,7 @@ import SupportedLanguages from './supported-languages.mdx';
 - **适用场景**：适合处理语言理解要求较高的内容，如文学作品、技术文档、多语种资料等。
 - **高度可定制**：支持配置系统提示词（System Prompt）与用户提示词（User Prompt），可灵活控制翻译风格、术语偏好等，满足多样化的翻译需求。
 - **LLM 模型**：一般情况下填写所选接口提供的模型名称；若使用 Azure OpenAI，则需填写对应的部署名称。
-- **温度参数（temperature）**：用于控制翻译结果的创造性与稳定性。数值越高，生成内容越具多样性和创造性，但可能降低准确性；数值越低，输出更稳定、一致，适合正式或技术性较强的场景。
+- **采样温度（temperature）**：用于控制翻译结果的创造性与稳定性，默认值为 0.7。建议：0～0.3 适合技术/术语严格场景；0.4～0.7 适合通用内容；0.8～1.0 适合更具创造性的场景（如营销/意译）。
 
 ## 本地模型连接说明
 
