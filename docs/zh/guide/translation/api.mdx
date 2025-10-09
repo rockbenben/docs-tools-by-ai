@@ -40,39 +40,46 @@ import SupportedLanguages from './supported-languages.mdx';
 
 ## 本地模型连接说明
 
-对于希望在本地部署大模型的用户（如 Ollama、LM Studio），可通过以下方式完成本工具的连接配置。为获得更优的翻译质量，推荐在自定义模型中使用 `qwen2.5-14b-instruct` 或性能更高的模型。
+对于希望在本地部署并使用自定义大模型（如 Ollama 或 LM Studio）的用户，可通过以下方式完成本工具与本地模型的连接方式，并解决可能出现的跨域访问（CORS）问题。为获得更优的翻译质量，推荐在自定义模型中使用 `qwen3-14b` 或更高参数规模的模型（如 32B、70B）。
 
 ### 默认接口地址示例
 
-- Ollama：
+下表列出了常见本地模型工具的默认接口地址，可直接在配置中使用，或根据实际端口号进行修改。
 
-```yml
-http://127.0.0.1:11434/v1/chat/completions
-```
+| 工具        | 默认接口地址                                       |
+| --------- | -------------------------------------------- |
+| Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
+| LM Studio | `http://localhost:61234/v1/chat/completions` |
 
-- LM Studio：
+### 本地模型跨域访问配置方法（CORS）
 
-```yml
-http://localhost:61234/v1/chat/completions
-```
+在浏览器中调用本地部署的模型时，如果出现连接失败，常见原因包括 **浏览器的广告屏蔽插件** 或 **跨域访问限制（CORS 策略）**。
+跨域策略是浏览器的一种安全机制，用于防止网页随意访问不同来源的资源。因此，当你在网页中请求本地模型接口时，可能会被浏览器阻止。
 
-### 跨域访问配置方法（CORS）
+#### 一、排查广告屏蔽插件
 
-如果在浏览器中调用本地部署的模型时出现连接失败，可能是由于浏览器的跨域策略导致。解决方式如下：
+首先，尝试**禁用浏览器的广告屏蔽插件**，然后重新加载页面测试。如果问题依旧，请继续下一步。
 
-- Ollama：需通过如下命令启动服务以允许所有来源访问：
+#### 二、启用本地模型服务的 CORS 支持
+
+##### 1. Ollama
+
+在启动服务时添加以下命令，允许任意来源访问本地模型接口：
 
 ```bash
 OLLAMA_ORIGINS="*" ollama serve
 ```
 
-- LM Studio：
-  1. 打开软件左侧菜单，点击「Developer」图标；
-  2. 进入本地服务器设置页面，点击顶部「Settings」；
-  3. 勾选“Enable CORS”复选框。
+> 其中 `*` 表示允许所有来源访问。若需更严格的安全控制，可将其替换为指定的域名。
 
-  ![LM Studio CORS 配置截图](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
+##### 2. LM Studio
 
-完成以上配置后，本工具即可顺利调用你的本地 LLM 模型。（特别感谢 mrfragger 分享配置经验）
+1. 打开软件左侧菜单，点击 「Developer」 图标；
+2. 进入本地服务器设置页面，点击顶部 「Settings」；
+3. 勾选 「Enable CORS」 复选框（如下图所示）。
+
+![LM Studio CORS 配置截图](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
+
+完成以上设置后，本工具即可顺利调用你的本地 LLM 模型。若仍遇到访问问题，可检查端口占用情况或浏览器控制台中的报错信息。（特别感谢 mrfragger 分享配置经验）
 
 <SupportedLanguages />

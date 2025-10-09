@@ -40,37 +40,50 @@ In addition to traditional translation APIs, this tool also supports calling var
 
 ## Local Model Connection Guide
 
-For users who wish to deploy large models locally (e.g., using Ollama, LM Studio), you can configure the connection to this tool as follows. To achieve better translation quality, it is recommended to use `qwen2.5-14b-instruct` or a higher-performance model in your custom configuration.
+For users who wish to deploy and use custom large language models locally (such as **Ollama** or **LM Studio**), the following guide explains how to connect this tool with your local model and resolve potential **CORS (Cross-Origin Resource Sharing)** issues.
+For better translation quality, it is recommended to use models such as `qwen3-14b` or larger parameter sizes (e.g., 32B, 70B).
 
-### Default Endpoint Address Examples
+### Default API Endpoint Examples
 
-- Ollama:
+The table below lists the default API endpoints for common local model tools. You can use these directly in your configuration or modify them according to your actual port settings.
 
-```yml
-http://127.0.0.1:11434/v1/chat/completions
-```
+| Tool      | Default API Endpoint                         |
+| --------- | -------------------------------------------- |
+| Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
+| LM Studio | `http://localhost:61234/v1/chat/completions` |
 
-- LM Studio:
+### Configuring CORS for Local Models
 
-```yml
-http://localhost:61234/v1/chat/completions
-```
+When calling a locally deployed model from a browser, connection failures may occur due to **ad-blocking extensions** or **CORS policy restrictions**.
+CORS is a browser security mechanism designed to prevent webpages from accessing resources from other origins arbitrarily.
+As a result, when you request a local model API from a webpage, the browser may block it.
 
-### Cross-Origin Access Configuration (CORS)
+#### 1. Check for Ad-Blocking Extensions
 
-If you encounter a connection failure when calling a locally deployed model from a browser, it may be due to the browser's cross-origin policy. Here is how to resolve it:
+First, **disable any ad-blocking browser extensions** and reload the page to test the connection.
+If the issue persists, continue to the next step.
 
-- Ollama: You need to start the service with the following command to allow access from all origins:
+#### 2. Enable CORS Support on the Local Model Server
+
+##### 1. Ollama
+
+Start the service with the following command to allow requests from any origin:
 
 ```bash
 OLLAMA_ORIGINS="*" ollama serve
 ```
 
-- LM Studio:
-  1. Open the left-side menu in the software and click the "Developer" icon.
-  2. Go to the local server settings page and click "Settings" at the top.
-  3. Check the "Enable CORS" checkbox.
+> The `*` symbol allows all origins. For stricter security, you can replace `*` with a specific domain name.
 
-After completing the above configuration, the tool will be able to successfully call your local LLM. (Special thanks to `mrfragger` for sharing this configuration advice.)
+##### 2. LM Studio
+
+1. Open the left-side menu and click the **“Developer”** icon.
+2. Go to the **Local Server Settings** page and click the **“Settings”** tab.
+3. Check the **“Enable CORS”** box (as shown below).
+
+![LM Studio CORS Configuration Screenshot](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
+
+Once configured, this tool can successfully call your local LLM model.
+If you still encounter access issues, check whether the port is in use or review the browser console for error messages.(Special thanks to **mrfragger** for sharing this configuration tip.)
 
 <SupportedLanguages />
