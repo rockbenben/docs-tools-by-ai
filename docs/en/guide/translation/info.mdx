@@ -27,6 +27,23 @@ To avoid redundant requests to the translation API, this tool introduces a **loc
 
 If you do not wish to use the cache, you can disable it in the settings by unchecking "Use Translation Cache," or you can manually clear it by clicking the "Clear Translation Cache" button in the API settings.
 
+## Remove Characters After Translation: Automatic Content Cleanup
+
+After translation is complete, you can automatically remove specified characters or symbols, ideal for batch cleaning of music symbols, markers, etc. in subtitles:
+
+- **How to Use**: In the "Remove Characters After Translation" input field, enter the characters you want to remove, separated by spaces for multiple characters
+- **Example**: Enter `♪ ♫ 🎵` to remove music symbols from subtitles
+- **Use Cases**:
+  - Remove music markers from subtitles (♪, ♫, 🎵, etc.)
+  - Remove HTML tags (such as `</i>`, `<b>`)
+  - Batch delete specific punctuation or symbols
+- **Processing Timing**: Executed uniformly after all translation and format processing is complete to ensure translation quality is not affected
+- **Cross-Tool Sharing**: This setting is shared across Subtitle Translation, Markdown Translation, and JSON Translation tools, and is saved in local storage
+
+:::tip Tip
+This feature only performs simple string replacement and does not support escape characters (like `\n`, `\t`). For more complex text processing, please use the Text Splitter tool.
+:::
+
 ## Translation Modes: Automatic Mode Selection
 
 The tool automatically switches translation modes based on your upload action, requiring no manual selection:
