@@ -12,14 +12,35 @@ description: Translation empty or slow? Is my API key safe? This page answers co
 
 ## Why is the translation result empty, showing only the original text, or displaying as null?
 
-This can happen for several reasons:
+This issue may occur due to the following reasons:
 
-- The API Key or related settings are incorrect.
-- The available credits/tokens for your account have been used up.
-- The translation rate is set too high, or the API itself is temporarily unstable.
-- The selected AI provider (e.g., OpenAI, Gemini, Claude) may not support access from mainland China IPs. Please verify your network environment or use an access method allowed by the provider.
+1. Configuration Issues
 
-If only some content failed to translate, simply try clicking the "Translate" button again. When the translation cache is enabled, the system will skip already translated content, avoiding duplicate charges or requests.
+- The API Key is entered incorrectly or has not yet taken effect;
+- Translation API parameters are improperly configured.
+
+2. Quota and Rate Limit Issues
+
+- The available account credits or tokens have been exhausted;
+- The translation request rate is too high, or the API is temporarily unstable.
+
+3. Caching Issues
+
+- The original text was mistakenly saved in the translation cache, causing repeated requests to return the original text directly.
+
+4. Network and Access Restrictions
+
+- The selected AI API (such as OpenAI, Gemini, Claude, etc.) does not support access from Mainland China IP addresses;
+- The current network or proxy configuration is abnormal, preventing requests from being properly sent.
+
+✅ Solutions:
+
+- Verify the API Key and API configuration;
+- Check account balance and request rate limits;
+- Disable or clear the translation cache and try again;
+- Ensure that the network environment meets the API access requirements.
+
+If only part of the content fails to translate, click the “Translate” button again. When caching is enabled, the system will automatically skip already translated sections to avoid duplicate requests and repeated charges.
 
 ## What if AI translation quality isn’t ideal?
 
