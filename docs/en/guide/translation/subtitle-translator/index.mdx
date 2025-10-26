@@ -35,9 +35,15 @@ Subtitle Translator supports multiple subtitle formats, including `.srt`, `.ass`
 
 ## Context-Aware Translation
 
-When *Context-Aware Translation* is enabled, the AI will interpret the surrounding text to provide more accurate and natural translations.
-If you wish to improve translation speed, you can adjust the translation rate to 50 or higher, depending on the model in use.
+When *Context-Aware Translation* is enabled, the AI interprets the text in connection with its surrounding context, producing more accurate and natural translations.
 
-⚠️ Note: It is not recommended to enable Context-Aware Translation on smaller models below 70B, as this may lead to unexpected formatting issues.
+* By default, about 20 lines of text are translated at a time (controlled by the *Translation Speed / Limit* parameter).
+* While translating these 20 lines, the model additionally reads about 10 lines before and after the target segment as contextual reference.
+* Adjusting the *Translation Speed / Limit* value simultaneously affects the size of the context window:
+
+  * Increasing the value → faster translation and a broader context range, but higher token consumption.
+  * Decreasing the value → slower translation and a narrower context range, but lighter processing load.
+
+⚠️ Note: It is not recommended to enable this feature on models smaller than 70B, as unexpected formatting issues may occur. Mainstream large online models can handle it normally.
 
 <Info />
