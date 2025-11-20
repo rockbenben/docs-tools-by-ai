@@ -11,7 +11,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^1.45.6",
+    "rspress": "^1.46.1",
     "rspress-plugin-sitemap": "^1.2.1"
   },
   "devDependencies": {

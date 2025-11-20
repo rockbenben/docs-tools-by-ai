@@ -89,7 +89,6 @@ This controls the interval between requests for chunked translations, helping to
 
 ### Translation Rate
 
-Setting the request frequency too high can trigger rate limiting or return null values (e.g., an HTTP 429 error):
+"Translation Rate" corresponds to the **Translation Speed / limit** parameter in the tool, representing the **number of concurrent requests sent to the API**. A higher value yields greater theoretical throughput, but it also increases the likelihood of being rate-limited or receiving errors such as HTTP 429.
 
-- Please adjust the rate according to the specific service you are using.
-- If you frequently encounter errors, it is recommended to **lower the rate or increase the delay**.
+If frequent errors occur, it is recommended to **lower the rate or increase the delay**, for example, by reducing it to 20 or lower first, and then adjusting it back up once stability is confirmed.
