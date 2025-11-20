@@ -87,8 +87,16 @@ This controls the interval between requests for chunked translations, helping to
 - It is recommended to set a higher delay when on a **poor network or using a free API**.
 - For example: When using the free Azure Translate tier, a setting of **5000ms** or more is recommended.
 
-### Translation Rate
+### Translation Rate / Context Window
 
-"Translation Rate" corresponds to the **Translation Speed / limit** parameter in the tool, representing the **number of concurrent requests sent to the API**. A higher value yields greater theoretical throughput, but it also increases the likelihood of being rate-limited or receiving errors such as HTTP 429.
+The "Translation Rate / Context Window" parameter serves two functions:
 
-If frequent errors occur, it is recommended to **lower the rate or increase the delay**, for example, by reducing it to 20 or lower first, and then adjusting it back up once stability is confirmed.
+- **Concurrent Request Limit**: Controls the number of lines/requests sent to the API per batch. Higher values result in faster speeds but increase the likelihood of being rate-limited or triggering errors such as HTTP 429 or empty responses.
+- **Context Window Size**: In the "Context-Aware Translation" mode for subtitles, this same parameter determines the number of preceding and succeeding lines included (subject to a safety cap). Setting this too high not only consumes more time but also makes it easier to exceed the LLM's context limit.
+
+Tuning Suggestions:
+
+- For standard APIs, it is recommended to adjust incrementally between 10 and 30; if errors occur frequently, prioritize **lowering the rate or increasing the delay**.
+- If you need to increase the window in context mode, adjust it upwards slightly (e.g., 10%~15%), but avoid jumping to hundreds or thousands of lines at once to prevent the prompt from becoming excessively long.
+
+Once stable, gradually increase the values while monitoring the API error rate and response time to ensure they remain within an acceptable range before relaxing the limits further.
