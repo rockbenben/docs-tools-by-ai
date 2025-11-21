@@ -6,79 +6,65 @@ head:
 description: Translation empty or slow? Is my API key safe? This page answers common questions about our translation tools, covering API keys, DeepL, and data security.
 ---
 
-# Frequently Asked Questions
+# FAQ
 
-> General troubleshooting: Press F12 to open DevTools, check the Network tab and inspect the Response. Most errors can be located there.
+> **General troubleshooting:** Press `F12` to open the browser developer tools, switch to the **"Network"** tab, and check the **Response** details of the request. Most errors can be identified here.
 
-## Why is the translation result empty, showing only the original text, or displaying as null?
+## What if the translation result is empty, shows only the original text, or returns null?
 
-This issue may occur due to the following reasons:
+Common causes:
 
-1. Configuration Issues
+  - **Configuration Error**: The API Key is invalid, or the translation interface parameters are incomplete.
+  - **Quota/Rate Limited**: Account Credits are exhausted, or the request rate is too high and has been temporarily restricted by the interface.
+  - **Cache Hit Original**: Previous original text stored in the cache is being returned directly.
+  - **Network Restricted**: The selected interface (e.g., OpenAI, Gemini, Claude, etc.) is restricted in the current region, or proxy/network anomalies caused the request to fail.
 
-- The API Key is entered incorrectly or has not yet taken effect;
-- Translation API parameters are improperly configured.
+✅ **Troubleshooting Order:**
 
-2. Quota and Rate Limit Issues
+1.  Verify the API Key and interface settings.
+2.  Check account quota, rate limits, and `429` errors.
+3.  Disable or clear the translation cache and retry.
+4.  Confirm the network environment supports the interface being used.
 
-- The available account credits or tokens have been exhausted;
-- The translation request rate is too high, or the API is temporarily unstable.
+If only a few sentences failed to translate, you can simply click "Translate" again; the cache will skip completed content and will not deduct fees repeatedly.
 
-3. Caching Issues
+## Local model reporting cross-origin (CORS) or connection failure?
 
-- The original text was mistakenly saved in the translation cache, causing repeated requests to return the original text directly.
+When using local models like Ollama or LM Studio, common causes for failure are browser CORS policies or ad blockers:
 
-4. Network and Access Restrictions
+1.  Temporarily disable ad/privacy extensions and refresh.
+2.  Enable CORS for the local service according to the [Translation API Guide](./api.mdx#solving-cors-issues) (e.g., set `OLLAMA_ORIGINS=*`, check "Enable CORS" in LM Studio).
+3.  If it still fails, check for port conflicts and view the return status code in the **Network** panel. Company/Campus networks also need to ensure the firewall isn't blocking local ports.
 
-- The selected AI API (such as OpenAI, Gemini, Claude, etc.) does not support access from Mainland China IP addresses;
-- The current network or proxy configuration is abnormal, preventing requests from being properly sent.
+## Why is the translation speed slow?
 
-✅ Solutions:
+The "Translation Rate" parameter in API settings ≈ **Concurrency**; higher values mean more simultaneous requests.
 
-- Verify the API Key and API configuration;
-- Check account balance and request rate limits;
-- Disable or clear the translation cache and try again;
-- Ensure that the network environment meets the API access requirements.
+  - **GTX is Faster**: High default concurrency and short response times, but strict frequency limits; prone to rate limiting with large batches over long periods.
+  - **AI Interfaces are Slower**: Low default concurrency to reduce `429` and "context length exceeded" errors; better for beginners.
 
-If only part of the content fails to translate, click the “Translate” button again. When caching is enabled, the system will automatically skip already translated sections to avoid duplicate requests and repeated charges.
+To speed up, you can gradually increase the "Translation Rate" from `20` to `30` or `50`; once `429` errors or empty results appear, dial it back slightly. Enabling translation cache, optimizing the network, or changing models can also significantly improve speed.
 
-## What if AI translation quality isn’t ideal?
+## What if the AI translation quality is unsatisfactory?
 
-Troubleshoot in this order:
+  - **Restore defaults first**: Reset in "Translation Settings" and re-test with a small text segment.
+  - **Then adjust Temperature**:
+      - **0\~0.3**: Strict terminology, requires stability;
+      - **0.4\~0.7**: General scenarios;
+      - **0.8\~1.0**: Allows paraphrasing/more creativity.
+  - **Enable context-aware translation** to improve dialogue coherence.
 
-- Reset to defaults: In “Translation Settings”, reset and retest with a short sample.
-- Tune temperature (default 0.7):
-  - 0–0.3: technical/strict terminology (stable/consistent)
-  - 0.4–0.7: general content (balanced)
-  - 0.8–1.0: more creative (marketing/paraphrasing)
+The basic translation capability of most online mainstream 70B+ models is generally fine; abnormal output is usually related to temperature or prompt settings.
 
-Note: Most mainstream online 70B+ models are fine; issues are commonly due to inappropriate temperature.
+## Why use a third-party interface to access DeepL?
 
-## Why is translation slower? Why does free GTX feel faster?
+DeepL officially prohibits direct API calls from web pages, so a relay channel is needed to forward requests. This channel is only used for forwarding and will not record your data; if you need extreme stability, you can build your own dedicated proxy.
 
-The key is the “translation rate,” which is essentially the concurrency (how many requests are sent at once).
+## Is the API Key saved?
 
-- GTX feels faster: Higher default concurrency and shorter responses, so it runs faster overall. But it’s more strictly rate‑limited, so large/long runs may get throttled.
-- AI interfaces are safer by default: Lower default concurrency to reduce 429 (rate limit) and “context/token limit” errors, so beginners are less likely to hit failures.
+No. The API Key and all settings are stored only in the local browser; no server can access them.
 
-Want it faster? Increase the “translation rate” from 20 to 30/50 gradually; if you see 429 or empty results, step back a bit.
+## Why is GTX Web disabled by default?
 
-Tips:
-- With translation cache enabled, repeated content is skipped; subsequent runs are faster.
-- Network conditions and the chosen model also affect speed; try a different model or time window if needed.
+GTX Web puts significant pressure on the shared service, so it is disabled by default. If using it locally for personal use, you can manually enable it; enabling a global proxy or unstable networks may cause request anomalies.
 
-## Why does this use a third-party interface to access DeepL?
-
-Because DeepL's official service does not allow direct calls from a webpage, we use a "proxy channel" to send the requests for you.
-
-This proxy interface **is only used to transmit data and will not collect any of your information**, so you can use it with confidence. If you have higher stability requirements, you can also set up this channel yourself.
-
-## Will my API Key be saved?
-
-No! Your API Key and other settings **are only saved in your own browser**. We do not upload or record any of your information.
-
-## Why isn't the GTX Web interface enabled?
-
-The GTX Web interface puts significant pressure on the server, so it is not enabled by default.
-
-If you are using this tool on your own computer, you can enable it manually. Please avoid using this interface in a network environment with a global proxy enabled, as it may cause translation anomalies.

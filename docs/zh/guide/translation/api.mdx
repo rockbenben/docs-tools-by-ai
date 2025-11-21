@@ -8,11 +8,11 @@ description: 如何选择最适合您的翻译接口？本页详细对比 DeepL�
 
 import SupportedLanguages from './supported-languages.mdx';
 
-# 翻译 API
+# 翻译接口指南
 
 本工具集成了 5 种翻译 API 和 6 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：
 
-## 翻译 API 对比
+## 经典翻译 API
 
 | API 类型         | 翻译质量 | 稳定性 | 适用场景               | 免费额度                                       |
 | ---------------- | -------- | ------ | ---------------------- | ---------------------------------------------- |
@@ -29,7 +29,7 @@ import SupportedLanguages from './supported-languages.mdx';
 
 如果对翻译速度和质量有更高要求，可自行申请 API Key：[Google Translate](https://cloud.google.com/translate/docs/setup?hl=zh-cn)、[Google Gemini](https://aistudio.google.com/app/apikey)、[Azure Translate](https://learn.microsoft.com/zh-cn/azure/ai-services/translator/reference/v3-0-translate)、[DeepL Translate](https://www.deepl.com/your-account/keys)。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
-## LLM 翻译（AI 大模型）
+## LLM 模型翻译
 
 除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、OpenAI、Azure OpenAI、Siliconflow、Groq，以及可自由配置的 Custom LLM。
 
@@ -38,11 +38,11 @@ import SupportedLanguages from './supported-languages.mdx';
 - **LLM 模型**：一般情况下填写所选接口提供的模型名称；若使用 Azure OpenAI，则需填写对应的部署名称。
 - **采样温度（temperature）**：用于控制翻译结果的创造性与稳定性，默认值为 0.7。建议：0～0.3 适合技术/术语严格场景；0.4～0.7 适合通用内容；0.8～1.0 适合更具创造性的场景（如营销/意译）。
 
-## 本地模型连接说明
+## 本地模型接入
 
 对于希望在本地部署并使用自定义大模型（如 Ollama 或 LM Studio）的用户，可通过以下方式完成本工具与本地模型的连接方式，并解决可能出现的跨域访问（CORS）问题。为获得更优的翻译质量，推荐在自定义模型中使用 `qwen3-14b` 或更高参数规模的模型（如 32B、70B）。
 
-### 默认接口地址示例
+### 常用接口地址
 
 下表列出了常见本地模型工具的默认接口地址，可直接在配置中使用，或根据实际端口号进行修改。
 
@@ -51,28 +51,37 @@ import SupportedLanguages from './supported-languages.mdx';
 | Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
 | LM Studio | `http://localhost:61234/v1/chat/completions` |
 
-### 本地模型跨域访问配置方法（CORS）
+### 解决CORS跨域
 
 在浏览器中调用本地部署的模型时，如果出现连接失败，常见原因包括 **浏览器的广告屏蔽插件** 或 **跨域访问限制（CORS 策略）**。
 跨域策略是浏览器的一种安全机制，用于防止网页随意访问不同来源的资源。因此，当你在网页中请求本地模型接口时，可能会被浏览器阻止。
 
-#### 一、排查广告屏蔽插件
+**步骤 1｜排查广告/隐私插件**：先暂时禁用浏览器的拦截扩展，再刷新页面测试。
 
-首先，尝试**禁用浏览器的广告屏蔽插件**，然后重新加载页面测试。如果问题依旧，请继续下一步。
+**步骤 2｜开启本地服务的 CORS**：按照下方指南为常用工具放行跨域。
 
-#### 二、启用本地模型服务的 CORS 支持
+#### Ollama
 
-##### 1. Ollama
+要让本地运行的 Ollama 服务支持 CORS，你可以通过设置环境变量的方式永久启用。操作如下：
 
-在启动服务时添加以下命令，允许任意来源访问本地模型接口：
+1. 按下 `Win + X`，选择 **Windows PowerShell** 或 **终端**。
+2. 在打开的 PowerShell 中粘贴以下命令并按回车：
+
+    ```powershell
+    [System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
+    ```
+
+    > 其中 `*` 表示允许所有来源访问 Ollama 接口。若你希望更严格的安全控制，可将其替换为特定域名，例如 `http://192.168.2.20:3000`。
+
+设置完成后，重启 Ollama 服务，即可让其生效。
+
+如果只想临时启用 CORS，也可以在启动服务时直接加入环境变量：
 
 ```bash
 OLLAMA_ORIGINS="*" ollama serve
 ```
 
-> 其中 `*` 表示允许所有来源访问。若需更严格的安全控制，可将其替换为指定的域名。
-
-##### 2. LM Studio
+#### LM Studio
 
 1. 打开软件左侧菜单，点击 「Developer」 图标；
 2. 进入本地服务器设置页面，点击顶部 「Settings」；
