@@ -10,7 +10,7 @@ import SupportedLanguages from './supported-languages.mdx';
 
 # Translation API Guide
 
-This tool integrates 5 translation APIs and 6 mainstream Large Language Model (LLM) interfaces, allowing users to choose the most suitable translation method based on their needs:
+This tool integrates 5 translation APIs and 8 mainstream Large Language Model (LLM) interfaces, allowing users to choose the most suitable translation method based on their needs:
 
 ## Classic Translation APIs
 
@@ -27,11 +27,11 @@ This tool integrates 5 translation APIs and 6 mainstream Large Language Model (L
   - **Azure Translate**: Supports the most languages, ideal for multi-language translation needs.
   - **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and call frequency. For example, when *mrfragger* translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after just two translation executions.
 
-If you have higher requirements for translation speed and quality, you can apply for your own API Key: [Google Translate](https://www.google.com/search?q=https://cloud.google.com/translate/docs/setup%3Fhl%3Den), [Google Gemini](https://aistudio.google.com/app/apikey), [Azure Translate](https://www.google.com/search?q=https://learn.microsoft.com/en-us/azure/ai-services/translator/reference/v3-0-translate), [DeepL Translate](https://www.deepl.com/your-account/keys). For application procedures, please refer to the relevant [Interface Application Tutorial](https://ttime.timerecord.cn/service/translate/google.html).
+If you have higher requirements for translation speed and quality, you can apply for your own API Key. For application procedures, please refer to the relevant [Interface Application Tutorial](https://ttime.timerecord.cn/service/translate/google.html).
 
 ## LLM Model Translation
 
-In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, OpenAI, Azure OpenAI, Siliconflow, Groq, and highly configurable Custom LLMs.
+In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, OpenAI, Gemini, Perplexity, Azure OpenAI, Siliconflow, Groq, and highly configurable Custom LLMs.
 
   - **Use Case**: Suitable for content requiring high language comprehension, such as literary works, technical documents, and multilingual materials.
   - **Highly Customizable**: Supports configuration of System Prompts and User Prompts, allowing flexible control over translation style and terminology preferences to meet diverse needs.
