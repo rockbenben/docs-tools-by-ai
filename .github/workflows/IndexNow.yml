@@ -12,5 +12,5 @@ jobs:
         uses: bojieyang/indexnow-action@v2
         with:
           sitemap-location: 'https://docs.newzone.top/sitemap.xml'
-          since: 3
+          since: 4
           key: ${{ secrets.INDEXNOW_KEY }}
