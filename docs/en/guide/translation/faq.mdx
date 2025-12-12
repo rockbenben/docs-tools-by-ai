@@ -25,6 +25,7 @@ Common causes:
 2.  Check account quota, rate limits, and `429` errors.
 3.  Disable or clear the translation cache and retry.
 4.  Confirm the network environment supports the interface being used.
+5.  Inspect the API response in DevTools: press **F12** (or **Ctrl+Shift+I**) → open **Network** → click "Translate" again → open the latest translation request and check **Status** (e.g., 401/429/5xx) plus the error details in **Response/Preview**.
 
 If only a few sentences failed to translate, you can simply click "Translate" again; the cache will skip completed content and will not deduct fees repeatedly.
 
