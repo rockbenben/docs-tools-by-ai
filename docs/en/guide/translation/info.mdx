@@ -3,72 +3,78 @@ head:
   - - meta
     - property: og:title
       content: Translation Tool Features - Batch Translate, Cache & API | Tools By AI
-description: Explore advanced features like batch translation, caching, and configuring API parameters like chunk size and delay to build an efficient and stable translation workflow.
+description: Explore the core capabilities of the translation tool: IndexedDB-based massive caching, smart concurrency control, and context optimization for long texts.
 ---
 
 # Feature Description
 
-This tool is suitable for multilingual translation tasks for files such as subtitles and text. It supports various scenarios including batch processing, cache optimization, and multi-language export to help you complete localization work efficiently.
+Designed for multilingual localization scenarios, this tool integrates **batch processing**, **high-performance caching**, **smart context handling**, and **multi-language export** to help you build an efficient and stable translation workflow.
 
-## Multi-Language Translation: Translate Once, Output Multiple Languages
+## Core Features
 
-You can translate the same file into multiple languages simultaneously, which is ideal for multilingual subtitles or internationalization projects:
+### Multi-Language Translation: Translate Once, Output Many
+
+You can translate the same file into multiple languages simultaneously, perfect for multilingual subtitles or internationalization projects:
 
 - **Example**: Translate English subtitles into Chinese, Japanese, German, French, etc.
-- Currently supports 50+ languages, with more to be added in the future.
+- **Support**: 50+ languages currently supported, with more on the way.
 
-## Translation Cache: Reduce Redundant Translations, Improve Efficiency
+### High-Performance Translation Cache
 
-To avoid redundant requests to the translation API, this tool introduces a **local caching mechanism**:
+The tool is built with an enterprise-grade **instant caching system** powered by **IndexedDB**:
 
-- **Cache Rule**: Each translated segment is stored using a unique key composed of: `Source Text_Target Language_Source Language_Translation API_Model Settings`.
-- **Cache Hit Condition**: The cache is only used when all parameters match exactly.
-- **Purpose of Cache**: Avoids re-translating content, reduces the number of API calls, and improves translation speed.
+- **Unlimited Capacity**: Bypasses browser LocalStorage limits to store millions of translation records without consuming memory.
+- **Persistent Storage**: Translation results are saved permanently and persist across browser refreshes or restarts.
+- **Smart Hitting**: Generates a unique key based on `Source Text_Target Language_Source Language_Translation API_Model Settings`. Cache is called directly when parameters match, achieving "translate once, instant access forever".
+- **On-Demand Management**: Supports manual cache disabling for specific scenarios (like debugging Prompts) or one-click clearing in settings.
 
-If you do not wish to use the cache, you can disable it in the settings by unchecking "Use Translation Cache," or you can manually clear it by clicking the "Clear Translation Cache" button in the API settings.
+### Smart Concurrency & Long Text Optimization
 
-## Remove Characters After Translation: Automatic Content Cleanup
+For long documents and batch tasks, the tool utilizes a refactored task scheduling engine:
 
-After translation is complete, you can automatically remove specified characters or symbols, ideal for batch cleaning of music symbols, markers, etc. in subtitles:
+- **Concurrency Control**: Built-in request queue mechanism supports custom **Translate Rate**. It allows you to maximize paid API usage or limit rates to protect free APIs from being banned.
+- **Large File Support**: Uses streaming and chunking strategies to easily handle ultra-large subtitles or Markdown documents, supporting **concurrent rendering of large texts** in the editor.
+- **Context Awareness**: Intelligently slices context windows for subtitle or document translation, ensuring LLMs understand plot continuity and improving translation accuracy.
 
-- **How to Use**: In the "Remove Characters After Translation" input field, enter the characters you want to remove, separated by spaces for multiple characters
-- **Example**: Enter `♪ ♫ 🎵` to remove music symbols from subtitles
-- **Use Cases**:
-  - Remove music markers from subtitles (♪, ♫, 🎵, etc.)
-  - Remove HTML tags (such as `</i>`, `<b>`)
-  - Batch delete specific punctuation or symbols
-- **Processing Timing**: Executed uniformly after all translation and format processing is complete to ensure translation quality is not affected
-- **Cross-Tool Sharing**: This setting is shared across Subtitle Translation, Markdown Translation, and JSON Translation tools, and is saved in local storage
+---
+
+## Translation Modes & Workflow
+
+The tool automatically detects user actions and switches modes:
+
+- **Batch Mode** (Default): Drag and drop multiple files to upload. They enter a processing queue automatically, and results are packed and downloaded upon completion.
+- **Single-File Mode**: Upload a single file or paste text to enter single-file mode, supporting real-time preview and line-by-line proofreading/editing.
+
+:::tip Supported Formats
+
+- **Subtitles**: `.srt`, `.vtt`, `.ass` (Bilingual / Language Replacement)
+- **Documents**: Markdown (`.md`, `.mdx`), JSON (`.json`)
+  :::
+
+## Post-Translation Processing
+
+Supports automatic text cleanup after translation, with results applied to all output files:
+
+- **Character Filtering**: Automatically removes extraneous symbols (e.g., musical notes `♪ ♫` in subtitles).
+- **Format Correction**: Standardizes punctuation styles or removes specific HTML noise.
 
 :::tip Tip
-This feature only performs simple string replacement and does not support escape characters (like `\n`, `\t`). For more complex text processing, please use the Text Splitter tool.
+This feature performs simple string replacement and does not support escape characters (like `\n`, `\t`). For complex text processing, please use the Text Splitter tool.
 :::
 
-## Translation Modes: Automatic Mode Selection
+## Advanced Settings
 
-The tool automatically switches translation modes based on your upload action, requiring no manual selection:
+### Settings Import/Export
 
-- **Batch Mode (Default)**: Supports uploading multiple files simultaneously, suitable for large-scale translation tasks. Translated results are automatically downloaded and saved.
-- **Single-File Mode**: When you upload only one file or paste text, the tool enters single-file mode, which is ideal for quick previews or testing translation results. Note: In single-file mode, each new upload will overwrite the previous one.
+Supports one-click backup of all current configurations (including API Keys and Prompt settings). The generated configuration file can be imported across devices, facilitating team collaboration or environment migration.
 
-:::tip Tip
-JSON Translate currently only supports single-file mode.
-:::
+### API Parameter Tuning
 
-## Settings Import/Export
+To balance translation quality and speed, it is recommended to adjust the following parameters based on the selected API type:
 
-Supports one-click export/import of current settings, making it easy to move between devices or migrate deployments:
+#### Chunk Size
 
-- **Exported Content**: Includes all configurations (including sensitive information like API keys).
-- **Importing**: Will overwrite your current configuration. Please be sure to back up your settings before proceeding.
-
-## Detailed Translation API Parameters
-
-To balance context with API limitations, you can customize the following key parameters:
-
-### Chunk Translation Size
-
-For non-AI translation APIs, the tool automatically splits text into chunks before translation to handle long documents or subtitles. The **Chunk Translation Size** refers to the maximum character count for each chunk. Below are the maximum character limits for common APIs:
+For non-LLM interfaces (like Google/Azure API), the tool automatically splits long text into small chunks. **Chunk Size** refers to the maximum character count per chunk. Common limits are:
 
 | Translation Service    | Max Characters per Request |
 | ---------------------- | -------------------------- |
@@ -78,25 +84,23 @@ For non-AI translation APIs, the tool automatically splits text into chunks befo
 | Google Translate (Web) | 5,000 characters           |
 | Google Cloud API       | 30,000 characters          |
 
-⚠️ Note: The web version of Google Translate can break line breaks, so chunked translation is not used for it.
+⚠️ Note: The Google Translate web version may break line breaks, so chunked translation is not used.
 
-### Delay Time (ms)
+#### Delay (ms)
 
-This controls the interval between requests for chunked translations, helping to avoid frequent request failures:
+The cooldown time between chunk requests, helpful to avoid frequent failures:
 
-- It is recommended to set a higher delay when on a **poor network or using a free API**.
-- For example: When using the free Azure Translate tier, a setting of **5000ms** or more is recommended.
+- Recommended to set a higher delay for **poor networks or free APIs**.
+- Example: When using the Azure Translate free tier, a setting of **5000ms** or higher is recommended.
 
-### Translation Rate / Context Window
+#### Concurrent Lines
 
-The "Translation Rate / Context Window" parameter serves two functions:
+- **Default**: 20
+- **Description**: The maximum number of lines translated simultaneously.
+- **Note**: Setting this too high may lead to API Rate Limiting or empty responses.
 
-- **Concurrent Request Limit**: Controls the number of lines/requests sent to the API per batch. Higher values result in faster speeds but increase the likelihood of being rate-limited or triggering errors such as HTTP 429 or empty responses.
-- **Context Window Size**: In the "Context-Aware Translation" mode for subtitles, this same parameter determines the number of preceding and succeeding lines included (subject to a safety cap). Setting this too high not only consumes more time but also makes it easier to exceed the LLM's context limit.
+#### Context Lines
 
-Tuning Suggestions:
-
-- For standard APIs, it is recommended to adjust incrementally between 10 and 30; if errors occur frequently, prioritize **lowering the rate or increasing the delay**.
-- If you need to increase the window in context mode, adjust it upwards slightly (e.g., 10%~15%), but avoid jumping to hundreds or thousands of lines at once to prevent the prompt from becoming excessively long.
-
-Once stable, gradually increase the values while monitoring the API error rate and response time to ensure they remain within an acceptable range before relaxing the limits further.
+- **Default**: 50
+- **Description**: The number of lines included per batch in Context-Aware Translation mode.
+- **Note**: Higher values provide richer context but may exceed the model's Token context limit.

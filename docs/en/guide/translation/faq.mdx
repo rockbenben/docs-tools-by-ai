@@ -14,10 +14,10 @@ description: Translation empty or slow? Is my API key safe? This page answers co
 
 Common causes:
 
-  - **Configuration Error**: The API Key is invalid, or the translation interface parameters are incomplete.
-  - **Quota/Rate Limited**: Account Credits are exhausted, or the request rate is too high and has been temporarily restricted by the interface.
-  - **Cache Hit Original**: Previous original text stored in the cache is being returned directly.
-  - **Network Restricted**: The selected interface (e.g., OpenAI, Gemini, Claude, etc.) is restricted in the current region, or proxy/network anomalies caused the request to fail.
+- **Configuration Error**: The API Key is invalid, or the translation interface parameters are incomplete.
+- **Quota/Rate Limited**: Account Credits are exhausted, or the request rate is too high and has been temporarily restricted by the interface.
+- **Cache Hit Original**: Previous original text stored in the cache is being returned directly.
+- **Network Restricted**: The selected interface (e.g., OpenAI, Gemini, Claude, etc.) is restricted in the current region, or proxy/network anomalies caused the request to fail.
 
 ✅ **Troubleshooting Order:**
 
@@ -37,23 +37,25 @@ When using local models like Ollama or LM Studio, common causes for failure are 
 2.  Enable CORS for the local service according to the [Translation API Guide](./api.mdx#solving-cors-issues) (e.g., set `OLLAMA_ORIGINS=*`, check "Enable CORS" in LM Studio).
 3.  If it still fails, check for port conflicts and view the return status code in the **Network** panel. Company/Campus networks also need to ensure the firewall isn't blocking local ports.
 
-## Why is the translation speed slow?
+The "Concurrent Lines / Context Lines" parameters in API settings directly determine the translation concurrency and speed.
 
-The "Translation Rate" parameter in API settings ≈ **Concurrency**; higher values mean more simultaneous requests.
+- **GTX (Free)**: Default high concurrency, but prone to rate limiting (429) with large volumes of requests.
+- **AI Interfaces**: Default concurrency is lower to ensure stability.
 
-  - **GTX is Faster**: High default concurrency and short response times, but strict frequency limits; prone to rate limiting with large batches over long periods.
-  - **AI Interfaces are Slower**: Low default concurrency to reduce `429` and "context length exceeded" errors; better for beginners.
+**Speed-up Suggestions**:
 
-To speed up, you can gradually increase the "Translation Rate" from `20` to `30` or `50`; once `429` errors or empty results appear, dial it back slightly. Enabling translation cache, optimizing the network, or changing models can also significantly improve speed.
+1. **Increase Concurrency**: Gradually increase "Concurrent Lines" from 20 to 30 or 50. If 429 errors or empty results occur, lower it immediately.
+2. **Enable Context**: For LLM translation, enabling "Context-Aware Translation" and appropriately increasing "Context Lines" can effectively improve coherence and efficiency.
+3. **Use Cache**: Enabling translation cache allows direct reuse of results, significantly speeding up secondary translations.
 
 ## What if the AI translation quality is unsatisfactory?
 
-  - **Restore defaults first**: Reset in "Translation Settings" and re-test with a small text segment.
-  - **Then adjust Temperature**:
-      - **0\~0.3**: Strict terminology, requires stability;
-      - **0.4\~0.7**: General scenarios;
-      - **0.8\~1.0**: Allows paraphrasing/more creativity.
-  - **Enable context-aware translation** to improve dialogue coherence.
+- **Restore defaults first**: Reset in "Translation Settings" and re-test with a small text segment.
+- **Then adjust Temperature**:
+  - **0\~0.3**: Strict terminology, requires stability;
+  - **0.4\~0.7**: General scenarios;
+  - **0.8\~1.0**: Allows paraphrasing/more creativity.
+- **Enable context-aware translation** to improve dialogue coherence.
 
 The basic translation capability of most online mainstream 70B+ models is generally fine; abnormal output is usually related to temperature or prompt settings.
 
@@ -68,4 +70,3 @@ No. The API Key and all settings are stored only in the local browser; no server
 ## Why is GTX Web disabled by default?
 
 GTX Web puts significant pressure on the shared service, so it is disabled by default. If using it locally for personal use, you can manually enable it; enabling a global proxy or unstable networks may cause request anomalies.
-

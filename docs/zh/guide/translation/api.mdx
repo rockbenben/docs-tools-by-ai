@@ -31,7 +31,7 @@ import SupportedLanguages from './supported-languages.mdx';
 
 ## LLM 模型翻译
 
-除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、OpenAI、Gemini、Perplexity、Azure OpenAI、Siliconflow、Groq，以及可自由配置的 Custom LLM。
+除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、OpenAI、Gemini、Perplexity、Azure OpenAI、Siliconflow、Groq、OpenRouter，以及可自由配置的 Custom LLM。
 
 - **适用场景**：适合处理语言理解要求较高的内容，如文学作品、技术文档、多语种资料等。
 - **高度可定制**：支持配置系统提示词（System Prompt）与用户提示词（User Prompt），可灵活控制翻译风格、术语偏好等，满足多样化的翻译需求。
@@ -46,7 +46,7 @@ import SupportedLanguages from './supported-languages.mdx';
 
 下表列出了常见本地模型工具的默认接口地址，可直接在配置中使用，或根据实际端口号进行修改。
 
-| 工具        | 默认接口地址                                       |
+| 工具      | 默认接口地址                                 |
 | --------- | -------------------------------------------- |
 | Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
 | LM Studio | `http://localhost:61234/v1/chat/completions` |
@@ -67,11 +67,11 @@ import SupportedLanguages from './supported-languages.mdx';
 1. 按下 `Win + X`，选择 **Windows PowerShell** 或 **终端**。
 2. 在打开的 PowerShell 中粘贴以下命令并按回车：
 
-    ```powershell
-    [System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
-    ```
+   ```powershell
+   [System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
+   ```
 
-    > 其中 `*` 表示允许所有来源访问 Ollama 接口。若你希望更严格的安全控制，可将其替换为特定域名，例如 `http://192.168.2.20:3000`。
+   > 其中 `*` 表示允许所有来源访问 Ollama 接口。若你希望更严格的安全控制，可将其替换为特定域名，例如 `http://192.168.2.20:3000`。
 
 设置完成后，重启 Ollama 服务，即可让其生效。
 

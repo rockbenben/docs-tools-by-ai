@@ -14,29 +14,29 @@ This tool integrates 5 translation APIs and 8 mainstream Large Language Model (L
 
 ## Classic Translation APIs
 
-| API Type | Quality | Stability | Use Case | Free Limit |
-| :--- | :--- | :--- | :--- | :--- |
-| DeepL(X) | ★★★★★ | ★★★★☆ | Suitable for long texts; smoother translation | 500,000 characters/month |
-| Google Translate | ★★★★☆ | ★★★★★ | Suitable for UI interfaces, common sentences | 500,000 characters/month |
-| Azure Translate | ★★★★☆ | ★★★★★ | Widest language support | **First 12 months** 2 million characters/month |
-| GTX API (Free) | ★★★☆☆ | ★★★☆☆ | General text translation | Subject to rate limits (e.g., \~5 million chars every 3 hours) |
-| GTX Web (Free) | ★★★☆☆ | ★★☆☆☆ | Suitable for small-scale translation | Free |
+| API Type         | Quality | Stability | Use Case                                      | Free Limit                                                     |
+| :--------------- | :------ | :-------- | :-------------------------------------------- | :------------------------------------------------------------- |
+| DeepL(X)         | ★★★★★   | ★★★★☆     | Suitable for long texts; smoother translation | 500,000 characters/month                                       |
+| Google Translate | ★★★★☆   | ★★★★★     | Suitable for UI interfaces, common sentences  | 500,000 characters/month                                       |
+| Azure Translate  | ★★★★☆   | ★★★★★     | Widest language support                       | **First 12 months** 2 million characters/month                 |
+| GTX API (Free)   | ★★★☆☆   | ★★★☆☆     | General text translation                      | Subject to rate limits (e.g., \~5 million chars every 3 hours) |
+| GTX Web (Free)   | ★★★☆☆   | ★★☆☆☆     | Suitable for small-scale translation          | Free                                                           |
 
-  - **DeepL**: Suitable for long texts, offering more fluid and natural translations, but does not support web-based API calls (requires local or server proxy).
-  - **Google Translate**: Stable quality, suitable for short sentences and interface text; supports web-based calls.
-  - **Azure Translate**: Supports the most languages, ideal for multi-language translation needs.
-  - **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and call frequency. For example, when *mrfragger* translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after just two translation executions.
+- **DeepL**: Suitable for long texts, offering more fluid and natural translations, but does not support web-based API calls (requires local or server proxy).
+- **Google Translate**: Stable quality, suitable for short sentences and interface text; supports web-based calls.
+- **Azure Translate**: Supports the most languages, ideal for multi-language translation needs.
+- **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and call frequency. For example, when _mrfragger_ translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after just two translation executions.
 
 If you have higher requirements for translation speed and quality, you can apply for your own API Key. For application procedures, please refer to the relevant [Interface Application Tutorial](https://ttime.timerecord.cn/service/translate/google.html).
 
 ## LLM Model Translation
 
-In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, OpenAI, Gemini, Perplexity, Azure OpenAI, Siliconflow, Groq, and highly configurable Custom LLMs.
+In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, OpenAI, Gemini, Perplexity, Azure OpenAI, Siliconflow, Groq, OpenRouter, and highly configurable Custom LLMs.
 
-  - **Use Case**: Suitable for content requiring high language comprehension, such as literary works, technical documents, and multilingual materials.
-  - **Highly Customizable**: Supports configuration of System Prompts and User Prompts, allowing flexible control over translation style and terminology preferences to meet diverse needs.
-  - **LLM Model**: Generally, fill in the model name provided by the selected interface; if using Azure OpenAI, fill in the corresponding deployment name.
-  - **Temperature**: Controls the creativity and stability of the translation results. The default value is 0.7. **Suggestions**: 0–0.3 for strict technical/terminology scenarios; 0.4–0.7 for general content; 0.8–1.0 for creative scenarios (e.g., marketing/paraphrasing).
+- **Use Case**: Suitable for content requiring high language comprehension, such as literary works, technical documents, and multilingual materials.
+- **Highly Customizable**: Supports configuration of System Prompts and User Prompts, allowing flexible control over translation style and terminology preferences to meet diverse needs.
+- **LLM Model**: Generally, fill in the model name provided by the selected interface; if using Azure OpenAI, fill in the corresponding deployment name.
+- **Temperature**: Controls the creativity and stability of the translation results. The default value is 0.7. **Suggestions**: 0–0.3 for strict technical/terminology scenarios; 0.4–0.7 for general content; 0.8–1.0 for creative scenarios (e.g., marketing/paraphrasing).
 
 ## Local Model Integration
 
@@ -46,9 +46,9 @@ For users who wish to deploy and use custom large models locally (such as Ollama
 
 The table below lists default interface addresses for common local model tools. You can use them directly in the configuration or modify them according to your actual port number.
 
-| Tool | Default Interface Address |
-| :--- | :--- |
-| Ollama | `http://127.0.0.1:11434/v1/chat/completions` |
+| Tool      | Default Interface Address                    |
+| :-------- | :------------------------------------------- |
+| Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
 | LM Studio | `http://localhost:61234/v1/chat/completions` |
 
 ### Solving CORS Issues
@@ -88,6 +88,6 @@ OLLAMA_ORIGINS="*" ollama serve
 2.  Enter the local server settings page and click "Settings" at the top.
 3.  Check the "Enable CORS" checkbox (as shown below).
 
-After completing the above settings, this tool should be able to successfully call your local LLM model. If you still encounter access issues, check for port conflicts or error messages in the browser console. (Special thanks to *mrfragger* for sharing configuration experience).
+After completing the above settings, this tool should be able to successfully call your local LLM model. If you still encounter access issues, check for port conflicts or error messages in the browser console. (Special thanks to _mrfragger_ for sharing configuration experience).
 
 <SupportedLanguages />

@@ -35,16 +35,18 @@ Subtitle Translator supports multiple subtitle formats, including `.srt`, `.ass`
 
 ## Context-Aware Translation
 
-*Context-Aware Translation* (exclusive to AI models) sends subtitles to the Large Language Model in batches, accompanied by a small amount of preceding and succeeding context, ensuring more coherent character dialogue and a more natural tone.
+_Context-Aware Translation_ (exclusive to AI models) sends subtitles to the Large Language Model in batches, accompanied by a small amount of preceding and succeeding context, ensuring more coherent character dialogue and a more natural tone.
 
-The "Translation Rate / Context Window" in the API settings is the only parameter requiring adjustment; it simultaneously determines the number of main text lines to be translated per batch and how many lines of contextual background can be included.
+The API settings provide two parameters for fine-tuning this process:
 
-- **Lines per Batch**: When the parameter is increased, a single batch will contain more lines of main text, resulting in faster throughput; when decreased, the system splits the text into smaller batches to enhance stability.
-- **Supplemental Context**: Before and after each batch of main text, the system appends up to 25 lines of context to provide cues for character relationships and tone. As the parameter increases, the range of context carried with the batch also expands, but a capping mechanism ensures the prompt does not bloat indefinitely.
-- **Tuning Strategy**:
-  - Increase "Translation Rate / Context Window" → Faster translation but heavier requests; more likely to hit rate limits, token limits, or context caps. Requires high-performance API/LLMs.
-  - Decrease this parameter → Lighter individual requests and higher fault tolerance, but the immediate context available for the model to reference will be shortened.
-  - When adjusting this parameter, please balance interface throughput, latency, and the model's context limit; if you encounter errors such as 429, empty responses, or "context length exceeded," simply lower the parameter or increase the request interval first.
+- **Concurrent Lines**: Determines the number of main content lines to be translated in each batch.
+- **Context Lines**: Controls the number of preceding and succeeding lines included as context.
+
+### Tuning Strategy
+
+- **Increase Values**: Faster throughput and richer context, but heavier requests. More likely to hit API rate limits, token limits, or context caps. Requires high-performance API/LLMs.
+- **Decrease Values**: Lighter individual requests and higher fault tolerance, but the immediate context available for the model to reference will be reduced.
+- **Error Handling**: If you encounter errors such as 429, empty responses, or "context length exceeded," try lowering these parameters or increasing the request interval.
 
 ⚠️ User Tip: Models under 70B or compact local models are prone to outputting misaligned text or missing tags in this mode; using mainstream online large models is highly recommended.
 

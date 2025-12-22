@@ -34,6 +34,14 @@ md-translator is deeply adapted for Markdown and can recognize and restore the f
 
 Translation of FrontMatter, code blocks, and LaTeX formulas is optional and can be flexibly configured based on user needs.
 
+### Context-Aware Translation
+
+Markdown documents also support **Context-Aware Translation** mode (AI models only). This mode slices the document into segments and sends them to the large model with preceding and succeeding context, significantly improving coherence between paragraphs and consistency of terminology.
+
+:::warning Note
+Due to the complexity of Markdown structures, enabling context mode may increase the risk of model output formatting errors (e.g., unclosed code blocks, disordered list indentation). It is recommended to closely monitor the format integrity of the translation results when using this mode.
+:::
+
 ### “Plain Text Translation Mode” for Any Document
 
 Beyond structured Markdown support, md-translator offers a **“Plain Text Translation Mode”** that bypasses format parsing and directly translates raw content. Whether it's Markdown, TXT, HTML, log files, or even messy technical notes, this mode ensures accurate and efficient translation.
