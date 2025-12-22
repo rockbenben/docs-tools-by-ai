@@ -2,48 +2,23 @@
 head:
   - - meta
     - property: og:title
-      content: Subtitle Translator Deployment - Vercel, Docker & Local Setup | Tools By AI
-description: Want to self-host the Subtitle Translator? This page offers detailed guides for one-click Vercel deployment, Docker images, and local setup to get you running.
+      content: Subtitle Translator Deployment - Vercel & Docker | Tools By AI
+description: Complete deployment guide for Subtitle Translator, including local deployment, Vercel one-click, Cloudflare Pages, and Docker image deployment.
 ---
 
-# Project Deployment
+import Deploy from '../deploy.mdx';
 
-**System Requirements:**
+# Subtitle Translator Deployment
 
-- [Node.js 20.9](https://nodejs.org/) or later.
-- Supported on macOS, Windows (including WSL), and Linux.
-
-## Local Deployment
-
-Ensure you have installed [Node.js](https://nodejs.org/).
-
-```shell
-# Installation (Install dependencies)
-yarn
-
-# Local Development
-yarn dev
-
-# Build and Start
-yarn build && npx serve@latest out
-
-# Deploy for a Single Language
-yarn build:lang en
-yarn build:lang zh
-yarn build:lang zh-hant
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the result.
-
-You can start editing the page by modifying `src/app/[locale]/page.tsx`. The page will auto-update as you edit the file.
+<Deploy />
 
 ## Vercel Deployment
 
-Click the button below to deploy Subtitle Translator to the Vercel platform with one click:
+Click the button below to deploy Subtitle Translator to Vercel with one click:
 
 [![Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fsubtitle-translator)
 
-With Vercel, you can quickly host your project, and it automatically handles building and deployment—ideal for users without complex server configuration needs.
+With Vercel, you can quickly host your project, and it automatically handles building and deployment — ideal for users without complex server configuration needs.
 
 ## Cloudflare Pages Deployment
 
@@ -62,7 +37,7 @@ Deployment steps:
    - **Environment variable**: Add `NODE_VERSION` with the value `22.14.0`
 5. Click the deploy button to start building!
 
-🎉 Once completed, you’ll be able to access your subtitle translator page!
+🎉 Once completed, you'll be able to access your subtitle translator page!
 
 ## Docker Deployment
 

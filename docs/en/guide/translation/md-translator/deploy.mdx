@@ -2,64 +2,67 @@
 head:
   - - meta
     - property: og:title
-      content: Markdown Translator Deployment Guide - Vercel & Local Setup | Tools By AI
-description: Need to self-host the Markdown Translator? This guide provides detailed instructions for local deployment and one-click Vercel deployment to quickly set up your own service.
+      content: Markdown Translator Deployment - Vercel & Docker | Tools By AI
+description: Complete deployment guide for Markdown Translator, including local deployment, Vercel one-click, Cloudflare Pages, and Docker image deployment.
 ---
 
-# Project Deployment
+import Deploy from '../deploy.mdx';
 
-System Requirements:
+# MD Translator Deployment
 
-- [Node.js 20.9](https://nodejs.org/) or later.
-- macOS, Windows (including WSL), and Linux are supported.
-
-## Local Deployment
-
-Ensure you have [Node.js](https://nodejs.org/) installed.
-
-```shell
-# Installation
-yarn
-
-# Local Development
-yarn dev
-
-# build and start
-yarn build && npx serve@latest out
-
-# Deploy for a single language
-yarn build:lang en
-yarn build:lang zh
-yarn build:lang zh-hant
-```
-
-Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `src/app/[locale]/page.tsx`. The page auto-updates as you edit the file.
+<Deploy />
 
 ## Vercel Deployment
 
-Click the button below to deploy MD Translator to the Vercel platform with one click:
+Click the button below to deploy MD Translator to Vercel with one click:
 
-[](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fmd-translator)
+[![Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fmd-translator)
 
-With Vercel, you can quickly host the project, and it will automatically handle the build and deployment process. This is ideal for users who do not have complex server configuration needs.
+With Vercel, you can quickly host the project, and it will automatically handle the build and deployment process — ideal for users who don't have complex server configuration needs.
 
 ## Cloudflare Pages Deployment
 
-Click the button or link below to Fork this project, and then follow the steps below to deploy on Cloudflare Pages:
+Click the button or link below to fork this project, then follow the steps to deploy it on Cloudflare Pages:
 
-👉 [Fork this project](https://www.google.com/search?q=https.github.com/rockbenben/md-translator/fork)
+👉 [Fork this project](https://github.com/rockbenben/md-translator/fork)
 
 Deployment steps:
 
-1.  Log in to [Cloudflare Pages](https://pages.cloudflare.com/)
-2.  Click **"Create a project"**
-3.  Connect the GitHub repository you just forked
-4.  Configure build and deployment settings:
-    - **Build command**: `npm run build`
-    - **Build output directory**: `out`
-    - **Environment variables**: Add the variable `NODE_VERSION` with the value `22.14.0`
-5.  Click the deploy button to start building!
+1. Log in to [Cloudflare Pages](https://pages.cloudflare.com/)
+2. Click **"Create a project"**
+3. Connect the GitHub repository you just forked
+4. Configure the build and deployment settings:
+   - **Build command**: `npm run build`
+   - **Build output directory**: `out`
+   - **Environment variable**: Add `NODE_VERSION` with the value `22.14.0`
+5. Click the deploy button to start building!
 
 🎉 Once completed, you can access your MD Translator page!
+
+## Docker Deployment
+
+If you prefer to run the application in a containerized environment, you can use the following methods to run MD Translator via Docker:
+
+```bash
+# Pull and run from ghcr.io
+docker run -d -p 3000:3000 --name md-translator ghcr.io/rockbenben/md-translator:latest
+
+# Or pull and run from Docker Hub
+docker run -d -p 3000:3000 --name md-translator rockben/md-translator:latest
+```
+
+Once running, you can access it at [http://localhost:3000](http://localhost:3000).
+
+You can also deploy using a `docker-compose.yml` file:
+
+```yaml
+services:
+  md-translator:
+    image: ghcr.io/rockbenben/md-translator:latest
+    container_name: md-translator
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+```
+
+Run the command `docker-compose up -d` to start the service.

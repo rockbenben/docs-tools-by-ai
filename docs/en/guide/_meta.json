@@ -8,11 +8,11 @@
   {
     "type": "dir",
     "name": "tools",
-    "label": "tools"
+    "label": "Tools"
   },
   {
     "type": "dir",
     "name": "json",
-    "label": "json"
+    "label": "JSON Tools"
   }
 ]

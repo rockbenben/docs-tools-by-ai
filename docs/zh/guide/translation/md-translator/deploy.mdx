@@ -2,40 +2,15 @@
 head:
   - - meta
     - property: og:title
-      content: Markdown 翻译工具部署指南 - Vercel 与本地部署 | Tools By AI
-description: 需要私有化部署 Markdown 翻译工具？本指南为您提供详细的本地部署和 Vercel 一键部署说明，帮助您快速搭建专属的文档翻译环境。
+      content: Markdown 翻译工具部署 - Vercel, Docker 一键部署 | Tools By AI
+description: Markdown 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 ---
 
-# 项目部署
+import Deploy from '../deploy.mdx';
 
-System Requirements:
+# MD Translator 部署
 
-- [Node.js 20.9](https://nodejs.org/) or later.
-- macOS, Windows (including WSL), and Linux are supported.
-
-## 本地部署
-
-确保你已安装 [Node.js](https://nodejs.org/)。
-
-```shell
-# Installation（安装依赖）
-yarn
-
-# Local Development (本地开发)
-yarn dev
-
-# build and start (构建并启动)
-yarn build && npx serve@latest out
-
-# Deploy for a single language（单一语言部署）
-yarn build:lang en
-yarn build:lang zh
-yarn build:lang zh-hant
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `src/app/[locale]/page.tsx`. The page auto-updates as you edit the file.
+<Deploy />
 
 ## Vercel 部署
 
@@ -63,3 +38,31 @@ You can start editing the page by modifying `src/app/[locale]/page.tsx`. The pag
 5. 点击部署按钮，开始构建！
 
 🎉 完成后即可访问你的 Markdown 翻译工具！
+
+## Docker 部署
+
+如果你更倾向于在容器环境中运行应用程序，可以使用以下方法通过 Docker 容器运行 MD Translator：
+
+```bash
+# 从 ghcr.io 拉取并运行
+docker run -d -p 3000:3000 --name md-translator ghcr.io/rockbenben/md-translator:latest
+
+# 或者从 Docker Hub 拉取并运行
+docker run -d -p 3000:3000 --name md-translator rockben/md-translator:latest
+```
+
+运行后，访问 [http://localhost:3000](http://localhost:3000) 即可使用。
+
+也可以通过 `docker-compose.yml` 来部署：
+
+```yaml
+services:
+  md-translator:
+    image: ghcr.io/rockbenben/md-translator:latest
+    container_name: md-translator
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+```
+
+执行 `docker-compose up -d` 命令即可启动服务。

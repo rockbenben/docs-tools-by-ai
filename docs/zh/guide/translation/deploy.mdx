@@ -1,0 +1,28 @@
+## 系统要求
+
+- [Node.js 20.9](https://nodejs.org/) 或更高版本
+- 支持 macOS、Windows（包括 WSL）和 Linux
+
+## 本地部署
+
+确保你已安装 [Node.js](https://nodejs.org/)。
+
+```shell
+# 安装依赖
+yarn
+
+# 本地开发
+yarn dev
+
+# 构建并启动
+yarn build && npx serve@latest out
+
+# 单一语言部署
+yarn build:lang en
+yarn build:lang zh
+yarn build:lang zh-hant
+```
+
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看结果。
+
+你可以通过修改 `src/app/[locale]/page.tsx` 开始编辑页面，保存后页面会自动更新。

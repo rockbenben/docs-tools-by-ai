@@ -1,0 +1,28 @@
+## System Requirements
+
+- [Node.js 20.9](https://nodejs.org/) or later
+- Supports macOS, Windows (including WSL), and Linux
+
+## Local Deployment
+
+Ensure you have [Node.js](https://nodejs.org/) installed.
+
+```shell
+# Install dependencies
+yarn
+
+# Local Development
+yarn dev
+
+# Build and Start
+yarn build && npx serve@latest out
+
+# Deploy for a Single Language
+yarn build:lang en
+yarn build:lang zh
+yarn build:lang zh-hant
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+You can start editing the page by modifying `src/app/[locale]/page.tsx`. The page will auto-update as you edit the file.
