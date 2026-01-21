@@ -45,6 +45,8 @@ The tool automatically detects user actions and switches modes:
 - **Batch Mode** (Default): Drag and drop multiple files to upload. They enter a processing queue automatically, and results are packed and downloaded upon completion.
 - **Single-File Mode**: Upload a single file or paste text to enter single-file mode, supporting real-time preview and line-by-line proofreading/editing.
 
+Note: If the current tool supports it, you can also manually toggle **Single-File Mode** in Advanced Settings to force a preview/proofreading-oriented workflow.
+
 :::tip Supported Formats
 
 - **Subtitles**: `.srt`, `.vtt`, `.ass` (Bilingual / Language Replacement)
@@ -67,6 +69,14 @@ This feature performs simple string replacement and does not support escape char
 ### Settings Import/Export
 
 Supports one-click backup of all current configurations (including API Keys and Prompt settings). The generated configuration file can be imported across devices, facilitating team collaboration or environment migration.
+
+### General Translation Options
+
+- **Use Cache**: Enabled by default. When parameters match, results are read from IndexedDB cache to speed up batch jobs; you can disable it temporarily when debugging Prompts/model settings.
+- **Retry Count**: Maximum number of retries when a request fails (increase for unstable networks or rate-limited/free endpoints).
+- **Retry Timeout**: Per-request timeout threshold (seconds). Increase when APIs respond slowly or when translating long content.
+- **Remove Characters After Translation**: Automatically removes specified characters/fragments from the translated result (e.g., `♪` in subtitles, or noisy HTML fragments like `<i>`).
+- **Custom Export Filename**: Unifies file naming when exporting/downloading. Supports placeholders: `{name}` (original filename without extension), `{lang}` (target language), `{ext}` (extension), `{date}` (date, YYYY-MM-DD), `{time}` (time, HHMMSS). Example: `{name}_{lang}_{date}_{time}.{ext}`.
 
 ### API Parameter Tuning
 
