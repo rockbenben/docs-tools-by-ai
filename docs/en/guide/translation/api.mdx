@@ -31,12 +31,19 @@ If you have higher requirements for translation speed and quality, you can apply
 
 ## LLM Model Translation
 
-In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, OpenAI, Gemini, Perplexity, Azure OpenAI, Siliconflow, Groq, OpenRouter, and highly configurable Custom LLMs.
+In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, Nvidia, OpenAI, Gemini, Perplexity, Azure OpenAI, Siliconflow, Groq, OpenRouter, and highly configurable Custom LLMs.
 
 - **Use Case**: Suitable for content requiring high language comprehension, such as literary works, technical documents, and multilingual materials.
 - **Highly Customizable**: Supports configuration of System Prompts and User Prompts, allowing flexible control over translation style and terminology preferences to meet diverse needs.
 - **LLM Model**: Generally, fill in the model name provided by the selected interface; if using Azure OpenAI, fill in the corresponding deployment name.
 - **Temperature**: Controls the creativity and stability of the translation results. The default value is 0.7. **Suggestions**: 0–0.3 for strict technical/terminology scenarios; 0.4–0.7 for general content; 0.8–1.0 for creative scenarios (e.g., marketing/paraphrasing).
+
+## API Proxy
+
+To resolve Cross-Origin Resource Sharing (CORS) issues when calling official APIs directly from the browser, **DeepL** and **Nvidia** use built-in proxy services by default.
+
+- **Default Behavior**: When the API URL is empty, the tool automatically uses the built-in proxy (e.g., `https://api-edgeone.newzone.top/api/nvidia`) to forward requests.
+- **Custom URL**: If you specify a custom **API URL** in the settings (e.g., a private deployment or direct official address), the built-in proxy will be **bypassed**, and the request will be sent directly to your specified address.
 
 ## Local Model Integration
 

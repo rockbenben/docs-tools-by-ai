@@ -31,12 +31,19 @@ import SupportedLanguages from './supported-languages.mdx';
 
 ## LLM 模型翻译
 
-除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、OpenAI、Gemini、Perplexity、Azure OpenAI、Siliconflow、Groq、OpenRouter，以及可自由配置的 Custom LLM。
+除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、Nvidia、OpenAI、Gemini、Perplexity、Azure OpenAI、Siliconflow、Groq、OpenRouter，以及可自由配置的 Custom LLM。
 
 - **适用场景**：适合处理语言理解要求较高的内容，如文学作品、技术文档、多语种资料等。
 - **高度可定制**：支持配置系统提示词（System Prompt）与用户提示词（User Prompt），可灵活控制翻译风格、术语偏好等，满足多样化的翻译需求。
 - **LLM 模型**：一般情况下填写所选接口提供的模型名称；若使用 Azure OpenAI，则需填写对应的部署名称。
 - **采样温度（temperature）**：用于控制翻译结果的创造性与稳定性，默认值为 0.7。建议：0～0.3 适合技术/术语严格场景；0.4～0.7 适合通用内容；0.8～1.0 适合更具创造性的场景（如营销/意译）。
+
+## API 代理
+
+为了解决浏览器直接调用官方 API 时可能遇到的跨域（CORS）问题，**DeepL** 和 **Nvidia** 默认使用内置的代理服务。
+
+- **默认行为**：当 API URL 为空时，工具会自动使用内置代理（如 `https://api-edgeone.newzone.top/api/nvidia`）来转发请求。
+- **自定义 URL**：如果您在设置中指定了自定义的 **API URL**（例如私有部署地址或官方直接地址），内置代理将被 **绕过**，请求直接发送到您指定的地址。
 
 ## 本地模型接入
 
