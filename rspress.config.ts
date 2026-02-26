@@ -1,6 +1,7 @@
 import * as path from 'node:path';
-import sitemap from 'rspress-plugin-sitemap';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
+import { pluginLlms } from '@rspress/plugin-llms';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -37,10 +38,26 @@ export default defineConfig({
     ],
   },
   plugins: [
-    sitemap({
-      domain: 'https://docs.newzone.top',
-      defaultChangeFreq: 'monthly',
-      defaultPriority: '0.5',
+    pluginLlms([
+      {
+        llmsTxt: {
+          name: 'llms.txt',
+        },
+        llmsFullTxt: false,
+        mdFiles: false,
+        include: ({ page }) => page.lang === 'zh',
+      },
+      {
+        llmsTxt: {
+          name: 'en/llms.txt',
+        },
+        llmsFullTxt: false,
+        mdFiles: false,
+        include: ({ page }) => page.lang === 'en',
+      },
+    ]),
+    pluginSitemap({
+      siteUrl: 'https://docs.newzone.top',
     }),
   ],
 });
