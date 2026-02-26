@@ -10,7 +10,7 @@ import SupportedLanguages from './supported-languages.mdx';
 
 # 翻译接口指南
 
-本工具集成了 5 种翻译 API 和 8 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：
+本工具集成了 6 种翻译 API 和 9 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：
 
 ## 经典翻译 API
 
@@ -19,12 +19,14 @@ import SupportedLanguages from './supported-languages.mdx';
 | DeepL(X)         | ★★★★★    | ★★★★☆  | 适合长文本，翻译更流畅 | 每月 50 万字符                                 |
 | Google Translate | ★★★★☆    | ★★★★★  | 适合 UI 界面、常见句子 | 每月 50 万字符                                 |
 | Azure Translate  | ★★★★☆    | ★★★★★  | 语言支持最广泛         | **前 12 个月** 每月 200 万字符                 |
+| Qwen-MT          | ★★★★★    | ★★★★★  | 支持特定领域(Domain)翻译     | 按 Token 计费，新用户享免费额度                |
 | GTX API（免费）  | ★★★☆☆    | ★★★☆☆  | 一般文本翻译           | 有调用频率限制（例如，每 3 小时约 500 万字符） |
 | GTX Web（免费）  | ★★★☆☆    | ★★☆☆☆  | 适合小规模翻译         | 免费                                           |
 
 - **DeepL**：适用于长篇文本，翻译更加流畅自然，但不支持网页端 API，需本地或服务器代理调用。
 - **Google Translate**：翻译质量稳定，适用于短句、界面文本，支持网页端调用。
 - **Azure Translate**：支持语言最多，适合多语言翻译需求。
+- **Qwen-MT**：阿里云推出的专门针对翻译场景优化的大模型，支持指定领域（如医疗、科技等）以获取更专业的翻译结果。
 - **GTX API/Web**：免费翻译选项，适合轻量级使用，但稳定性和调用频率有限。例如，mrfragger 在翻译一个约 200 万字符的字幕文件（约 2MB）时，仅执行两次翻译即触发了 GTX API 限制。
 
 如果对翻译速度和质量有更高要求，可自行申请 API Key。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。

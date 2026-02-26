@@ -4,7 +4,7 @@ pageType: home
 hero:
   name: Tools By AI Docs
   text:
-  tagline: Documentation fo Tools By AI toolkit
+  tagline: Documentation for Tools By AI toolkit
   actions:
     - theme: brand
       text: Quick Start

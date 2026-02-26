@@ -10,7 +10,7 @@ import SupportedLanguages from './supported-languages.mdx';
 
 # Translation API Guide
 
-This tool integrates 5 translation APIs and 8 mainstream Large Language Model (LLM) interfaces, allowing users to choose the most suitable translation method based on their needs:
+This tool integrates 6 translation APIs and 9 mainstream Large Language Model (LLM) interfaces, allowing users to choose the most suitable translation method based on their needs:
 
 ## Classic Translation APIs
 
@@ -19,12 +19,14 @@ This tool integrates 5 translation APIs and 8 mainstream Large Language Model (L
 | DeepL(X)         | ★★★★★   | ★★★★☆     | Suitable for long texts; smoother translation | 500,000 characters/month                                       |
 | Google Translate | ★★★★☆   | ★★★★★     | Suitable for UI interfaces, common sentences  | 500,000 characters/month                                       |
 | Azure Translate  | ★★★★☆   | ★★★★★     | Widest language support                       | **First 12 months** 2 million characters/month                 |
+| Qwen-MT          | ★★★★★   | ★★★★★     | Supports domain-specific translation          | Billed by token, free tier for new users                       |
 | GTX API (Free)   | ★★★☆☆   | ★★★☆☆     | General text translation                      | Subject to rate limits (e.g., \~5 million chars every 3 hours) |
 | GTX Web (Free)   | ★★★☆☆   | ★★☆☆☆     | Suitable for small-scale translation          | Free                                                           |
 
 - **DeepL**: Suitable for long texts, offering more fluid and natural translations, but does not support web-based API calls (requires local or server proxy).
 - **Google Translate**: Stable quality, suitable for short sentences and interface text; supports web-based calls.
 - **Azure Translate**: Supports the most languages, ideal for multi-language translation needs.
+- **Qwen-MT**: An LLM optimized explicitly for translation scenarios by Alibaba Cloud, supporting specific domains (e.g., medical, tech) for more professional results.
 - **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and call frequency. For example, when _mrfragger_ translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after just two translation executions.
 
 If you have higher requirements for translation speed and quality, you can apply for your own API Key. For application procedures, please refer to the relevant [Interface Application Tutorial](https://ttime.timerecord.cn/service/translate/google.html).
