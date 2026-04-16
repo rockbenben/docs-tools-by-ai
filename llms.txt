@@ -1,5 +1,3 @@
-# undefined
-
 ## guide
 
 - [Tools By AI](/guide/index.md): 了解 Tools By AI 背后的核心理念。我们不追求完全自主的 AI，而是将 AI 作为强大辅助，帮您打造可控、可靠的定制化工具，真正实现“任务工具化”，提升效率。

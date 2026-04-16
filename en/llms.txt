@@ -1,5 +1,3 @@
-# undefined
-
 ## guide
 
 - [Tools By AI](/en/guide/index.md): Learn the core philosophy behind Tools By AI. We focus on AI as a powerful assistant to build controllable, reliable, and custom tools, not on full AI autonomy.
