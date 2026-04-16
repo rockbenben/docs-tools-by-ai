@@ -4,6 +4,47 @@ head:
     - property: og:title
       content: Translation Tools FAQ - API Keys & Troubleshooting | Tools By AI
 description: Translation empty or slow? Is my API key safe? This page answers common questions about our translation tools, covering API keys, DeepL, and data security.
+faq:
+  - q: Translation returns empty, only the original text, or null — what to do?
+    a: >-
+      Common causes: invalid API Key, exhausted quota or rate limit, cache hit on the original,
+      or a restricted network. Troubleshoot in order: verify the API Key and interface settings,
+      check account quota and 429 errors, clear the translation cache and retry, confirm the
+      network supports the chosen provider, and open DevTools (F12) Network to inspect the
+      request Status and Response for the actual error.
+  - q: Local model reports CORS or connection failure?
+    a: >-
+      For local models like Ollama or LM Studio, failures are usually caused by browser CORS or
+      ad blockers. Fix: temporarily disable ad/privacy extensions and refresh; enable CORS on
+      the local service (set OLLAMA_ORIGINS=* for Ollama, check "Enable CORS" in LM Studio);
+      if it still fails, check port conflicts and firewall restrictions.
+  - q: Why is translation slow?
+    a: >-
+      Speed is controlled by the "Concurrent Lines / Context Lines" parameters. To speed up,
+      gradually raise Concurrent Lines from 20 to 30 or 50 (lower it immediately if you see
+      429 errors), enable context-aware translation with more context lines, and enable the
+      translation cache to reuse previous results.
+  - q: What if AI translation quality is unsatisfactory?
+    a: >-
+      First reset to defaults in Translation Settings and re-test with a small segment. Then
+      tune temperature — 0–0.3 for strict terminology, 0.4–0.7 for general use, 0.8–1.0 for
+      paraphrasing. Enable context-aware translation to improve dialogue coherence. Most online
+      70B+ models have enough translation capability; abnormal output is usually caused by
+      temperature or prompt settings.
+  - q: Why use a third-party interface to access DeepL?
+    a: >-
+      DeepL officially prohibits direct API calls from web pages, so a relay channel is needed
+      to forward requests. This channel only forwards and does not record your data; for
+      maximum stability you can build your own dedicated proxy.
+  - q: Is my API Key saved on a server?
+    a: >-
+      No. The API Key and all settings are stored only in the local browser; no server can
+      access them.
+  - q: Why is GTX Web disabled by default?
+    a: >-
+      GTX Web puts significant pressure on the shared service, so it is disabled by default.
+      You can enable it manually for local personal use; enabling a global proxy or unstable
+      networks may cause request anomalies.
 ---
 
 # FAQ

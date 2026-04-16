@@ -8,6 +8,10 @@ description: Learn the core philosophy behind Tools By AI. We focus on AI as a p
 
 # Tools By AI
 
+:::tip One-line summary
+Tools By AI is a suite of free, AI-assisted online tools for developers and office workers — covering subtitle translation, i18n localization, JSON editing, text processing, and more. The core idea is to "toolify tasks": build controllable, reusable single-purpose tools instead of relying on fully autonomous AI agents.
+:::
+
 > The age of AI has arrived, and everyone can now customize their own exclusive tools.
 
 I truly enjoy using AI to write tools or scripts, but to be honest, I still remain cautious about the current capabilities of AI. While it can certainly help us with basic, repetitive tasks, it often falls short of ideal outcomes.
