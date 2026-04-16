@@ -8,11 +8,11 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.0"
+    "@rspress/core": "^2.0.9"
   },
   "devDependencies": {
-    "@rspress/plugin-llms": "^2.0.3",
-    "@rspress/plugin-sitemap": "^2.0.3",
+    "@rspress/plugin-llms": "^2.0.9",
+    "@rspress/plugin-sitemap": "^2.0.9",
     "@types/node": "^22.8.1",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
