@@ -12,14 +12,14 @@
 - [翻译接口指南](/guide/translation/api.md): 如何选择最适合您的翻译接口？本页详细对比 DeepL、Google、Azure 等翻译 API 及多种 LLM 的优劣、免费额度和适用场景，助您做出最佳选择。
 - [常见问题](/guide/translation/faq.md): 翻译结果为空或速度慢？API Key 安全吗？本页解答了翻译工具的常见问题，包括 API 密钥、翻译无响应、DeepL 接口及数据安全等，帮您快速解决使用中的疑问。
 - [更新日志](/guide/translation/changelog.md): 查看翻译工具的完整更新历史。本页记录了从最初版本至今的所有功能新增、性能优化和问题修复，包括 AI 上下文翻译、多语言支持扩展等重要里程碑。
-- [文本分割器](/guide/tools/text-splitter.md): 需要处理长文本？文本分割器支持按字符数、自定义符号或中文段落进行智能分割，适用于 AI 输入优化、文档编辑等场景，并支持批量导出，提升文本处理效率。
+- [文本分割器](/guide/tools/text-splitter.md): 需要处理长文本？文本分割器支持按字符数、按分隔符、按中英文段落智能切分，适用于 AI 输入优化、文档编辑等场景，支持批量导出。
 - [本地批量简繁转换](/guide/others/chinese-conversion.md): 需要在简繁中文间转换？本工具支持本地批量文件转换，涵盖简繁、港台用词及日本新字体，无需联网保障数据安全，并提供智能换行优化排版。
 - [小说文本整理器](/guide/others/novel-processor.md): 下载的小说排版乱、广告多？本工具专为网络小说设计，能一键批量修复排版、清理垃圾内容、简繁转换和智能分段，让阅读体验更清爽。
 - [正则文本助手](/guide/others/regex-matcher.md): 需要批量处理文本？正则文本助手支持正则匹配、过滤、排序、添加前后缀等多种操作，提供常用模板，助您轻松完成文本提取、清理和格式化任务。
 - [JSON 数据匹配与更新工具](/guide/json/json-match-update.md): 需要根据一个数据集更新另一个？本工具通过匹配两个 JSON 中的 ID 字段，将一个数据集的值精确更新到另一个数据集中对应的字段，简化数据同步与整合。
 - [JSON 节点批量编辑](/guide/json/json-node-edit.md): 需要批量修改 JSON 节点？这款工具支持通过 JSONPath 查找节点，并进行添加前缀/后缀、文本替换或直接替换节点值等多种批量编辑操作，简化数据处理。
 - [JSON 节点插入工具](/guide/json/json-node-inserter.md): 需要向 JSON 中批量添加新字段？本工具支持在指定节点后精确插入一个或多个新节点，轻松优化和调整数据结构，提高数据处理效率。
-- [JSON 排序与分类](/guide/json/json-sort-classify.md): 需要整理混乱的 JSON 数据？这款工具能帮您按指定字段或自定义顺序对 JSON 进行排序和分类，支持多级分组和 JSONPath，轻松重组复杂数据结构。
+- [JSON 排序与分组](/guide/json/json-sort-classify.md): 整理混乱的 JSON 数组。支持自定义顺序、数值升/降序排序，可额外按字段分组后在组内复用同一套排序策略。
 - [JSON 值提取器](/guide/json/json-value-extractor.md): 需要从复杂的 JSON 中提取特定数据？使用本工具，通过 JSONPath 表达式轻松提取一个或多个节点的值，并支持为提取结果添加自定义前缀和后缀。
 - [JSON 键值互换](/guide/json/json-value-swapper.md): 需要交换 JSON 中两个键的值？这款工具可以帮您一键完成，自动检测并显示所有可用键名，轻松实现数据重组，提高数据处理效率。
 - [JSON 键值映射工具](/guide/json/json-value-transformer.md): 需要在不同 JSON 结构间迁移数据？本工具支持使用 JSONPath 定义键映射关系，将源值复制到目标字段，特别适用于多语言内容转换和复杂数据重组。
