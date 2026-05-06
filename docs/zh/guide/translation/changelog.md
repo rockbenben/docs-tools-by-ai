@@ -10,6 +10,16 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
 
 待更新功能：本地客户端化；对翻译后的字幕内容进行 ai 润色。
 
+- 2026.05.06: 服务目录 v2 大版本更新。
+  - 新增 MT 服务 **TranslateGemma**（Google 翻译专用 Gemma 衍生模型，本地自托管）
+  - 新增 LLM 提供商：MiniMax、Tencent Hunyuan（混元）、Baidu ERNIE（千帆）、Cohere
+  - 各提供商支持区域端点快速切换（Mainland CN / International / US 等）
+  - DeepSeek、NVIDIA NIM、Claude 等支持 Thinking 模式 + 推理强度（low / medium / high）
+  - Custom (OpenAI-compatible) 新增不发送 system 消息开关，兼容 Gemma 系列 chat template
+  - URL 字段 onBlur 自动补全 `/v1/chat/completions`，避免误用 Responses / 旧 completions API
+  - 新增独立的 Prompt 预设管理（与 LLM API 预设解耦，可自由组合）
+  - 主页面新增 API Status 状态徽章 + 一键源/目标语言互换
+  - 修复：关闭缓存时仍在写入 IndexedDB；LLM-backed MT (Qwen-MT / TranslateGemma) retry 行为对齐 LLM
 - 2025.07.29: 支持ai模式下的上下文关联翻译。
 - 2025.03.20：完成 i18n 化；修复缓存 key 等已知 bug；项目开源。
 - 2025.02.28：LLM 模型翻译时支持自定义系统提示词和用户提示词。

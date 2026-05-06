@@ -4,9 +4,11 @@ head:
     - property: og:title
       content: Markdown Document Translator - Translate with Formatting | Tools By AI
 description: Tired of broken formatting when translating Markdown? This tool is designed for technical docs, preserving original structure while translating with multiple AI engines.
+appUrl: https://tools.newzone.top/en/md-translator
+appName: MD Translator
 ---
 
-import Info from '../interface.mdx';
+import Info from '../_interface.mdx';
 
 # Introduction
 
@@ -75,5 +77,14 @@ This feature is especially useful for automated applications like content summar
 - Bilingual synchronization of Markdown blog content
 - Format-preserving translation of mixed content (code, formulas, etc.)
 - Semantic translation and extraction for any structured/unstructured text
+
+## Compared to Similar Tools
+
+Before building md-translator, I tested these alternatives — both fell short:
+
+- **[GT4T](https://www.gt4t.cn/)**: Lets you drag a folder for batch Markdown translation, but only commercial licenses are available — even with your own API key, payment is required. Not a fit for individual users.
+- **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**: Open-source and free, using web-based translation interfaces. Translation is slow and tends to break on long texts.
+
+md-translator differentiates on two fronts: fully free + everything runs in your browser (data never leaves your machine), with deep preservation of Markdown structure (code blocks, LaTeX, FrontMatter).
 
 <Info />

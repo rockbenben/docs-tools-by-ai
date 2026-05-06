@@ -2,89 +2,146 @@
 head:
   - - meta
     - property: og:title
-      content: 翻译 API 与大语言模型(LLM)接口对比 | Tools By AI
-description: 如何选择最适合您的翻译接口？本页详细对比 DeepL、Google、Azure 等翻译 API 及多种 LLM 的优劣、免费额度和适用场景，助您做出最佳选择。
+      content: 翻译接口对比 - 经典 API 与大语言模型 | Tools By AI
+description: 工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
 ---
 
-import SupportedLanguages from './supported-languages.mdx';
+import SupportedLanguages from './_supported-languages.mdx';
 
 # 翻译接口指南
 
-本工具集成了 7 种翻译 API 和 17 种主流大语言模型（LLM）接口，用户可根据需求选择合适的翻译方式：
+工具集成了 **8 种经典翻译 API** 和 **21 种大语言模型**，可按文本类型、预算与隐私需求自由选择。
 
 ## 经典翻译 API
 
-| API 类型         | 翻译质量 | 稳定性 | 适用场景               | 免费额度                                       |
-| ---------------- | -------- | ------ | ---------------------- | ---------------------------------------------- |
-| DeepL(X)         | ★★★★★    | ★★★★☆  | 适合长文本，翻译更流畅 | 每月 50 万字符                                 |
-| Google Translate | ★★★★☆    | ★★★★★  | 适合 UI 界面、常见句子 | 每月 50 万字符                                 |
-| Azure Translate  | ★★★★☆    | ★★★★★  | 语言支持最广泛         | **前 12 个月** 每月 200 万字符                 |
-| Qwen-MT          | ★★★★★    | ★★★★★  | 支持特定领域(Domain)翻译     | 按 Token 计费，新用户享免费额度                |
-| GTX API（免费）  | ★★★☆☆    | ★★★☆☆  | 一般文本翻译           | 有调用频率限制（例如，每 3 小时约 500 万字符） |
-| GTX Web（免费）  | ★★★☆☆    | ★★☆☆☆  | 适合小规模翻译         | 免费                                           |
+| 接口             | 质量  | 稳定性 | 适合场景                       | 免费额度                   |
+| ---------------- | ----- | ------ | ------------------------------ | -------------------------- |
+| DeepL(X)         | ★★★★★ | ★★★★☆  | 长文本、商务/文学翻译          | 每月 50 万字符             |
+| Google Translate | ★★★★☆ | ★★★★★  | UI 文案、短句                  | 每月 50 万字符             |
+| Azure Translate  | ★★★★☆ | ★★★★★  | 语种最广（90+）                | 前 12 个月每月 200 万字符  |
+| Qwen-MT          | ★★★★★ | ★★★★★  | 中英互译、可指定行业领域       | 按 Token 计费，新用户有额度 |
+| TranslateGemma   | ★★★★☆ | ★★★★☆  | 本地翻译，隐私敏感场景         | 自托管免费                 |
+| GTX API（免费）  | ★★★☆☆ | ★★★☆☆  | 一般文本翻译                   | 共享服务，3 小时约 500 万字符 |
+| GTX Web（免费）  | ★★★☆☆ | ★★☆☆☆  | 小规模翻译                     | 免费                       |
 
-- **DeepL**：适用于长篇文本，翻译更加流畅自然，但不支持网页端 API，需本地或服务器代理调用。
-- **Google Translate**：翻译质量稳定，适用于短句、界面文本，支持网页端调用。
-- **Azure Translate**：支持语言最多，适合多语言翻译需求。
-- **Qwen-MT**：阿里云推出的专门针对翻译场景优化的大模型，支持指定领域（如医疗、科技等）以获取更专业的翻译结果。
-- **GTX API/Web**：免费翻译选项，适合轻量级使用，但稳定性和调用频率有限。例如，mrfragger 在翻译一个约 200 万字符的字幕文件（约 2MB）时，仅执行两次翻译即触发了 GTX API 限制。
+要点说明：
 
-如果对翻译速度和质量有更高要求，可自行申请 API Key。申请流程参考相关的[接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
+- **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。
+- **Qwen-MT** 是阿里云专为翻译训练的模型，详见下文 [Qwen-MT 使用要点](#qwen-mt-使用要点)。
+- **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / Ollama / llama.cpp 跑起来，详见下文 [本地模型接入](#本地模型接入)。
+- **GTX API/Web** 免费但有调用频率限制，长任务建议用付费 API。
 
-## LLM 模型翻译
+需要更稳定的服务，可自行申请商业 API Key，详见 [接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
-除传统翻译 API 外，本工具还支持调用多种 LLM 进行智能翻译，包括：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao（火山方舟）、xAI (Grok)、Mistral、Perplexity、OpenRouter、Groq、SiliconFlow、Nvidia NIM、Azure OpenAI，以及可自由配置的 Custom LLM。
+## 大语言模型（LLM）
 
-- **适用场景**：适合处理语言理解要求较高的内容，如文学作品、技术文档、多语种资料等。
-- **高度可定制**：支持配置系统提示词（System Prompt）与用户提示词（User Prompt），可灵活控制翻译风格、术语偏好等，满足多样化的翻译需求。
-- **LLM 模型**：一般情况下填写所选接口提供的模型名称；若使用 Azure OpenAI，则需填写对应的部署名称。
-- **采样温度（temperature）**：用于控制翻译结果的创造性与稳定性，默认值为 0.7。建议：0～0.3 适合技术/术语严格场景；0.4～0.7 适合通用内容；0.8～1.0 适合更具创造性的场景（如营销/意译）。
+支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、OpenRouter、Groq、SiliconFlow、Nvidia NIM、Azure OpenAI，以及兼容 OpenAI 协议的自定义接口。
 
-## API 代理
+适合处理：
 
-为了解决浏览器直接调用官方 API 时可能遇到的跨域（CORS）问题，**DeepL** 和 **Nvidia** 默认使用内置的代理服务。
+- 文学作品、技术文档等需要深度理解的内容
+- 需要保持术语风格一致的多语种资料
+- 想用自定义提示词控制翻译风格的场景
 
-- **默认行为**：当 API URL 为空时，工具会自动使用内置代理（如 `https://api-edgeone.newzone.top/api/nvidia`）来转发请求。
-- **自定义 URL**：如果您在设置中指定了自定义的 **API URL**（例如私有部署地址或官方直接地址），内置代理将被 **绕过**，请求直接发送到您指定的地址。
+主要参数：
+
+- **模型**：填所选接口提供的模型名；Azure OpenAI 填部署名。
+- **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
+- **思考模式**：DeepSeek、Claude、部分 NVIDIA NIM 模型支持思考链开关，开启后可在 `low / medium / high` 三档调节推理强度。仅对支持的模型显示。
+
+### 区域端点切换
+
+不少接口在国内、海外、美国有不同的接入地址，URL 输入框上方会以快捷标签列出官方地址，点击即可切换：
+
+| 提供商             | 可选区域                                       |
+| ------------------ | ---------------------------------------------- |
+| Qwen / Qwen-MT     | 中国大陆 / 国际 / 美国                         |
+| Moonshot (Kimi)    | 中国大陆 / 国际                                |
+| Zhipu GLM          | 中国大陆 / 国际（Z.ai）                        |
+| MiniMax            | 中国大陆 / 国际                                |
+| Doubao（火山方舟） | 标准版 / Coding 套餐                           |
+
+### URL 自动补全
+
+OpenAI 兼容接口的 URL 字段在你切走焦点时会自动补全为完整路径，避免常见的"少写 `/v1/chat/completions` 导致连不上"的问题。粘贴 `http://host:port` 或 `http://host:port/v1` 即可。
+
+## Qwen-MT 使用要点
+
+阿里云的 Qwen-MT 是机器翻译类服务，与通用 LLM 不同——它没有 system prompt 概念，只用源/目标语言代码工作，因此 Prompt 设置对它不生效。
+
+### 模型选择
+
+API 设置的 **模型** 字段需要手动填写：
+
+| 模型             | 特点                       | 适合                             |
+| ---------------- | -------------------------- | -------------------------------- |
+| `qwen-mt-plus`   | 质量最高，速度较慢、单价较高 | 文学、法律、医疗等高质量翻译     |
+| `qwen-mt-turbo`  | 速度与质量平衡             | 通用文档、批量翻译               |
+| `qwen-mt-flash`  | 最快最便宜（**默认值**）   | 字幕、UI、海量短文本             |
+
+### 领域提示（domains）
+
+`domains` 字段告诉模型当前文本所处的行业，让术语更专业。注意：**填一段英文自然语言**，不是关键词列表。阿里官方示例：
+
+```text
+The sentence is from Ali Cloud IT domain. It mainly involves computer-related
+software development and usage methods, including many terms related to computer
+software and hardware. Pay attention to professional troubleshooting terminologies
+and sentence patterns when translating. Translate into this IT domain style.
+```
+
+不需要时留空即可。
+
+### 不支持的语言
+
+以下语言 Qwen-MT 暂未覆盖，UI 会自动提示并阻止使用：柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、旁遮普（pa）、博杰普尔（bho）、豪萨（ha）、阿姆哈拉（am）、维吾尔（ug）。
+
+## 内置 API 代理
+
+DeepL、Nvidia NIM 等接口浏览器直连会被官方 CORS 策略拦截，工具默认通过自家代理转发请求。如果你在设置里填了自定义 API URL，代理会被绕过，请求直接发到你填的地址。
 
 ## 本地模型接入
 
-对于希望在本地部署并使用自定义大模型（如 Ollama 或 LM Studio）的用户，可通过以下方式完成本工具与本地模型的连接方式，并解决可能出现的跨域访问（CORS）问题。为获得更优的翻译质量，推荐在自定义模型中使用 `qwen3-14b` 或更高参数规模的模型（如 32B、70B）。
+希望自己跑模型保护隐私？工具支持任何兼容 OpenAI 协议的本地服务。为了翻译质量，建议使用 `qwen3-14b` 及以上参数规模的模型（32B / 70B 效果更好）。
 
-### 常用接口地址
+### 默认接口地址
 
-下表列出了常见本地模型工具的默认接口地址，可直接在配置中使用，或根据实际端口号进行修改。
+| 工具       | 默认接口地址                                  |
+| ---------- | --------------------------------------------- |
+| LM Studio  | `http://127.0.0.1:1234/v1/chat/completions`   |
+| Ollama     | `http://127.0.0.1:11434/v1/chat/completions`  |
+| llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 
-| 工具      | 默认接口地址                                 |
-| --------- | -------------------------------------------- |
-| Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
-| LM Studio | `http://localhost:61234/v1/chat/completions` |
+URL 输入框旁会列出这些常用地址作为快捷选项。
 
-### 解决CORS跨域
+### TranslateGemma
 
-在浏览器中调用本地部署的模型时，如果出现连接失败，常见原因包括 **浏览器的广告屏蔽插件** 或 **跨域访问限制（CORS 策略）**。
-跨域策略是浏览器的一种安全机制，用于防止网页随意访问不同来源的资源。因此，当你在网页中请求本地模型接口时，可能会被浏览器阻止。
+Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练。使用要点：
 
-**步骤 1｜排查广告/隐私插件**：先暂时禁用浏览器的拦截扩展，再刷新页面测试。
+- 默认地址指向 LM Studio 1234 端口，可一键切换到 Ollama / llama.cpp
+- 推荐模型：`translategemma-4b-it`（轻量快速）或 `translategemma-9b-it`（质量更好）
+- **必须明确指定源语言**——这个模型不支持"自动检测"
+- 暂不支持粤语（yue）和博杰普尔语（bho）
 
-**步骤 2｜开启本地服务的 CORS**：按照下方指南为常用工具放行跨域。
+### 解决 CORS 跨域
+
+浏览器调用本地模型时若连不上，最常见的两个原因：
+
+**步骤 1｜排查广告/隐私插件**：先暂时禁用浏览器的拦截扩展，刷新重试。
+
+**步骤 2｜为本地服务开启 CORS**：
 
 #### Ollama
 
-要让本地运行的 Ollama 服务支持 CORS，你可以通过设置环境变量的方式永久启用。操作如下：
+在 PowerShell（Win + X 打开终端）粘贴一行命令永久启用：
 
-1. 按下 `Win + X`，选择 **Windows PowerShell** 或 **终端**。
-2. 在打开的 PowerShell 中粘贴以下命令并按回车：
+```powershell
+[System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
+```
 
-   ```powershell
-   [System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
-   ```
+> `*` 允许所有来源；想更严格可换成具体域名，例如 `http://192.168.2.20:3000`。
 
-   > 其中 `*` 表示允许所有来源访问 Ollama 接口。若你希望更严格的安全控制，可将其替换为特定域名，例如 `http://192.168.2.20:3000`。
-
-设置完成后，重启 Ollama 服务，即可让其生效。
-
-如果只想临时启用 CORS，也可以在启动服务时直接加入环境变量：
+设置后重启 Ollama 服务即可生效。临时启用也可以在启动时加环境变量：
 
 ```bash
 OLLAMA_ORIGINS="*" ollama serve
@@ -92,12 +149,12 @@ OLLAMA_ORIGINS="*" ollama serve
 
 #### LM Studio
 
-1. 打开软件左侧菜单，点击 「Developer」 图标；
-2. 进入本地服务器设置页面，点击顶部 「Settings」；
-3. 勾选 「Enable CORS」 复选框（如下图所示）。
+1. 打开左侧菜单的「Developer」图标
+2. 进入本地服务器设置页，点顶部「Settings」
+3. 勾选「Enable CORS」复选框
 
 ![LM Studio CORS 配置截图](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
 
-完成以上设置后，本工具即可顺利调用你的本地 LLM 模型。若仍遇到访问问题，可检查端口占用情况或浏览器控制台中的报错信息。（特别感谢 mrfragger 分享配置经验）
+完成后即可正常调用本地模型。仍连不上的话，检查端口占用情况和浏览器控制台的报错信息。（特别感谢 mrfragger 分享配置经验）
 
 <SupportedLanguages />

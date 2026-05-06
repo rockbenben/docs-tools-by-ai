@@ -2,90 +2,146 @@
 head:
   - - meta
     - property: og:title
-      content: Translation API & LLM Comparison | Tools By AI
-description: How to choose the best translation service? This page compares APIs like DeepL, Google, and Azure, plus various LLMs, detailing their free tiers and ideal use cases.
+      content: Translation API Guide - Classic APIs and LLMs Compared | Tools By AI
+description: Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
 ---
 
-import SupportedLanguages from './supported-languages.mdx';
+import SupportedLanguages from './_supported-languages.mdx';
 
 # Translation API Guide
 
-This tool integrates 7 translation APIs and 17 mainstream Large Language Model (LLM) interfaces, allowing users to choose the most suitable translation method based on their needs:
+The tool integrates **8 classic translation APIs** and **21 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
 
 ## Classic Translation APIs
 
-| API Type         | Quality | Stability | Use Case                                      | Free Limit                                                     |
-| :--------------- | :------ | :-------- | :-------------------------------------------- | :------------------------------------------------------------- |
-| DeepL(X)         | ★★★★★   | ★★★★☆     | Suitable for long texts; smoother translation | 500,000 characters/month                                       |
-| Google Translate | ★★★★☆   | ★★★★★     | Suitable for UI interfaces, common sentences  | 500,000 characters/month                                       |
-| Azure Translate  | ★★★★☆   | ★★★★★     | Widest language support                       | **First 12 months** 2 million characters/month                 |
-| Qwen-MT          | ★★★★★   | ★★★★★     | Supports domain-specific translation          | Billed by token, free tier for new users                       |
-| GTX API (Free)   | ★★★☆☆   | ★★★☆☆     | General text translation                      | Subject to rate limits (e.g., \~5 million chars every 3 hours) |
-| GTX Web (Free)   | ★★★☆☆   | ★★☆☆☆     | Suitable for small-scale translation          | Free                                                           |
+| API              | Quality | Stability | Best for                          | Free tier                                |
+| :--------------- | :------ | :-------- | :-------------------------------- | :--------------------------------------- |
+| DeepL(X)         | ★★★★★   | ★★★★☆     | Long text, business / literature  | 500K characters/month                    |
+| Google Translate | ★★★★☆   | ★★★★★     | UI strings, short sentences       | 500K characters/month                    |
+| Azure Translate  | ★★★★☆   | ★★★★★     | Widest language coverage (90+)    | 2M characters/month for the first year   |
+| Qwen-MT          | ★★★★★   | ★★★★★     | CN/EN translation, domain-tuned   | Pay-per-token, free tier for new users   |
+| TranslateGemma   | ★★★★☆   | ★★★★☆     | Local translation, privacy-first  | Free (self-hosted)                       |
+| GTX API (Free)   | ★★★☆☆   | ★★★☆☆     | General text                      | Shared service, ~5M chars per 3 hours    |
+| GTX Web (Free)   | ★★★☆☆   | ★★☆☆☆     | Small-volume translation          | Free                                     |
 
-- **DeepL**: Suitable for long texts, offering more fluid and natural translations, but does not support web-based API calls (requires local or server proxy).
-- **Google Translate**: Stable quality, suitable for short sentences and interface text; supports web-based calls.
-- **Azure Translate**: Supports the most languages, ideal for multi-language translation needs.
-- **Qwen-MT**: An LLM optimized explicitly for translation scenarios by Alibaba Cloud, supporting specific domains (e.g., medical, tech) for more professional results.
-- **GTX API/Web**: Free translation options suitable for lightweight use, but with limited stability and call frequency. For example, when _mrfragger_ translated a subtitle file of about 2 million characters (\~2MB), the GTX API limit was triggered after just two translation executions.
+Notes:
 
-If you have higher requirements for translation speed and quality, you can apply for your own API Key. For application procedures, please refer to the relevant [Interface Application Tutorial](https://ttime.timerecord.cn/service/translate/google.html).
+- **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
+- **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
+- **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / Ollama / llama.cpp — see [Local Model Setup](#local-model-setup).
+- **GTX API/Web** are free but rate-limited. Use a paid API for long-running jobs.
 
-## LLM Model Translation
+For more reliable service, apply for a commercial API key — see the [API application guide](https://ttime.timerecord.cn/service/translate/google.html).
 
-In addition to traditional translation APIs, this tool supports calling various LLMs for intelligent translation, including: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, Nvidia NIM, Azure OpenAI, and highly configurable Custom LLMs.
+## Large Language Models (LLMs)
 
-- **Use Case**: Suitable for content requiring high language comprehension, such as literary works, technical documents, and multilingual materials.
-- **Highly Customizable**: Supports configuration of System Prompts and User Prompts, allowing flexible control over translation style and terminology preferences to meet diverse needs.
-- **LLM Model**: Generally, fill in the model name provided by the selected interface; if using Azure OpenAI, fill in the corresponding deployment name.
-- **Temperature**: Controls the creativity and stability of the translation results. The default value is 0.7. **Suggestions**: 0–0.3 for strict technical/terminology scenarios; 0.4–0.7 for general content; 0.8–1.0 for creative scenarios (e.g., marketing/paraphrasing).
+Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.
 
-## API Proxy
+LLMs work best for:
 
-To resolve Cross-Origin Resource Sharing (CORS) issues when calling official APIs directly from the browser, **DeepL** and **Nvidia** use built-in proxy services by default.
+- Literature and technical documentation that needs deeper understanding
+- Multilingual content where consistent terminology matters
+- Custom prompts to control translation style
 
-- **Default Behavior**: When the API URL is empty, the tool automatically uses the built-in proxy (e.g., `https://api-edgeone.newzone.top/api/nvidia`) to forward requests.
-- **Custom URL**: If you specify a custom **API URL** in the settings (e.g., a private deployment or direct official address), the built-in proxy will be **bypassed**, and the request will be sent directly to your specified address.
+Key parameters:
 
-## Local Model Integration
+- **Model**: enter the model name from your provider; for Azure OpenAI, enter the deployment name.
+- **Temperature**: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.
+- **Thinking mode**: DeepSeek, Claude, and certain NVIDIA NIM models support a thinking-chain toggle plus a `low / medium / high` reasoning effort selector. Only shown when the current model actually supports it.
 
-For users who wish to deploy and use custom large models locally (such as Ollama or LM Studio), you can connect this tool to your local model and resolve potential Cross-Origin Resource Sharing (CORS) issues using the methods below. To achieve better translation quality, it is recommended to use `qwen3-14b` or models with larger parameter scales (such as 32B, 70B) in your custom model setup.
+### Regional Endpoint Switcher
 
-### Common Interface Addresses
+Many providers run separate endpoints for Mainland China, International, and US regions. The official endpoints appear as quick-pick chips above the URL field — click to switch:
 
-The table below lists default interface addresses for common local model tools. You can use them directly in the configuration or modify them according to your actual port number.
+| Provider             | Available regions                                   |
+| :------------------- | :-------------------------------------------------- |
+| Qwen / Qwen-MT       | Mainland CN / International / US                    |
+| Moonshot (Kimi)      | Mainland CN / International                         |
+| Zhipu GLM            | Mainland CN / International (Z.ai)                  |
+| MiniMax              | Mainland CN / International                         |
+| Doubao (Volcano Ark) | Standard / Coding Plan                              |
 
-| Tool      | Default Interface Address                    |
-| :-------- | :------------------------------------------- |
-| Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
-| LM Studio | `http://localhost:61234/v1/chat/completions` |
+### URL Auto-Completion
+
+OpenAI-compatible URL fields auto-complete to the full path when focus leaves the field — paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest. This catches the most common "incomplete URL → connection failure" mistake.
+
+## Qwen-MT Essentials
+
+Qwen-MT is a machine translation service (not a general LLM). It has no system-prompt concept and works purely with source/target language codes — so the Prompt settings don't apply.
+
+### Picking a Model
+
+You'll need to fill in the **Model** field manually:
+
+| Model            | Characteristics                              | Best for                                  |
+| :--------------- | :------------------------------------------- | :---------------------------------------- |
+| `qwen-mt-plus`   | Highest quality, slower, premium pricing     | Literature, legal, medical translation    |
+| `qwen-mt-turbo`  | Balanced speed and quality                   | General documents, batch jobs             |
+| `qwen-mt-flash`  | Fastest and cheapest (**default**)           | Subtitles, UI strings, large short-text volumes |
+
+### Domain Hint
+
+The `domains` field tells the model what industry the text is from, so terminology lands closer to the field. Important: **write a short English description**, not a keyword list. Alibaba's official example:
+
+```text
+The sentence is from Ali Cloud IT domain. It mainly involves computer-related
+software development and usage methods, including many terms related to computer
+software and hardware. Pay attention to professional troubleshooting terminologies
+and sentence patterns when translating. Translate into this IT domain style.
+```
+
+Leave empty if you don't need it.
+
+### Unsupported Languages
+
+These languages are not yet covered by Qwen-MT — the UI will block them: Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Punjabi (pa), Bhojpuri (bho), Hausa (ha), Amharic (am), Uyghur (ug).
+
+## Built-in API Proxy
+
+DeepL, Nvidia NIM, and similar providers can't be called from the browser due to CORS. The tool routes those through a built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.
+
+## Local Model Setup
+
+Want to run models locally for privacy? The tool works with any OpenAI-compatible local server. For decent translation quality, use `qwen3-14b` or larger (32B / 70B works even better).
+
+### Default Endpoints
+
+| Tool       | Default endpoint                              |
+| :--------- | :-------------------------------------------- |
+| LM Studio  | `http://127.0.0.1:1234/v1/chat/completions`   |
+| Ollama     | `http://127.0.0.1:11434/v1/chat/completions`  |
+| llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
+
+These appear as quick-pick chips next to the URL field.
+
+### TranslateGemma
+
+Google's translation-specialized Gemma model, trained specifically for translation quality. Quick notes:
+
+- The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp
+- Recommended models: `translategemma-4b-it` (compact and fast) or `translategemma-9b-it` (better quality)
+- **Source language must be explicit** — auto-detect isn't supported
+- Cantonese (yue) and Bhojpuri (bho) aren't covered by the model
 
 ### Solving CORS Issues
 
-When calling a locally deployed model in a browser, if the connection fails, common causes include **browser ad-blocking extensions** or **Cross-Origin Resource Sharing (CORS) restrictions**.
-CORS policy is a browser security mechanism that prevents web pages from accessing resources from different origins arbitrarily. Therefore, when you request a local model interface from a web page, it may be blocked by the browser.
+If a local model can't be reached, the two usual culprits:
 
-**Step 1 | Check Ad/Privacy Plugins**: Temporarily disable browser interception extensions, then refresh the page to test.
+**Step 1: Disable ad/privacy extensions**, then refresh and retry.
 
-**Step 2 | Enable Local Service CORS**: Follow the guide below to allow cross-origin requests for common tools.
+**Step 2: Enable CORS on the local server.**
 
 #### Ollama
 
-To enable CORS support for your locally running Ollama service, you can permanently enable it by setting an environment variable. Follow these steps:
+Run this once in PowerShell (Win + X to open Terminal) to enable it permanently:
 
-1.  Press `Win + X` and select **Windows PowerShell** or **Terminal**.
+```powershell
+[System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
+```
 
-2.  Paste the following command into the open PowerShell window and press Enter:
+> `*` allows all origins. For tighter security, use a specific domain like `http://192.168.2.20:3000`.
 
-    ```powershell
-    [System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
-    ```
-
-    > The `*` wildcard allows all origins to access the Ollama interface. If you prefer stricter security controls, you can replace it with a specific domain, such as `http://192.168.2.20:3000`.
-
-Once configured, restart the Ollama service for the changes to take effect.
-
-If you only want to enable CORS temporarily, you can add the environment variable directly when starting the service:
+Restart the Ollama service for the change to take effect. To enable temporarily, set the variable when starting:
 
 ```bash
 OLLAMA_ORIGINS="*" ollama serve
@@ -93,12 +149,12 @@ OLLAMA_ORIGINS="*" ollama serve
 
 #### LM Studio
 
-1.  Open the left menu in the software and click the "Developer" icon.
-2.  Enter the local server settings page and click "Settings" at the top.
-3.  Check the "Enable CORS" checkbox (as shown below).
+1. Open the "Developer" icon in the left menu
+2. Go to the local server settings page, click "Settings" at the top
+3. Check the "Enable CORS" box
 
-![LM Studio CORS Configuration Screenshot](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
+![LM Studio CORS settings screenshot](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
 
-After completing the above settings, this tool should be able to successfully call your local LLM model. If you still encounter access issues, check for port conflicts or error messages in the browser console. (Special thanks to _mrfragger_ for sharing configuration experience).
+That's it — local models should work now. If you're still stuck, check for port conflicts and look at the browser console for the actual error. (Special thanks to _mrfragger_ for the configuration tips.)
 
 <SupportedLanguages />

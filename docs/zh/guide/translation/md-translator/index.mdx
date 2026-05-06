@@ -4,9 +4,11 @@ head:
     - property: og:title
       content: Markdown 文档翻译工具 - 保持格式精准翻译 | Tools By AI
 description: 翻译 Markdown 文档时格式总错乱？这款工具专为技术文档设计，能精准保留原始格式，支持多种 AI 翻译引擎，是翻译开源项目文档的理想选择。
+appUrl: https://tools.newzone.top/zh/md-translator
+appName: MD Translator
 ---
 
-import Info from '../interface.mdx';
+import Info from '../_interface.mdx';
 
 # 项目介绍
 
@@ -75,5 +77,14 @@ md-translator 还具备将 Markdown 内容转换为纯文本的能力，方便�
 - Markdown 博客内容的中英双语同步
 - 代码注释、公式说明等混合文档的格式保留翻译
 - 任何结构化/非结构化文本的语义翻译与提取
+
+## 与同类工具对比
+
+在开发 md-translator 之前，我测试过以下方案，但都因各自的局限未能满足需求：
+
+- **[GT4T](https://www.gt4t.cn/)**：支持把整个文件夹拖入批量翻译 Markdown，但仅商业付费授权——即使填入自己的 API Key 仍要付费，对个人用户不友好。
+- **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**：开源免费，基于网页版接口翻译。问题是速度慢，长文本处理容易中断。
+
+md-translator 在两点上做差异化：完全免费 + 浏览器本地运行（数据不出本机），并对 Markdown 结构与代码块/公式/FrontMatter 做了深度保留。
 
 <Info />

@@ -4,6 +4,8 @@ head:
     - property: og:title
       content: Text Splitter - Chunk long text by length or paragraph | Tools By AI
 description: Split long text into chunks by character count, by delimiter, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
+appUrl: https://tools.newzone.top/en/text-splitter
+appName: Text Splitter
 ---
 
 # Text Splitter
@@ -18,16 +20,18 @@ Modes are picked via the Segmented at the top of the Configuration card. Each mo
 
 ### 1. By length
 
-Chunks text into blocks of a given character count. Default is 2000 — a reasonable block size for LLM context windows.
+Chunks text into blocks of a given character count. Default is 2000 — a reasonable block size for LLM context windows. The **delimiter** input is always visible — whether it activates is purely determined by whether the field has a value, no extra toggle needed:
 
-**Align to separator (optional)**: when enabled, chunk boundaries snap to the nearest delimiter so sentences aren't cut mid-word. The toggle reveals a delimiter input that accepts:
+- **Length > 0 + delimiter filled**: chunk by length; boundaries snap to the nearest delimiter so sentences aren't cut mid-way
+- **Length > 0 + delimiter empty**: hard chunk by length, ignoring sentence boundaries
+- **Length = 0 (or empty) + delimiter filled**: ignore length entirely — split at every delimiter occurrence (delimiter is required)
+
+The delimiter input accepts:
 
 - Manual entry, e.g. `。 ？ ！` (separate multiple delimiters with a space)
 - Click "CJK" to fill `。 ？ ！`
 - Click "Latin" to fill `. ? !`
 - Escape sequences: `\n`, `\r`, `\t`, `\s`, `\\`
-
-**Pure-delimiter split**: set the character count to 0 (or leave it empty) and this mode ignores length entirely — it splits at every occurrence of any delimiter. The delimiter input appears automatically and at least one delimiter is required.
 
 Delimiter splits keep the delimiter at the end of each segment.
 
@@ -54,7 +58,7 @@ All modes share these:
 
 ## Common patterns
 
-- **LLM context prep**: length 2000–4000 with align-to-separator and `。 ？ ！` or `. ? !`
+- **LLM context prep**: length 2000–4000 with delimiters `。 ？ ！` or `. ? !` — boundaries auto-snap to sentence ends
 - **Sentence-level split**: length 0 + delimiters `。 ？ ！` (or `. ? !`) — one split at each delimiter
 - **Paragraph-level split**: use Chinese paragraph or English paragraph mode
 - **Code / Markdown split**: length mode with delimiter `\n\n` (literal `\n` supported)

@@ -10,6 +10,16 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: Create a local desktop client; add AI polishing for translated subtitles.
 
+- 2026.05.06: Service catalog v2 — major release.
+  - New MT service: **TranslateGemma** (Google's translation-specialized Gemma derivative, self-hosted)
+  - New LLM providers: MiniMax, Tencent Hunyuan, Baidu ERNIE (Qianfan), Cohere
+  - Quick-pick regional endpoints across providers (Mainland CN / International / US, etc.)
+  - Thinking mode + reasoning effort (low / medium / high) for DeepSeek, NVIDIA NIM, Claude, etc.
+  - New "skip system message" toggle for Custom (OpenAI-compatible), compatible with Gemma chat templates
+  - URL field auto-completes `/v1/chat/completions` on blur — guards against misusing Responses / legacy completions
+  - Standalone Prompt preset management (decoupled from LLM API presets, freely combinable)
+  - Main page now shows an API Status badge plus a one-click source/target language swap
+  - Fixed: cache writes were happening even when caching was disabled; LLM-backed MT (Qwen-MT, TranslateGemma) retry behavior now aligns with LLM
 - 2025.07.29: Added context-aware translation for AI mode.
 - 2025.03.20: Completed i18n (internationalization); fixed known bugs including cache key issues; project open-sourced.
 - 2025.02.28: Added support for custom system and user prompts for LLM model translations.

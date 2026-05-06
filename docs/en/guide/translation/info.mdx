@@ -2,115 +2,154 @@
 head:
   - - meta
     - property: og:title
-      content: Translation Tool Features - Batch Translate, Cache & API | Tools By AI
-description: Explore the core capabilities of the translation tool. IndexedDB-based massive caching, smart concurrency control, and context optimization for long texts.
+      content: Translation Tool Features - Multilingual, Cache, and Tuning | Tools By AI
+description: Core features of the translation tool — multilingual batch translation, local cache, context-aware translation, failed-line retry, and tuning guidance.
 ---
 
-# Feature Description
-
-Designed for multilingual localization scenarios, this tool integrates **batch processing**, **high-performance caching**, **smart context handling**, and **multi-language export** to help you build an efficient and stable translation workflow.
+# Feature Guide
 
 ## Core Features
 
-### Multi-Language Translation: Translate Once, Output Many
+### Translate Once, Output Many
 
-You can translate the same file into multiple languages simultaneously, perfect for multilingual subtitles or internationalization projects:
+Translate the same file into multiple languages in a single run — perfect for multilingual subtitles or i18n projects. For example, translate an English subtitle file into Chinese, Japanese, German, and French at once and download all versions packaged. 70+ languages supported, with more added regularly.
 
-- **Example**: Translate English subtitles into Chinese, Japanese, German, French, etc.
-- **Support**: 70+ languages currently supported, with more on the way.
+### Translation Cache
 
-### High-Performance Translation Cache
+Translation results are saved locally in your browser. When parameters match, the tool returns the cached result and skips the API call:
 
-The tool is built with an enterprise-grade **instant caching system** powered by **IndexedDB**:
+- **Persistent**: survives refreshes and browser restarts
+- **High capacity**: holds millions of records without bloating memory
+- **Toggle off**: disable temporarily when debugging prompts or model settings
+- **One-click clear**: clean up everything from the settings panel
 
-- **Unlimited Capacity**: Bypasses browser LocalStorage limits to store millions of translation records without consuming memory.
-- **Persistent Storage**: Translation results are saved permanently and persist across browser refreshes or restarts.
-- **Smart Hitting**: Generates a unique key based on `Source Text_Target Language_Source Language_Translation API_Model Settings`. Cache is called directly when parameters match, achieving "translate once, instant access forever".
-- **On-Demand Management**: Supports manual cache disabling for specific scenarios (like debugging Prompts) or one-click clearing in settings.
+### Long Text & Concurrency
 
-### Smart Concurrency & Long Text Optimization
+Tuned for large documents and batch jobs:
 
-For long documents and batch tasks, the tool utilizes a refactored task scheduling engine:
+- **Concurrency control**: customize request rate — max out paid APIs or throttle free ones to avoid bans
+- **Streaming for large files**: chunk-based handling keeps the UI responsive
+- **Context-aware translation**: subtitles and documents get sent with surrounding context so the AI understands flow
+- **Per-line retry**: failed lines are tracked separately; the rest of the batch isn't blocked
 
-- **Concurrency Control**: Built-in request queue mechanism supports custom **Translate Rate**. It allows you to maximize paid API usage or limit rates to protect free APIs from being banned.
-- **Large File Support**: Uses streaming and chunking strategies to easily handle ultra-large subtitles or Markdown documents, supporting **concurrent rendering of large texts** in the editor.
-- **Context Awareness**: Intelligently slices context windows for subtitle or document translation, ensuring LLMs understand plot continuity and improving translation accuracy.
+### Failed-Line Retry
+
+LLMs occasionally drop a line, return an empty response, or break formatting. When that happens:
+
+- A red alert at the top of the result panel says how many lines failed
+- Click **Retry failed lines** to reissue only those — completed content stays as-is and isn't re-billed
+- A copy button lets you grab the failed source rows for manual handling elsewhere
+
+### Cancel Translation
+
+Click the close button on the progress modal to abort a running batch. Already-translated lines are cached, so clicking "Translate" again resumes from where you stopped.
+
+### RTL Language Auto-Adaptation
+
+Right-to-left languages (Arabic, Hebrew, Persian, Urdu) automatically render right-to-left in the textarea and result view — no manual configuration.
 
 ---
 
-## Translation Modes & Workflow
+## Usage Modes
 
-The tool automatically detects user actions and switches modes:
+### Batch vs. Single-File
 
-- **Batch Mode** (Default): Drag and drop multiple files to upload. They enter a processing queue automatically, and results are packed and downloaded upon completion.
-- **Single-File Mode**: Upload a single file or paste text to enter single-file mode, supporting real-time preview and line-by-line proofreading/editing.
+The tool switches modes based on what you upload:
 
-Note: If the current tool supports it, you can also manually toggle **Single-File Mode** in Advanced Settings to force a preview/proofreading-oriented workflow.
+- **Batch mode** (default): drop multiple files, they queue up automatically and download as a bundle when done.
+- **Single-file mode**: upload one file or paste text — review line-by-line, edit before exporting.
 
-:::tip Supported Formats
+Advanced settings let you lock to single-file mode if you prefer.
 
-- **Subtitles**: `.srt`, `.vtt`, `.ass` (Bilingual / Language Replacement)
-- **Documents**: Markdown (`.md`, `.mdx`), JSON (`.json`)
-  :::
-
-## Post-Translation Processing
-
-Supports automatic text cleanup after translation, with results applied to all output files:
-
-- **Character Filtering**: Automatically removes extraneous symbols (e.g., musical notes `♪ ♫` in subtitles).
-- **Format Correction**: Standardizes punctuation styles or removes specific HTML noise.
-
-:::tip Tip
-This feature performs simple string replacement and does not support escape characters (like `\n`, `\t`). For complex text processing, please use the Text Splitter tool.
+:::tip
+JSON Translate is single-file mode only.
 :::
+
+### One-Click Source/Target Swap
+
+A **⇄** button sits between the source and target language dropdowns — click to swap them. The button greys out when the source is "Auto-detect" or when multi-language mode is on (you can't swap "auto" or against multiple targets).
+
+### API Connection Status
+
+The badge at the top of the main page tells you the current API's status at a glance:
+
+- **Not configured / Needs config**: URL or API key missing
+- **Configured**: filled in but not yet tested
+- **Testing** → **✓ Connected** or **Connection failed**: test results
+- **Free API**: free, no-config services like GTX
+
+Click the badge to jump to the API settings panel.
+
+### Presets: API Config and Prompts, Separately
+
+API configs and prompts are stored as two independent preset types so they combine freely:
+
+- **API presets**: snapshot the current service's URL, key, model, temperature, etc. Useful for switching between local Ollama, a remote gateway, and a paid cloud endpoint.
+- **Prompt presets**: snapshot the system + user prompts. Switch between a "strict terminology" prompt and a "creative paraphrase" prompt without touching the API config.
+
+Both types support add / load / rename / update / delete, and travel with settings import/export.
+
+### Post-Translation Cleanup
+
+After translation, the tool can automatically apply simple string replacements:
+
+- **Character filtering**: strip stray symbols like `♪ ♫` from subtitles
+- **Format cleanup**: remove leftover HTML tags
+
+:::tip
+This feature does plain string replacement only — no escape sequences (`\n`, `\t` etc.). Use the Text Splitter for richer transformations.
+:::
+
+---
 
 ## Advanced Settings
 
 ### Settings Import/Export
 
-Supports one-click backup of all current configurations (including API Keys and Prompt settings). The generated configuration file can be imported across devices, facilitating team collaboration or environment migration.
+One-click backup of every configuration: API credentials, model parameters, API presets, Prompt presets. The exported JSON imports across devices, ideal for team sharing or moving to a new machine.
 
-### General Translation Options
+### General Options
 
-- **Use Cache**: Enabled by default. When parameters match, results are read from IndexedDB cache to speed up batch jobs; you can disable it temporarily when debugging Prompts/model settings.
-- **Retry Count**: Maximum number of retries when a request fails (increase for unstable networks or rate-limited/free endpoints).
-- **Retry Timeout**: Per-request timeout threshold (seconds). Increase when APIs respond slowly or when translating long content.
-- **Remove Characters After Translation**: Automatically removes specified characters/fragments from the translated result (e.g., `♪` in subtitles, or noisy HTML fragments like `<i>`).
-- **Custom Export Filename**: Unifies file naming when exporting/downloading. Supports placeholders: `{name}` (original filename without extension), `{lang}` (target language), `{ext}` (extension), `{date}` (date, YYYY-MM-DD), `{time}` (time, HHMMSS). Example: `{name}_{lang}_{date}_{time}.{ext}`.
+- **Use Cache**: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.
+- **Retry Count**: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.
+- **Retry Timeout (seconds)**: per-request timeout. Increase for slow models or long text.
+- **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
+- **Custom export filename**: standardize filenames in batch exports. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}`, `{time}`. Example: `{name}_{lang}_{date}.{ext}`.
 
 ### API Parameter Tuning
 
-To balance translation quality and speed, it is recommended to adjust the following parameters based on the selected API type:
-
 #### Chunk Size
 
-For non-LLM interfaces (like Google/Azure API), the tool automatically splits long text into small chunks. **Chunk Size** refers to the maximum character count per chunk. Common limits are:
+Non-LLM APIs (Google / Azure) split long text into chunks before sending. **Chunk size** is the per-chunk character cap. Common limits:
 
-| Translation Service    | Max Characters per Request |
-| ---------------------- | -------------------------- |
-| DeepL API              | 128,000 characters         |
-| DeepLX Free            | 1,000 characters           |
-| Azure Translate        | 10,000 characters          |
-| Google Translate (Web) | 5,000 characters           |
-| Google Cloud API       | 30,000 characters          |
+| API                  | Max characters per request |
+| :------------------- | :------------------------- |
+| DeepL API            | 128,000                    |
+| DeepLX Free          | 1,000                      |
+| Azure Translate      | 10,000                     |
+| Google Translate Web | 5,000                      |
+| Google Cloud API     | 30,000                     |
 
-⚠️ Note: The Google Translate web version may break line breaks, so chunked translation is not used.
+> ⚠️ Google Translate Web breaks line breaks, so chunking is disabled there.
 
 #### Delay (ms)
 
-The cooldown time between chunk requests, helpful to avoid frequent failures:
-
-- Recommended to set a higher delay for **poor networks or free APIs**.
-- Example: When using the Azure Translate free tier, a setting of **5000ms** or higher is recommended.
+The cooldown between chunked requests. Increase on poor networks or free APIs. For example, Azure Translate Free Tier works best at **5000 ms** or higher.
 
 #### Concurrent Lines
 
 - **Default**: 20
-- **Description**: The maximum number of lines translated simultaneously.
-- **Note**: Setting this too high may lead to API Rate Limiting or empty responses.
+- **What it does**: the maximum number of lines translated simultaneously
+- **Caveat**: too high triggers rate limiting (429) or empty responses
+
+#### Context Batch Size
+
+- **Default**: 3 (1 for some providers)
+- **What it does**: in context-aware mode, how many "target lines" go into a single request. Each request also carries the surrounding context.
+- **Trade-off**: larger values throughput-wise are faster but the model has to emit more lines per response, raising the chance of formatting drift. Smaller values are steadier but use more requests. Stick with 3 for documents/subtitles, push to 5 for plain text.
 
 #### Context Lines
 
 - **Default**: 50
-- **Description**: The number of lines included per batch in Context-Aware Translation mode.
-- **Note**: Higher values provide richer context but may exceed the model's Token context limit.
+- **What it does**: how many surrounding lines to include in each context-aware request
+- **Caveat**: more context = richer but may exceed the model's token limit
