@@ -1,15 +1,15 @@
 ## guide
 
 - [Tools By AI](/guide/index.md): 了解 Tools By AI 背后的核心理念。我们不追求完全自主的 AI，而是将 AI 作为强大辅助，帮您打造可控、可靠的定制化工具，真正实现“任务工具化”，提升效率。
-- [翻译工具](/guide/translation/index.md): 还在为项目开发中的文本翻译烦恼？我们提供针对 JSON、Markdown、字幕等格式优化的专用翻译工具，支持批量翻译和多种 API 接口，解决传统工具的局限。
+- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 21 种 AI 大模型与 8 种翻译 API，70+ 语言批量翻译。
 - [项目介绍](/guide/translation/json-translate/index.md): 需要处理多语言 JSON 文件？JsonTranslate 工具专为 i18n 本地化设计，支持全局、指定节点、i18n 等多种翻译模式，助您轻松完成项目国际化。
 - [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [项目介绍](/guide/translation/subtitle-translator/index.md): 还在手动翻译字幕？这款免费工具支持批量、秒级翻译 SRT/ASS/VTT 字幕，提供上下文关联、多语言支持等高级功能，大幅提升您的视频翻译效率。
 - [Subtitle Translator 部署](/guide/translation/subtitle-translator/deploy.md): 字幕翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [项目介绍](/guide/translation/md-translator/index.md): 翻译 Markdown 文档时格式总错乱？这款工具专为技术文档设计，能精准保留原始格式，支持多种 AI 翻译引擎，是翻译开源项目文档的理想选择。
 - [MD Translator 部署](/guide/translation/md-translator/deploy.md): Markdown 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
-- [功能说明](/guide/translation/info.md): 深入了解翻译工具的核心能力：基于 IndexedDB 的海量缓存、智能并发控制、以及针对长文本的上下文优化。
-- [翻译接口指南](/guide/translation/api.md): 如何选择最适合您的翻译接口？本页详细对比 DeepL、Google、Azure 等翻译 API 及多种 LLM 的优劣、免费额度和适用场景，助您做出最佳选择。
+- [功能说明](/guide/translation/info.md): 工具的核心特性介绍——多语言批量翻译、本地缓存、上下文优化、失败行重试，以及高级参数的调优建议。
+- [翻译接口指南](/guide/translation/api.md): 工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
 - [常见问题](/guide/translation/faq.md): 翻译结果为空或速度慢？API Key 安全吗？本页解答了翻译工具的常见问题，包括 API 密钥、翻译无响应、DeepL 接口及数据安全等，帮您快速解决使用中的疑问。
 - [更新日志](/guide/translation/changelog.md): 查看翻译工具的完整更新历史。本页记录了从最初版本至今的所有功能新增、性能优化和问题修复，包括 AI 上下文翻译、多语言支持扩展等重要里程碑。
 - [文本分割器](/guide/tools/text-splitter.md): 需要处理长文本？文本分割器支持按字符数、按分隔符、按中英文段落智能切分，适用于 AI 输入优化、文档编辑等场景，支持批量导出。
@@ -23,8 +23,3 @@
 - [JSON 值提取器](/guide/json/json-value-extractor.md): 需要从复杂的 JSON 中提取特定数据？使用本工具，通过 JSONPath 表达式轻松提取一个或多个节点的值，并支持为提取结果添加自定义前缀和后缀。
 - [JSON 键值互换](/guide/json/json-value-swapper.md): 需要交换 JSON 中两个键的值？这款工具可以帮您一键完成，自动检测并显示所有可用键名，轻松实现数据重组，提高数据处理效率。
 - [JSON 键值映射工具](/guide/json/json-value-transformer.md): 需要在不同 JSON 结构间迁移数据？本工具支持使用 JSONPath 定义键映射关系，将源值复制到目标字段，特别适用于多语言内容转换和复杂数据重组。
-- [](/guide/translation/deploy.md)
-- [管理词汇表](/guide/translation/glossaries.md): 如何确保专业术语在翻译中保持一致？了解如何使用术语库功能，通过简单的格式定义专有名词、人名等，提高翻译的准确性和专业性。
-- [](/guide/translation/interface.md): 查找如何配置翻译工具？本页面为您导航至详细的界面功能说明与翻译 API 设置文档，帮助您快速上手并自定义您的翻译流程。
-- [](/guide/translation/md-translator/next.md): 想知道 MD Translator 的开发初衷吗？本页对比了 GT4T、Markdown Docs Translator 等工具的优劣，并介绍了我们的解决方案，同时提供了目录翻译功能的实现说明。
-- [语言支持](/guide/translation/supported-languages.md): 完整的语言代码对照表，支持 77 种语言互译。包含语言代码、母语名称、英文名称和中文名称，方便批量配置多语言翻译。

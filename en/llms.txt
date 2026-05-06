@@ -1,15 +1,15 @@
 ## guide
 
 - [Tools By AI](/en/guide/index.md): Learn the core philosophy behind Tools By AI. We focus on AI as a powerful assistant to build controllable, reliable, and custom tools, not on full AI autonomy.
-- [Translation Tools](/en/guide/translation/index.md): Struggling with text translation in your projects? We offer specialized tools for JSON, Markdown, and subtitle files, supporting batch translation and multiple APIs.
+- [Translation Tools](/en/guide/translation/index.md): A free translation suite for developers and creators, covering subtitle, Markdown, and JSON i18n files. Supports 21 LLMs and 8 translation APIs across 70+ languages.
 - [Introduction](/en/guide/translation/json-translate/index.md): Need to translate JSON files? This tool is designed for i18n, supporting global, node-specific, and key-based translation modes to streamline localization.
 - [JSON Translate Deployment](/en/guide/translation/json-translate/deploy.md): Complete deployment guide for JSON Translation Tool, including local deployment, Vercel one-click, Cloudflare Pages, and Docker image deployment.
 - [Introduction](/en/guide/translation/subtitle-translator/index.md): Need a fast, free subtitle translator? This tool batch translates SRT, ASS, VTT files in seconds with context-aware AI, multi-language support, and more.
 - [Subtitle Translator Deployment](/en/guide/translation/subtitle-translator/deploy.md): Complete deployment guide for Subtitle Translator, including local deployment, Vercel one-click, Cloudflare Pages, and Docker image deployment.
 - [Introduction](/en/guide/translation/md-translator/index.md): Tired of broken formatting when translating Markdown? This tool is designed for technical docs, preserving original structure while translating with multiple AI engines.
 - [MD Translator Deployment](/en/guide/translation/md-translator/deploy.md): Complete deployment guide for Markdown Translator, including local deployment, Vercel one-click, Cloudflare Pages, and Docker image deployment.
-- [Feature Description](/en/guide/translation/info.md): Explore the core capabilities of the translation tool. IndexedDB-based massive caching, smart concurrency control, and context optimization for long texts.
-- [Translation API Guide](/en/guide/translation/api.md): How to choose the best translation service? This page compares APIs like DeepL, Google, and Azure, plus various LLMs, detailing their free tiers and ideal use cases.
+- [Feature Guide](/en/guide/translation/info.md): Core features of the translation tool — multilingual batch translation, local cache, context-aware translation, failed-line retry, and tuning guidance.
+- [Translation API Guide](/en/guide/translation/api.md): Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
 - [FAQ](/en/guide/translation/faq.md): Translation empty or slow? Is my API key safe? This page answers common questions about our translation tools, covering API keys, DeepL, and data security.
 - [Changelog](/en/guide/translation/changelog.md): See the complete update history for our translation tools. This page logs all new features, optimizations, and bug fixes, including major milestones like AI context translation.
 - [Text Splitter](/en/guide/tools/text-splitter.md): Split long text into chunks by character count, by delimiter, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
@@ -20,8 +20,3 @@
 - [JSON Value Extractor](/en/guide/json/json-value-extractor.md): Need to pull specific data from complex JSON? Use this tool to easily extract values from one or more nodes using JSONPath expressions, with optional prefixes.
 - [JSON Key-Value Swap](/en/guide/json/json-value-swapper.md): Need to swap the values of two keys in a JSON array? This tool helps you do it in one click, automatically detecting all available keys to speed up data processing.
 - [JSON Key-Value Mapping Tool](/en/guide/json/json-value-transformer.md): Need to migrate data between JSON structures? This tool uses JSONPath to map keys, copying values from a source to a target, ideal for multilingual content.
-- [](/en/guide/translation/deploy.md)
-- [管理词汇表](/en/guide/translation/glossaries.md): 将某些固定文本翻译成统一的英文版本，创建一个字典，将固定文本映射为对应的英文版本。 注意：词汇表为 NEXT 功能，以下仅为设计思路，参考：https://developers.deepl.com/docs/api-reference/glossaries 初步设计：只有完全符合的文本才会按指定内容翻译，无视翻译规则。如果是想将指定文本进行翻译，就需要将指定词汇再进行切割？ key 结构为 源条目_targetlanguage_目标条目，词汇表保存为本地文件，之后翻译自动从中读取。也就是用 t*glossarieskey 来查找，找不到才进行翻译。完整的结构为 t*${SparkMD5.hash(text)}_${targetLanguage}_${sourceLanguage}_${translationMethod}_${llmConfigHash}。
-- [](/en/guide/translation/interface.md): Looking for how to configure the translation tools? This page navigates you to detailed interface instructions and Translation API settings to help you get started quickly.
-- [](/en/guide/translation/md-translator/next.md): Curious about the motivation behind MD Translator? This page compares it with tools like GT4T and explains our solution. Also includes instructions for directory translation.
-- [Language Support](/en/guide/translation/supported-languages.md): Complete language code reference table with 77 supported languages. Includes language codes, native names, English names, and Chinese names for batch multi-language configuration.
