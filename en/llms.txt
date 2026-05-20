@@ -12,7 +12,10 @@
 - [Translation API Guide](/en/guide/translation/api.md): Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
 - [FAQ](/en/guide/translation/faq.md): Translation empty or slow? Is my API key safe? This page answers common questions about our translation tools, covering API keys, DeepL, and data security.
 - [Changelog](/en/guide/translation/changelog.md): See the complete update history for our translation tools. This page logs all new features, optimizations, and bug fixes, including major milestones like AI context translation.
-- [Text Splitter](/en/guide/tools/text-splitter.md): Split long text into chunks by character count, by delimiter, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
+- [Chinese Converter](/en/guide/tools/chinese-conversion.md): Browser-local Chinese converter. Simplified ↔ Traditional, Taiwan/HK regional vocabulary, Japanese Shinjitai, plus batch files, smart line break, and a user-editable protected dictionary (terms that won't be converted). Nothing uploaded.
+- [Novel Processor](/en/guide/tools/novel-processor.md): Novel Processor is a one-stop cleanup tool built for web novels, e-books, and other long-form text. It auto-repairs formatting issues, strips ads, normalizes chapter titles, reorders by chapter index, and optionally does Trad/Simp conversion — turning chaotic novel text into something clean and readable.
+- [](/en/guide/tools/text-splitter.md)
+- [](/en/guide/tools/text-toolbox.md)
 - [JSON Data Matching Tool](/en/guide/json/json-match-update.md): Need to update one dataset from another? This tool matches IDs between two JSON files to accurately update values in a target field, simplifying data integration.
 - [JSON Node Edit Tool](/en/guide/json/json-node-edit.md): Need to bulk edit JSON nodes? This tool finds nodes via JSONPath and lets you add prefixes, find/replace text, or directly replace values to simplify data processing.
 - [JSON Node Insertion](/en/guide/json/json-node-inserter.md): Need to add new fields to a JSON file in bulk? This tool lets you precisely insert one or more new nodes after a specified target, simplifying data restructuring.
