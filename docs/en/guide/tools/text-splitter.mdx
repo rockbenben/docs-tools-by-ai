@@ -6,6 +6,17 @@ head:
 description: Split long text into chunks by character count, by delimiter, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
 appUrl: https://tools.newzone.top/en/text-splitter
 appName: Text Splitter
+faq:
+  - q: What's the difference between the three splitting modes?
+    a: "By Length" chunks text into blocks of a fixed character count (default 2000) and snaps boundaries to a delimiter if one is provided. "Chinese Paragraph" / "English Paragraph" run language-aware sentence detection — Chinese uses punctuation rules, English uses the compromise NLP library. Pick whichever matches your input language.
+  - q: Why is there no length toggle for delimiter-only splitting?
+    a: Delimiter activation is implicit — purely controlled by whether the delimiter field has a value. Length > 0 + delimiter filled = chunk + snap. Length > 0 + delimiter empty = hard chunk. Length = 0 + delimiter filled = split at every delimiter (length ignored). Length = 0 + delimiter empty = error.
+  - q: When does batch export package as ZIP?
+    a: Above 3 segments. ≤ 3 segments download as individual files; > 3 are bundled into a single `<filename>_split_files.zip` to avoid spamming your downloads folder.
+  - q: Why does the preview hide automatically sometimes?
+    a: When the result exceeds 500 segments, the preview is auto-hidden to keep the page responsive. Click "Show Anyway" to render it, or just use the export buttons (which work regardless of visibility). You can also force-hide via the "Hide results" toggle in the config.
+  - q: Is anything uploaded?
+    a: No. The tool runs entirely in your browser — no servers, no uploads. Process even million-character files without bandwidth concerns.
 ---
 
 # Text Splitter

@@ -12,11 +12,6 @@
   },
   {
     "type": "dir",
-    "name": "others",
-    "label": "其他"
-  },
-  {
-    "type": "dir",
     "name": "json",
     "label": "JSON 工具"
   }
