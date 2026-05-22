@@ -1,7 +1,7 @@
 ## guide
 
 - [Tools By AI](/en/guide/index.md): Learn the core philosophy behind Tools By AI. We focus on AI as a powerful assistant to build controllable, reliable, and custom tools, not on full AI autonomy.
-- [Translation Tools](/en/guide/translation/index.md): A free translation suite for developers and creators, covering subtitle, Markdown, and JSON i18n files. Supports 21 LLMs and 8 translation APIs across 70+ languages.
+- [Translation Tools](/en/guide/translation/index.md): A free translation suite for developers and creators, covering subtitle, Markdown, and JSON i18n files. Supports 21 LLMs and 8 translation APIs across 100+ languages.
 - [Introduction](/en/guide/translation/json-translate/index.md): Need to translate JSON files? This tool is designed for i18n, supporting global, node-specific, and key-based translation modes to streamline localization.
 - [JSON Translate Deployment](/en/guide/translation/json-translate/deploy.md): Complete deployment guide for JSON Translation Tool, including local deployment, Vercel one-click, Cloudflare Pages, and Docker image deployment.
 - [Introduction](/en/guide/translation/subtitle-translator/index.md): Need a fast, free subtitle translator? This tool batch translates SRT, ASS, VTT files in seconds with context-aware AI, multi-language support, and more.
