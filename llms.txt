@@ -1,7 +1,9 @@
+字幕翻译器 · Markdown 翻译 · JSON i18n 翻译工具 - Tools By AI 中文文档
+
 ## guide
 
 - [Tools By AI](/guide/index.md): 了解 Tools By AI 背后的核心理念。我们不追求完全自主的 AI，而是将 AI 作为强大辅助，帮您打造可控、可靠的定制化工具，真正实现“任务工具化”，提升效率。
-- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 21 种 AI 大模型与 8 种翻译 API，100+ 语言批量翻译。
+- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 21 种 AI 大模型与 8 种翻译 API，120+ 语言批量翻译。
 - [项目介绍](/guide/translation/json-translate/index.md): 需要处理多语言 JSON 文件？JsonTranslate 工具专为 i18n 本地化设计，支持全局、指定节点、i18n 等多种翻译模式，助您轻松完成项目国际化。
 - [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [项目介绍](/guide/translation/subtitle-translator/index.md): 还在手动翻译字幕？这款免费工具支持批量、秒级翻译 SRT/ASS/VTT 字幕，提供上下文关联、多语言支持等高级功能，大幅提升您的视频翻译效率。
