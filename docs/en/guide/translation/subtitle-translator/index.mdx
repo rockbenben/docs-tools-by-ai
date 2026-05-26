@@ -6,6 +6,16 @@ head:
 description: Need a fast, free subtitle translator? This tool batch translates SRT, ASS, VTT files in seconds with context-aware AI, multi-language support, and more.
 appUrl: https://tools.newzone.top/en/subtitle-translator
 appName: Subtitle Translator
+image: https://img.newzone.top/subtile-translator.gif?imageMogr2/format/webp
+howto:
+  name: How to translate subtitles with Subtitle Translator
+  steps:
+    - name: Upload your subtitle file
+      text: Drag or paste a .srt / .ass / .vtt / .lrc file into the main view.
+    - name: Pick the target language
+      text: Pick your target language in the top-right; source defaults to Auto-detect but you can pick one explicitly.
+    - name: Translate
+      text: Click Translate. Exported in seconds — multi-language output appends the language code to the filename (e.g. movie.zh.srt).
 ---
 
 import Info from '../_interface.mdx';
@@ -13,7 +23,15 @@ import Info from '../_interface.mdx';
 # Introduction
 
 :::tip Quick summary
-Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, VTT, and LRC formats across 100+ languages. Block-compression plus parallel translation finishes a full TV episode in ~1 second. It also offers context-aware translation, local cache reuse, and 3 free + 3 commercial + 5 AI LLM interfaces.
+Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, VTT, and LRC formats across 120+ languages. Block-compression plus parallel translation finishes a full TV episode in ~1 second. It also offers context-aware translation, local cache reuse, and a wide range of free / commercial translation APIs plus 20+ LLMs (including local Ollama / LM Studio / TranslateGemma).
+:::
+
+:::tip 30-second quickstart
+1. **Drag** or **paste** your subtitle file (`.srt` / `.ass` / `.vtt` / `.lrc`)
+2. Pick the **target language** (source defaults to Auto-detect)
+3. Click **Translate** — exported in seconds; for multi-language output the filename auto-appends the language code (e.g. `movie.zh.srt`, `movie.fr.srt`)
+
+No API key required — runs on free **GTX** by default. For higher quality, switch to **DeepSeek** (best value) / DeepL / Claude in the top-right API settings; see the [API guide](../api.mdx).
 :::
 
 In recent years, with the rise of online video, translations of popular foreign films and series are mostly handled by video platforms, while the once-active fansub groups have gradually faded from public view. However, the demand for subtitles for niche and self-made videos has not been effectively met, leading to a continuous increase in the number of videos without subtitles. To solve this problem, the Whisper tool can be used to automatically generate subtitles for these "raw" videos, which can then be translated into other languages using a translation API. For specific steps, you can refer to the article: [Can't find subtitles? Whisper lets you understand Japanese dramas even if you don't know the language](https://newzone.top/posts/2022-11-18-whisper_ai_subtitles.html).
@@ -25,19 +43,19 @@ To address issues in the market such as slow translation speeds, lack of batch p
 !["Batch Translation"](https://img.newzone.top/subtile-translator.gif?imageMogr2/format/webp 'Batch Translation')
 
 - **Second-level Translation**: Utilizes chunk compression and parallel processing of subtitle text to translate an entire TV episode in one second (the GTX interface is slightly slower).
-- **Batch Translation**: Supports processing hundreds of subtitle files at once, significantly boosting translation efficiency.
+- **Batch Translation**: Process hundreds of subtitle files at once. When the run finishes you get an aggregated success/failure summary (e.g. "Exported (3/5)") — no need to check each file individually.
 - **Translation Cache**: Automatically caches translation results locally to avoid redundant calls, saving time and API costs.
 - **Context-Aware Translation** (AI models only): The AI translates based on context, improving the coherence and accuracy of dialogue.
-- **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .v.tt / .lrc), and the exported file has the same name as the original, eliminating the need for manual adjustments.
+- **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .vtt / .lrc). Exports preserve the original filename; when translating into multiple languages, the language code is automatically appended as a suffix (e.g. `movie.zh.srt`, `movie.fr.srt`).
 - **Subtitle Extraction**: Supports extracting subtitle text for subsequent use in AI summarization, derivative works, and other applications.
-- **Multiple API Options**: Offers 3 free translation methods, 3 commercial-grade translation APIs, and 5 AI LLM (Large Language Model) interfaces to meet different needs.
-- **Multi-language Support & Internationalization**: Supports 100+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
+- **Multiple API Options**: Built-in free / commercial translation APIs plus 20+ AI LLM endpoints (including local Ollama / LM Studio / TranslateGemma) — pick by budget and privacy needs.
+- **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
 
 ## Subtitle Format Support
 
 Subtitle Translator supports multiple subtitle formats, including `.srt`, `.ass`, `.vtt`, and `.lrc`, and provides an automatic format matching feature:
 
-- **Bilingual Subtitles**: When checked, the translated text will be inserted below the original subtitle, and the display position of the translation (top/bottom) can be adjusted.
+- **Bilingual Subtitles**: When checked, the translated text is inserted below the original, with the display order (top/bottom) configurable. For SRT / VTT sources you can additionally choose **ASS output**: original and translation get separate styles (Default 70pt white + Secondary 55pt cyan), letting you independently tweak font, color, and size in any subtitle editor.
 - **Timeline Compatibility**: Supports time formats that omit the default hour, exceed 100 hours, and display 1-3 millisecond digits to ensure compatibility.
 - **Automatic Encoding Detection**: No need to manually select the encoding format; the tool automatically detects the subtitle file's encoding to prevent garbled text issues.
 
@@ -56,6 +74,11 @@ The API settings provide two parameters for fine-tuning this process:
 - **Decrease Values**: Lighter individual requests and higher fault tolerance, but the immediate context available for the model to reference will be reduced.
 - **Error Handling**: If you encounter errors such as 429, empty responses, or "context length exceeded," try lowering these parameters or increasing the request interval.
 
-⚠️ User Tip: Models under 70B or compact local models are prone to outputting misaligned text or missing tags in this mode; using mainstream online large models is highly recommended.
+⚠️ **Small local model tip**: Local models under 14B are prone to misaligned output or dropped lines in context mode (dropped lines fall back to the original text). Two solutions:
+
+- **Simple fix**: Turn off the "Context-Aware Translation" toggle to switch to line-by-line concurrent mode (default 10 concurrent). Fast and reliable, at the cost of slightly reduced consistency between adjacent lines.
+- **Keep context**: Lower "Context Lines" to 20-30, and use a 14B+ instruction-tuned model (Qwen3-14B/32B, Gemma 3 27B-it, etc.).
+
+For pure translation needs, also consider the standalone **TranslateGemma** service in the service list (not by entering `translategemma` as a model name under "Custom OpenAI-compatible") — it's a seq2seq line-by-line service with no marker structure, the most reliable option for local deployment.
 
 <Info />

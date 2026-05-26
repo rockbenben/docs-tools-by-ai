@@ -12,6 +12,21 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 The tool integrates **8 classic translation APIs** and **21 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
 
+## Which API should I pick?
+
+| Use case | Recommended | Why |
+|---|---|---|
+| First-time user, no API key | **GTX (Free)** | Free, zero-config — the default |
+| Subtitles, UI strings, lots of short sentences | **GTX Free** or **Qwen-MT Flash** | High concurrency, cheap |
+| Long text, business / literature | **DeepL** | Best overall quality and flow |
+| **Entry-level AI translation / budget-conscious LLM use** | **DeepSeek** | Best price/value LLM — strong CN/EN quality at a fraction of Claude / GPT per-token cost |
+| Chinese ↔ English, reliability | **DeepSeek** / **Qwen-MT Plus** / **Claude** | Works in mainland CN, great CN/EN quality |
+| Technical docs needing consistent terminology | **DeepSeek** (best value) / **Claude** (premium) / **GPT** / **Gemini** | LLMs let you control style via custom prompts |
+| Privacy-sensitive, local-only | **TranslateGemma** | Self-hosted, free, purpose-built translation model |
+| Low-resource languages (Wolof, Bhojpuri, etc.) | **DeepL** | Covers many low-resource languages reliably (e.g. wo / an / gn that Google doesn't carry) |
+
+For detailed comparisons and how to get API keys, keep reading ↓
+
 ## Classic Translation APIs
 
 | API              | Quality | Stability | Best for                          | Free tier                                |
@@ -47,7 +62,11 @@ Key parameters:
 
 - **Model**: enter the model name from your provider; for Azure OpenAI, enter the deployment name.
 - **Temperature**: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.
-- **Thinking mode**: DeepSeek, Claude, and certain NVIDIA NIM models support a thinking-chain toggle plus a `low / medium / high` reasoning effort selector. Only shown when the current model actually supports it.
+- **Thinking mode**: lets the AI think before translating — higher quality, slower and pricier. Supported models show a toggle in the UI. The toggle is **stored per model** so switching models preserves each one's setting independently. The exact UI form depends on the provider:
+  - **Three levels** (off / low / medium / high): Claude, Gemini, DeepSeek, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM
+  - **Binary toggle** (off / on): Doubao, Zhipu GLM, Moonshot (Kimi), MiniMax, Hunyuan TurboS (underlying APIs accept on/off but not an effort param)
+  - **Low / high only**: xAI Grok 4.3 (API limitation)
+  - **Always-on SKUs** (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro / Deep Research, Cohere Command A Reasoning, Grok 4.20 Reasoning / Multi-Agent
 
 ### Regional Endpoint Switcher
 
@@ -118,10 +137,11 @@ These appear as quick-pick chips next to the URL field.
 
 Google's translation-specialized Gemma model, trained specifically for translation quality. Quick notes:
 
+- **Pick "TranslateGemma" directly from the service list** — don't go through "Custom (OpenAI-compatible)" with `translategemma-4b-it` as the model name. The two take entirely different code paths: the dedicated TranslateGemma service makes line-by-line calls tailored to the Gemma translation model's I/O format, while Custom uses the generic LLM pipeline with batching and context markers — which causes dropped lines and slower runs on small (under 14B) models.
 - The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp
-- Recommended models: `translategemma-4b-it` (compact and fast) or `translategemma-9b-it` (better quality)
+- Recommended models: `translategemma-4b-it` (compact and fast), `translategemma-12b-it` (better quality), or `translategemma-27b-it` (best quality)
 - **Source language must be explicit** — auto-detect isn't supported
-- Cantonese (yue) and Bhojpuri (bho) aren't covered by the model
+- **Limited language coverage**: only ~55 mainstream languages (Google's WMT24++ benchmark scope). Low-resource languages (Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr), and ~62 others) are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
 
 ### Solving CORS Issues
 

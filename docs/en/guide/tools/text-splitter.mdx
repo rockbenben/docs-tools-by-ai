@@ -6,9 +6,21 @@ head:
 description: Split long text into chunks by character count, by delimiter, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
 appUrl: https://tools.newzone.top/en/text-splitter
 appName: Text Splitter
+image: https://docs.newzone.top/img/text-splitter.png
+howto:
+  name: How to chunk long text with Text Splitter
+  steps:
+    - name: Paste or upload your long text
+      text: Paste long text into the input box, or drag in a text file.
+    - name: Pick a splitting mode
+      text: Fixed-size chunks (for AI input) → By Length; long Chinese text by paragraph → Chinese Paragraph; English text by sentence → English Paragraph.
+    - name: Configure delimiters (optional)
+      text: To align cuts to delimiters like `. ? !`, fill in the delimiter field.
+    - name: Process and export
+      text: Click Process. ≤ 3 segments download individually; > 3 segments auto-bundle as a ZIP.
 faq:
   - q: What's the difference between the three splitting modes?
-    a: "By Length" chunks text into blocks of a fixed character count (default 2000) and snaps boundaries to a delimiter if one is provided. "Chinese Paragraph" / "English Paragraph" run language-aware sentence detection — Chinese uses punctuation rules, English uses the compromise NLP library. Pick whichever matches your input language.
+    a: '"By Length" chunks text into blocks of a fixed character count (default 2000) and snaps boundaries to a delimiter if one is provided. "Chinese Paragraph" / "English Paragraph" run language-aware sentence detection — Chinese uses punctuation rules, English uses the compromise NLP library. Pick whichever matches your input language.'
   - q: Why is there no length toggle for delimiter-only splitting?
     a: Delimiter activation is implicit — purely controlled by whether the delimiter field has a value. Length > 0 + delimiter filled = chunk + snap. Length > 0 + delimiter empty = hard chunk. Length = 0 + delimiter filled = split at every delimiter (length ignored). Length = 0 + delimiter empty = error.
   - q: When does batch export package as ZIP?
@@ -24,6 +36,16 @@ faq:
 The [Text Splitter](https://tools.newzone.top/en/text-splitter) chunks long text for use cases like preparing LLM context (ChatGPT, DeepSeek, Claude), document editing, and social media content prep. It offers **three splitting modes** — by length, by Chinese paragraph, by English paragraph — plus batch export and ZIP packaging.
 
 ![Text Splitter interface](/img/text-splitter.png 'Text Splitter interface')
+
+:::tip 30-second quickstart
+1. Paste or upload your long text
+2. Pick a **mode**:
+   - Fixed-size chunks (for AI input) → **By Length**
+   - Long Chinese text by paragraph → **Chinese Paragraph**
+   - English text by sentence → **English Paragraph**
+3. To align cuts to delimiters (`. ? !` etc.), fill in the delimiter field
+4. Click **Process** — exports as individual files (≤ 3) or a ZIP bundle (> 3)
+:::
 
 ## Three splitting modes
 

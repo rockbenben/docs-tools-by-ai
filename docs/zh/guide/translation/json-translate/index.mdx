@@ -6,6 +6,18 @@ head:
 description: 需要处理多语言 JSON 文件？JsonTranslate 工具专为 i18n 本地化设计，支持全局、指定节点、i18n 等多种翻译模式，助您轻松完成项目国际化。
 appUrl: https://tools.newzone.top/zh/json-translate
 appName: JSON Translate
+image: https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp
+howto:
+  name: 用 JSON Translate 翻译 i18n 文件的步骤
+  steps:
+    - name: 上传 JSON 文件
+      text: 拖入或粘贴 JSON 文件到主界面。
+    - name: 选择翻译模式
+      text: 全部 string 翻 → 全局翻译；只翻 title / description 等特定 key → 指定键名；多语言 i18n（每个对象添加目标语言字段）→ i18n 模式。
+    - name: 设置源/目标语言
+      text: 在右上角选源语言和一个或多个目标语言。
+    - name: 开始翻译
+      text: 点「翻译」按钮。导出 JSON 时原始结构保持不变。
 ---
 
 import Info from '../_interface.mdx';
@@ -13,10 +25,21 @@ import Info from '../_interface.mdx';
 # 项目介绍
 
 :::tip 快速介绍
-JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google Translate、Azure 和 DeepL(X) 三种 API。提供全局翻译、指定节点翻译、i18n 键值翻译三种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
+JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、选择性翻译、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
 :::
 
-[JsonTranslate](https://tools.newzone.top/zh/json-translate)，一款专为开发者和内容创作者设计的多语言 JSON 翻译工具，支持 Google Translate、Azure 和 DeepL(X) 翻译 API，助力项目国际化和本地化。无论你是在开发多语言网站、应用程序还是处理多语言数据集，JsonTranslate 都能提供简便的解决方案，轻松将 JSON 文件中的内容翻译为多种目标语言。
+:::tip 30 秒上手
+1. 拖入或粘贴 JSON 文件
+2. 选 **翻译模式**：
+   - 全部 string 都翻 → **全局翻译**
+   - 只翻 `title` / `description` 等特定 key → **指定键名**
+   - 多语言 i18n 项目（每个对象添加目标语言字段）→ **i18n 模式**
+3. 选源/目标语言，点 **翻译** —— JSON 结构原样保留导出
+
+> JSON 翻译只支持单文件模式（不批量），适合精细处理。
+:::
+
+[JsonTranslate](https://tools.newzone.top/zh/json-translate)，一款专为开发者和内容创作者设计的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等大语言模型，助力项目国际化和本地化。无论你是在开发多语言网站、应用程序还是处理多语言数据集，JsonTranslate 都能提供简便的解决方案，轻松将 JSON 文件中的内容翻译为多种目标语言。
 
 ![JSON Translate 工作流动画演示：拖入 JSON 文件、设置源/目标语言、一键批量翻译](https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp 'JsonTranslate 使用示例')
 

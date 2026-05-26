@@ -10,6 +10,16 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
 
 待更新功能：本地客户端化；对翻译后的字幕内容进行 ai 润色。
 
+- 2026.05.26: 翻译引擎深度调优。
+  - Claude API 自动启用 prompt caching（`cache_control`）——同一 system prompt 多次复用时，输入 token 享受 ~90% 折扣
+  - Custom (OpenAI-compatible) 新增可选 maxTokens 上限，防止本地小模型陷入重复输出循环；Claude / Gemini / OpenAI-compat 同步加上 `finish_reason=length` 截断检测
+  - Custom 本地 LLM 默认 contextWindow 从 100 降到 30，适配 14B 以下的小模型
+  - 失败处理升级：单行失败自动回填原文（保证输出可用）；多语言批量翻译中整语言失败聚合到独立面板，可一键复制语言代码重试
+  - SRT / VTT 双语模式新增 **ASS 输出** 选项，原文 / 译文走独立样式（Default / Secondary），方便后期独立调整字体颜色大小
+  - 友好错误提示：NetworkError / 超时 / 级联中止给出可读文案，不再 "Failed to fetch" 一刀切
+  - Thinking 模式按模型独立保存开关状态；UI 自动区分三档（off/low/med/high）/ 二档（off/on）/ 仅 low-high 三种 effort 形态；intrinsic-thinking SKU 不再误显示 toggle
+  - 语言选择器升级：122 种语言按地理 + 使用人数分组；多语言模式新增 "Top 10 / 欧洲 / 东亚 / 印度次大陆" 4 个预设，单语言场景记忆最近 5 个选过的语言；移动端单列布局
+  - DeepLX 在服务下拉中下移到 DeepL 后面（品牌成组，稳定版在前）
 - 2026.05.06: 服务目录 v2 大版本更新。
   - 新增 MT 服务 **TranslateGemma**（Google 翻译专用 Gemma 衍生模型，本地自托管）
   - 新增 LLM 提供商：MiniMax、Tencent Hunyuan（混元）、Baidu ERNIE（千帆）、Cohere

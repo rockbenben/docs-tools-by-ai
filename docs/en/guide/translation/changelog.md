@@ -10,6 +10,16 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: Create a local desktop client; add AI polishing for translated subtitles.
 
+- 2026.05.26: Translation engine deep-tuning.
+  - Auto-enable Anthropic prompt caching (`cache_control`) for Claude requests — ~90% input token discount when the same system prompt is reused
+  - New opt-in `maxTokens` cap for Custom (OpenAI-compatible) to prevent local small-model repetition loops; `finish_reason=length` truncation detection added to Claude / Gemini / OpenAI-compat
+  - Default `contextWindow` for Custom local LLM lowered from 100 to 30 to match the behavior of models under 14B
+  - Failure handling: failed lines now auto-fill with original text (output always usable); whole-language failures in multi-language mode aggregate into a dedicated panel with one-click copy-target-language for retry
+  - SRT / VTT bilingual mode adds an **ASS output** option with separate Default / Secondary styles for original and translation — independent font/color/size tweaks in any subtitle editor
+  - Friendly error messages for NetworkError / timeout / cascaded abort — no more raw "Failed to fetch"
+  - Thinking mode toggle now stored per model; UI auto-distinguishes three-level (off/low/med/high) / binary (off/on) / low-high-only effort variants; intrinsic-thinking SKUs no longer show a useless toggle
+  - Language picker overhaul: 122 languages grouped by geography + speaker count; multi-language mode adds Top 10 / Europe / East Asia / Indian Subcontinent presets; single-language mode remembers the last 5 picks; mobile collapses to a single column
+  - DeepLX moved below DeepL in the service dropdown (brand-grouped, stable version first)
 - 2026.05.06: Service catalog v2 — major release.
   - New MT service: **TranslateGemma** (Google's translation-specialized Gemma derivative, self-hosted)
   - New LLM providers: MiniMax, Tencent Hunyuan, Baidu ERNIE (Qianfan), Cohere

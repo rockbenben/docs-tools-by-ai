@@ -12,6 +12,21 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 工具集成了 **8 种经典翻译 API** 和 **21 种大语言模型**，可按文本类型、预算与隐私需求自由选择。
 
+## 我应该挑哪个接口？
+
+| 场景 | 推荐 | 为什么 |
+|---|---|---|
+| 第一次试用，没 API Key | **GTX (Free)** | 免费、零配置，默认就是它 |
+| 字幕、UI 文案、海量短句 | **GTX Free** 或 **Qwen-MT Flash** | 并发高、便宜 |
+| 长文本、商务/文学翻译 | **DeepL** | 翻译质量最稳，整体连贯 |
+| **入门 AI 翻译 / 想用大模型省钱** | **DeepSeek** | 国产 LLM 性价比首选——中英文质量好，单价远低于 Claude / GPT |
+| 中英互译、要稳定 | **DeepSeek** / **Qwen-MT Plus** / **Claude** | 国内可用、中英效果好 |
+| 技术文档、需要术语一致 | **DeepSeek**（性价比）/ **Claude**（顶级）/ **GPT** / **Gemini** | LLM 可用自定义 prompt 控风格 |
+| 隐私敏感，要本地跑 | **TranslateGemma** | 自托管免费，翻译专用模型质量好 |
+| 沃洛夫、博杰普尔等小语种 | **DeepL** | 含较多小语种，质量稳定（如 wo / an / gn 等 Google 不收的） |
+
+详细对比和申请方式往下看 ↓
+
 ## 经典翻译 API
 
 | 接口             | 质量  | 稳定性 | 适合场景                       | 免费额度                   |
@@ -47,7 +62,11 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 - **模型**：填所选接口提供的模型名；Azure OpenAI 填部署名。
 - **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
-- **思考模式**：DeepSeek、Claude、部分 NVIDIA NIM 模型支持思考链开关，开启后可在 `low / medium / high` 三档调节推理强度。仅对支持的模型显示。
+- **思考模式**：让 AI 多想一步再翻译，质量更高但更慢/更贵——支持的模型 UI 会显示开关。开关**按模型独立保存**，切模型不影响别的设置。具体 UI 形态因 provider 而异：
+  - **三档调节**（off / low / medium / high）：Claude、Gemini、DeepSeek、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM
+  - **两档开关**（off / on）：Doubao、Zhipu GLM、Moonshot (Kimi)、MiniMax、Hunyuan TurboS（底层 API 只接受 on/off，不接受 effort）
+  - **仅 low / high**：xAI Grok 4.3（API 限制）
+  - **选了即开启**（UI 不显示 toggle）：ERNIE 5.0-Thinking、Hunyuan 2.0-Thinking、Mistral Magistral、Perplexity Sonar Reasoning Pro / Deep Research、Cohere Command A Reasoning、Grok 4.20 Reasoning / Multi-Agent
 
 ### 区域端点切换
 
@@ -118,10 +137,11 @@ URL 输入框旁会列出这些常用地址作为快捷选项。
 
 Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练。使用要点：
 
+- **请在服务列表里直接选「TranslateGemma」**——不要走「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 模型名。两者是完全不同的代码路径：独立的 TranslateGemma 服务走逐行调用，专门匹配 Gemma 翻译模型的输入输出格式；Custom 走的是带批次/上下文标记的 LLM 通用路径，对 14B 以下的小模型容易漏行、速度也更慢。
 - 默认地址指向 LM Studio 1234 端口，可一键切换到 Ollama / llama.cpp
-- 推荐模型：`translategemma-4b-it`（轻量快速）或 `translategemma-9b-it`（质量更好）
+- 推荐模型：`translategemma-4b-it`（轻量快速）、`translategemma-12b-it`（质量更好）或 `translategemma-27b-it`（最强）
 - **必须明确指定源语言**——这个模型不支持"自动检测"
-- 暂不支持粤语（yue）和博杰普尔语（bho）
+- **语言覆盖较小**：只支持约 55 种主流语言（对齐 Google WMT24++ benchmark）；小语种（粤语 yue、博杰普尔 bho、沃洛夫 wo、阿拉贡 an、瓜拉尼 gn、库尔德 ckb/kmr 等约 68 种）会被 UI 直接拦截。需要更广语种请改用 DeepL / Google / Azure / Qwen-MT
 
 ### 解决 CORS 跨域
 

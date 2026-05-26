@@ -6,6 +6,20 @@ head:
 description: Reorder messy JSON arrays. Custom order, numeric asc/desc, with an optional group field that reuses the same sort strategy inside each bucket.
 appUrl: https://tools.newzone.top/en/json-sort-classify
 appName: JSON Sort & Classify
+image: https://docs.newzone.top/img/json-sort-classify.png
+howto:
+  name: How to reorder JSON arrays with JSON Sort & Group
+  steps:
+    - name: Paste or upload your JSON array
+      text: Paste a JSON array into the input box, or drag in a file.
+    - name: Pick a sort method
+      text: Custom Order / Numeric Asc / Numeric Desc — pick one.
+    - name: Set the sort field
+      text: Specify which key to sort by (e.g. `name`, `price`).
+    - name: Configure grouping (optional)
+      text: Fill in the "Group field" to bucket items first; leave empty to sort the whole array.
+    - name: Process
+      text: Click Process. The array gets reshuffled per your rules, ready to export.
 ---
 
 # JSON Sort & Group
@@ -13,6 +27,14 @@ appName: JSON Sort & Classify
 [JSON Sort & Group](https://tools.newzone.top/en/json-sort-classify) reshuffles a JSON array by rules you pick. At its core is one single-field sort; optionally, a **group field** buckets items first and the same sort strategy runs inside each bucket — **you learn one thing, use it in two places**.
 
 ![JSON Sort & Group interface](/img/json-sort-classify.png 'JSON Sort & Group interface')
+
+:::tip 30-second quickstart
+1. Paste or upload your JSON array
+2. Pick a **sort method** (Custom Order / Numeric Asc / Numeric Desc)
+3. Fill in the **sort field** (which key to sort by, e.g. `name`, `price`)
+4. **Group field** is optional — fill to bucket first, leave empty to sort the whole array
+5. Click **Process** — array reshuffled per your rules
+:::
 
 ## How it works
 

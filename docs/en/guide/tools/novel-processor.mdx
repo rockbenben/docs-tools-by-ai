@@ -8,7 +8,7 @@ faq:
   - q: What common novel-format issues does it fix?
     a: Smart line break (re-merge broken lines), paragraph indent, chapter title formatting, full-width → half-width, Trad/Simp conversion, ad/downloader watermark cleanup, line-end digit stripping, adjacent duplicate-line removal. Every step is an independent toggle inside the three collapsible config sections on the right.
   - q: What's the difference between "Chapter Split" and "Chapter Reorder" buttons?
-    a: "Chapter Split" only breaks inline-written chapter titles onto their own lines — a lightweight pre-processing pass that leaves everything else untouched. "Chapter Reorder" sorts the entire novel by the numeric chapter index extracted from each title (第十二章, Chapter 5, etc.), useful for downloads with scrambled chapter order.
+    a: '"Chapter Split" only breaks inline-written chapter titles onto their own lines — a lightweight pre-processing pass that leaves everything else untouched. "Chapter Reorder" sorts the entire novel by the numeric chapter index extracted from each title (第十二章, Chapter 5, etc.), useful for downloads with scrambled chapter order.'
   - q: How do "Filter Words" and the "Filter Threshold" work together?
     a: Filter Words accepts comma-separated keywords (e.g. `channel,downloader,group`) — every line containing any of them is removed. To avoid wiping legitimate text, set Filter Threshold to N → lines longer than N characters are exempt (kept even if they match a keyword). 0 disables the exemption. This lets you clean short watermark lines while preserving long body paragraphs.
   - q: What's the "Protected Dictionary" and is it related to the Chinese Converter?

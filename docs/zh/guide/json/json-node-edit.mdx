@@ -6,6 +6,18 @@ head:
 description: 需要批量修改 JSON 节点？这款工具支持通过 JSONPath 查找节点，并进行添加前缀/后缀、文本替换或直接替换节点值等多种批量编辑操作，简化数据处理。
 appUrl: https://tools.newzone.top/zh/json-node-edit
 appName: JSON Node Edit
+image: https://docs.newzone.top/img/json-node-edit.png
+howto:
+  name: 用 JSON 节点编辑器批量修改 JSON 的步骤
+  steps:
+    - name: 粘贴或上传 JSON 数据
+      text: 把 JSON 数据粘贴到输入框，或拖入 JSON / TXT 文件。
+    - name: 指定 JSONPath
+      text: 在「🔍 JSONPaths」输入要改的节点路径（如 title、zh.title,en.title，逗号分隔多条）。
+    - name: 选择操作
+      text: 加前后缀 / 查找替换 / 直接替换值，按需选。
+    - name: 开始处理
+      text: 点「开始处理」。所有匹配的节点会被批量改写。
 ---
 
 # JSON 节点批量编辑
@@ -13,6 +25,13 @@ appName: JSON Node Edit
 [JSON 节点编辑器](https://tools.newzone.top/zh/json-node-edit) 可以批量查找 JSON 数据中的特定节点，并对其值进行编辑操作。你可以为找到的节点值添加前缀、后缀，或进行文本替换，还可以直接替换整个节点值或进行多语言替换等高级操作。
 
 ![JSON 节点批量编辑界面](/img/json-node-edit.png 'JSON 节点批量编辑使用界面')
+
+:::tip 30 秒上手
+1. 粘贴或上传 JSON 数据
+2. 在 **🔍 JSONPaths** 输入要改的节点路径（如 `title`、`zh.title,en.title`，逗号分隔多条）
+3. 选操作：**加前后缀** / **查找替换** / **直接替换值**
+4. 点 **开始处理** —— 所有匹配的节点会被批量改写
+:::
 
 ## 功能概述
 

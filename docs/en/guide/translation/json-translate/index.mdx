@@ -6,6 +6,18 @@ head:
 description: Need to translate JSON files? This tool is designed for i18n, supporting global, node-specific, and key-based translation modes to streamline localization.
 appUrl: https://tools.newzone.top/en/json-translate
 appName: JSON Translate
+image: https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp
+howto:
+  name: How to translate i18n JSON files with JSON Translate
+  steps:
+    - name: Upload your JSON file
+      text: Drag or paste a JSON file into the main view.
+    - name: Pick a translation mode
+      text: Translate every string → Global Translation; only translate keys like title / description → Specific Keys; i18n projects (auto-adds target-language fields to each object) → i18n Mode.
+    - name: Set source / target languages
+      text: Pick source and one or more target languages in the top-right.
+    - name: Translate
+      text: Click Translate. Original JSON structure is preserved on export.
 ---
 
 import Info from '../_interface.mdx';
@@ -13,10 +25,21 @@ import Info from '../_interface.mdx';
 # Introduction
 
 :::tip Quick summary
-JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google Translate, Azure, and DeepL(X) APIs. It offers three modes — global translation, targeted node translation, and i18n key translation — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
+JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, selective translation, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
 :::
 
-[JsonTranslate](https://tools.newzone.top/en/json-translate) is a multilingual JSON translation tool designed specifically for developers and content creators. It supports translation APIs from Google Translate, Azure, and DeepL(X), helping streamline internationalization and localization processes. Whether you're building multilingual websites, applications, or working with multilingual datasets, JsonTranslate provides a simple and efficient solution to translate content in JSON files into multiple target languages.
+:::tip 30-second quickstart
+1. Drag or paste your JSON file
+2. Pick a **mode**:
+   - Translate every string → **Global Translation**
+   - Only translate keys like `title` / `description` → **Specific Keys**
+   - i18n project (auto-adds target-language fields to each object) → **i18n Mode**
+3. Set source/target languages, click **Translate** — original JSON structure preserved
+
+> JSON Translate is single-file only (no batch) — built for careful, targeted edits.
+:::
+
+[JsonTranslate](https://tools.newzone.top/en/json-translate) is a multilingual JSON translation tool designed specifically for developers and content creators. It supports translation APIs from Google, Azure, DeepL(X), Qwen-MT, and major LLMs (DeepSeek, Claude, GPT, Gemini, and more), helping streamline internationalization and localization processes. Whether you're building multilingual websites, applications, or working with multilingual datasets, JsonTranslate provides a simple and efficient solution to translate content in JSON files into multiple target languages.
 
 ![JSON Translate workflow animation: drag in a JSON file, pick source/target languages, batch translate in one click](https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp 'JsonTranslate usage demo')
 
