@@ -1,7 +1,10 @@
 import * as path from "node:path";
 import * as fs from "node:fs";
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import type { RspressPlugin } from "@rspress/core";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Build-time cache: git log spawns are slow (~50–100 ms each). One Map
 // per plugin invocation lets `extendPageData` re-look-up free.
@@ -71,55 +74,67 @@ export interface PluginGeoOptions {
   orgLogo: string;
   /** Profile / repo URLs that disambiguate the organization (sameAs). */
   orgSameAs?: string[];
+  /** One-sentence Organization description for site-level JSON-LD. Helps AI engines describe the brand without scraping the homepage. */
+  orgDescription?: string;
   /** URL of the actual web app — distinct from the docs site if hosted separately. Defaults to siteUrl. */
   appUrl?: string;
+  /** One-sentence SoftwareApplication description (the brand-level app entity). */
+  appDescription?: string;
+  /** Screenshot URL surfaced under SoftwareApplication.screenshot for rich SERP cards. */
+  appScreenshot?: string;
   /** Plain-text feature labels surfaced under SoftwareApplication.featureList. */
   appFeatureList?: string[];
   /** Bilingual site names rendered as name / alternateName. */
   siteNames?: Record<string, string>;
-  /** Reserved for future per-locale description support; not currently emitted. */
+  /** One-sentence WebSite description. Single language (global JSON-LD appears on all pages). */
+  siteDescription?: string;
+  /** @deprecated Use siteDescription. Kept for backward compat. */
   siteDescriptions?: Record<string, string>;
 }
 
 const buildSiteGraph = (o: PluginGeoOptions) => {
   const appUrl = o.appUrl ?? o.siteUrl;
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${o.siteUrl}/#organization`,
-        name: o.orgName,
-        url: o.siteUrl,
-        logo: o.orgLogo,
-        sameAs: o.orgSameAs ?? [],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${o.siteUrl}/#website`,
-        url: o.siteUrl,
-        name: o.siteNames?.en ?? `${o.orgName} Docs`,
-        alternateName: o.siteNames?.zh,
-        inLanguage: ["zh-CN", "en"],
-        publisher: { "@id": `${o.siteUrl}/#organization` },
-        // No SearchAction: rspress's search is an in-page modal (Cmd/Ctrl+K),
-        // not a URL-query endpoint, so a SearchAction would point at a fictional
-        // endpoint and degrade trust signal.
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": `${appUrl}/#software`,
-        name: o.orgName,
-        applicationCategory: "DeveloperApplication",
-        operatingSystem: "Web",
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-        url: appUrl,
-        author: { "@id": `${o.siteUrl}/#organization` },
-        publisher: { "@id": `${o.siteUrl}/#organization` },
-        featureList: o.appFeatureList ?? [],
-      },
-    ],
+  const siteDescription = o.siteDescription ?? o.siteDescriptions?.en ?? o.siteDescriptions?.zh;
+  const organization: Record<string, unknown> = {
+    "@type": "Organization",
+    "@id": `${o.siteUrl}/#organization`,
+    name: o.orgName,
+    url: o.siteUrl,
+    logo: o.orgLogo,
+    sameAs: o.orgSameAs ?? [],
   };
+  if (o.orgDescription) organization.description = o.orgDescription;
+
+  const website: Record<string, unknown> = {
+    "@type": "WebSite",
+    "@id": `${o.siteUrl}/#website`,
+    url: o.siteUrl,
+    name: o.siteNames?.en ?? `${o.orgName} Docs`,
+    alternateName: o.siteNames?.zh,
+    inLanguage: ["zh-CN", "en"],
+    publisher: { "@id": `${o.siteUrl}/#organization` },
+    // No SearchAction: rspress's search is an in-page modal (Cmd/Ctrl+K),
+    // not a URL-query endpoint, so a SearchAction would point at a fictional
+    // endpoint and degrade trust signal.
+  };
+  if (siteDescription) website.description = siteDescription;
+
+  const software: Record<string, unknown> = {
+    "@type": "SoftwareApplication",
+    "@id": `${appUrl}/#software`,
+    name: o.orgName,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    url: appUrl,
+    author: { "@id": `${o.siteUrl}/#organization` },
+    publisher: { "@id": `${o.siteUrl}/#organization` },
+    featureList: o.appFeatureList ?? [],
+  };
+  if (o.appDescription) software.description = o.appDescription;
+  if (o.appScreenshot) software.screenshot = o.appScreenshot;
+
+  return { "@context": "https://schema.org", "@graph": [organization, website, software] };
 };
 
 export function pluginGeo(opts: PluginGeoOptions): RspressPlugin {

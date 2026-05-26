@@ -222,6 +222,12 @@ export default function GeoHead() {
   if (primaryType === "TechArticle") {
     const section = sectionFor(routePath, lang);
     if (section) primary.articleSection = section;
+    // speakable tells AI/voice engines which parts are voice-suitable summaries.
+    // Title + first H2 give the gist; rspress's `.rspress-doc` wraps full content.
+    primary.speakable = {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "h2", ".rspress-doc"],
+    };
   }
 
   scripts.push({
@@ -288,6 +294,8 @@ export default function GeoHead() {
           name: item.q,
           acceptedAnswer: { "@type": "Answer", text: stripMarkdown(item.a) },
         })),
+        // Question headings are ideal for voice/quick AI answers.
+        speakable: { "@type": "SpeakableSpecification", cssSelector: ["h2"] },
       }),
       key: "geo-faq",
     });
@@ -295,19 +303,24 @@ export default function GeoHead() {
 
   const howto = fm.howto as { name?: string; steps?: HowToStep[] } | undefined;
   if (howto && Array.isArray(howto.steps) && howto.steps.length) {
+    const howToObj: Record<string, unknown> = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: howto.name || rawTitle,
+      step: howto.steps.map((s, i) => ({
+        "@type": "HowToStep",
+        position: i + 1,
+        name: s.name,
+        text: stripMarkdown(s.text),
+      })),
+    };
+    // Link the HowTo to the per-tool SoftwareApplication via @id reference, so
+    // AI engines know "these steps are for this specific tool" instead of treating
+    // the HowTo as a free-floating tutorial.
+    if (appUrl) howToObj.tool = [{ "@id": `${appUrl}#software` }];
     scripts.push({
       type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        name: howto.name || rawTitle,
-        step: howto.steps.map((s, i) => ({
-          "@type": "HowToStep",
-          position: i + 1,
-          name: s.name,
-          text: stripMarkdown(s.text),
-        })),
-      }),
+      innerHTML: JSON.stringify(howToObj),
       key: "geo-howto",
     });
   }
@@ -317,6 +330,35 @@ export default function GeoHead() {
   const alts = buildLanguageAlternates(routePath);
   const canonical = lang === "en" ? alts.en : alts.zh;
 
+  // og / Twitter / article meta — overrides the site-wide defaults set in
+  // rspress.config.ts head. Content pages should be "article" not "website";
+  // each page gets its own twitter card text and image; bilingual locale tags
+  // tell crawlers about the cross-language pair.
+  const ogType = primaryType === "TechArticle" ? "article" : "website";
+  const ogLocale = lang === "en" ? "en_US" : lang === "zh-Hant" ? "zh_TW" : "zh_CN";
+  const ogLocaleAlternate = lang === "en" ? "zh_CN" : "en_US";
+  const pageImage = (fm.image as string) || undefined;
+  const articleSection = primaryType === "TechArticle" ? sectionFor(routePath, lang) : null;
+  const datePublished = (fm.datePublished as string) || undefined;
+
+  const meta: Array<{ property?: string; name?: string; content: string }> = [
+    { property: "og:url", content: canonical },
+    { property: "og:type", content: ogType },
+    { property: "og:locale", content: ogLocale },
+    { property: "og:locale:alternate", content: ogLocaleAlternate },
+    { name: "twitter:title", content: headline },
+    { name: "twitter:description", content: description },
+  ];
+  if (pageImage) {
+    meta.push({ property: "og:image", content: pageImage });
+    meta.push({ name: "twitter:image", content: pageImage });
+  }
+  if (ogType === "article") {
+    if (datePublished) meta.push({ property: "article:published_time", content: datePublished });
+    if (dateModified) meta.push({ property: "article:modified_time", content: dateModified });
+    if (articleSection) meta.push({ property: "article:section", content: articleSection });
+  }
+
   useHead({
     script: scripts,
     link: [
@@ -325,7 +367,7 @@ export default function GeoHead() {
       { rel: "alternate", hreflang: "en", href: alts.en },
       { rel: "alternate", hreflang: "x-default", href: alts.zh },
     ],
-    meta: [{ property: "og:url", content: canonical }],
+    meta: meta.filter((m) => m.content),
   });
 
   return null;
