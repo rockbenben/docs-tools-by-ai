@@ -1,5 +1,17 @@
 {
   "name": "docs",
+  "redirects": [
+    {
+      "source": "/zh/guide/tools/:path*",
+      "destination": "/zh/guide/text/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/en/guide/tools/:path*",
+      "destination": "/en/guide/text/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "static/*.js",

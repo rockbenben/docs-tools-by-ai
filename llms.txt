@@ -1,27 +1,29 @@
 字幕翻译器 · Markdown 翻译 · JSON i18n 翻译工具 - Tools By AI 中文文档
 
-## guide
+## 指南
 
-- [Tools By AI](/guide/index.md): 了解 Tools By AI 背后的核心理念。我们不追求完全自主的 AI，而是将 AI 作为强大辅助，帮您打造可控、可靠的定制化工具，真正实现“任务工具化”，提升效率。
+- [Tools By AI](/guide/index.md): Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆盖字幕翻译、Markdown 翻译、i18n JSON 处理、文本清洗等开发与办公场景，浏览器本地运行，原文不上传服务器。
 - [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 21 种 AI 大模型与 8 种翻译 API，120+ 语言批量翻译。
-- [项目介绍](/guide/translation/json-translate/index.md): 需要处理多语言 JSON 文件？JsonTranslate 工具专为 i18n 本地化设计，支持全局、指定节点、i18n 等多种翻译模式，助您轻松完成项目国际化。
-- [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
-- [项目介绍](/guide/translation/subtitle-translator/index.md): 还在手动翻译字幕？这款免费工具支持批量、秒级翻译 SRT/ASS/VTT 字幕，提供上下文关联、多语言支持等高级功能，大幅提升您的视频翻译效率。
+- [字幕翻译器使用指南](/guide/translation/subtitle-translator/index.md): 免费在线字幕翻译工具：批量处理 SRT、ASS、VTT、LRC 四种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 25+ 翻译引擎，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
 - [Subtitle Translator 部署](/guide/translation/subtitle-translator/deploy.md): 字幕翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
-- [项目介绍](/guide/translation/md-translator/index.md): 翻译 Markdown 文档时格式总错乱？这款工具专为技术文档设计，能精准保留原始格式，支持多种 AI 翻译引擎，是翻译开源项目文档的理想选择。
+- [Markdown 翻译工具使用指南](/guide/translation/md-translator/index.md): 免费 Markdown 文档翻译工具：智能保留代码块、LaTeX 公式、链接、表格与 Front Matter 元数据。支持 DeepSeek、Claude、GPT、Gemini 等 AI 引擎批量翻译，一键发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus 等博客和文档站。
 - [MD Translator 部署](/guide/translation/md-translator/deploy.md): Markdown 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
+- [JSON 翻译工具使用指南](/guide/translation/json-translate/index.md): 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 25+ 引擎，覆盖 120+ 语言。提供全局翻译、JSONPath 节点定位、指定键名、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
+- [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [功能说明](/guide/translation/info.md): 工具的核心特性介绍——多语言批量翻译、本地缓存、上下文优化、失败行重试，以及高级参数的调优建议。
 - [翻译接口指南](/guide/translation/api.md): 工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
 - [常见问题](/guide/translation/faq.md): 翻译结果为空或速度慢？API Key 安全吗？本页解答了翻译工具的常见问题，包括 API 密钥、翻译无响应、DeepL 接口及数据安全等，帮您快速解决使用中的疑问。
 - [更新日志](/guide/translation/changelog.md): 查看翻译工具的完整更新历史。本页记录了从最初版本至今的所有功能新增、性能优化和问题修复，包括 AI 上下文翻译、多语言支持扩展等重要里程碑。
-- [简繁转换工具](/guide/tools/chinese-conversion.md): 浏览器本地的中文转换工具。简繁体互转、台湾/香港地区词汇、日本新字体，支持批量文件、智能换行、自定义保护词典（不被转换的特定词组），全程不上传服务器。
-- [小说文本整理器](/guide/tools/novel-processor.md): 网络小说排版乱、广告多？一键修复智能换行、章节标题、繁简转换、删除广告，附带章节重排与保护词典。批量处理，浏览器本地运行。
-- [文本分割器](/guide/tools/text-splitter.md): 需要处理长文本？文本分割器支持按字符数、按分隔符、按中英文段落智能切分，适用于 AI 输入优化、文档编辑等场景，支持批量导出。
-- [多功能文本处理](/guide/tools/text-toolbox.md): 一站式文本处理工具箱。一个页面集成正则匹配、过滤、去重排序、批量加前后缀、JSON 美化、智能分段。浏览器本地运行，敏感数据不外发。
-- [JSON 数据匹配与更新工具](/guide/json/json-match-update.md): 需要根据一个数据集更新另一个？本工具通过匹配两个 JSON 中的 ID 字段，将一个数据集的值精确更新到另一个数据集中对应的字段，简化数据同步与整合。
-- [JSON 节点批量编辑](/guide/json/json-node-edit.md): 需要批量修改 JSON 节点？这款工具支持通过 JSONPath 查找节点，并进行添加前缀/后缀、文本替换或直接替换节点值等多种批量编辑操作，简化数据处理。
-- [JSON 节点插入工具](/guide/json/json-node-inserter.md): 需要向 JSON 中批量添加新字段？本工具支持在指定节点后精确插入一个或多个新节点，轻松优化和调整数据结构，提高数据处理效率。
-- [JSON 排序与分组](/guide/json/json-sort-classify.md): 整理混乱的 JSON 数组。支持自定义顺序、数值升/降序排序，可额外按字段分组后在组内复用同一套排序策略。
-- [JSON 值提取器](/guide/json/json-value-extractor.md): 需要从复杂的 JSON 中提取特定数据？使用本工具，通过 JSONPath 表达式轻松提取一个或多个节点的值，并支持为提取结果添加自定义前缀和后缀。
-- [JSON 键值互换](/guide/json/json-value-swapper.md): 需要交换 JSON 中两个键的值？这款工具可以帮您一键完成，自动检测并显示所有可用键名，轻松实现数据重组，提高数据处理效率。
-- [JSON 键值映射工具](/guide/json/json-value-transformer.md): 需要在不同 JSON 结构间迁移数据？本工具支持使用 JSONPath 定义键映射关系，将源值复制到目标字段，特别适用于多语言内容转换和复杂数据重组。
+- [文本工具集](/guide/text/index.md): 四款互补的文本处理工具，覆盖简繁中文转换、网络小说排版去广告、长文本智能分段、正则匹配与批量行操作。全部浏览器本地运行，敏感数据不外发。
+- [简繁转换工具使用指南](/guide/text/chinese-conversion.md): 浏览器本地的中文转换工具。简繁体互转、台湾/香港地区词汇、日本新字体，支持批量文件、智能换行、自定义保护词典（不被转换的特定词组），全程不上传服务器。
+- [小说文本整理器使用指南](/guide/text/novel-processor.md): 网络小说排版乱、广告多？一键修复智能换行、章节标题、繁简转换、删除广告，附带章节重排与保护词典。批量处理，浏览器本地运行。
+- [文本分割器](/guide/text/text-splitter.md): 需要处理长文本？文本分割器支持按字符数、按分隔符、按中英文段落智能切分，适用于 AI 输入优化、文档编辑等场景，支持批量导出。
+- [多功能文本处理](/guide/text/text-toolbox.md): 一站式文本处理工具箱。一个页面集成正则匹配、过滤、去重排序、批量加前后缀、JSON 美化、智能分段。浏览器本地运行，敏感数据不外发。
+- [JSON 工具集](/guide/json/index.md): 七款互补的 JSON 处理工具，覆盖提取、批量编辑、节点插入、排序分组、键值互换、字段映射、跨数据集同步。全部基于 JSONPath，浏览器本地运行，支持大文件模式，原文不上传服务器。
+- [JSON 值提取器使用指南](/guide/json/json-value-extractor.md): 需要从复杂的 JSON 中提取特定数据？使用本工具，通过 JSONPath 表达式轻松提取一个或多个节点的值，并支持为提取结果添加自定义前缀和后缀。
+- [JSON 节点批量编辑使用指南](/guide/json/json-node-edit.md): 需要批量修改 JSON 节点？这款工具支持通过 JSONPath 查找节点，并进行添加前缀/后缀、文本替换或直接替换节点值等多种批量编辑操作，简化数据处理。
+- [JSON 节点插入工具使用指南](/guide/json/json-node-inserter.md): 需要向 JSON 中批量添加新字段？本工具支持在指定节点后精确插入一个或多个新节点，轻松优化和调整数据结构，提高数据处理效率。
+- [JSON 排序与分组工具使用指南](/guide/json/json-sort-classify.md): 整理混乱的 JSON 数组。支持自定义顺序、数值升/降序排序，可额外按字段分组后在组内复用同一套排序策略。
+- [JSON 键值互换工具使用指南](/guide/json/json-value-swapper.md): 需要交换 JSON 中两个键的值？这款工具可以帮您一键完成，自动检测并显示所有可用键名，轻松实现数据重组，提高数据处理效率。
+- [JSON 键值映射工具使用指南](/guide/json/json-value-transformer.md): 需要在不同 JSON 结构间迁移数据？本工具支持使用 JSONPath 定义键映射关系，将源值复制到目标字段，特别适用于多语言内容转换和复杂数据重组。
+- [JSON 数据匹配与更新工具使用指南](/guide/json/json-match-update.md): 需要根据一个数据集更新另一个？本工具通过匹配两个 JSON 中的 ID 字段，将一个数据集的值精确更新到另一个数据集中对应的字段，简化数据同步与整合。
