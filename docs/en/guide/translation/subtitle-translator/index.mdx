@@ -1,9 +1,10 @@
 ---
+title: Subtitle Translator Guide
 head:
   - - meta
     - property: og:title
-      content: Subtitle Translator Tool - Free Batch SRT/ASS/VTT Translation | Tools By AI
-description: Need a fast, free subtitle translator? This tool batch translates SRT, ASS, VTT files in seconds with context-aware AI, multi-language support, and more.
+      content: Free Subtitle Translator | Batch SRT/VTT/ASS + Bilingual | Tools By AI
+description: "Free SRT/ASS/VTT/LRC batch subtitle translator with 25+ AI engines: DeepSeek, Claude, GPT, DeepL, Google. 120+ languages, preserved timecodes, bilingual output."
 appUrl: https://tools.newzone.top/en/subtitle-translator
 appName: Subtitle Translator
 image: https://img.newzone.top/subtile-translator.gif?imageMogr2/format/webp
@@ -16,11 +17,86 @@ howto:
       text: Pick your target language in the top-right; source defaults to Auto-detect but you can pick one explicitly.
     - name: Translate
       text: Click Translate. Exported in seconds — multi-language output appends the language code to the filename (e.g. movie.zh.srt).
+faq:
+  - q: Which subtitle formats are supported? Can it translate SRT, ASS, VTT, and LRC?
+    a: >-
+      Four formats supported: SRT, ASS, VTT, and LRC. SRT/VTT fit YouTube, HTML5 players, and creator dashboards
+      (export YouTube captions with yt-dlp); ASS fits Aegisub and anime fansubs, with line-leading position tags
+      (e.g. \an8) auto-restored after translation; LRC fits music lyrics. File encoding
+      (UTF-8 / UTF-16 / GBK / Shift-JIS) is auto-detected via jschardet. Complex inline ASS effect tags (colors,
+      animation, karaoke) are simplified during translation.
+  - q: Should I use machine translation or an AI/LLM for subtitles? Which is best quality, which is cheapest?
+    a: >-
+      For cheap, use machine translation; for quality, use an AI/LLM. Machine translation (MT) is cheap or free
+      but reads flat for dialogue: Google free tier costs nothing (long inputs get truncated); DeepL is top tier
+      for European languages; Qwen-MT and Azure Translate are similar. AI/LLM bills per token but reads
+      noticeably more natural — DeepSeek is the value pick for whole-season batches; Claude Sonnet or GPT-5 give
+      the most natural dialogue; Gemini 3 Pro's 1M-token context handles book-length subtitles. Engine configs
+      are shared with [JSON Translator](../json-translate/index.mdx) and
+      [Markdown Translator](../md-translator/index.mdx) — configure once, use everywhere.
+  - q: How do I preserve names, brands, and proper nouns so they aren't mistranslated?
+    a: >-
+      Add a glossary in the System Prompt; AI/LLM engines will respect it. Example: "Keep verbatim: iPhone,
+      OpenAI, Premiere, person name John Smith." Especially recommended for TV series — all episodes share the
+      same term dictionary, so the protagonist doesn't get called one name in episode 1 and a different one in
+      episode 8. Machine translation (Google, DeepL, Qwen-MT) doesn't accept prompt customization and requires
+      manual post-processing.
+  - q: Do I need to add 'preserve line count / numbering / timecodes' instructions to my system prompt?
+    a: >-
+      No. The tool extracts structural metadata (timecodes, cue numbers, ASS headers, VTT cue IDs) locally and
+      sends only the dialogue text to the translation engine, then re-inserts the result at the original indices
+      — the model never sees the timecodes, so it cannot disrupt them. Keep your system prompt focused on
+      translation style, glossary (see previous question), and character tone; adding format-preservation
+      directives wastes tokens and can prompt the model to inject stray line numbers or timestamps into the
+      output. Unlike tools that dump the entire SRT/VTT into the LLM, this tool uses a structural separation
+      architecture — timecodes are 100% controlled by local code.
+  - q: How do I create bilingual subtitles for YouTube or language learning?
+    a: >-
+      Select 'Bilingual' mode with your target language. Position translation above (for learning — focus on
+      translation) or below (for consumption — primary is original). Export as ASS for colored dual-language
+      subtitles, embed in Premiere/DaVinci Resolve, or upload to YouTube community subs, Vimeo, or any player
+      supporting ASS format.
+  - q: How many subtitle files can I batch translate at once? What about a whole season of episodes?
+    a: >-
+      Batch upload an entire season's subtitles for simultaneous translation with no hard file limit (actual
+      limit depends on your translation engine's concurrency and API quota). Each file translates and caches
+      independently (IndexedDB), so refreshing the page doesn't lose translated files. For shared terminology
+      across episodes (character names, place names), put a glossary in the System Prompt — all files share the
+      same context, ensuring consistent translations across the entire season.
+  - q: How do I convert SRT to VTT or ASS? Do I need a separate subtitle format converter?
+    a: >-
+      No separate tool needed. Pick your target language and export format during translation for one-click
+      conversion: SRT ↔ VTT, SRT/VTT → ASS, plus bilingual ASS/SRT output. VTT-to-SRT auto-handles inline
+      `<c.classname>` tags and `<00:00:06.040>` karaoke timestamps; ASS conversion preserves \an8 position tags
+      with default styling. Note: identical source and target language are blocked by validation, so format
+      conversion currently requires an actual translation pass.
+  - q: Can I convert subtitles to plain-text scripts? Or export only specific lines?
+    a: >-
+      The 'Extract Text' button extracts the dialogue text without timecodes or cue numbers (auto-copied to
+      clipboard) — useful for language learning materials, podcast scripts, AI training data, or voice-actor
+      handoffs. For more granular line-level editing (filter by keyword, batch-replace terms, add prefix/suffix,
+      sort/dedupe), pair with the [Text Toolbox](https://tools.newzone.top/en/text-toolbox) — its regex matching
+      and line operations cover most subtitle cleanup tasks. For splitting very long subtitles by time or
+      character count, use [Text Splitter](https://tools.newzone.top/en/text-splitter).
+  - q: How do I fix subtitle timing mismatch or encoding (□□□) issues after translation?
+    a: >-
+      The tool only translates text and never modifies timecodes. Timing mismatches after translation usually
+      stem from framerate inconsistencies (23.976 vs 25 fps) in the source — fix with Aegisub or Subtitle Edit.
+      For encoding, jschardet auto-detects UTF-8/UTF-16/GBK/Shift-JIS; if detection fails it defaults to UTF-8,
+      so re-save source as UTF-8 via Notepad++ or VS Code before uploading.
+  - q: Are subtitle files uploaded to your server? Is it private and secure?
+    a: >-
+      Fully client-side: subtitle file reading, parsing, and translation requests all happen in your browser —
+      original content never touches our servers. LLM engine requests go directly from your browser to your
+      configured API endpoint (OpenAI, DeepSeek, etc.), and API keys are stored only in local browser storage.
+      Translation cache uses browser IndexedDB and persists across sessions. Source code is open on GitHub at
+      [rockbenben/subtitle-translator](https://github.com/rockbenben/subtitle-translator) for self-hosting or auditing.
 ---
 
 import Info from '../_interface.mdx';
+import Privacy from '../_privacy.mdx';
 
-# Introduction
+# Subtitle Translator | Batch AI Translation for SRT, ASS, VTT, LRC
 
 :::tip Quick summary
 Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, VTT, and LRC formats across 120+ languages. Block-compression plus parallel translation finishes a full TV episode in ~1 second. It also offers context-aware translation, local cache reuse, and a wide range of free / commercial translation APIs plus 20+ LLMs (including local Ollama / LM Studio / TranslateGemma).
@@ -80,5 +156,49 @@ The API settings provide two parameters for fine-tuning this process:
 - **Keep context**: Lower "Context Lines" to 20-30, and use a 14B+ instruction-tuned model (Qwen3-14B/32B, Gemma 3 27B-it, etc.).
 
 For pure translation needs, also consider the standalone **TranslateGemma** service in the service list (not by entering `translategemma` as a model name under "Custom OpenAI-compatible") — it's a seq2seq line-by-line service with no marker structure, the most reliable option for local deployment.
+
+## Frequently Asked Questions
+
+### Which subtitle formats are supported? Can it translate SRT, ASS, VTT, and LRC?
+
+Four formats supported: SRT, ASS, VTT, and LRC. SRT/VTT fit YouTube, HTML5 players, and creator dashboards (export YouTube captions with yt-dlp); ASS fits Aegisub and anime fansubs, with line-leading position tags (e.g. `\an8`) auto-restored after translation; LRC fits music lyrics. File encoding (UTF-8 / UTF-16 / GBK / Shift-JIS) is auto-detected via jschardet. Complex inline ASS effect tags (colors, animation, karaoke) are simplified during translation.
+
+### Should I use machine translation or an AI/LLM for subtitles? Which is best quality, which is cheapest?
+
+For subtitle dialogue, AI/LLM clearly wins on naturalness. **DeepSeek** is the value pick for whole-season batches; **Claude Sonnet** or **GPT-5** give the most natural dialogue; **Gemini 3 Pro**'s 1M-token context handles book-length subtitles. For zero-cost quick previews use **Google**, for European languages **DeepL**. Full engine comparison and signup links in the [API guide](../api.mdx); configs are shared across all three translation tools.
+
+### How do I preserve names, brands, and proper nouns so they aren't mistranslated?
+
+Add a glossary in the System Prompt; AI/LLM engines will respect it. Example: "Keep verbatim: iPhone, OpenAI, Premiere, person name John Smith." Especially recommended for TV series — all episodes share the same term dictionary, so the protagonist doesn't get called one name in episode 1 and a different one in episode 8. Machine translation (Google, DeepL, Qwen-MT) doesn't accept prompt customization and requires manual post-processing.
+
+### Do I need to add "preserve line count / numbering / timecodes" instructions to my system prompt?
+
+No. The tool extracts structural metadata (timecodes, cue numbers, ASS headers, VTT cue IDs) locally and sends only the dialogue text to the translation engine, then re-inserts the result at the original indices — the model never sees the timecodes, so it cannot disrupt them. Keep your system prompt focused on translation style, glossary (see previous question), and character tone; adding format-preservation directives wastes tokens and can prompt the model to inject stray line numbers or timestamps into the output. Unlike tools that dump the entire SRT/VTT into the LLM, this tool uses a structural separation architecture — timecodes are 100% controlled by local code.
+
+### How do I create bilingual subtitles for YouTube or language learning?
+
+Select 'Bilingual' mode with your target language. Position translation above (for learning — focus on translation) or below (for consumption — primary is original). Export as ASS for colored dual-language subtitles, embed in Premiere/DaVinci Resolve, or upload to YouTube community subs, Vimeo, or any player supporting ASS format.
+
+### How many subtitle files can I batch translate at once? What about a whole season of episodes?
+
+Batch upload an entire season's subtitles for simultaneous translation with no hard file limit (actual limit depends on your translation engine's concurrency and API quota). Each file translates and caches independently (IndexedDB), so refreshing the page doesn't lose translated files. For shared terminology across episodes, see the "names/brands" Q above.
+
+### How do I convert SRT to VTT or ASS? Do I need a separate subtitle format converter?
+
+No separate tool needed. Pick your target language and export format during translation for one-click conversion: SRT ↔ VTT, SRT/VTT → ASS, plus bilingual ASS/SRT output. VTT-to-SRT auto-handles inline `<c.classname>` tags and `<00:00:06.040>` karaoke timestamps; ASS conversion preserves `\an8` position tags with default styling. Note: identical source and target language are blocked by validation, so format conversion currently requires an actual translation pass.
+
+### Can I convert subtitles to plain-text scripts? Or export only specific lines?
+
+The 'Extract Text' button extracts the dialogue text without timecodes or cue numbers (auto-copied to clipboard) — useful for language learning materials, podcast scripts, AI training data, or voice-actor handoffs. For more granular line-level editing (filter by keyword, batch-replace terms, add prefix/suffix, sort/dedupe), pair with the [Text Toolbox](https://tools.newzone.top/en/text-toolbox) — its regex matching and line operations cover most subtitle cleanup tasks. For splitting very long subtitles by time or character count, use [Text Splitter](https://tools.newzone.top/en/text-splitter).
+
+### How do I fix subtitle timing mismatch or encoding (□□□) issues after translation?
+
+The tool only translates text and never modifies timecodes. Timing mismatches after translation usually stem from framerate inconsistencies (23.976 vs 25 fps) in the source — fix with Aegisub or Subtitle Edit. For encoding, jschardet auto-detects UTF-8/UTF-16/GBK/Shift-JIS; if detection fails it defaults to UTF-8, so re-save source as UTF-8 via Notepad++ or VS Code before uploading.
+
+### Are subtitle files uploaded to your server? Is it private and secure?
+
+<Privacy />
+
+Source code is open on GitHub at [rockbenben/subtitle-translator](https://github.com/rockbenben/subtitle-translator) for self-hosting or auditing.
 
 <Info />

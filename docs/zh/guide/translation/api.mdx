@@ -20,7 +20,7 @@ import SupportedLanguages from './_supported-languages.mdx';
 | 字幕、UI 文案、海量短句 | **GTX Free** 或 **Qwen-MT Flash** | 并发高、便宜 |
 | 长文本、商务/文学翻译 | **DeepL** | 翻译质量最稳，整体连贯 |
 | **入门 AI 翻译 / 想用大模型省钱** | **DeepSeek** | 国产 LLM 性价比首选——中英文质量好，单价远低于 Claude / GPT |
-| 中英互译、要稳定 | **DeepSeek** / **Qwen-MT Plus** / **Claude** | 国内可用、中英效果好 |
+| 中英互译、要稳定 | **DeepSeek** / **Qwen-MT Plus** | 国内可直连、中英效果好 |
 | 技术文档、需要术语一致 | **DeepSeek**（性价比）/ **Claude**（顶级）/ **GPT** / **Gemini** | LLM 可用自定义 prompt 控风格 |
 | 隐私敏感，要本地跑 | **TranslateGemma** | 自托管免费，翻译专用模型质量好 |
 | 沃洛夫、博杰普尔等小语种 | **DeepL** | 含较多小语种，质量稳定（如 wo / an / gn 等 Google 不收的） |
@@ -141,7 +141,7 @@ Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练
 - 默认地址指向 LM Studio 1234 端口，可一键切换到 Ollama / llama.cpp
 - 推荐模型：`translategemma-4b-it`（轻量快速）、`translategemma-12b-it`（质量更好）或 `translategemma-27b-it`（最强）
 - **必须明确指定源语言**——这个模型不支持"自动检测"
-- **语言覆盖较小**：只支持约 55 种主流语言（对齐 Google WMT24++ benchmark）；小语种（粤语 yue、博杰普尔 bho、沃洛夫 wo、阿拉贡 an、瓜拉尼 gn、库尔德 ckb/kmr 等约 68 种）会被 UI 直接拦截。需要更广语种请改用 DeepL / Google / Azure / Qwen-MT
+- **语言覆盖较小**：只支持约 55 种主流语言（对齐 Google WMT24++ benchmark）；约 68 种小语种——包括粤语 yue、博杰普尔 bho、沃洛夫 wo、阿拉贡 an、瓜拉尼 gn、库尔德 ckb/kmr——会被 UI 直接拦截。需要更广语种请改用 DeepL / Google / Azure / Qwen-MT
 
 ### 解决 CORS 跨域
 

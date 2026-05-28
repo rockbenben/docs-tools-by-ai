@@ -1,9 +1,20 @@
 ---
+title: Novel Processor Guide
 head:
   - - meta
     - property: og:title
       content: Novel Processor - Batch Repair Web-Novel Layout, Trad/Simp Conversion, Chapter Reorder | Tools By AI
 description: Web novel layout messy and full of ads? One-click fix for line breaks, chapter titles, Trad/Simp conversion, ad removal — plus chapter reorder and protected dictionary. Batch processing, runs locally in your browser.
+image: https://docs.newzone.top/img/novel-processor.png
+howto:
+  name: How to clean up web novels with Novel Processor
+  steps:
+    - name: Import the novel TXT
+      text: Paste text or upload a TXT file (no size limit — handles 3M-character mega-novels fine).
+    - name: Configure repair rules
+      text: Toggle the rules you need — smart line break, chapter split, paragraph indent, dedupe lines, Trad/Simp conversion, junk filter. Rules are independent and stackable.
+    - name: Export reader-ready TXT
+      text: Export the cleaned TXT and send via Kindle push email, or import into WeChat Read, iReader, Moon Reader. Chapter Split enables Kindle's auto-generated TOC.
 faq:
   - q: What common novel-format issues does it fix?
     a: Smart line break (re-merge broken lines), paragraph indent, chapter title formatting, full-width → half-width, Trad/Simp conversion, ad/downloader watermark cleanup, line-end digit stripping, adjacent duplicate-line removal. Every step is an independent toggle inside the three collapsible config sections on the right.
@@ -145,6 +156,6 @@ With "Auto-Export" enabled, the preview is skipped and the file downloads immedi
 
 ## Technical note
 
-For deeply-obfuscated watermarks (scrambled-character promotional content), combine **Filter Words** with **Filter Threshold** as a first pass. Extremely obfuscated patterns are best handled by the [Text Toolbox](/en/guide/tools/text-toolbox.html) with a custom regex, then fed back here for layout.
+For deeply-obfuscated watermarks (scrambled-character promotional content), combine **Filter Words** with **Filter Threshold** as a first pass. Extremely obfuscated patterns are best handled by the [Text Toolbox](./text-toolbox.mdx) with a custom regex, then fed back here for layout.
 
 Runs entirely in your browser — **no data is uploaded**.

@@ -1,9 +1,10 @@
 ---
+title: JSON Translator Guide
 head:
   - - meta
     - property: og:title
-      content: JSON Translator for i18n & Localization | Tools By AI
-description: Need to translate JSON files? This tool is designed for i18n, supporting global, node-specific, and key-based translation modes to streamline localization.
+      content: JSON Translator | i18n Batch Translation with JSONPath | Tools By AI
+description: "Free JSON i18n translator with 25+ AI engines (DeepSeek, Claude, GPT, DeepL). Five modes: global, JSONPath, key-by-name, i18n aggregation. Works with next-intl, i18next, vue-i18n."
 appUrl: https://tools.newzone.top/en/json-translate
 appName: JSON Translate
 image: https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp
@@ -18,11 +19,65 @@ howto:
       text: Pick source and one or more target languages in the top-right.
     - name: Translate
       text: Click Translate. Original JSON structure is preserved on export.
+faq:
+  - q: Which translation engines and file sizes does this JSON translator support?
+    a: >-
+      Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage.
+      Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure,
+      Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate
+      modes: all keys, specified-node (JSONPath), specified-key, selective-key, and i18n multi-language merge.
+      IndexedDB cache gives incremental builds — only changed keys re-call the API.
+  - q: Should I use machine translation or AI/LLM for translating JSON? How do I choose?
+    a: >-
+      Pick by JSON value length: short → MT, long → AI/LLM. For short UI strings (button labels, menu items,
+      error messages) machine translation works — Google free tier costs nothing (5000 chars/call limit),
+      DeepL and Azure Translate handle European languages well. For longer text (product descriptions,
+      tutorials) use AI/LLM: DeepSeek is the value pick, Claude Sonnet handles terminology most reliably — add a
+      glossary in the System Prompt to lock brand names, SKUs, and API terms. Engine configs are shared with
+      [Subtitle Translator](../subtitle-translator/index.mdx) and [Markdown Translator](../md-translator/index.mdx).
+  - q: Does it support next-intl, i18next, vue-i18n, and react-intl JSON formats?
+    a: >-
+      Yes to all. next-intl and vue-i18n nested object structures, i18next flat-key namespaces, and react-intl
+      ICU MessageFormat placeholders are all handled correctly. Placeholders like `{name}`,
+      `{count, plural, ...}`, `{0}` are preserved verbatim during translation. Use 'Specified Keys' mode to
+      translate only values without touching keys, or 'i18n Mode' to aggregate multiple languages directly into
+      the source JSON (e.g. `{en: "Settings", zh: "设置"}` structure).
+  - q: How do I translate JSON into multiple languages at once?
+    a: >-
+      Enable Multi-Language Mode to select multiple target languages and batch-generate files like en.json,
+      ja.json, ko.json in one operation, saving significant internationalization time.
+  - q: How do I use JSONPath to translate only specific nodes? For example, only product name fields.
+    a: >-
+      'Specified Nodes' mode accepts standard JSONPath expressions: `$.products[*].name` translates every
+      product's name field, `$..title` recursively translates all title fields; multiple paths are
+      comma-separated. Combined with the advanced mapping mode of 'Specified Keys', you can also write
+      translation results to new fields (e.g. `name` → `name_zh`) while preserving the original. Caveat: key
+      names containing dots (.) are misread as nested paths — best avoided.
+  - q: Will JSON keys and nesting structure break after translation?
+    a: >-
+      No. The tool only translates values — keys, nesting hierarchy, and array structures are fully preserved.
+      Translated files work directly in React, Vue, and other frontend i18n frameworks.
+  - q: What if I need to translate Markdown or subtitle files instead of i18n JSON?
+    a: >-
+      For Markdown documents (.md, .mdx), use [Markdown Translator](../md-translator/index.mdx) — preserves
+      code blocks, LaTeX formulas, and Front Matter metadata. For subtitle files (SRT/ASS/VTT/LRC), use
+      [Subtitle Translator](../subtitle-translator/index.mdx) — preserves timecodes and ASS style tags. All
+      three translation tools share the same engine configurations and translation cache, so switching
+      between them requires no re-setup.
+  - q: Are JSON contents uploaded to your server? Is privacy safe for large files?
+    a: >-
+      Fully client-side: JSON reading, parsing, and translation requests all happen in your browser —
+      original content never touches our servers. LLM engine requests go directly from your browser to your
+      configured API endpoint (OpenAI, DeepSeek, etc.), and API keys are stored only in local browser
+      storage. Translation cache uses browser IndexedDB and supports incremental updates across builds — only
+      changed keys trigger new API calls, saving cost. Source code is open on GitHub at
+      [rockbenben/json-translate](https://github.com/rockbenben/json-translate) for self-hosting or auditing.
 ---
 
 import Info from '../_interface.mdx';
+import Privacy from '../_privacy.mdx';
 
-# Introduction
+# JSON Translator | i18n Batch Translation with JSONPath
 
 :::tip Quick summary
 JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, selective translation, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
@@ -178,5 +233,41 @@ Here’s an explanation of several sample key names:
 ```
 
 Currently, JsonTranslate does not support JSON keys that contain dots (`.`). This is because dots are interpreted as delimiters in JSONPath, which may lead to misinterpretation of such keys as nested paths. To avoid this issue, it's recommended to use keys without dots.
+
+## Frequently Asked Questions
+
+### Which translation engines and file sizes does this JSON translator support?
+
+Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, selective-key, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
+
+### Should I use machine translation or AI/LLM for translating JSON? How do I choose?
+
+Pick by JSON value length: short UI strings (button labels, menu items, error messages) — machine translation works (**Google free tier** costs nothing, 5000 chars/call limit); longer text (product descriptions, tutorials) — use AI/LLM (**DeepSeek** value pick, **Claude Sonnet** for terminology consistency, add a glossary in the System Prompt to lock brand names, SKUs, and API terms). Full engine comparison in the [API guide](../api.mdx); configs are shared across all three translation tools.
+
+### Does it support next-intl, i18next, vue-i18n, and react-intl JSON formats?
+
+Yes to all. next-intl and vue-i18n nested object structures, i18next flat-key namespaces, and react-intl ICU MessageFormat placeholders are all handled correctly. Placeholders like `{name}`, `{count, plural, ...}`, `{0}` are preserved verbatim during translation. Use 'Specified Keys' mode to translate only values without touching keys, or 'i18n Mode' to aggregate multiple languages directly into the source JSON (e.g. `{en: "Settings", zh: "设置"}` structure).
+
+### How do I translate JSON into multiple languages at once?
+
+Enable Multi-Language Mode to select multiple target languages and batch-generate files like en.json, ja.json, ko.json in one operation, saving significant internationalization time.
+
+### How do I use JSONPath to translate only specific nodes? For example, only product name fields.
+
+'Specified Nodes' mode accepts standard JSONPath expressions: `$.products[*].name` translates every product's name field, `$..title` recursively translates all title fields; multiple paths are comma-separated. Combined with the advanced mapping mode of 'Specified Keys', you can also write translation results to new fields (e.g. `name` → `name_zh`) while preserving the original. Caveat: key names containing dots (.) are misread as nested paths — best avoided.
+
+### Will JSON keys and nesting structure break after translation?
+
+No. The tool only translates values — keys, nesting hierarchy, and array structures are fully preserved. Translated files work directly in React, Vue, and other frontend i18n frameworks.
+
+### What if I need to translate Markdown or subtitle files instead of i18n JSON?
+
+For Markdown documents (.md, .mdx), use [Markdown Translator](../md-translator/index.mdx) — preserves code blocks, LaTeX formulas, and Front Matter metadata. For subtitle files (SRT/ASS/VTT/LRC), use [Subtitle Translator](../subtitle-translator/index.mdx) — preserves timecodes and ASS style tags. All three translation tools share the same engine configurations and translation cache, so switching between them requires no re-setup.
+
+### Are JSON contents uploaded to your server? Is privacy safe for large files?
+
+<Privacy />
+
+The IndexedDB cache also supports incremental updates across builds — only changed keys trigger new API calls, saving cost. Source code is open on GitHub at [rockbenben/json-translate](https://github.com/rockbenben/json-translate) for self-hosting or auditing.
 
 <Info />

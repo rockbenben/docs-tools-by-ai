@@ -24,10 +24,6 @@ Translation results are saved locally in your browser. When parameters match, th
 - **One-click clear**: clean up everything from the settings panel
 - **Hit conditions**: source text + source/target language + service-specific key params must all match (LLMs key off prompt/temperature/thinking effort; Qwen-MT off `domains`; traditional MT only off the source text). Changing temperature, editing prompts, or toggling thinking will miss the cache.
 
-:::tip Bonus for Claude users
-Claude requests automatically opt into Anthropic's prompt caching (`cache_control`). When the same system prompt is reused across requests, input tokens get roughly a 90% discount — most useful when you pair a long custom prompt (glossary, style guide) with multi-file batch translation. Short default prompts won't trigger billable cache writes.
-:::
-
 ### Long Text & Concurrency
 
 Tuned for large documents and batch jobs:
@@ -83,7 +79,7 @@ A **⇄** button sits between the source and target language dropdowns — click
 
 122 languages are grouped by geography + speaker count (Common / Europe / Middle East / Central Asia / South Asia / Southeast Asia / Africa / Americas & Oceania) so you can find what you need fast. Multi-language mode adds four quick-preset buttons that merge-select common bundles:
 
-- **Global Top 10**: the 10 most-spoken languages (English, Chinese, Spanish, French, Japanese, Portuguese, German, Russian, Hindi, Arabic, etc.)
+- **Global Top 10**: the 10 most-spoken languages (English, Chinese, Spanish, French, Japanese, Portuguese, German, Russian, Hindi, Arabic)
 - **European mainstream**: French, German, Italian, Spanish, Portuguese, Dutch, Polish, and other commercial European languages
 - **East Asian**: Chinese (Simplified + Traditional), Japanese, Korean, Cantonese
 - **Indian subcontinent**: Hindi, Bengali, Tamil, Marathi, Gujarati, and other major South Asian languages
@@ -176,7 +172,7 @@ The max number of lines translated in parallel. **The default is already tuned p
 
 - **Default**: 3 (1 for some providers)
 - **What it does**: in context-aware mode, how many "target lines" go into a single request. Each request also carries the surrounding context.
-- **Trade-off**: larger values throughput-wise are faster but the model has to emit more lines per response, raising the chance of formatting drift. Smaller values are steadier but use more requests. Stick with 3 for documents/subtitles, push to 5 for plain text.
+- **Trade-off**: larger values give higher throughput but force the model to emit more lines per response, raising the chance of formatting drift. Smaller values are steadier but use more requests. Stick with 3 for documents/subtitles, push to 5 for plain text.
 
 #### Context Lines
 

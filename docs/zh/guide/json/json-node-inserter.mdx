@@ -1,4 +1,5 @@
 ---
+title: JSON 节点插入工具使用指南
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,38 @@ head:
 description: 需要向 JSON 中批量添加新字段？本工具支持在指定节点后精确插入一个或多个新节点，轻松优化和调整数据结构，提高数据处理效率。
 appUrl: https://tools.newzone.top/zh/json-node-inserter
 appName: JSON Node Inserter
+image: https://docs.newzone.top/img/json-node-inserter.png
+howto:
+  name: 用 JSON Node Inserter 批量插入字段的步骤
+  steps:
+    - name: 粘贴 JSON 数据
+      text: 粘贴需要插入新字段的 JSON 数据。
+    - name: 设置参考位置
+      text: 输入参考节点名称（新字段将插入其后）和要添加的新节点名称（逗号分隔可批量插入）。
+    - name: 插入并导出
+      text: 点击插入。工具为每个对象添加新字段，保持原有顺序和结构。
+faq:
+  - q: 能在一个目标节点后同时插入多个新节点吗？
+    a: >-
+      可以。在「新节点」输入框里用逗号分隔多个节点名（中英文逗号都支持），新节点会按你输入的顺序依次插入到目标节点之后。
+      比如目标节点写 `id`，新节点写 `created_at, updated_at`，处理后这两个字段就会出现在 `id` 之后。
+  - q: 如果新节点名是纯数字会怎么样？
+    a: >-
+      工具会自动按数值大小排序，并把纯数字键放在前面（这是 JS 对象键的默认行为）。如果想保留输入顺序，
+      建议在数字前加个非数字前缀，比如 `k_001, k_002`。
+  - q: 目标节点不存在会怎样？
+    a: >-
+      会提示错误并中止处理，不会破坏原数据。请先确认 JSON 里确实存在该键名（区分大小写）。如果 JSON 结构本身不规整，
+      可以先用 [JSON Node Edit](./json-node-edit.mdx) 检查或调整。
+  - q: 处理大文件会卡吗？
+    a: >-
+      勾选「大文件模式」可以处理超大 JSON 文件（隐藏左侧文本框，强制走文件上传）。所有处理都在浏览器本地完成，
+      不会上传到服务器。
+  - q: 新插入的节点怎么填值？
+    a: >-
+      本工具只负责「插入空字段占位」。要给新插入的字段批量填充值，请用
+      [JSON Node Edit](./json-node-edit.mdx) 的「直接替换值」操作；要把另一个字段的值复制过来，请用
+      [JSON Value Transformer](./json-value-transformer.mdx) 配置键映射。两个工具配合使用可以覆盖大部分结构调整需求。
 ---
 
 # JSON 节点插入工具

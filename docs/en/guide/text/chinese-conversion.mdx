@@ -1,9 +1,20 @@
 ---
+title: Chinese Converter Guide
 head:
   - - meta
     - property: og:title
       content: Chinese Converter - Batch Simplified ↔ Traditional with Protected Dictionary | Tools By AI
 description: Browser-local Chinese converter. Simplified ↔ Traditional, Taiwan/HK regional vocabulary, Japanese Shinjitai, plus batch files, smart line break, and a user-editable protected dictionary (terms that won't be converted). Nothing uploaded.
+image: https://docs.newzone.top/img/chinese-conversion.gif
+howto:
+  name: How to use Chinese Converter
+  steps:
+    - name: Paste or upload text
+      text: Paste Simplified or Traditional Chinese text into the input area, or drop in batch TXT files.
+    - name: Choose conversion direction
+      text: Pick the conversion direction (Simplified ↔ Taiwan Traditional ↔ HK Traditional ↔ Japanese Shinjitai). To preserve specific terms (names, brands), add them to the Protected Dictionary first.
+    - name: Convert and copy
+      text: Conversion runs locally in real time. Copy the result — your text never leaves your machine.
 faq:
   - q: Which conversion directions are supported?
     a: Any pair among 6 codes — Simplified (`cn`), Traditional Taiwan (`tw`), Traditional Taiwan + regional vocab (`twp`), Traditional Hong Kong (`hk`), OpenCC-mode Traditional (`t`), and Japanese Shinjitai (`jp`). Two quick buttons (Trad→Simp, Simp→Trad) plus a Custom Language card to pick any source/target combination.
@@ -109,7 +120,7 @@ Click "Manage Rules" on the Protected Dictionary panel (bottom-right) to open th
 
 ### Typical use cases
 
-- Force "机器人" (robot) to stay as "机器人" during Simp→Trad instead of becoming "機器人" (common tech term where 机 is correct)
+- Force the Simplified "机器人" (robot — a common tech term where the Simplified character is preferred) to stay as "机器人" during Simp→Trad instead of becoming "機器人"
 - Preserve Simplified forms of brand names regardless of conversion direction
 - Add Traditional-form proper names to t2s rules to prevent incorrect simplification
 

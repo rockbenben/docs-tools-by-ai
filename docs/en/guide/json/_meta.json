@@ -1,0 +1,9 @@
+[
+  "json-value-extractor",
+  "json-node-edit",
+  "json-node-inserter",
+  "json-sort-classify",
+  "json-value-swapper",
+  "json-value-transformer",
+  "json-match-update"
+]

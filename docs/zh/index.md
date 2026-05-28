@@ -4,14 +4,14 @@ pageType: home
 hero:
   name: Tools By AI Docs
   text:
-  tagline: 为 Tools By AI 工具集提供具体的说明文档
+  tagline: Tools By AI 工具集的使用说明文档
   actions:
     - theme: brand
-      text: 开始使用
-      link: https://tools.newzone.top/zh
-    - theme: alt
-      text: 指南
+      text: 阅读指南
       link: /guide/
+    - theme: alt
+      text: 打开应用
+      link: https://tools.newzone.top/zh
   image:
     src: /rspress-icon.png
     alt: Logo

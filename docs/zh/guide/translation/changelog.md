@@ -11,7 +11,6 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
 待更新功能：本地客户端化；对翻译后的字幕内容进行 ai 润色。
 
 - 2026.05.26: 翻译引擎深度调优。
-  - Claude API 自动启用 prompt caching（`cache_control`）——同一 system prompt 多次复用时，输入 token 享受 ~90% 折扣
   - Custom (OpenAI-compatible) 新增可选 maxTokens 上限，防止本地小模型陷入重复输出循环；Claude / Gemini / OpenAI-compat 同步加上 `finish_reason=length` 截断检测
   - Custom 本地 LLM 默认 contextWindow 从 100 降到 30，适配 14B 以下的小模型
   - 失败处理升级：单行失败自动回填原文（保证输出可用）；多语言批量翻译中整语言失败聚合到独立面板，可一键复制语言代码重试
@@ -30,7 +29,7 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
   - 新增独立的 Prompt 预设管理（与 LLM API 预设解耦，可自由组合）
   - 主页面新增 API Status 状态徽章 + 一键源/目标语言互换
   - 修复：关闭缓存时仍在写入 IndexedDB；LLM-backed MT (Qwen-MT / TranslateGemma) retry 行为对齐 LLM
-- 2025.07.29: 支持ai模式下的上下文关联翻译。
+- 2025.07.29：支持 AI 模式下的上下文关联翻译。
 - 2025.03.20：完成 i18n 化；修复缓存 key 等已知 bug；项目开源。
 - 2025.02.28：LLM 模型翻译时支持自定义系统提示词和用户提示词。
 - 2025.02.27: 增强双语字幕的时间轴兼容性，支持省略默认小时、超过 100 小时的时间格式，以及 1 至 3 位数的毫秒显示。

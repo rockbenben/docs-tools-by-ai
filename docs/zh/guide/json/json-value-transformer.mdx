@@ -1,4 +1,5 @@
 ---
+title: JSON 键值映射工具使用指南
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,40 @@ head:
 description: 需要在不同 JSON 结构间迁移数据？本工具支持使用 JSONPath 定义键映射关系，将源值复制到目标字段，特别适用于多语言内容转换和复杂数据重组。
 appUrl: https://tools.newzone.top/zh/json-value-transformer
 appName: JSON Value Transformer
+image: https://docs.newzone.top/img/json-value-transformer.png
+howto:
+  name: 用 JSON Value Transformer 映射字段的步骤
+  steps:
+    - name: 粘贴 JSON 数据
+      text: 将需要转换的 JSON 内容粘贴进来。
+    - name: 配置映射规则
+      text: 手动定义键值映射规则，或加载 AIShort 预设（一键把 `en.prompt` 复制到 11 种语言目标）。通过字段名递归匹配定位（支持嵌套键的点路径）。
+    - name: 转换并导出
+      text: 点击转换。导出转换后的 JSON，原始结构完整保留。
+faq:
+  - q: 自定义映射和预设映射有什么区别？
+    a: >-
+      自定义映射需要自己添加输入键/输出键对，灵活但要手动配；预设映射（AIShort）一键加载 `en.prompt` 到 11
+      种语言（ar、bn、de、es、fr、hi、it、ja、ko、pt、ru）的映射，适合做多语言模板初始化。
+      两种模式都用 JSONPath 语法定位字段，比如 `en.prompt`。
+  - q: 这个工具和 JSON Node Edit 的区别是什么？
+    a: >-
+      [JSON Node Edit](./json-node-edit.mdx) 是「就地修改值」——加前后缀、查找替换、覆盖。本工具是「跨字段复制
+      值」——把源路径的值原封不动地搬到目标路径，常用于多语言模板（把 `en.prompt` 同时复制到
+      `zh.prompt`、`ja.prompt` 等占位字段，再交给翻译工具补全）。
+  - q: 处理大型 JSON 文件会不会卡？
+    a: >-
+      勾选「大文件模式」可以处理超大 JSON 文件（隐藏左侧文本框，强制走文件上传）。所有处理在浏览器本地完成，
+      不会上传到服务器，复杂的嵌套结构可能需要更长处理时间。
+  - q: 输入或输出键不存在会怎么样？
+    a: >-
+      系统在执行映射前会校验所有输入/输出键是否存在于 JSON 中。如果有无效路径，会给出具体的错误提示（哪个键、在哪条映射里），
+      不会破坏原数据。键名区分大小写，含点（.）的键会被误解析为嵌套路径，建议避免。
+  - q: 把字段复制好之后，怎么真正翻译它们？
+    a: >-
+      映射只负责把源值搬到目标字段。要真正翻译这些字段，用 [JSON Translate](../../translation/json-translate/index.mdx)
+      的 i18n 模式或指定节点模式，配合 DeepSeek、Claude、GPT 等 25+ 引擎。如果还要根据另一份数据更新现有值，
+      可以用 [JSON Match & Update](./json-match-update.mdx) 按 ID 字段批量同步。
 ---
 
 # JSON 键值映射工具
@@ -28,7 +63,7 @@ appName: JSON Value Transformer
 ### 基本操作流程
 
 1. **选择映射模式**
-   - 在配置卡片顶部的 Segmented 控件上选择"自定义映射"或"预设映射 · AIShort"
+   - 在配置卡片顶部的分段控件上选择"自定义映射"或"预设映射 · AIShort"
    - 预设映射针对 AIShort 多语言处理进行了优化，选中后会直接列出所有 11 个目标键名
 
 2. **设置键映射关系**

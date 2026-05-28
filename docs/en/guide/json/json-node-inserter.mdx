@@ -1,4 +1,5 @@
 ---
+title: JSON Node Inserter Guide
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,43 @@ head:
 description: Need to add new fields to a JSON file in bulk? This tool lets you precisely insert one or more new nodes after a specified target, simplifying data restructuring.
 appUrl: https://tools.newzone.top/en/json-node-inserter
 appName: JSON Node Inserter
+image: https://docs.newzone.top/img/json-node-inserter.png
+howto:
+  name: How to batch-insert fields with JSON Node Inserter
+  steps:
+    - name: Paste JSON data
+      text: Paste the JSON data where new fields should be inserted.
+    - name: Set reference position
+      text: Enter the reference node name (new fields will be inserted after it) and the names of new nodes to add (comma-separated for batch insertion).
+    - name: Insert and export
+      text: Click Insert. The tool adds new fields to every object while preserving original order and structure.
+faq:
+  - q: Can I insert multiple new nodes after a single target node at once?
+    a: >-
+      Yes. Comma-separate multiple node names in the "New Nodes" field (both English and Chinese
+      commas work). New nodes are inserted in the order you typed them, immediately after the target
+      node. For example, target = `id`, new = `created_at, updated_at` adds both fields right after
+      `id`.
+  - q: What happens if my new node names are purely numeric?
+    a: >-
+      The tool auto-sorts numeric keys by value and places them at the front (this matches JS object
+      key ordering rules). If you want to preserve input order, prefix the numbers with a non-digit
+      character, e.g. `k_001, k_002`.
+  - q: What if the target node doesn't exist?
+    a: >-
+      An error is shown and processing stops — your original data is never touched. Double-check the
+      key name exists in the JSON (case-sensitive). If your JSON structure is irregular, use
+      [JSON Node Edit](./json-node-edit.mdx) first to inspect or normalize it.
+  - q: Will it lag on large files?
+    a: >-
+      Enable "Large File Mode" for big JSON files (it hides the left text box and forces file upload).
+      All processing happens locally in your browser — files never leave your machine.
+  - q: How do I assign values to the newly inserted nodes?
+    a: >-
+      This tool only inserts empty field placeholders. To fill values in bulk, use
+      [JSON Node Edit](./json-node-edit.mdx)'s "Direct value replacement" operation. To copy a value
+      from another field, use [JSON Value Transformer](./json-value-transformer.mdx) with key
+      mappings. Chaining these two tools covers most structure-adjustment workflows.
 ---
 
 # JSON Node Insertion

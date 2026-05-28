@@ -1,4 +1,5 @@
 ---
+title: JSON Sort & Classify Guide
 head:
   - - meta
     - property: og:title
@@ -20,6 +21,33 @@ howto:
       text: Fill in the "Group field" to bucket items first; leave empty to sort the whole array.
     - name: Process
       text: Click Process. The array gets reshuffled per your rules, ready to export.
+faq:
+  - q: When should I pick Custom Order vs Numeric Asc/Desc?
+    a: >-
+      For numeric fields (price, score, count), pick Numeric Asc/Desc to sort by value. For string
+      fields (name, type, status) where you want a specific order, pick Custom Order and write the
+      desired sequence line-by-line in the textbox — values not listed keep their first-appearance
+      order rather than getting dropped.
+  - q: How do the "Group field" and "Sort field" interact?
+    a: >-
+      Group field is optional: leave empty to sort the whole array once; fill it and items get
+      bucketed by that field (buckets ordered by first appearance), then the same sort strategy runs
+      inside each bucket. Common pattern: Group field = `type`, Sort = Numeric Asc, Sort field =
+      `price` gives you "items grouped by category, each category ordered cheap to expensive".
+  - q: How do I group without changing in-group order?
+    a: >-
+      Group field = your category key; Sort strategy = Custom Order with an empty list in the textbox.
+      The tool buckets items but keeps their original order inside each group. This applies the rule
+      "Custom Order + empty list = preserve first-appearance order".
+  - q: Does the sort field support nested paths?
+    a: >-
+      Yes. All field inputs accept JSONPath nested paths like `zh.name` or `stats.score`. The tool
+      reads the value at that path and uses it for sorting. If you only need a few fields from a big
+      JSON, use [JSON Value Extractor](./json-value-extractor.mdx) first to slim it down.
+  - q: After sorting, how do I batch-edit those entries?
+    a: >-
+      Use [JSON Node Edit](./json-node-edit.mdx) for JSONPath-based bulk prefix/suffix, find/replace,
+      or direct overwrite. All JSON tools process data locally in your browser — nothing is uploaded.
 ---
 
 # JSON Sort & Group

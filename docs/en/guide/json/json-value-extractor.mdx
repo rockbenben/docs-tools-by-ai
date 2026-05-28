@@ -1,4 +1,5 @@
 ---
+title: JSON Value Extractor Guide
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,42 @@ head:
 description: Need to pull specific data from complex JSON? Use this tool to easily extract values from one or more nodes using JSONPath expressions, with optional prefixes.
 appUrl: https://tools.newzone.top/en/json-value-extractor
 appName: JSON Value Extractor
+image: https://docs.newzone.top/img/json-value-extractor.png
+howto:
+  name: How to extract fields with JSON Value Extractor
+  steps:
+    - name: Paste JSON data
+      text: Paste the JSON content you want to extract values from into the input area.
+    - name: Add extraction rules
+      text: Enter field names (supports nested keys like 'user.name' via dot notation). Add custom prefix/suffix for formatted output.
+    - name: Extract and copy
+      text: Click Extract. Matching values are concatenated one per line — copy or export as needed.
+faq:
+  - q: How do I use JSONPath to extract a specific field from nested JSON?
+    a: >-
+      Type a JSONPath expression in the input box (the leading `$` is optional). For example, `data.title`
+      extracts every `title` field under `data`, and `messages[*].text` extracts the `text` from every
+      message in an array. When multiple nodes match, results are concatenated line by line.
+  - q: Can I add a prefix or suffix to each extracted value?
+    a: >-
+      Yes. Fill in the prefix/suffix input fields and use `{value}` as the placeholder for the original
+      value. For example, a prefix of `<item>{value}` wraps each result in a tag, ready to paste into
+      HTML or Markdown.
+  - q: Which data types are supported? Can I extract objects or arrays?
+    a: >-
+      Strings, numbers, and booleans are supported. If a JSONPath hits an object or array node, the tool
+      skips it and shows an error — drill the path deeper so it lands on a scalar field.
+  - q: Will it lag on large files? Is there a large-file mode?
+    a: >-
+      Enable "Large Mode" for better performance on big JSON files (it hides the left text box and routes
+      input through file upload). All processing runs locally in your browser — files never leave your
+      machine.
+  - q: After extracting, how do I batch-edit or translate the results?
+    a: >-
+      For find/replace, prefix/suffix, or full overwrite on extracted nodes, use
+      [JSON Node Edit](./json-node-edit.mdx). To translate i18n JSON into multiple languages, use
+      [JSON Translate](../../translation/json-translate/index.mdx). All three tools share JSONPath
+      semantics, so they chain nicely.
 ---
 
 # JSON Value Extractor
@@ -21,7 +58,7 @@ appName: JSON Value Extractor
    - Example: `data.title` to extract all title values under data
    - Example: `messages[*].text` to extract text from all messages
 3. Optionally add prefix and suffix text for each extracted value
-   - Use `\{value\}` as a placeholder to include the extracted value in your prefix/suffix
+   - Use `{value}` as a placeholder to include the extracted value in your prefix/suffix
 4. Click "Start Process" to extract values
 
 The tool supports extracting strings, numbers, and boolean values. If you attempt to extract an object or array, the tool will show an error message and skip that node.

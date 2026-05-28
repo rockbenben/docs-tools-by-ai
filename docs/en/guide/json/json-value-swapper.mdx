@@ -1,4 +1,5 @@
 ---
+title: JSON Value Swapper Guide
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,42 @@ head:
 description: Need to swap the values of two keys in a JSON array? This tool helps you do it in one click, automatically detecting all available keys to speed up data processing.
 appUrl: https://tools.newzone.top/en/json-value-swapper
 appName: JSON Value Swapper
+image: https://docs.newzone.top/img/json-value-swapper.png
+howto:
+  name: How to swap field values with JSON Value Swapper
+  steps:
+    - name: Paste JSON array
+      text: Paste the JSON array containing items whose values need swapping.
+    - name: Specify fields to swap
+      text: Enter the two field names whose values should be exchanged across all array items.
+    - name: Swap and export
+      text: Click Swap. Review missing-field alerts and export the corrected JSON.
+faq:
+  - q: How do I know which two key names to fill in?
+    a: >-
+      You don't have to remember them. Once you paste or upload a JSON array, the tool auto-detects
+      every available key and renders them as clickable buttons — one tap fills "Key 1" or "Key 2",
+      preventing typos. Key names are case-sensitive.
+  - q: Can I swap keys inside nested objects?
+    a: >-
+      No. This tool only swaps first-level keys within objects of a JSON array. For nested-structure
+      edits, switch to [JSON Node Edit](./json-node-edit.mdx), which uses JSONPath to find and modify
+      nodes at any depth.
+  - q: What if some objects in the array are missing one of the keys?
+    a: >-
+      The system keeps processing the other objects and prints a notice telling you which entries are
+      missing the key — no abort. Always back up important data first; exported filenames auto-append
+      a timestamp so you can keep multiple versions side by side.
+  - q: Will it lag on large files?
+    a: >-
+      Enable "Large File Mode" to optimize performance on big datasets (it hides the left text box and
+      forces file upload). All processing happens locally in your browser — data never leaves your
+      machine.
+  - q: I don't want to swap — I want to copy one field's value to another. What should I use?
+    a: >-
+      Use [JSON Value Transformer](./json-value-transformer.mdx). It defines arbitrary key mappings
+      (including nested JSONPath) and copies values from source to target paths — perfect for
+      multilingual template initialization. This tool is for "two fields literally trading places".
 ---
 
 # JSON Key-Value Swap

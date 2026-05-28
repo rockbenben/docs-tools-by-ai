@@ -7,11 +7,11 @@ hero:
   tagline: Documentation for Tools By AI toolkit
   actions:
     - theme: brand
-      text: Quick Start
-      link: https://tools.newzone.top/en
-    - theme: alt
-      text: Guide
+      text: Read the Guide
       link: /guide/
+    - theme: alt
+      text: Open App
+      link: https://tools.newzone.top/en
   image:
     src: /rspress-icon.png
     alt: Logo

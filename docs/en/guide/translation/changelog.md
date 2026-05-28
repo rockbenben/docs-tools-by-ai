@@ -11,7 +11,6 @@ description: See the complete update history for our translation tools. This pag
 Upcoming features: Create a local desktop client; add AI polishing for translated subtitles.
 
 - 2026.05.26: Translation engine deep-tuning.
-  - Auto-enable Anthropic prompt caching (`cache_control`) for Claude requests — ~90% input token discount when the same system prompt is reused
   - New opt-in `maxTokens` cap for Custom (OpenAI-compatible) to prevent local small-model repetition loops; `finish_reason=length` truncation detection added to Claude / Gemini / OpenAI-compat
   - Default `contextWindow` for Custom local LLM lowered from 100 to 30 to match the behavior of models under 14B
   - Failure handling: failed lines now auto-fill with original text (output always usable); whole-language failures in multi-language mode aggregate into a dedicated panel with one-click copy-target-language for retry

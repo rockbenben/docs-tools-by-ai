@@ -1,16 +1,16 @@
 [
   {
-    "text": "guide",
+    "text": "Guide",
     "link": "/guide/",
     "activeMatch": "/guide/"
   },
   {
-    "text": "app",
+    "text": "App",
     "link": "https://tools.newzone.top/en",
     "activeMatch": "app"
   },
   {
-    "text": "feedback",
+    "text": "Feedback",
     "link": "https://tools.newzone.top/en/feedback",
     "activeMatch": "feedback"
   }

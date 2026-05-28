@@ -1,11 +1,6 @@
 [
   {
     "type": "dir",
-    "name": "json-translate",
-    "label": "JSON Translate"
-  },
-  {
-    "type": "dir",
     "name": "subtitle-translator",
     "label": "Subtitle Translator"
   },
@@ -13,6 +8,11 @@
     "type": "dir",
     "name": "md-translator",
     "label": "Markdown Translator"
+  },
+  {
+    "type": "dir",
+    "name": "json-translate",
+    "label": "JSON Translate"
   },
   "info",
   "api",

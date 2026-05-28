@@ -1,4 +1,5 @@
 ---
+title: JSON 键值互换工具使用指南
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,37 @@ head:
 description: 需要交换 JSON 中两个键的值？这款工具可以帮您一键完成，自动检测并显示所有可用键名，轻松实现数据重组，提高数据处理效率。
 appUrl: https://tools.newzone.top/zh/json-value-swapper
 appName: JSON Value Swapper
+image: https://docs.newzone.top/img/json-value-swapper.png
+howto:
+  name: 用 JSON Value Swapper 交换字段值的步骤
+  steps:
+    - name: 粘贴 JSON 数组
+      text: 粘贴需要交换字段值的 JSON 数组。
+    - name: 指定要交换的字段
+      text: 输入要互换值的两个字段名，工具会处理数组中所有项。
+    - name: 交换并导出
+      text: 点击交换。查看缺失字段提示并导出修正后的 JSON。
+faq:
+  - q: 怎么知道要填哪两个键名？
+    a: >-
+      不需要自己记。粘贴或上传 JSON 数组后，工具会自动分析数据并把所有可用的键名以按钮形式列出来，
+      点一下按钮就能填入「键 1」和「键 2」，避免手抖打错。键名区分大小写。
+  - q: 嵌套对象里的键能交换吗？
+    a: >-
+      不能。本工具只支持交换 JSON 数组中对象的第一层键值。如果你要在嵌套结构里改动，请改用
+      [JSON Node Edit](./json-node-edit.mdx)（基于 JSONPath，支持任意深度的节点查找和值替换）。
+  - q: 数组里有些对象缺少其中一个键怎么办？
+    a: >-
+      系统会继续处理其它对象并给出提示信息，告诉你哪些条目缺失键，不会因为部分缺失就报错中断。
+      建议处理重要数据前先备份原始数据，导出文件名会自动追加时间戳，方便区分版本。
+  - q: 处理大文件会卡吗？
+    a: >-
+      勾选「大文件模式」可以优化大数据集的处理性能（隐藏左侧文本框，强制走文件上传流程）。所有处理都在浏览器本地完成，
+      不会上传到服务器。
+  - q: 如果我要做的不是简单互换，而是把一个字段的值复制到另一个字段怎么办？
+    a: >-
+      用 [JSON Value Transformer](./json-value-transformer.mdx)，它支持定义任意的键映射关系（包括 JSONPath 嵌套路径），
+      把源字段的值复制到目标字段，常用于多语言模板初始化。本工具更适合「左右两边的值真正调换位置」的场景。
 ---
 
 # JSON 键值互换

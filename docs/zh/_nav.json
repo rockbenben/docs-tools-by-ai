@@ -1,16 +1,16 @@
 [
   {
-    "text": "guide",
+    "text": "指南",
     "link": "/guide/",
     "activeMatch": "/guide/"
   },
   {
-    "text": "app",
+    "text": "应用",
     "link": "https://tools.newzone.top/zh",
     "activeMatch": "app"
   },
   {
-    "text": "feedback",
+    "text": "反馈",
     "link": "https://tools.newzone.top/zh/feedback",
     "activeMatch": "feedback"
   }

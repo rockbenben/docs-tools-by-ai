@@ -1,9 +1,10 @@
 ---
+title: JSON 翻译工具使用指南
 head:
   - - meta
     - property: og:title
-      content: JSON 翻译工具 - i18n 本地化与多语言支持 | Tools By AI
-description: 需要处理多语言 JSON 文件？JsonTranslate 工具专为 i18n 本地化设计，支持全局、指定节点、i18n 等多种翻译模式，助您轻松完成项目国际化。
+      content: JSON 翻译工具 - i18n 多语言批量翻译，JSONPath 精准定位 | Tools By AI
+description: 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 25+ 引擎，覆盖 120+ 语言。提供全局翻译、JSONPath 节点定位、指定键名、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
 appUrl: https://tools.newzone.top/zh/json-translate
 appName: JSON Translate
 image: https://img.newzone.top/2023-12-18-16-09-04.gif?imageMogr2/format/webp
@@ -18,11 +19,56 @@ howto:
       text: 在右上角选源语言和一个或多个目标语言。
     - name: 开始翻译
       text: 点「翻译」按钮。导出 JSON 时原始结构保持不变。
+faq:
+  - q: 这个 JSON 翻译工具支持哪些翻译引擎和文件大小？
+    a: >-
+      浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持 25+ 引擎：
+      Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点
+      （Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、选择性 Key、i18n 多语言聚合
+      5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
+  - q: 翻译 JSON 用机器翻译还是 AI 大模型？怎么选最合适？
+    a: >-
+      按 JSON 值长度选：短选机器翻译、长选 AI 大模型。短 UI 文案（按钮、菜单项、错误提示）用机器翻译够用——
+      Google 免费版零成本（限单条 5000 字符），DeepL 和 Azure Translate 适合欧洲语言。长文本（产品描述、教程）
+      建议 AI 大模型：DeepSeek 性价比首选；Claude Sonnet 术语一致性最稳，可在「系统提示词」加术语保留表
+      保护品牌名、SKU、API 术语。引擎配置可与
+      [字幕翻译](../subtitle-translator/index.mdx)、[Markdown 翻译](../md-translator/index.mdx) 共享。
+  - q: 支持 next-intl、i18next、vue-i18n、react-intl 这些 i18n 框架的 JSON 格式吗？
+    a: >-
+      全部支持。next-intl 和 vue-i18n 的嵌套对象结构、i18next 的扁平 key 命名空间、react-intl 的 ICU
+      MessageFormat 占位符都能正确处理。`{name}`、`{count, plural, ...}`、`{0}` 等占位符在翻译时会被保留不会
+      被改写。建议用「指定键名」模式只翻译值不动 Key，或用「i18n 模式」直接在原 JSON 上聚合多语言
+      （如 `{en: "Settings", zh: "设置"}` 结构）。
+  - q: 怎么把 JSON 一次翻译成多种语言？
+    a: >-
+      开启「多语言模式」后可同时选择多个目标语言，一次操作即可批量生成 en.json、ja.json、ko.json 等多语言文件，
+      大幅节省国际化工作时间。
+  - q: 用 JSONPath 怎么只翻译特定节点？比如只翻译商品名字段。
+    a: >-
+      「指定节点」模式接受标准 JSONPath 表达式：`$.products[*].name` 翻译所有商品的 name 字段，`$..title`
+      递归翻译所有 title 字段，多个路径用英文逗号分隔。配合「指定键名」的高级映射模式，还可以把翻译结果写入新字段
+      （如 `name` → `name_zh`）而保留原文。注意：键名含点（.）会被误认为嵌套路径，建议避免。
+  - q: JSON 翻译后键名和嵌套结构会乱吗？
+    a: >-
+      不会。工具只翻译值内容，键名、嵌套层级、数组结构全部原样保留，翻译后的 JSON 可直接用于 React、Vue 等
+      前端 i18n 项目。
+  - q: 翻译的不是 i18n JSON，是 Markdown 或字幕文件怎么办？
+    a: >-
+      Markdown 文档（.md、.mdx）请用 [Markdown 翻译](../md-translator/index.mdx)，会保留代码块、LaTeX 公式和
+      Front Matter 元数据；字幕文件（SRT/ASS/VTT/LRC）请用 [字幕翻译器](../subtitle-translator/index.mdx)，
+      保留时间轴和 ASS 样式标签。三个翻译工具共享同一套引擎配置和翻译缓存，跨工具切换无需重新设置。
+  - q: JSON 内容会上传到服务器吗？大文件会不会泄露隐私？
+    a: >-
+      完全前端处理：JSON 读取、解析、翻译请求都在浏览器内完成，原文不经过我们的服务器存储。LLM 引擎的请求直接从
+      你的浏览器发往你配置的 API 端点（OpenAI、DeepSeek 等），API Key 仅保存在本地 localStorage。翻译缓存使用
+      浏览器 IndexedDB，支持构建间的增量更新——只有改动过的 Key 会重新调用 API，节省成本。源代码开源于
+      [rockbenben/json-translate](https://github.com/rockbenben/json-translate)，可自部署或审查实现。
 ---
 
 import Info from '../_interface.mdx';
+import Privacy from '../_privacy.mdx';
 
-# 项目介绍
+# JSON 翻译工具｜i18n 多语言批量翻译与 JSONPath 精准定位
 
 :::tip 快速介绍
 JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、选择性翻译、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
@@ -178,5 +224,41 @@ JSON 数据是以键值对的形式存储的，其中“键”（也称为“名
 ```
 
 目前，JsonTranslate 无法处理包含点（`.`）的 JSON 键名。这是因为点号在 JSONPath 中用于区分嵌套对象的键名，使得含点的键名可能被误解为多层嵌套对象。为避免这一问题，建议使用不含点的键名。
+
+## 常见问题
+
+### 这个 JSON 翻译工具支持哪些翻译引擎和文件大小？
+
+浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持 25+ 引擎：Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点（Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、选择性 Key、i18n 多语言聚合 5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
+
+### 翻译 JSON 用机器翻译还是 AI 大模型？怎么选最合适？
+
+按 JSON 值长度选：短 UI 文案（按钮、菜单项、错误提示）用机器翻译够用——**Google 免费版** 零成本（限单条 5000 字符）；长文本（产品描述、教程）建议 AI 大模型——**DeepSeek** 性价比首选、**Claude Sonnet** 术语一致性最稳，可在「系统提示词」加术语保留表保护品牌名、SKU、API 术语。完整引擎对比见 [接口指南](../api.mdx)，配置在三个翻译工具间共享。
+
+### 支持 next-intl、i18next、vue-i18n、react-intl 这些 i18n 框架的 JSON 格式吗？
+
+全部支持。next-intl 和 vue-i18n 的嵌套对象结构、i18next 的扁平 key 命名空间、react-intl 的 ICU MessageFormat 占位符都能正确处理。`{name}`、`{count, plural, ...}`、`{0}` 等占位符在翻译时会被保留不会被改写。建议用「指定键名」模式只翻译值不动 Key，或用「i18n 模式」直接在原 JSON 上聚合多语言（如 `{en: "Settings", zh: "设置"}` 结构）。
+
+### 怎么把 JSON 一次翻译成多种语言？
+
+开启「多语言模式」后可同时选择多个目标语言，一次操作即可批量生成 en.json、ja.json、ko.json 等多语言文件，大幅节省国际化工作时间。
+
+### 用 JSONPath 怎么只翻译特定节点？比如只翻译商品名字段。
+
+「指定节点」模式接受标准 JSONPath 表达式：`$.products[*].name` 翻译所有商品的 name 字段，`$..title` 递归翻译所有 title 字段，多个路径用英文逗号分隔。配合「指定键名」的高级映射模式，还可以把翻译结果写入新字段（如 `name` → `name_zh`）而保留原文。注意：键名含点（.）会被误认为嵌套路径，建议避免。
+
+### JSON 翻译后键名和嵌套结构会乱吗？
+
+不会。工具只翻译值内容，键名、嵌套层级、数组结构全部原样保留，翻译后的 JSON 可直接用于 React、Vue 等前端 i18n 项目。
+
+### 翻译的不是 i18n JSON，是 Markdown 或字幕文件怎么办？
+
+Markdown 文档（.md、.mdx）请用 [Markdown 翻译](../md-translator/index.mdx)，会保留代码块、LaTeX 公式和 Front Matter 元数据；字幕文件（SRT/ASS/VTT/LRC）请用 [字幕翻译器](../subtitle-translator/index.mdx)，保留时间轴和 ASS 样式标签。三个翻译工具共享同一套引擎配置和翻译缓存，跨工具切换无需重新设置。
+
+### JSON 内容会上传到服务器吗？大文件会不会泄露隐私？
+
+<Privacy />
+
+JSON 工具的 IndexedDB 缓存还支持构建间增量更新——只有改动过的 Key 会重新调用 API，节省成本。源代码开源于 [rockbenben/json-translate](https://github.com/rockbenben/json-translate)，可自部署或审查实现。
 
 <Info />

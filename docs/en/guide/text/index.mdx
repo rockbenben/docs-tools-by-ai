@@ -1,0 +1,34 @@
+---
+title: Text Tools
+head:
+  - - meta
+    - property: og:title
+      content: Text Tools - Chinese Conversion, Novel Cleanup, Splitter, Regex Toolbox | Tools By AI
+description: Four complementary text processing tools covering Simplified-Traditional Chinese conversion, novel formatting and ad removal, smart text splitting, regex matching and bulk line operations. Browser-local processing — sensitive data stays on your machine.
+---
+
+# Text Tools
+
+Four complementary plain-text utilities covering **format conversion → content cleanup → chunking → general-purpose ops**. All run locally in your browser — sensitive data never leaves your machine.
+
+## Pick the Right Tool
+
+| I want to…                                          | Use                                                  |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| Convert Simplified ↔ Traditional Chinese (TW / HK)  | [**Chinese Conversion**](./chinese-conversion.mdx)   |
+| Reformat web novels, fix chapter titles, strip ads | [**Novel Processor**](./novel-processor.mdx)        |
+| Split long text by chars / paragraphs / delimiter   | [**Text Splitter**](./text-splitter.mdx)             |
+| Regex match, dedupe, batch prefix/suffix, line ops  | [**Text Toolbox**](./text-toolbox.mdx)               |
+
+## Shared Capabilities
+
+- **Browser-local**: file reading, parsing, and processing happen locally — sensitive data stays on your machine
+- **Batch input**: all four tools accept multi-document paste or multi-file upload
+- **Protected dictionary**: Chinese Conversion and Novel Processor let you mark "do-not-process" terms (iPhone, OpenAI, custom names)
+- **Chainable**: split a huge doc → run regex cleanup → convert to Traditional
+
+## Common Combinations
+
+- **Web-novel reading prep**: Novel Processor strips ads + fixes chapter headings → Chinese Conversion to TW Traditional → batch export
+- **AI prompt prep**: Text Splitter chunks a long doc into ~4K-token blocks → Text Toolbox regex-cleans each chunk → batch export .txt
+- **Multilingual archive cleanup**: Text Toolbox filters out Japanese lines → Chinese Conversion to Simplified → Text Splitter by paragraph

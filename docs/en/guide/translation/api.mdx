@@ -20,7 +20,7 @@ The tool integrates **8 classic translation APIs** and **21 large language model
 | Subtitles, UI strings, lots of short sentences | **GTX Free** or **Qwen-MT Flash** | High concurrency, cheap |
 | Long text, business / literature | **DeepL** | Best overall quality and flow |
 | **Entry-level AI translation / budget-conscious LLM use** | **DeepSeek** | Best price/value LLM — strong CN/EN quality at a fraction of Claude / GPT per-token cost |
-| Chinese ↔ English, reliability | **DeepSeek** / **Qwen-MT Plus** / **Claude** | Works in mainland CN, great CN/EN quality |
+| Chinese ↔ English, reliability | **DeepSeek** / **Qwen-MT Plus** | Direct access from mainland CN, great CN/EN quality |
 | Technical docs needing consistent terminology | **DeepSeek** (best value) / **Claude** (premium) / **GPT** / **Gemini** | LLMs let you control style via custom prompts |
 | Privacy-sensitive, local-only | **TranslateGemma** | Self-hosted, free, purpose-built translation model |
 | Low-resource languages (Wolof, Bhojpuri, etc.) | **DeepL** | Covers many low-resource languages reliably (e.g. wo / an / gn that Google doesn't carry) |
@@ -141,7 +141,7 @@ Google's translation-specialized Gemma model, trained specifically for translati
 - The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp
 - Recommended models: `translategemma-4b-it` (compact and fast), `translategemma-12b-it` (better quality), or `translategemma-27b-it` (best quality)
 - **Source language must be explicit** — auto-detect isn't supported
-- **Limited language coverage**: only ~55 mainstream languages (Google's WMT24++ benchmark scope). Low-resource languages (Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr), and ~62 others) are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
+- **Limited language coverage**: only ~55 mainstream languages (Google's WMT24++ benchmark scope). About 68 low-resource languages — including Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr) — are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
 
 ### Solving CORS Issues
 

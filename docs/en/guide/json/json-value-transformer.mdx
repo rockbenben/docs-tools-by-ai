@@ -1,4 +1,5 @@
 ---
+title: JSON Value Transformer Guide
 head:
   - - meta
     - property: og:title
@@ -6,6 +7,46 @@ head:
 description: Need to migrate data between JSON structures? This tool uses JSONPath to map keys, copying values from a source to a target, ideal for multilingual content.
 appUrl: https://tools.newzone.top/en/json-value-transformer
 appName: JSON Value Transformer
+image: https://docs.newzone.top/img/json-value-transformer.png
+howto:
+  name: How to map fields with JSON Value Transformer
+  steps:
+    - name: Paste JSON data
+      text: Paste the JSON content for transformation.
+    - name: Configure mapping rules
+      text: Define key-value mapping rules manually, or load the AIShort preset (one-click `en.prompt` → 11 language targets). Targets field names with recursive search (nested keys via dot notation).
+    - name: Transform and export
+      text: Click Transform. Export the transformed JSON with original structure preserved.
+faq:
+  - q: What's the difference between Custom Mapping and Preset Mapping?
+    a: >-
+      Custom Mapping lets you add input/output key pairs manually — flexible but hands-on. Preset
+      Mapping (AIShort) one-click loads `en.prompt` → 11 language targets (ar, bn, de, es, fr, hi, it,
+      ja, ko, pt, ru), great for bootstrapping multilingual templates. Both modes use JSONPath dot
+      notation like `en.prompt` to locate fields.
+  - q: How is this tool different from JSON Node Edit?
+    a: >-
+      [JSON Node Edit](./json-node-edit.mdx) is "edit values in place" — prefix/suffix, find/replace,
+      overwrite. This tool is "copy values across fields" — moves the value at one path to another
+      path, commonly used for multilingual templates (copy `en.prompt` into `zh.prompt`, `ja.prompt`,
+      etc. as placeholders, then hand off to a translator).
+  - q: Will processing large JSON files be slow?
+    a: >-
+      Check "Large File Mode" to handle extremely large JSON (hides the left text box and forces file
+      upload). All processing runs in your browser — files never leave your machine. Deeply nested
+      structures may take longer.
+  - q: What happens if an input or output key doesn't exist?
+    a: >-
+      The system validates every input/output key against the JSON before running the mapping. Invalid
+      paths trigger a specific error message (which key, in which mapping row), and your data isn't
+      touched. Key names are case-sensitive; keys containing dots (`.`) are misread as nested paths —
+      avoid them when possible.
+  - q: After copying fields, how do I actually translate them?
+    a: >-
+      Mapping only moves source values to target fields. To translate those fields, use
+      [JSON Translate](../../translation/json-translate/index.mdx)'s i18n mode or targeted-node mode
+      with any of 25+ engines (DeepSeek, Claude, GPT, etc.). To sync values from another dataset by an
+      ID field, use [JSON Match & Update](./json-match-update.mdx).
 ---
 
 # JSON Key-Value Mapping Tool
@@ -28,7 +69,7 @@ The [JSON Key-Value Mapping Tool](https://tools.newzone.top/en/json-value-transf
 ### Basic Operation Process
 
 1. **Select Mapping Mode**
-   - Pick "Custom Mapping" or "Preset Mapping · AIShort" on the Segmented at the top of the Configuration card
+   - Pick "Custom Mapping" or "Preset Mapping · AIShort" from the segmented control at the top of the Configuration card
    - Preset mapping is optimized for AIShort multilingual processing; when selected, the 11 target keys render inline
 
 2. **Set Key Mapping Relationships**
