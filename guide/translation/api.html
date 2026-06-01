@@ -10,7 +10,7 @@
 <script defer src="/static/js/lib-react.d56db99f1f.js"></script>
 <script defer src="/static/js/lib-router.a1926d0801.js"></script>
 <script defer src="/static/js/788.f22e0cbd4d.js"></script>
-<script defer src="/static/js/index.97836d1f6f.js"></script>
+<script defer src="/static/js/index.a4757a1adb.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.13">
 <meta name="author" content="rockbenben">
@@ -27,7 +27,7 @@
 <meta name="description" content="工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。">
 <meta property="og:description" content="工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。">
 <meta property="og:title" content="翻译接口对比 - 经典 API 与大语言模型 | Tools By AI">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"翻译接口指南","name":"翻译接口指南","description":"工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。","inLanguage":"zh-CN","url":"https://docs.newzone.top/guide/translation/api","mainEntityOfPage":"https://docs.newzone.top/guide/translation/api","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-05-28","articleSection":"翻译工具","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"翻译接口指南","name":"翻译接口指南","description":"工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。","inLanguage":"zh-CN","url":"https://docs.newzone.top/guide/translation/api","mainEntityOfPage":"https://docs.newzone.top/guide/translation/api","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-06-01","articleSection":"翻译工具","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://docs.newzone.top/"},{"@type":"ListItem","position":2,"name":"指南","item":"https://docs.newzone.top/guide"},{"@type":"ListItem","position":3,"name":"翻译工具","item":"https://docs.newzone.top/guide/translation"},{"@type":"ListItem","position":4,"name":"翻译接口指南"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/guide/translation/api">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/translation/api">
@@ -38,7 +38,7 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:title" content="翻译接口指南">
 <meta name="twitter:description" content="工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。">
-<meta property="article:modified_time" content="2026-05-28">
+<meta property="article:modified_time" content="2026-06-01">
 <meta property="article:section" content="翻译工具"></head>
 
   <body>
@@ -58,7 +58,7 @@
 </ul>
 <p>需要更稳定的服务，可自行申请商业 API Key，详见 <a href="https://ttime.timerecord.cn/service/translate/google.html" target="_blank" rel="noopener noreferrer" class="rp-link">接口申请教程</a>。</p>
 <h2 class="rp-toc-include" id="大语言模型llm"><a href="#大语言模型llm" class="rp-header-anchor rp-link" aria-hidden="true">#</a>大语言模型（LLM）</h2>
-<p>支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、OpenRouter、Groq、SiliconFlow、Nvidia NIM、Azure OpenAI，以及兼容 OpenAI 协议的自定义接口。</p>
+<p>支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、Xiaomi MiMo、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、OpenRouter、Groq、SiliconFlow、GitHub Models、Nvidia NIM、Azure OpenAI，以及兼容 OpenAI 协议的自定义接口。</p>
 <p>适合处理：</p>
 <ul>
 <li>文学作品、技术文档等需要深度理解的内容</li>
@@ -71,10 +71,12 @@
 <li><strong>温度（Temperature）</strong>：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。</li>
 <li><strong>思考模式</strong>：让 AI 多想一步再翻译，质量更高但更慢/更贵——支持的模型 UI 会显示开关。开关<strong>按模型独立保存</strong>，切模型不影响别的设置。具体 UI 形态因 provider 而异：<!-- -->
 <ul>
-<li><strong>三档调节</strong>（off / low / medium / high）：Claude、Gemini、DeepSeek、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM</li>
-<li><strong>两档开关</strong>（off / on）：Doubao、Zhipu GLM、Moonshot (Kimi)、MiniMax、Hunyuan TurboS（底层 API 只接受 on/off，不接受 effort）</li>
+<li><strong>三档调节</strong>（off / low / medium / high）：Claude、Gemini、DeepSeek、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM、Perplexity Sonar Deep Research</li>
+<li><strong>两档开关</strong>（off / on）：Doubao、Zhipu GLM、Moonshot (Kimi)、MiniMax、Xiaomi MiMo、Hunyuan TurboS、Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning（底层 API 只接受 on/off，不接受 effort）</li>
 <li><strong>仅 low / high</strong>：xAI Grok 4.3（API 限制）</li>
-<li><strong>选了即开启</strong>（UI 不显示 toggle）：ERNIE 5.0-Thinking、Hunyuan 2.0-Thinking、Mistral Magistral、Perplexity Sonar Reasoning Pro / Deep Research、Cohere Command A Reasoning、Grok 4.20 Reasoning / Multi-Agent</li>
+<li><strong>三态（off / on / auto）</strong>：在支持思考的 provider 上填写<strong>未列出的自定义模型</strong>时（含 Mistral、Perplexity、自定义 OpenAI 兼容接口）。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off</li>
+<li><strong>选了即开启</strong>（UI 不显示 toggle）：ERNIE 5.0-Thinking、Hunyuan 2.0-Thinking、Mistral Magistral、Perplexity Sonar Reasoning Pro、Grok 4.20 Reasoning / Multi-Agent</li>
+<li><strong>无思考开关</strong>：GitHub Models（网关不支持 reasoning 参数）</li>
 </ul>
 </li>
 </ul>
@@ -96,7 +98,7 @@
 <span class="line"><span>and sentence patterns when translating. Translate into this IT domain style.</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="切换代码换行" aria-label="切换代码换行"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="currentColor" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M20 8v12H8V8zm0-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 16H2V4a2 2 0 0 1 2-2h12v2H4Z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="currentColor" d="m9.55 18-5.7-5.7 1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"></path></svg></button></div></div></div>
 <p>不需要时留空即可。</p>
 <h3 class="rp-toc-include" id="不支持的语言"><a href="#不支持的语言" class="rp-header-anchor rp-link" aria-hidden="true">#</a>不支持的语言</h3>
-<p>以下语言 Qwen-MT 暂未覆盖，UI 会自动提示并阻止使用：柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、旁遮普（pa）、博杰普尔（bho）、豪萨（ha）、阿姆哈拉（am）、维吾尔（ug）。</p>
+<p>Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自动提示并阻止使用（以应用内实际拦截为准）：如柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、维吾尔（ug）、阿姆哈拉（am）等数十种。</p>
 <h2 class="rp-toc-include" id="内置-api-代理"><a href="#内置-api-代理" class="rp-header-anchor rp-link" aria-hidden="true">#</a>内置 API 代理</h2>
 <p>DeepL、Nvidia NIM 等接口浏览器直连会被官方 CORS 策略拦截，工具默认通过自家代理转发请求。如果你在设置里填了自定义 API URL，代理会被绕过，请求直接发到你填的地址。</p>
 <h2 class="rp-toc-include" id="本地模型接入"><a href="#本地模型接入" class="rp-header-anchor rp-link" aria-hidden="true">#</a>本地模型接入</h2>

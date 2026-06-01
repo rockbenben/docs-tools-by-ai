@@ -10,7 +10,7 @@
 <script defer src="/static/js/lib-react.d56db99f1f.js"></script>
 <script defer src="/static/js/lib-router.a1926d0801.js"></script>
 <script defer src="/static/js/788.f22e0cbd4d.js"></script>
-<script defer src="/static/js/index.97836d1f6f.js"></script>
+<script defer src="/static/js/index.a4757a1adb.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.13">
 <meta name="author" content="rockbenben">
@@ -27,7 +27,7 @@
 <meta name="description" content="Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.">
 <meta property="og:description" content="Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.">
 <meta property="og:title" content="Translation API Guide - Classic APIs and LLMs Compared | Tools By AI">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"Translation API Guide","name":"Translation API Guide","description":"Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/translation/api","mainEntityOfPage":"https://docs.newzone.top/en/guide/translation/api","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-05-28","articleSection":"Translation","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"Translation API Guide","name":"Translation API Guide","description":"Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/translation/api","mainEntityOfPage":"https://docs.newzone.top/en/guide/translation/api","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-06-01","articleSection":"Translation","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://docs.newzone.top/en"},{"@type":"ListItem","position":2,"name":"Guide","item":"https://docs.newzone.top/en/guide"},{"@type":"ListItem","position":3,"name":"Translation","item":"https://docs.newzone.top/en/guide/translation"},{"@type":"ListItem","position":4,"name":"Translation API Guide"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/en/guide/translation/api">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/translation/api">
@@ -38,7 +38,7 @@
 <meta property="og:locale:alternate" content="zh_CN">
 <meta name="twitter:title" content="Translation API Guide">
 <meta name="twitter:description" content="Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.">
-<meta property="article:modified_time" content="2026-05-28">
+<meta property="article:modified_time" content="2026-06-01">
 <meta property="article:section" content="Translation"></head>
 
   <body>
@@ -58,7 +58,7 @@
 </ul>
 <p>For more reliable service, apply for a commercial API key — see the <a href="https://ttime.timerecord.cn/service/translate/google.html" target="_blank" rel="noopener noreferrer" class="rp-link">API application guide</a>.</p>
 <h2 class="rp-toc-include" id="large-language-models-llms"><a href="#large-language-models-llms" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Large Language Models (LLMs)</h2>
-<p>Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.</p>
+<p>Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.</p>
 <p>LLMs work best for:</p>
 <ul>
 <li>Literature and technical documentation that needs deeper understanding</li>
@@ -71,10 +71,12 @@
 <li><strong>Temperature</strong>: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.</li>
 <li><strong>Thinking mode</strong>: lets the AI think before translating — higher quality, slower and pricier. Supported models show a toggle in the UI. The toggle is <strong>stored per model</strong> so switching models preserves each one&#x27;s setting independently. The exact UI form depends on the provider:<!-- -->
 <ul>
-<li><strong>Three levels</strong> (off / low / medium / high): Claude, Gemini, DeepSeek, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM</li>
-<li><strong>Binary toggle</strong> (off / on): Doubao, Zhipu GLM, Moonshot (Kimi), MiniMax, Hunyuan TurboS (underlying APIs accept on/off but not an effort param)</li>
+<li><strong>Three levels</strong> (off / low / medium / high): Claude, Gemini, DeepSeek, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM, Perplexity Sonar Deep Research</li>
+<li><strong>Binary toggle</strong> (off / on): Doubao, Zhipu GLM, Moonshot (Kimi), MiniMax, Xiaomi MiMo, Hunyuan TurboS, Mistral (Medium 3.5 / Small 4), Cohere Command A Reasoning (underlying APIs accept on/off but not an effort param)</li>
 <li><strong>Low / high only</strong>: xAI Grok 4.3 (API limitation)</li>
-<li><strong>Always-on SKUs</strong> (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro / Deep Research, Cohere Command A Reasoning, Grok 4.20 Reasoning / Multi-Agent</li>
+<li><strong>Three-state (off / on / auto)</strong>: when you enter an <strong>unlisted custom model</strong> on a thinking-capable provider (incl. Mistral, Perplexity, and the custom OpenAI-compatible endpoint). Auto omits the thinking param to follow the model&#x27;s built-in default — a fallback for strict providers that 422 on a non-thinking SKU; defaults to Off</li>
+<li><strong>Always-on SKUs</strong> (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro, Grok 4.20 Reasoning / Multi-Agent</li>
+<li><strong>No thinking toggle</strong>: GitHub Models (the gateway doesn&#x27;t support reasoning params)</li>
 </ul>
 </li>
 </ul>
@@ -96,7 +98,7 @@
 <span class="line"><span>and sentence patterns when translating. Translate into this IT domain style.</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap" aria-label="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="currentColor" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M20 8v12H8V8zm0-2H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 16H2V4a2 2 0 0 1 2-2h12v2H4Z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="currentColor" d="m9.55 18-5.7-5.7 1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"></path></svg></button></div></div></div>
 <p>Leave empty if you don&#x27;t need it.</p>
 <h3 class="rp-toc-include" id="unsupported-languages"><a href="#unsupported-languages" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Unsupported Languages</h3>
-<p>These languages are not yet covered by Qwen-MT — the UI will block them: Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Punjabi (pa), Bhojpuri (bho), Hausa (ha), Amharic (am), Uyghur (ug).</p>
+<p>Qwen-MT covers ~92 languages; a number of low-resource ones aren&#x27;t covered and the UI auto-blocks them with a clear message (the in-app blocklist is authoritative): e.g. Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Uyghur (ug), Amharic (am), and dozens more.</p>
 <h2 class="rp-toc-include" id="built-in-api-proxy"><a href="#built-in-api-proxy" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Built-in API Proxy</h2>
 <p>DeepL, Nvidia NIM, and similar providers can&#x27;t be called from the browser due to CORS. The tool routes those through a built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.</p>
 <h2 class="rp-toc-include" id="local-model-setup"><a href="#local-model-setup" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Local Model Setup</h2>
