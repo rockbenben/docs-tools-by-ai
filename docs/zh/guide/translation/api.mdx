@@ -50,7 +50,7 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 ## 大语言模型（LLM）
 
-支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、OpenRouter、Groq、SiliconFlow、Nvidia NIM、Azure OpenAI，以及兼容 OpenAI 协议的自定义接口。
+支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、Xiaomi MiMo、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、OpenRouter、Groq、SiliconFlow、GitHub Models、Nvidia NIM、Azure OpenAI，以及兼容 OpenAI 协议的自定义接口。
 
 适合处理：
 
@@ -63,10 +63,12 @@ import SupportedLanguages from './_supported-languages.mdx';
 - **模型**：填所选接口提供的模型名；Azure OpenAI 填部署名。
 - **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
 - **思考模式**：让 AI 多想一步再翻译，质量更高但更慢/更贵——支持的模型 UI 会显示开关。开关**按模型独立保存**，切模型不影响别的设置。具体 UI 形态因 provider 而异：
-  - **三档调节**（off / low / medium / high）：Claude、Gemini、DeepSeek、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM
-  - **两档开关**（off / on）：Doubao、Zhipu GLM、Moonshot (Kimi)、MiniMax、Hunyuan TurboS（底层 API 只接受 on/off，不接受 effort）
+  - **三档调节**（off / low / medium / high）：Claude、Gemini、DeepSeek、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM、Perplexity Sonar Deep Research
+  - **两档开关**（off / on）：Doubao、Zhipu GLM、Moonshot (Kimi)、MiniMax、Xiaomi MiMo、Hunyuan TurboS、Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning（底层 API 只接受 on/off，不接受 effort）
   - **仅 low / high**：xAI Grok 4.3（API 限制）
-  - **选了即开启**（UI 不显示 toggle）：ERNIE 5.0-Thinking、Hunyuan 2.0-Thinking、Mistral Magistral、Perplexity Sonar Reasoning Pro / Deep Research、Cohere Command A Reasoning、Grok 4.20 Reasoning / Multi-Agent
+  - **三态（off / on / auto）**：在支持思考的 provider 上填写**未列出的自定义模型**时（含 Mistral、Perplexity、自定义 OpenAI 兼容接口）。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off
+  - **选了即开启**（UI 不显示 toggle）：ERNIE 5.0-Thinking、Hunyuan 2.0-Thinking、Mistral Magistral、Perplexity Sonar Reasoning Pro、Grok 4.20 Reasoning / Multi-Agent
+  - **无思考开关**：GitHub Models（网关不支持 reasoning 参数）
 
 ### 区域端点切换
 
@@ -113,7 +115,7 @@ and sentence patterns when translating. Translate into this IT domain style.
 
 ### 不支持的语言
 
-以下语言 Qwen-MT 暂未覆盖，UI 会自动提示并阻止使用：柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、旁遮普（pa）、博杰普尔（bho）、豪萨（ha）、阿姆哈拉（am）、维吾尔（ug）。
+Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自动提示并阻止使用（以应用内实际拦截为准）：如柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、维吾尔（ug）、阿姆哈拉（am）等数十种。
 
 ## 内置 API 代理
 

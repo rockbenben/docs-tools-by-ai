@@ -50,7 +50,7 @@ For more reliable service, apply for a commercial API key — see the [API appli
 
 ## Large Language Models (LLMs)
 
-Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.
+Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.
 
 LLMs work best for:
 
@@ -63,10 +63,12 @@ Key parameters:
 - **Model**: enter the model name from your provider; for Azure OpenAI, enter the deployment name.
 - **Temperature**: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.
 - **Thinking mode**: lets the AI think before translating — higher quality, slower and pricier. Supported models show a toggle in the UI. The toggle is **stored per model** so switching models preserves each one's setting independently. The exact UI form depends on the provider:
-  - **Three levels** (off / low / medium / high): Claude, Gemini, DeepSeek, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM
-  - **Binary toggle** (off / on): Doubao, Zhipu GLM, Moonshot (Kimi), MiniMax, Hunyuan TurboS (underlying APIs accept on/off but not an effort param)
+  - **Three levels** (off / low / medium / high): Claude, Gemini, DeepSeek, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM, Perplexity Sonar Deep Research
+  - **Binary toggle** (off / on): Doubao, Zhipu GLM, Moonshot (Kimi), MiniMax, Xiaomi MiMo, Hunyuan TurboS, Mistral (Medium 3.5 / Small 4), Cohere Command A Reasoning (underlying APIs accept on/off but not an effort param)
   - **Low / high only**: xAI Grok 4.3 (API limitation)
-  - **Always-on SKUs** (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro / Deep Research, Cohere Command A Reasoning, Grok 4.20 Reasoning / Multi-Agent
+  - **Three-state (off / on / auto)**: when you enter an **unlisted custom model** on a thinking-capable provider (incl. Mistral, Perplexity, and the custom OpenAI-compatible endpoint). Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that 422 on a non-thinking SKU; defaults to Off
+  - **Always-on SKUs** (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro, Grok 4.20 Reasoning / Multi-Agent
+  - **No thinking toggle**: GitHub Models (the gateway doesn't support reasoning params)
 
 ### Regional Endpoint Switcher
 
@@ -113,7 +115,7 @@ Leave empty if you don't need it.
 
 ### Unsupported Languages
 
-These languages are not yet covered by Qwen-MT — the UI will block them: Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Punjabi (pa), Bhojpuri (bho), Hausa (ha), Amharic (am), Uyghur (ug).
+Qwen-MT covers ~92 languages; a number of low-resource ones aren't covered and the UI auto-blocks them with a clear message (the in-app blocklist is authoritative): e.g. Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Uyghur (ug), Amharic (am), and dozens more.
 
 ## Built-in API Proxy
 

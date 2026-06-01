@@ -8,8 +8,13 @@ description: See the complete update history for our translation tools. This pag
 
 # Changelog
 
-Upcoming features: Create a local desktop client; add AI polishing for translated subtitles.
+Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.06.01: Added GitHub Models; thinking-control overhaul.
+  - New LLM provider **GitHub Models**: authenticates with a GitHub PAT (`models:read` scope), with a free tier tiered per model (GPT-4.1 / 4.1 Mini / 4o Mini, Mistral Medium 3, Phi-4, Llama 3.3 70B) — a good no-cost entry point for users without a paid key. The gateway doesn't support reasoning params, so no thinking toggle is shown.
+  - Thinking-control overhaul: Mistral (Medium 3.5 / Small 4) and Cohere Command A Reasoning move from always-on to an **off / on** toggle; Perplexity Sonar Deep Research gains **off / low / medium / high**.
+  - Custom (unlisted) models on a thinking-capable provider get a new **three-state off / on / auto** control: off explicitly disables, on enables, auto omits the param to follow the model's default (a fallback for strict providers that error on non-thinking models); defaults to off.
+  - Fix: provider selection guard is now purely derived, so a stale bundle no longer silently overrides the user's choice.
 - 2026.05.26: Translation engine deep-tuning.
   - New opt-in `maxTokens` cap for Custom (OpenAI-compatible) to prevent local small-model repetition loops; `finish_reason=length` truncation detection added to Claude / Gemini / OpenAI-compat
   - Default `contextWindow` for Custom local LLM lowered from 100 to 30 to match the behavior of models under 14B

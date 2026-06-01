@@ -8,8 +8,13 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
 
 # 更新日志
 
-待更新功能：本地客户端化；对翻译后的字幕内容进行 ai 润色。
+待更新功能：对翻译后的字幕内容进行 AI 润色。
 
+- 2026.06.01: 新增 GitHub Models；思考控制全面化。
+  - 新增 LLM 提供商 **GitHub Models**：用 GitHub PAT（`models:read` 权限）鉴权，免费额度按模型分级（GPT-4.1 / 4.1 Mini / 4o Mini、Mistral Medium 3、Phi-4、Llama 3.3 70B），适合没有付费 Key 的入门用户；该网关不支持 reasoning 参数，故不显示思考开关
+  - 思考控制全面化：Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning 由「选了即开启」改为 **off / on** 开关；Perplexity Sonar Deep Research 支持 **off / low / medium / high** 三档
+  - 自定义（未列出）模型在支持思考的 provider 上新增 **三态控制 off / on / auto**：off 显式关闭、on 开启、auto 省略参数跟随模型默认（严格 provider 对非思考模型会报错时的兜底）；默认 off
+  - 修复：provider 选择守卫改为纯派生，避免旧 bundle 静默覆盖用户的选择
 - 2026.05.26: 翻译引擎深度调优。
   - Custom (OpenAI-compatible) 新增可选 maxTokens 上限，防止本地小模型陷入重复输出循环；Claude / Gemini / OpenAI-compat 同步加上 `finish_reason=length` 截断检测
   - Custom 本地 LLM 默认 contextWindow 从 100 降到 30，适配 14B 以下的小模型
