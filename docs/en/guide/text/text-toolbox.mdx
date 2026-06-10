@@ -40,6 +40,7 @@ howto:
 
 - **Extract specific content**: pull URLs, JSON keys, pattern-matching fields from a large body of text
 - **Clean up noise**: strip ads, GPT citation markers, HTML tags, blank lines
+- **Tidy terminal-copied text**: strip the quote bars and hard line wraps from Claude Code / terminal output and restore paste-ready paragraphs
 - **Batch formatting**: add prefixes/suffixes to each line — Markdown lists, CSV, SQL `IN` clauses
 - **Sort & organize**: asc/desc sort, reverse, dedup (with an exclusion list)
 - **Complex pipelines**: filter → regex → affix multi-step cleanups
@@ -98,6 +99,7 @@ When done, a **Result card** appears at the bottom with copy / export / format /
 ### Convert
 
 - **Smart Split**: uses `compromise` English NLP for sentence boundaries + Chinese paragraph rules
+- **CLI Text Cleanup**: built for text copied out of Claude Code / a terminal — strips leading quote bars (`▎ ▌ │`) and indentation, reflows lines hard-wrapped at the terminal width back into full paragraphs (CJK lines join directly, Latin lines get a single space), and keeps list items and code blocks line-by-line. The result is auto-copied to the clipboard, ready to paste
 - **JSON Beautify**: lenient parse (handles unquoted keys, single quotes, comments) + 2-space indent
 - **Common Link Replace**: replace every `https://huggingface.co` with `https://modelscope.cn/models` — useful for switching HuggingFace links to a China-accessible mirror
 

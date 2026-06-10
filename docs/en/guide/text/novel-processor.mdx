@@ -82,6 +82,7 @@ When done, the result is auto-copied to clipboard and shown in the result card.
 ### 2. Content Cleaning (collapsed by default)
 
 - **Chapter Title Formatting** (on): recognize "Chapter X" / "第X章" patterns and normalize them
+- **Merge Duplicate Chapter Titles**: when the same chapter title appears more than once (including back-to-back repeats and near-duplicates differing only in full/half-width punctuation), collapse them into one, keeping the more complete title
 - **Strip Line-End Digits** (off): remove trailing digits only on lines ≥ 10 chars (avoids stripping years from short titles)
 - **Trim Spaces** (on): strip leading/trailing whitespace per line
 - **Remove Adjacent Duplicates** (off): drop only **consecutive** duplicate lines (not full-text dedup — preserves common short dialogue like "嗯" / "好")
