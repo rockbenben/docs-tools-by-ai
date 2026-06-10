@@ -23,7 +23,8 @@ interface FaqItem {
 const extractFaqFromMarkdown = (content: string): FaqItem[] => {
   const noFrontmatter = content.replace(/^---[\r\n][\s\S]*?[\r\n]---[\r\n]?/, "");
   const items: FaqItem[] = [];
-  const re = /^##\s+([^\r\n]+?)\s*$([\s\S]*?)(?=^##\s+|\Z)/gm;
+  // (?![\s\S]) = absolute end-of-string; JS has no \Z and would treat it as a literal "Z".
+  const re = /^##\s+([^\r\n]+?)\s*$([\s\S]*?)(?=^##\s+|(?![\s\S]))/gm;
   let m: RegExpExecArray | null;
   while ((m = re.exec(noFrontmatter)) !== null) {
     const q = m[1].trim();

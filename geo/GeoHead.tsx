@@ -65,7 +65,8 @@ const stripMarkdown = (input: unknown): string => {
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "") // images
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // links
     .replace(/(\*\*|__)(.+?)\1/g, "$2") // bold
-    .replace(/(\*|_)(.+?)\1/g, "$2") // italic
+    .replace(/\*(.+?)\*/g, "$1") // italic (asterisk)
+    .replace(/(^|[^\w])_(.+?)_(?!\w)/g, "$1$2") // italic (underscore) — intra-word `_` like `a_b_c` is not emphasis
     .replace(/^#{1,6}\s+/gm, "") // ATX headers
     .replace(/^[\s]*[-*+]\s+/gm, "") // unordered list markers
     .replace(/^[\s]*\d+\.\s+/gm, "") // ordered list markers
