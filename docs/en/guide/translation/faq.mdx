@@ -3,16 +3,77 @@ head:
   - - meta
     - property: og:title
       content: Translation Tools FAQ - API Keys & Troubleshooting | Tools By AI
-description: Translation empty or slow? Is my API key safe? This page answers common questions about our translation tools, covering API keys, DeepL, and data security.
+description: Translation empty or slow? Is my API key safe? This page answers common questions about our translation tools, covering API keys, subtitle alignment, and data security.
 faq:
-  - q: Translation returns empty, only the original text, or null — what to do?
+  - q: What if the translation result is empty, shows only the original text, or returns null?
     a: >-
-      Common causes: invalid API Key, exhausted quota or rate limit, cache hit on the original,
-      or a restricted network. Troubleshoot in order: verify the API Key and interface settings,
-      check account quota and 429 errors, clear the translation cache and retry, confirm the
-      network supports the chosen provider, and open DevTools (F12) Network to inspect the
-      request Status and Response for the actual error.
-  - q: Local model reports CORS or connection failure?
+      If only a few lines show the original text, that's the failed-line fallback — click "Retry"
+      in the red panel to re-translate just those lines. If nothing translated at all, work
+      through: click the API status badge → "Test Connection"; follow the on-page error message
+      (bad key, quota exhausted, etc.); switch to free GTX and translate a small sample — if GTX
+      works the problem is the original provider's key/config/quota, if GTX also fails it's your
+      network (proxy, firewall, regional block); clear the translation cache and retry.
+  - q: Will failed translations retry automatically? What's not retried?
+    a: >-
+      Yes. Network blips, rate limits (429), and temporary server errors (5xx) retry up to your
+      "Retry Count". Lines that still fail fall back to the original text and collect in a red
+      panel with one-click Retry. Errors where retrying can't help need a settings change
+      instead: bad key (401/403) → fix the API key; timeout → raise "Timeout"; text too long
+      (context length) → lower "Context Lines" or split the file; output truncated (max_tokens)
+      → raise "Max Tokens".
+  - q: Why is translation slow?
+    a: >-
+      The most effective fix is raising "Concurrent Lines" — add 50–100% over the service
+      default, and dial back the moment you see 429 errors. Also: keep the cache on to reuse
+      results; enable context-aware translation for AI models; switch to a faster service when
+      in a hurry (free GTX far outpaces small local models); for small local models (under 14B)
+      do the opposite — turn context OFF and let lines run concurrently.
+  - q: Translated subtitles are out of order, or several lines got merged into one — what to do?
+    a: >-
+      The tool ships multiple safeguards: when a model drops the line markers it no longer
+      guesses positions by line number, and merged blocks are discarded and re-translated as a
+      group. If a model still does it often (Gemini and Mistral break markers the most), switch
+      to a more format-faithful model (DeepSeek / Claude / GPT), lower "Context Mode Concurrency"
+      (e.g. 3 → 1), and use the red panel's Retry to fill the gaps.
+  - q: How do I use AI translation for free, without a paid API key?
+    a: >-
+      Start with the default GTX (Free) — zero config, fast, plain machine translation that's
+      plenty for batch subtitles. For free LLM translation, several listed providers offer free
+      tiers: Google AI Studio (Gemini Flash family), OpenRouter (models with the :free suffix),
+      Nvidia NIM, GitHub Models (just a GitHub account), SiliconFlow, and more. Note that
+      overseas services need a suitable network environment. Only deploy locally for
+      privacy-sensitive content — otherwise free cloud APIs beat small local models on both
+      speed and quality.
+  - q: Which model should I pick for local translation?
+    a: >-
+      First choice is the translation-specialized TranslateGemma (from 4B up) — better quality
+      than same-size generic models with low VRAM needs; pick "TranslateGemma" directly in the
+      service list. For a generic LLM go 14B+ (Qwen3-14B / 32B, Gemma 3 27B); models under 8B
+      drop lines, scramble output, and can even crash on large batch jobs. In mainland China,
+      download models from ModelScope. Local deployment is mainly for privacy — for
+      non-sensitive content, free cloud APIs are better and easier.
+  - q: What if the AI translation quality is unsatisfactory?
+    a: >-
+      Try in order of increasing cost: reset Translation Settings to defaults and re-test with a
+      small segment; tune temperature (≈0.2 for strict terminology, 0.4–0.7 general, 0.8–1.0
+      creative); enable context-aware translation for coherence; use the Glossary for
+      inconsistent names/terms; finally switch models — mainstream online models (including the
+      mini / flash tiers) are all capable enough; for local model selection see "Which model
+      should I pick for local translation?".
+  - q: How do I keep names and terminology translated consistently?
+    a: >-
+      Use the Glossary — no prompt-stuffing needed. Translation Settings → Glossary → Edit terms,
+      one per row as "source word → required translation" (e.g. Spike → Спайк); with the toggle
+      on it applies to every translation automatically. For bulk import use TSV — one pair per
+      line separated by a Tab (pastes straight from Excel), with an optional third column for a
+      target language code (zh, ja, …).
+  - q: Should my custom prompt say "preserve timestamps / line numbers / formatting"?
+    a: >-
+      No. The tool sends only the dialogue text to the model — timestamps, cue numbers, and
+      ASS/VTT headers stay local and are re-inserted at their original positions after
+      translation. The model never sees the structure, so format-preservation instructions
+      just waste tokens. Focus the prompt on translation style and quality.
+  - q: Local model reporting cross-origin (CORS) or connection failure?
     a: >-
       For local models like Ollama or LM Studio, failures are usually caused by browser CORS or
       ad blockers. Fix: temporarily disable ad/privacy extensions and refresh; enable CORS on
@@ -26,43 +87,24 @@ faq:
       causing dropped lines and slower runs. Fix: pick the dedicated "TranslateGemma" service
       from the dropdown — it makes line-by-line calls tailored to the Gemma translation model's
       I/O format, the most reliable option for local small models.
-  - q: Why is translation slow?
+  - q: Why does DeepL go through a relay server?
     a: >-
-      Speed is controlled by the "Concurrent Lines / Context Lines" parameters in API settings.
-      Defaults vary widely by service: GTX = 100, cloud LLMs = 20, Custom local LLM / TranslateGemma
-      / DeepLX = 10. Speed-up: gradually raise concurrency above the current service's default
-      (e.g. 20→30→50, lower immediately on 429); enable context-aware translation with more
-      context lines; enable the translation cache. For small local models (&lt;14B) on
-      Ollama / LM Studio, turn OFF "Context-Aware Translation" to switch to line-by-line
-      concurrent mode, or keep it on but lower Context Lines to 20-30.
-  - q: Will failed translations retry automatically? What's not retried?
-    a: >-
-      Network blips, 429 rate-limits, and 5xx server errors retry up to your configured count.
-      These errors do NOT retry — retrying can't change the outcome: 401/403 (bad API key),
-      AbortError / timeout (waiting longer doesn't help), context length exceeded (text too
-      long — split it or lower context lines), max_tokens truncation (same params will truncate
-      again). See Feature Guide → Failed-Line Retry for details.
-  - q: What if AI translation quality is unsatisfactory?
-    a: >-
-      First reset to defaults in Translation Settings and re-test with a small segment. Then
-      tune temperature — 0–0.3 for strict terminology, 0.4–0.7 for general use, 0.8–1.0 for
-      paraphrasing. Enable context-aware translation to improve dialogue coherence. Most online
-      70B+ models have enough translation capability; abnormal output is usually caused by
-      temperature or prompt settings.
-  - q: Why use a third-party interface to access DeepL?
-    a: >-
-      DeepL officially prohibits direct API calls from web pages, so a relay channel is needed
-      to forward requests. This channel only forwards and does not record your data; for
-      maximum stability you can build your own dedicated proxy.
+      DeepL's official API can't be called directly from a web page (browser CORS restriction),
+      so the tool routes requests through a built-in relay — same for Nvidia NIM and YandexGPT.
+      The relay only forwards and never records your content; if you'd rather avoid it, enter a
+      custom API URL in settings and requests go straight to your endpoint.
   - q: Is my API Key saved on a server?
     a: >-
       No. The API Key and all settings are stored only in the local browser; no server can
       access them.
-  - q: Why is GTX Web disabled by default?
+  - q: Is there a CLI, API, or desktop version?
     a: >-
-      GTX Web puts significant pressure on the shared service, so it is disabled by default.
-      You can enable it manually for local personal use; enabling a global proxy or unstable
-      networks may cause request anomalies.
+      No — the tool is web-only: open and use, always up to date, with subtitles and API keys
+      stored only in your own browser. No desktop or portable builds are planned; CLI /
+      programmatic access is on the long-term roadmap. To cut down manual steps: batch mode
+      takes multiple files in one drag-and-drop; Import Settings pre-configures target languages
+      and everything else from a JSON file; multi-language mode accepts a pasted string of
+      language codes (zh, de, ru).
 ---
 
 # FAQ
@@ -71,22 +113,106 @@ faq:
 
 ## What if the translation result is empty, shows only the original text, or returns null?
 
-Common causes:
+Two different situations — check which one you have:
 
-- **Configuration Error**: The API Key is invalid, or the translation interface parameters are incomplete.
-- **Quota/Rate Limited**: Account Credits are exhausted, or the request rate is too high and has been temporarily restricted by the interface.
-- **Cache Hit Original**: Previous original text stored in the cache is being returned directly.
-- **Network Restricted**: The selected interface (e.g., OpenAI, Gemini, Claude, etc.) is restricted in the current region, or proxy/network anomalies caused the request to fail.
+**Only a few lines show the original text** — that's the failed-line fallback: lines that couldn't be translated keep the original text as a placeholder so the file structure stays intact. A red alert appears at the top of the result — click **Retry** to re-translate just those lines (completed content isn't re-billed). Usually it's a network blip or a flaky service; one or two retries clear it.
 
-✅ **Troubleshooting Order:**
+**Nothing translated at all / large blanks / null** — the API isn't getting through. Work through these in order:
 
-1.  Verify the API Key and interface settings.
-2.  Check account quota, rate limits, and `429` errors.
-3.  Disable or clear the translation cache and retry.
-4.  Confirm the network environment supports the interface being used.
-5.  Inspect the API response in DevTools: press **F12** (or **Ctrl+Shift+I**) → open **Network** → click "Translate" again → open the latest translation request and check **Status** (e.g., 401/429/5xx) plus the error details in **Response/Preview**.
+1. **Test the connection**: click the API status badge at the top of the page → **Test Connection** — confirms in seconds whether the API is reachable;
+2. **Read the error message**: the tool converts common failures into readable hints (invalid key, quota exhausted, timeout, …) — follow what it says;
+3. **A/B against the free API**: switch to **GTX (Free)** and translate a small sample. GTX works → the problem is the original provider's key / config / quota. GTX also fails → it's your network (proxy, firewall, regional restriction);
+4. **Clear the cache and retry**: wipe the translation cache in settings to rule out stale results.
 
-If only a few sentences failed to translate, you can simply click "Translate" again; the cache will skip completed content and will not deduct fees repeatedly.
+Still stuck? Press **F12** → **Network** → click "Translate" once more → open the newest request and bring its **Status** (401/429/5xx) and **Response** error to a [GitHub issue](https://github.com/rockbenben/subtitle-translator/issues).
+
+## Will failed translations retry automatically? What's not retried?
+
+Yes — **network blips, rate limits (429), and temporary server errors (5xx)** retry automatically, up to your "Retry Count". Lines that still fail **fall back to the original text** (never empty) and collect in the red failure panel — click **Retry** to re-translate them in one go without re-billing completed content.
+
+For these errors retrying can't change the outcome, so the tool fails fast and you need a settings change:
+
+| Error | What to do |
+| --- | --- |
+| Bad key (401 / 403) | Re-check or replace the API Key |
+| Timeout | Raise "Timeout", or pick a faster service |
+| Text too long (context length exceeded) | Lower "Context Lines", or split the file |
+| Output truncated (max_tokens reached) | Raise "Max Tokens" (or set 0 = unlimited), or split the file |
+
+Full mechanism: [Feature Guide → Failed-Line Retry](./info.mdx#failed-line-retry).
+
+## Why is translation slow?
+
+The single most effective fix: **raise "Concurrent Lines"** — add 50%–100% over the current service's default, and dial back the moment 429 errors appear. Also:
+
+- **Keep the cache on** (default) — identical content is reused instantly on re-runs
+- **Enable "Context-Aware Translation" for AI models** — more coherent AND higher throughput
+- **In a hurry? Pick a faster service** — free GTX runs circles around small local models; paid DeepL is faster than Claude Opus
+- **Small local models (under 14B) need the opposite — context OFF**: small models drop lines in long batches; line-by-line concurrent mode is both faster and more reliable
+
+Defaults vary per service. See [Feature Guide → Concurrent Lines](./info.mdx#concurrent-lines).
+
+## Translated subtitles are out of order, or several lines got merged into one — what to do?
+
+Some LLMs (**Gemini and Mistral** in particular) tend to break the markers the tool uses to keep lines aligned, producing shifted translations or several adjacent cues translated as one block. The tool ships multiple safeguards:
+
+- When line markers go missing, positions are **no longer guessed by line number** — no more whole-section shifts
+- When one cue absorbs the next few, the merged block is **discarded and the whole group re-translated**, so nothing gets duplicated
+- The model is explicitly instructed never to merge lines
+
+If a particular model still does it frequently:
+
+1. **Switch to a more format-faithful model** — DeepSeek / Claude / GPT follow the line markers noticeably better
+2. **Lower "Context Mode Concurrency"** in API settings (e.g. 3 → 1) — the fewer lines per response, the less scrambling
+3. Broken lines land in the failure panel — click **Retry** to fill them in without re-billing completed content
+
+## How do I use AI translation for free, without a paid API key?
+
+- **Zero-config start**: the default **GTX (Free)** needs no key and runs fast — plain machine translation, but plenty for batch subtitles and everyday text
+- **Free LLM tiers**: several listed providers offer free quotas — **Google AI Studio** (Gemini Flash family), **OpenRouter** (models with the `:free` suffix), **Nvidia NIM**, **GitHub Models** (just a GitHub account — see the [API guide](./api.mdx#provider-specific-notes)), **SiliconFlow**, and more. Browse the service list — many providers are included precisely because they have a free tier
+- **Mind your network**: overseas services (Google, OpenRouter, …) need a suitable network environment — if they don't connect, check the network before blaming the config
+- Only **privacy-sensitive** content is worth deploying locally; otherwise free cloud APIs beat small local models on both speed and reliability (next question)
+
+## Which model should I pick for local translation?
+
+In order of "good enough first":
+
+1. **Prefer the translation-specialized [TranslateGemma](./api.mdx#translategemma)** (from 4B up): trained specifically for translation, it beats same-size generic models with lower VRAM needs and faster runs. Pick **"TranslateGemma" directly in the service list**; it's a machine-translation service — prompts are built into the call format (system/user prompts don't apply), and the source language must be set explicitly
+2. **Generic LLMs: 14B minimum** — Qwen3-14B / 32B, Gemma 3 27B, etc.; bigger is steadier. **Don't run large batch jobs on models under 8B** — they drop lines, scramble output, and long jobs can even crash the model
+3. **Download source**: in mainland China, [ModelScope](https://www.modelscope.cn/models) is far faster than direct Hugging Face / LM Studio's built-in downloader
+
+The main value of local deployment is **privacy** (content never leaves your machine). For non-sensitive content, free cloud APIs (previous question) give better quality without tying up your GPU.
+
+## What if the AI translation quality is unsatisfactory?
+
+Try these in order of increasing cost:
+
+1. **Reset to defaults**: restore Translation Settings and re-test with a small segment — many "weird translations" come from previously changed parameters;
+2. **Tune temperature**: ≈0.2 for strict terminology / technical docs; 0.4–0.7 for everyday content; 0.8–1.0 for creative paraphrasing;
+3. **Enable context-aware translation**: dialogue and long-form text get noticeably more coherent;
+4. **Inconsistent names / terms**: pin them with the Glossary (next question);
+5. **Switch models**: mainstream online models (DeepSeek / Claude / GPT / Gemini — including their mini / flash tiers) are all capable enough; odd output is almost always a parameter or prompt issue, not the model. Small local models do have a real ceiling — see [Which model should I pick for local translation?](#which-model-should-i-pick-for-local-translation) above.
+
+## How do I keep names and terminology translated consistently?
+
+Use the **Glossary** — no need to stuff terms into the system prompt. The glossary is more reliable (per-request injection of matched terms, automatic retry on violations, post-hoc replacement net) and doesn't waste tokens.
+
+How to use: Translation Settings → **Glossary** → Edit terms, one term per row as "**source word → required translation**" (e.g. `Spike → Спайк`). With the toggle on, it applies to every translation automatically.
+
+For bulk import, use **TSV** (tab-separated — pastes straight from Excel / any spreadsheet):
+
+```text
+Spike	Спайк
+Moscow	Москва
+```
+
+An optional third column takes a target language code (`zh`, `ja`, …) so one file can import terms for several languages. Full details: [Feature Guide → Glossary](./info.mdx#glossary).
+
+## Should my custom prompt say "preserve timestamps / line numbers / formatting"?
+
+**No.** The tool sends only the dialogue text to the model — timestamps, cue numbers, and ASS/VTT headers all stay local and are re-inserted at their original positions after translation. The model never sees the structure.
+
+Format-preservation instructions ("keep line count / numbering / timecodes") are not just unnecessary — they waste tokens and can even coax the model into emitting extra content. Spend the prompt on **translation style and quality** instead (tone, domain terminology, target audience).
 
 ## Local model reporting cross-origin (CORS) or connection failure?
 
@@ -102,49 +228,22 @@ Most likely you've configured `translategemma` as a regular LLM: picked "Custom 
 
 ✅ Fix: pick the dedicated "**TranslateGemma**" service from the dropdown. It uses a purpose-built line-by-line path that matches the Gemma translation model's I/O format and is the most reliable option for local small models. See [Translation API Guide → TranslateGemma](./api.mdx#translategemma).
 
-## Why is translation slow?
+## Why does DeepL go through a relay server?
 
-The fastest fix: **raise "Concurrent Lines"** by 50%–100% above the current service's default; lower it immediately on 429 errors. Other tips:
+DeepL's official API can't be called directly from a web page (a browser CORS restriction), so the tool routes requests through a built-in relay — **Nvidia NIM and YandexGPT** work the same way. The relay only forwards requests and never records your content.
 
-- **Keep the cache on** — identical content won't be re-translated (already on by default)
-- **Turn on context** — AI models only — more coherent, higher throughput
-- **Pick a faster service** — free GTX runs circles around tiny local models; paid DeepL is faster than Claude Opus
-- **For small local models (&lt;14B), turn context OFF**: enabling context-aware translation makes tiny models drop lines. Switch to line-by-line concurrent mode — faster AND more reliable
+Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own proxy) and requests go straight to your endpoint, bypassing the built-in relay. See [Translation API Guide → Built-in API Proxy](./api.mdx#built-in-api-proxy).
 
-Defaults vary per service. See [Feature Guide → Concurrent Lines](./info.mdx#concurrent-lines).
-
-## Will failed translations retry automatically? What's not retried?
-
-Yes — **network blips, 429 rate-limits, and 5xx server errors** retry up to your configured "Retry Count". Failed lines **fall back to the original text** (never empty), and a red panel at the top of the result lets you retry with one click.
-
-These errors do NOT retry — retrying can't change the outcome:
-
-- **Bad API key (401 / 403)** — fix the key in settings first
-- **Timeout** — raise "Retry Timeout (seconds)", or pick a faster service
-- **Text too long (context length exceeded)** — split the file, or lower "Context Lines"
-- **Token truncation (max_tokens reached)** — split the file, or turn off the `maxTokens` cap
-
-Full mechanism: [Feature Guide → Failed-Line Retry](./info.mdx#failed-line-retry).
-
-## What if the AI translation quality is unsatisfactory?
-
-- **Restore defaults first**: Reset in "Translation Settings" and re-test with a small text segment.
-- **Then adjust Temperature**:
-  - **0\~0.3**: Strict terminology, requires stability;
-  - **0.4\~0.7**: General scenarios;
-  - **0.8\~1.0**: Allows paraphrasing/more creativity.
-- **Enable context-aware translation** to improve dialogue coherence.
-
-The basic translation capability of most online mainstream 70B+ models is generally fine; abnormal output is usually related to temperature or prompt settings.
-
-## Why use a third-party interface to access DeepL?
-
-DeepL officially prohibits direct API calls from web pages, so a relay channel is needed to forward requests. This channel is only used for forwarding and will not record your data; if you need extreme stability, you can build your own dedicated proxy.
-
-## Is the API Key saved?
+## Is my API Key saved on a server?
 
 No. The API Key and all settings are stored only in the local browser; no server can access them.
 
-## Why is GTX Web disabled by default?
+## Is there a CLI, API, or desktop version?
 
-GTX Web puts significant pressure on the shared service, so it is disabled by default. If using it locally for personal use, you can manually enable it; enabling a global proxy or unstable networks may cause request anomalies.
+No — the tool is **web-only**: open and use, always up to date, nothing to install or update. Your subtitles and API keys live only in your own browser and never touch a server. Desktop / portable builds aren't planned; CLI / programmatic access is on the long-term roadmap (PRs welcome).
+
+To cut down repetitive manual steps, combine these existing features for "semi-automation":
+
+- **Batch mode**: drag in multiple files at once — they queue automatically and download as a bundle
+- **Import Settings**: pre-configure target languages, API config, and every other parameter from a JSON file (see [Feature Guide → Settings Import/Export](./info.mdx#settings-importexport))
+- **Quick language-code entry**: in multi-language mode, paste a string of codes (e.g. `zh, de, ru`) instead of clicking through the picker

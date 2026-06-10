@@ -10,6 +10,18 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
 
 待更新功能：对翻译后的字幕内容进行 AI 润色。
 
+- 2026.06.10: 新增**术语表（Glossary）**功能。
+  - 为人名 / 专有名词指定固定译法，按目标语言生效；支持多套预设（按剧名 / 项目名建库）、TSV 批量导入导出（可选第 3 列目标语言代码，一个文件导入多语言术语）、编辑器搜索 / 重复词警示 / 分页
+  - 多层生效保障：LLM 按请求注入命中词条（不浪费 token）；Qwen-MT 走官方原生 `translation_options.terms` 参数；译文未采用指定译法时自动对违规行加强重译一次；最后还有译后兜底替换，确保术语一定生效
+  - 适用范围：全部 LLM 服务 + Qwen-MT；纯 MT 接口（GTX / Google / DeepL / Azure / TranslateGemma）无模型内术语通道，不显示术语表卡片
+  - 主页面 API 状态徽章旁新增术语表状态芯片，显示启用状态与词条数，点击直达设置
+- 2026.06.09: 稳定性与可访问性加固。
+  - 对翻译引擎、字幕 / Markdown / JSON / 文本各工具组做了一轮对抗式审查加固：占位符与代码围栏保护、格式边界处理、无效路径 / 正则给出明确报错而非静默跳过
+  - 字幕翻译错位修复：批次内标记丢失时不再按行号猜测位置，避免译文串行
+  - 可访问性：新增跳转正文链接与导航 landmark，工具控件全部支持键盘操作
+- 2026.06.06: 新增 YandexGPT (AI Studio)。
+  - 新增 LLM 提供商 **YandexGPT (AI Studio)**：API Key + Folder ID 鉴权，内置 YandexGPT 5.1 / Alice AI / Qwen3 / DeepSeek / GPT-OSS 等 SKU，也可直接粘贴完整 `gpt://` 模型 URI；官方接口无 CORS 头，默认经内置代理转发
+  - TranslateGemma 新增**可选 API Key**：适配 LM Studio "require API key"、vLLM `--api-key`、反向代理鉴权等加锁部署
 - 2026.06.01: 新增 GitHub Models；思考控制全面化。
   - 新增 LLM 提供商 **GitHub Models**：用 GitHub PAT（`models:read` 权限）鉴权，免费额度按模型分级（GPT-4.1 / 4.1 Mini / 4o Mini、Mistral Medium 3、Phi-4、Llama 3.3 70B），适合没有付费 Key 的入门用户；该网关不支持 reasoning 参数，故不显示思考开关
   - 思考控制全面化：Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning 由「选了即开启」改为 **off / on** 开关；Perplexity Sonar Deep Research 支持 **off / low / medium / high** 三档

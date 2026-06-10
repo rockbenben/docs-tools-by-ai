@@ -3,7 +3,7 @@ head:
   - - meta
     - property: og:title
       content: Translation Tool Features - Multilingual, Cache, and Tuning | Tools By AI
-description: Core features of the translation tool — multilingual batch translation, local cache, context-aware translation, failed-line retry, and tuning guidance.
+description: Core features of the translation tool — multilingual batch translation, local cache, glossary, context-aware translation, failed-line retry, and tuning guidance.
 ---
 
 # Feature Guide
@@ -22,7 +22,31 @@ Translation results are saved locally in your browser. When parameters match, th
 - **High capacity**: holds millions of records without bloating memory
 - **Toggle off**: disable temporarily when debugging prompts or model settings
 - **One-click clear**: clean up everything from the settings panel
-- **Hit conditions**: source text + source/target language + service-specific key params must all match (LLMs key off prompt/temperature/thinking effort; Qwen-MT off `domains`; traditional MT only off the source text). Changing temperature, editing prompts, or toggling thinking will miss the cache.
+- **Hit conditions**: source text + source/target language + service-specific key params must all match (LLMs key off prompt/temperature/thinking effort; Qwen-MT off `domains`; traditional MT only off the source text). Changing temperature, editing prompts, toggling thinking, or editing glossary terms will miss the cache.
+
+### Glossary
+
+Pin fixed translations for names and domain terms so they stay consistent across a whole file — or a whole series. Character names in episode subtitles and product terms in technical docs stop drifting between runs.
+
+**Where to enable**: the "Glossary" card in the translation settings panel (shown only when the selected service supports it). A glossary status chip next to the API status badge on the main page shows the on/off state and term count — click it to jump to settings. Turning the switch on creates a default glossary automatically if you don't have one yet.
+
+**Managing terms**:
+
+- Each term = **source word → required translation**, bound to one **target language** — the same word can carry a different translation per target language, and only the current target language's terms apply
+- Click "Edit terms" to open the editor: inline add/edit/delete, search filtering, duplicate-source warnings, automatic pagination past 50 terms
+- **TSV bulk import/export**: one term per line as `source ⇥ translation` (tab-separated, pastes straight from Excel / any spreadsheet); an optional third column takes a target language code (`zh`, `ja`, …) so one file can import terms for several languages
+- Multiple glossary **presets** (e.g. one per show / project) with create, rename, delete — included in settings import/export
+
+**How terms are enforced** (multiple layers):
+
+1. **LLM services**: only the terms actually present in the current text are injected into the system prompt (no token waste from shipping hundreds of terms with every request)
+2. **Qwen-MT**: terms go through the official native `translation_options.terms` parameter — the most reliable channel
+3. **Violation retry**: if an LLM translation ignores a required term, the offending line is retried once with a stricter instruction, and the version with fewer violations wins
+4. **Post-hoc replacement net**: on every service, source words left untranslated in the output are replaced per the glossary (word boundaries for Latin terms, substring matching for CJK, longest term first) — so terms always land
+
+**Service support**: all LLM services + Qwen-MT. Plain MT APIs (GTX, Google, DeepL(X), Azure, TranslateGemma) have no in-model term channel, so the glossary card is hidden for them.
+
+**Matching**: case-insensitive (`AI` and `ai` both match). Glossary data lives in your browser's local storage and is never uploaded.
 
 ### Long Text & Concurrency
 
@@ -39,7 +63,7 @@ LLMs occasionally drop a line, return an empty response, or break formatting. Wh
 
 - Failed lines automatically **fall back to the original text** — never empty, so the output is always usable
 - A red alert at the top of the result panel says how many lines failed
-- Click **Retry failed lines** to reissue only those — completed content stays as-is and isn't re-billed
+- Click **Retry** to reissue only those — completed content stays as-is and isn't re-billed
 - A copy button lets you grab the failed source rows for manual handling elsewhere
 
 **Multi-language batch mode**: when translating into multiple targets at once, if a whole target language fails (quota exhausted, model refusal, etc.), the failing language codes get aggregated into a dedicated panel. One-click copy them back into the "target languages" field to retry.
@@ -97,14 +121,15 @@ The badge at the top of the main page tells you the current API's status at a gl
 
 Click the badge to jump to the API settings panel.
 
-### Presets: API Config and Prompts, Separately
+### Presets: API Config, Prompts, and Glossaries, Separately
 
-API configs and prompts are stored as two independent preset types so they combine freely:
+API configs, prompts, and glossaries are stored as three independent preset types so they combine freely:
 
 - **API presets**: snapshot the current service's URL, key, model, temperature, etc. Useful for switching between local Ollama, a remote gateway, and a paid cloud endpoint.
 - **Prompt presets**: snapshot the system + user prompts. Switch between a "strict terminology" prompt and a "creative paraphrase" prompt without touching the API config.
+- **Glossary presets**: maintain separate term bases per show / project — see [Glossary](#glossary) above.
 
-Both types support add / load / rename / update / delete, and travel with settings import/export.
+All three types support add / load / rename / update / delete, and travel with settings import/export.
 
 ### Post-Translation Cleanup
 
@@ -123,14 +148,14 @@ This feature does plain string replacement only — no escape sequences (`\n`, `
 
 ### Settings Import/Export
 
-One-click backup of every configuration: API credentials, model parameters, API presets, Prompt presets. The exported JSON imports across devices, ideal for team sharing or moving to a new machine.
+One-click backup of every configuration: API credentials, model parameters, API presets, Prompt presets, glossaries. The exported JSON imports across devices, ideal for team sharing or moving to a new machine.
 
 ### General Options
 
 - **Use Cache**: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.
 - **Retry Count**: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.
-- **Retry Timeout (seconds)**: per-request timeout. Increase for slow models or long text.
-- **Max response tokens (Custom OpenAI-compatible only)**: optional `maxTokens` cap to prevent local small models from getting stuck in repetition loops. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
+- **Timeout**: per-request timeout in seconds. Increase for slow models or long text.
+- **Max Tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
 - **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
 - **Custom export filename**: standardize filenames in batch exports. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}`, `{time}`. Example: `{name}_{lang}_{date}.{ext}`.
 
@@ -168,7 +193,7 @@ The max number of lines translated in parallel. **The default is already tuned p
 
 </details>
 
-#### Context Batch Size
+#### Context Mode Concurrency
 
 - **Default**: 3 (1 for some providers)
 - **What it does**: in context-aware mode, how many "target lines" go into a single request. Each request also carries the surrounding context.

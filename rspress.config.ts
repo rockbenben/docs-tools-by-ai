@@ -47,13 +47,13 @@ export default defineConfig({
       label: "English",
       title: "Subtitle Translator · Markdown Translator · JSON i18n Tools — Tools By AI Docs",
       description:
-        "Free subtitle translator (SRT / ASS / VTT), Markdown translator preserving code blocks & LaTeX, and JSON i18n localization tools. 8 translation APIs + 21 LLMs across 120+ languages. Full usage guide and API setup.",
+        "Free subtitle translator (SRT / ASS / VTT), Markdown translator preserving code blocks & LaTeX, and JSON i18n localization tools. 7 translation APIs + 23 LLMs across 120+ languages. Full usage guide and API setup.",
     },
     {
       lang: "zh",
       label: "简体中文",
       title: "字幕翻译器 · Markdown 翻译 · JSON i18n 翻译工具 - Tools By AI 中文文档",
-      description: "免费的字幕翻译（SRT / ASS / VTT）、保留代码块与 LaTeX 的 Markdown 翻译、JSON i18n 本地化工具。8 种翻译 API + 21 种 AI 大模型，覆盖 120+ 种语言。完整使用文档与 API 配置指南。",
+      description: "免费的字幕翻译（SRT / ASS / VTT）、保留代码块与 LaTeX 的 Markdown 翻译、JSON i18n 本地化工具。7 种翻译 API + 23 种 AI 大模型，覆盖 120+ 种语言。完整使用文档与 API 配置指南。",
     },
   ],
   themeConfig: {
@@ -101,9 +101,9 @@ export default defineConfig({
         en: "Tools By AI Docs",
         zh: "Tools By AI 中文文档",
       },
-      siteDescription: "Documentation for Tools By AI — subtitle translator (SRT / ASS / VTT), Markdown translator preserving code blocks & LaTeX, JSON i18n localization, and more. 8 translation APIs + 21 LLMs across 120+ languages.",
+      siteDescription: "Documentation for Tools By AI — subtitle translator (SRT / ASS / VTT), Markdown translator preserving code blocks & LaTeX, JSON i18n localization, and more. 7 translation APIs + 23 LLMs across 120+ languages.",
       appUrl: "https://tools.newzone.top",
-      appDescription: "Free, browser-local AI tool suite: subtitle translator, Markdown translator, JSON i18n localization, regex toolbox, Chinese conversion, and more. Works with 8 translation APIs and 21 LLMs across 120+ languages.",
+      appDescription: "Free, browser-local AI tool suite: subtitle translator, Markdown translator, JSON i18n localization, regex toolbox, Chinese conversion, and more. Works with 7 translation APIs and 23 LLMs across 120+ languages.",
       appScreenshot: "https://img.newzone.top/subtile-translator.gif?imageMogr2/format/webp",
       appFeatureList: [
         "Subtitle translation",

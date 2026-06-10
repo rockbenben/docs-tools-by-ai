@@ -3,14 +3,14 @@ head:
   - - meta
     - property: og:title
       content: Translation API Guide - Classic APIs and LLMs Compared | Tools By AI
-description: Tools By AI integrates 8 translation APIs and 21 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
+description: Tools By AI integrates 7 translation APIs and 23 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
 ---
 
 import SupportedLanguages from './_supported-languages.mdx';
 
 # Translation API Guide
 
-The tool integrates **8 classic translation APIs** and **21 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
+The tool integrates **7 classic translation APIs** and **23 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
 
 ## Which API should I pick?
 
@@ -37,20 +37,19 @@ For detailed comparisons and how to get API keys, keep reading ↓
 | Qwen-MT          | ★★★★★   | ★★★★★     | CN/EN translation, domain-tuned   | Pay-per-token, free tier for new users   |
 | TranslateGemma   | ★★★★☆   | ★★★★☆     | Local translation, privacy-first  | Free (self-hosted)                       |
 | GTX API (Free)   | ★★★☆☆   | ★★★☆☆     | General text                      | Shared service, ~5M chars per 3 hours    |
-| GTX Web (Free)   | ★★★☆☆   | ★★☆☆☆     | Small-volume translation          | Free                                     |
 
 Notes:
 
 - **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
 - **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
 - **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / Ollama / llama.cpp — see [Local Model Setup](#local-model-setup).
-- **GTX API/Web** are free but rate-limited. Use a paid API for long-running jobs.
+- **GTX API** is free but rate-limited. Use a paid API for long-running jobs.
 
 For more reliable service, apply for a commercial API key — see the [API application guide](https://ttime.timerecord.cn/service/translate/google.html).
 
 ## Large Language Models (LLMs)
 
-Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.
+Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, YandexGPT (AI Studio), OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.
 
 LLMs work best for:
 
@@ -68,7 +67,12 @@ Key parameters:
   - **Low / high only**: xAI Grok 4.3 (API limitation)
   - **Three-state (off / on / auto)**: when you enter an **unlisted custom model** on a thinking-capable provider (incl. Mistral, Perplexity, and the custom OpenAI-compatible endpoint). Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that 422 on a non-thinking SKU; defaults to Off
   - **Always-on SKUs** (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro, Grok 4.20 Reasoning / Multi-Agent
-  - **No thinking toggle**: GitHub Models (the gateway doesn't support reasoning params)
+  - **No thinking toggle**: GitHub Models, YandexGPT (the gateway/API doesn't support reasoning params)
+
+### Provider-Specific Notes
+
+- **GitHub Models**: authenticates with a GitHub PAT (needs the `models:read` scope); free quota is tiered per model — a good entry point if you don't have a paid key.
+- **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so browsers can't call it directly — requests route through the built-in proxy.
 
 ### Regional Endpoint Switcher
 
@@ -113,17 +117,23 @@ and sentence patterns when translating. Translate into this IT domain style.
 
 Leave empty if you don't need it.
 
+### Native Glossary Channel
+
+Qwen-MT is one of the few MT services with **native glossary support**: with the [Glossary](./info#glossary) enabled, matched terms are sent through the official `translation_options.terms` parameter and applied by the model itself — more reliable than prompt injection.
+
 ### Unsupported Languages
 
 Qwen-MT covers ~92 languages; a number of low-resource ones aren't covered and the UI auto-blocks them with a clear message (the in-app blocklist is authoritative): e.g. Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Uyghur (ug), Amharic (am), and dozens more.
 
 ## Built-in API Proxy
 
-DeepL, Nvidia NIM, and similar providers can't be called from the browser due to CORS. The tool routes those through a built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.
+DeepL, Nvidia NIM, YandexGPT, and similar providers can't be called from the browser due to CORS. The tool routes those through a built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.
 
 ## Local Model Setup
 
-Want to run models locally for privacy? The tool works with any OpenAI-compatible local server. For decent translation quality, use `qwen3-14b` or larger (32B / 70B works even better).
+Want to run models locally for privacy? The tool works with any OpenAI-compatible local server. For decent translation quality with a generic LLM, use `qwen3-14b` or larger (32B-class works even better); on limited VRAM, switch to the translation-specialized [TranslateGemma](#translategemma) — solid quality from 4B up.
+
+> In mainland China, download models from [ModelScope](https://www.modelscope.cn/models) — far faster than direct Hugging Face access or LM Studio's built-in downloader, and the official TranslateGemma repos are mirrored there.
 
 ### Default Endpoints
 
@@ -141,7 +151,9 @@ Google's translation-specialized Gemma model, trained specifically for translati
 
 - **Pick "TranslateGemma" directly from the service list** — don't go through "Custom (OpenAI-compatible)" with `translategemma-4b-it` as the model name. The two take entirely different code paths: the dedicated TranslateGemma service makes line-by-line calls tailored to the Gemma translation model's I/O format, while Custom uses the generic LLM pipeline with batching and context markers — which causes dropped lines and slower runs on small (under 14B) models.
 - The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp
+- **API key is optional**: leave it empty for a plain local server; if your deployment requires auth (LM Studio's "require API key", vLLM's `--api-key`, or a reverse proxy in front), fill it in and requests carry an `Authorization: Bearer` header
 - Recommended models: `translategemma-4b-it` (compact and fast), `translategemma-12b-it` (better quality), or `translategemma-27b-it` (best quality)
+- **Prompt settings don't apply**: like Qwen-MT, it's a machine-translation service — the prompt is built into the call format; system/user prompts only affect LLM providers
 - **Source language must be explicit** — auto-detect isn't supported
 - **Limited language coverage**: only ~55 mainstream languages (Google's WMT24++ benchmark scope). About 68 low-resource languages — including Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr) — are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
 

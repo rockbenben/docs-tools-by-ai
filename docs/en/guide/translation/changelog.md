@@ -10,6 +10,18 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.06.10: New **Glossary** feature.
+  - Pin fixed translations for names and domain terms, applied per target language; multiple presets (one per show / project), TSV bulk import/export (optional third column for a target language code — one file imports terms for several languages), editor with search / duplicate warnings / pagination
+  - Multi-layer enforcement: LLMs get only the terms hit by the current text injected per request (no token waste); Qwen-MT uses the official native `translation_options.terms` parameter; lines that ignore a required term are retried once with a stricter instruction; a post-hoc replacement net guarantees terms land on every service
+  - Coverage: all LLM services + Qwen-MT; plain MT APIs (GTX / Google / DeepL / Azure / TranslateGemma) have no in-model term channel, so the glossary card is hidden there
+  - New glossary status chip next to the API status badge showing on/off state and term count — click to jump to settings
+- 2026.06.09: Stability and accessibility hardening.
+  - An adversarial-review hardening pass across the translation engine and the subtitle / Markdown / JSON / text tool groups: placeholder and code-fence protection, format edge cases, and explicit errors for invalid paths / regexes instead of silent no-ops
+  - Subtitle alignment fix: when batch markers go missing, lines are no longer guessed by position — no more shifted translations
+  - Accessibility: skip-to-content link and navigation landmarks added; all tool controls are now keyboard-operable
+- 2026.06.06: Added YandexGPT (AI Studio).
+  - New LLM provider **YandexGPT (AI Studio)**: authenticates with API key + Folder ID; ships YandexGPT 5.1 / Alice AI / Qwen3 / DeepSeek / GPT-OSS SKUs, or paste a full `gpt://` model URI; the official API sends no CORS headers, so requests route through the built-in proxy
+  - TranslateGemma gains an **optional API key** for gated deployments (LM Studio's "require API key", vLLM's `--api-key`, or a reverse-proxy auth layer)
 - 2026.06.01: Added GitHub Models; thinking-control overhaul.
   - New LLM provider **GitHub Models**: authenticates with a GitHub PAT (`models:read` scope), with a free tier tiered per model (GPT-4.1 / 4.1 Mini / 4o Mini, Mistral Medium 3, Phi-4, Llama 3.3 70B) — a good no-cost entry point for users without a paid key. The gateway doesn't support reasoning params, so no thinking toggle is shown.
   - Thinking-control overhaul: Mistral (Medium 3.5 / Small 4) and Cohere Command A Reasoning move from always-on to an **off / on** toggle; Perplexity Sonar Deep Research gains **off / low / medium / high**.
