@@ -10,7 +10,7 @@
 <script defer src="/static/js/lib-react.39eda44cfb.js"></script>
 <script defer src="/static/js/lib-router.5da0f123db.js"></script>
 <script defer src="/static/js/7424.36d688266e.js"></script>
-<script defer src="/static/js/index.9b58a9c4f0.js"></script>
+<script defer src="/static/js/index.3f033b8f0f.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.14">
 <meta name="author" content="rockbenben">
@@ -153,7 +153,7 @@ This feature does plain string replacement only — no escape sequences (<code>\
 <ul>
 <li><strong>Use Cache</strong>: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.</li>
 <li><strong>Retry Count</strong>: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.</li>
-<li><strong>Timeout</strong>: per-request timeout in seconds. Increase for slow models or long text.</li>
+<li><strong>Timeout</strong>: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.</li>
 <li><strong>Max Tokens (Custom OpenAI-compatible only)</strong>: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (<code>finish_reason=length</code>), the line is marked failed and won&#x27;t retry — same params would truncate again. Cloud LLMs rely on the server-side default and don&#x27;t expose this control.</li>
 <li><strong>Remove characters after translation</strong>: auto-strip specified characters or fragments from results (e.g., <code>♪</code> in subtitles, leftover <code>&lt;i&gt;</code> tags).</li>
 <li><strong>Custom export filename</strong>: standardize filenames in batch exports. Placeholders: <code>{name}</code> (source filename), <code>{lang}</code> (target language), <code>{ext}</code> (extension), <code>{date}</code>, <code>{time}</code>. Example: <code>{name}_{lang}_{date}.{ext}</code>.</li>

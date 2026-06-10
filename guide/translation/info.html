@@ -10,7 +10,7 @@
 <script defer src="/static/js/lib-react.39eda44cfb.js"></script>
 <script defer src="/static/js/lib-router.5da0f123db.js"></script>
 <script defer src="/static/js/7424.36d688266e.js"></script>
-<script defer src="/static/js/index.9b58a9c4f0.js"></script>
+<script defer src="/static/js/index.3f033b8f0f.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.14">
 <meta name="author" content="rockbenben">
@@ -153,7 +153,7 @@ JSON Translate 仅支持单文件模式。</p></div></div>
 <ul>
 <li><strong>使用缓存</strong>：默认开启。参数一致时直接读缓存。调试时可临时关闭。</li>
 <li><strong>重试次数</strong>：请求失败时的最大重试次数。网络不稳或免费接口易限流时可以调高。</li>
-<li><strong>超时时间</strong>：单次请求超时阈值（秒）。AI 模型慢或长文本多时可以调大。</li>
+<li><strong>超时时间</strong>：单次请求超时阈值（秒）。AI 模型慢或长文本多时可以调大。「测试连接」按钮也使用同一阈值——测试不会比正式翻译更严格。</li>
 <li><strong>最大输出 tokens（仅 Custom OpenAI-compatible）</strong>：可选的输出封顶，主要用于防止本地小模型陷入重复输出循环，建议本地模型设 2048–4096。默认 0（不限制）。响应若被截断（<code>finish_reason=length</code>）会标为失败但不会重试。其他云端 LLM 用各自服务端的默认上限，不暴露此控件。</li>
 <li><strong>翻译后移除字符</strong>：在结果中自动移除指定字符或片段（如字幕里的 <code>♪</code>、多余的 <code>&lt;i&gt;</code> 标签）。</li>
 <li><strong>自定义导出文件名</strong>：批量导出时统一命名，支持占位符 <code>{name}</code>（原文件名）、<code>{lang}</code>（目标语言）、<code>{ext}</code>（扩展名）、<code>{date}</code>、<code>{time}</code>。例如 <code>{name}_{lang}_{date}.{ext}</code>。</li>
