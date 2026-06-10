@@ -3,16 +3,16 @@
 ## 指南
 
 - [Tools By AI](/guide/index.md): Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆盖字幕翻译、Markdown 翻译、i18n JSON 处理、文本清洗等开发与办公场景，浏览器本地运行，原文不上传服务器。
-- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 21 种 AI 大模型与 8 种翻译 API，120+ 语言批量翻译。
+- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 23 种 AI 大模型与 7 种翻译 API，120+ 语言批量翻译。
 - [字幕翻译器使用指南](/guide/translation/subtitle-translator/index.md): 免费在线字幕翻译工具：批量处理 SRT、ASS、VTT、LRC 四种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 25+ 翻译引擎，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
 - [Subtitle Translator 部署](/guide/translation/subtitle-translator/deploy.md): 字幕翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [Markdown 翻译工具使用指南](/guide/translation/md-translator/index.md): 免费 Markdown 文档翻译工具：智能保留代码块、LaTeX 公式、链接、表格与 Front Matter 元数据。支持 DeepSeek、Claude、GPT、Gemini 等 AI 引擎批量翻译，一键发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus 等博客和文档站。
 - [MD Translator 部署](/guide/translation/md-translator/deploy.md): Markdown 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [JSON 翻译工具使用指南](/guide/translation/json-translate/index.md): 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 25+ 引擎，覆盖 120+ 语言。提供全局翻译、JSONPath 节点定位、指定键名、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
 - [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
-- [功能说明](/guide/translation/info.md): 工具的核心特性介绍——多语言批量翻译、本地缓存、上下文优化、失败行重试，以及高级参数的调优建议。
-- [翻译接口指南](/guide/translation/api.md): 工具集成了 8 种翻译 API 与 21 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
-- [常见问题](/guide/translation/faq.md): 翻译结果为空或速度慢？API Key 安全吗？本页解答了翻译工具的常见问题，包括 API 密钥、翻译无响应、DeepL 接口及数据安全等，帮您快速解决使用中的疑问。
+- [功能说明](/guide/translation/info.md): 工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。
+- [翻译接口指南](/guide/translation/api.md): 工具集成了 7 种翻译 API 与 23 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
+- [常见问题](/guide/translation/faq.md): 翻译结果为空或速度慢？API Key 安全吗？本页解答了翻译工具的常见问题，包括 API 密钥、翻译无响应、字幕错位及数据安全等，帮您快速解决使用中的疑问。
 - [更新日志](/guide/translation/changelog.md): 查看翻译工具的完整更新历史。本页记录了从最初版本至今的所有功能新增、性能优化和问题修复，包括 AI 上下文翻译、多语言支持扩展等重要里程碑。
 - [文本工具集](/guide/text/index.md): 四款互补的文本处理工具，覆盖简繁中文转换、网络小说排版去广告、长文本智能分段、正则匹配与批量行操作。全部浏览器本地运行，敏感数据不外发。
 - [简繁转换工具使用指南](/guide/text/chinese-conversion.md): 浏览器本地的中文转换工具。简繁体互转、台湾/香港地区词汇、日本新字体，支持批量文件、智能换行、自定义保护词典（不被转换的特定词组），全程不上传服务器。
