@@ -154,7 +154,7 @@ One-click backup of every configuration: API credentials, model parameters, API 
 
 - **Use Cache**: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.
 - **Retry Count**: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.
-- **Timeout**: per-request timeout in seconds. Increase for slow models or long text.
+- **Timeout**: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.
 - **Max Tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
 - **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
 - **Custom export filename**: standardize filenames in batch exports. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}`, `{time}`. Example: `{name}_{lang}_{date}.{ext}`.

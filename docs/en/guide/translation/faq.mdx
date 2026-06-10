@@ -94,6 +94,14 @@ faq:
       causing dropped lines and slower runs. Fix: pick the dedicated "TranslateGemma" service
       from the dropdown — it makes line-by-line calls tailored to the Gemma translation model's
       I/O format, the most reliable option for local small models.
+  - q: A local thinking model is very slow or never produces output?
+    a: >-
+      Thinking models (e.g. the Qwen3 family) generate a long reasoning block before the actual
+      translation — on limited hardware that's tens of seconds per line before any output. Fixes:
+      append /no_think to the system prompt (Qwen3 family soft switch); switch to an instruct
+      variant or the translation-specialized TranslateGemma; single-digit tokens/s usually means
+      the model runs on CPU — check GPU offload. The Test Connection button shares the
+      "Request timeout" setting with translation; raise it if reasoning genuinely takes long.
   - q: Why does DeepL go through a relay server?
     a: >-
       DeepL's official API can't be called directly from a web page (browser CORS restriction),
@@ -245,6 +253,15 @@ When using local models like Ollama or LM Studio, common causes for failure are 
 Most likely you've configured `translategemma` as a regular LLM: picked "Custom (OpenAI-compatible)" and filled in `translategemma-4b-it` (or similar) as the model name. That path uses the generic LLM pipeline with batching and context markers, and small (under 14B) models struggle to preserve the prompt's structure — you get dropped lines and slower runs.
 
 ✅ Fix: pick the dedicated "**TranslateGemma**" service from the dropdown. It uses a purpose-built line-by-line path that matches the Gemma translation model's I/O format and is the most reliable option for local small models. See [Translation API Guide → TranslateGemma](./api.mdx#translategemma).
+
+## A local thinking model is very slow or never produces output?
+
+**Thinking models** (e.g. the Qwen3 family, enabled by default) generate a long reasoning block before the actual translation — on limited hardware (a few tokens per second), every line waits tens of seconds for reasoning you never see. In order of effectiveness:
+
+1. **Turn thinking off**: append `/no_think` at the end of the system prompt (Translation Settings → System Prompt) — the Qwen3 family's soft switch; some community finetunes may not honor it
+2. **Switch models**: pick an instruct variant, or select the translation-specialized [TranslateGemma](./api.mdx#translategemma) from the service list — no reasoning stage, solid quality from 4B, an order of magnitude faster
+3. **Check GPU offload**: single-digit tokens/s usually means most layers run on CPU — check the GPU settings in LM Studio / Ollama
+4. The Test Connection button shares the **"Request timeout"** setting with translation (default 180s) — raise it if reasoning genuinely takes that long
 
 ## Why does DeepL go through a relay server?
 

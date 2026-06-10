@@ -10,6 +10,11 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.06.10: Adaptive rate limiting + fully localized error hints.
+  - **Adaptive 429 slowdown**: when any service gets rate-limited, all of its requests pause and resume automatically (honoring the server's `Retry-After`, otherwise 1s→60s exponential backoff, with jittered resume to avoid a second burst), with a "Rate limited — pausing briefly" notice. GTX Free keeps its fast default concurrency — full speed normally, automatic duty-cycling under throttling
+  - **Fully localized error hints**: HTTP status codes (invalid key, insufficient balance, model not found, unsupported parameter, rate limit, quota exhausted, server errors — 11 classes) now map to actionable hints in all 18 UI languages; the failure panel, tool error toasts, and Test buttons uniformly show "raw reason + hint"; network errors and timeouts get localized copy instead of raw "Failed to fetch"
+  - **Test Connection timeout now follows the "Request timeout" setting** (was a fixed 30s): slow local thinking models no longer fail the test while translating fine; test timeouts are classified separately
+  - Fix: TranslateGemma's preflight check now normalizes URLs the same way the translation service does — bare LAN addresses (e.g. `http://192.168.x.x:1234`) no longer "pass the test but get blocked when translating"
 - 2026.06.10: New **Glossary** feature.
   - Pin fixed translations for names and domain terms, applied per target language; multiple presets (one per show / project), TSV bulk import/export (optional third column for a target language code — one file imports terms for several languages), editor with search / duplicate warnings / pagination
   - Multi-layer enforcement: LLMs get only the terms hit by the current text injected per request (no token waste); Qwen-MT uses the official native `translation_options.terms` parameter; lines that ignore a required term are retried once with a stricter instruction; a post-hoc replacement net guarantees terms land on every service
