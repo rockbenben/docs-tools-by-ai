@@ -117,7 +117,7 @@ The badge at the top of the main page tells you the current API's status at a gl
 - **Not configured / Needs config**: URL or API key missing
 - **Configured**: filled in but not yet tested
 - **Testing** → **✓ Connected** or **Connection failed**: test results
-- **Free API**: free, no-config services like GTX
+- **Free API**: free, no-config services (GTX / Edge / DeepLX)
 
 Click the badge to jump to the API settings panel.
 
@@ -186,7 +186,8 @@ The max number of lines translated in parallel. **The default is already tuned p
 <details>
 <summary>Defaults per service (reference)</summary>
 
-- GTX (Free): 100
+- GTX (Free): translates in batched chunks (~5000 chars/block), not line-by-line concurrency
+- Edge (Free): 100
 - Commercial MT (Google / Azure / DeepL): 20-100
 - Cloud LLMs (Claude / Gemini / OpenAI / Qwen, etc.): 20
 - Custom local LLM / TranslateGemma / DeepLX: 10

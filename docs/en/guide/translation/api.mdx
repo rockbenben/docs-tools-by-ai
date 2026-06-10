@@ -17,7 +17,8 @@ The tool integrates **7 classic translation APIs** and **23 large language model
 | Use case | Recommended | Why |
 |---|---|---|
 | First-time user, no API key | **GTX (Free)** | Free, zero-config — the default |
-| Subtitles, UI strings, lots of short sentences | **GTX Free** or **Qwen-MT Flash** | High concurrency, cheap |
+| GTX won't connect, still want free | **Edge (Free)** or **DeepLX (Free)** | Also zero-config — just a different route |
+| Subtitles, UI strings, lots of short sentences | **GTX Free** or **Qwen-MT Flash** | Batched chunks, cheap |
 | Long text, business / literature | **DeepL** | Best overall quality and flow |
 | **Entry-level AI translation / budget-conscious LLM use** | **DeepSeek** | Best price/value LLM — strong CN/EN quality at a fraction of Claude / GPT per-token cost |
 | Chinese ↔ English, reliability | **DeepSeek** / **Qwen-MT Plus** | Direct access from mainland CN, great CN/EN quality |
@@ -36,14 +37,15 @@ For detailed comparisons and how to get API keys, keep reading ↓
 | Azure Translate  | ★★★★☆   | ★★★★★     | Widest language coverage (90+)    | 2M characters/month for the first year   |
 | Qwen-MT          | ★★★★★   | ★★★★★     | CN/EN translation, domain-tuned   | Pay-per-token, free tier for new users   |
 | TranslateGemma   | ★★★★☆   | ★★★★☆     | Local translation, privacy-first  | Free (self-hosted)                       |
-| GTX API (Free)   | ★★★☆☆   | ★★★☆☆     | General text                      | Shared service, ~5M chars per 3 hours    |
+| GTX API (Free)   | ★★★☆☆   | ★★★★☆     | General text, zero-config default | Shared service, auto-slows when throttled |
+| Edge API (Free)  | ★★★★☆   | ★★★★☆     | Free GTX backup, different route  | Shared service, auto-slows when throttled |
 
 Notes:
 
 - **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
 - **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
 - **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / Ollama / llama.cpp — see [Local Model Setup](#local-model-setup).
-- **GTX API** is free but rate-limited. Use a paid API for long-running jobs — see [GTX Free essentials](#gtx-free-essentials) below.
+- **GTX API / Edge API** are both zero-config free machine translation that back each other up — if one can't connect, switch to the other. See [Free machine translation essentials](#free-machine-translation-essentials) below.
 
 For more reliable service, apply for a commercial API key — see the [API application guide](https://ttime.timerecord.cn/service/translate/google.html).
 
@@ -90,19 +92,33 @@ Many providers run separate endpoints for Mainland China, International, and US 
 
 OpenAI-compatible URL fields auto-complete to the full path when focus leaves the field — paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest. This catches the most common "incomplete URL → connection failure" mistake.
 
-## GTX Free Essentials
+## Free machine translation essentials
 
-GTX is Google Translate's free public endpoint — zero-config, works out of the box, and the tool's **default service**. Requests go **directly from your browser** to `translate.googleapis.com`; your text never touches this tool's servers. The flip side: availability depends on **your network's path to Google** — the same moment working for one user and failing for another is normal for a shared free endpoint, not a bug in the tool.
+The tool ships **three zero-config free machine-translation services** — **GTX (Free)**, **Edge (Free)**, and **DeepLX (Free)**. None need an API key; they call the official endpoints directly from your browser and your text never touches this tool's servers. They take **different routes**, so they back each other up: if one can't connect, just switch to another in the dropdown — no key required. GTX is the default.
+
+| Service | Backend | Default gateway |
+| --- | --- | --- |
+| GTX (Free) | Google Translate | `translate-pa.googleapis.com` (same gateway as Google's web-translate widget) |
+| Edge (Free) | Microsoft Edge's built-in translator (Azure engine) | `edge.microsoft.com` free token |
+| DeepLX (Free) | Community DeepLX public endpoint | Built-in public address |
+
+### GTX gateway is switchable
+
+GTX defaults to `translate-pa.googleapis.com` (the gateway behind Google's web-translate widget — CORS-correct, good availability). Quick-switch chips sit above the URL field:
+
+- **translate-pa (default)**: recommended, works in most network environments
+- **Legacy gtx**: the old `translate.googleapis.com/translate_a` endpoint. Google has tightened anti-abuse on it (many IPs get redirected to a captcha page, which the browser reports as CORS), but the block is IP-reputation-based and some regions/networks still pass — kept as a fallback
+- **Self-hosted mirror**: paste your own mirror URL (e.g. a Cloudflare Worker); the tool auto-detects the protocol from the address shape
 
 ### Rate limits and automatic slowdown
 
-The shared free endpoint is rate-limited per user. Heavy bursts (large files, raised concurrency, multi-file batches) can trigger throttling. The tool handles this automatically:
+The shared free endpoints are rate-limited per user. GTX now translates in **batched chunks** — many lines packed into ~5000-character blocks, one request per block — so request volume drops sharply versus line-by-line, and everyday use rarely triggers throttling. Huge bursts can still hit limits; the tool handles it automatically:
 
 - When throttled it **pauses all requests** to the service and resumes on its own shortly after, showing "Rate limited — pausing briefly, will retry automatically"
 - Translation slows down but keeps going; in most cases no action is needed
-- If the failure panel keeps showing rate-limit messages: wait a few minutes and hit "Retry" (the cache skips completed lines), lower **concurrency** in Advanced Settings, or switch long batch jobs to a keyed service like DeepL / Qwen-MT / DeepSeek
+- If the failure panel keeps showing rate-limit messages: wait a few minutes and hit "Retry" (the cache skips completed lines), switch to the **Edge (Free)** / **DeepLX (Free)** backups, or move long batch jobs to a keyed service like DeepL / Qwen-MT / DeepSeek
 
-Can't connect, or seeing CORS errors in the console? It's almost always a network-environment issue (mainland China blocking, corporate network interception, Google abuse protection, or browser extensions) — see [FAQ → GTX Free cannot connect](./faq.mdx#gtx-free-cannot-connect-or-shows-cors-errors) for the checklist.
+Can't connect, or seeing CORS errors in the console? First **switch the gateway or try Edge (Free)** — that fixes most cases in one step. Still failing? Check your network environment (mainland China blocking, corporate network interception, browser extensions) — see [FAQ → GTX Free cannot connect](./faq.mdx#gtx-free-cannot-connect-or-shows-cors-errors) for the checklist.
 
 ## Qwen-MT Essentials
 

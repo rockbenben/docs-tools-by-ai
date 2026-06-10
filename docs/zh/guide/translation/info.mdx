@@ -117,7 +117,7 @@ JSON Translate 仅支持单文件模式。
 - **未配置 / 需配置**：URL 或 API Key 还没填
 - **已填写**：信息齐全但还没测试
 - **测试中** → **✓ 已连接** 或 **连接失败**：测试结果
-- **Free API**：免费且不需要配置的服务（如 GTX）
+- **Free API**：免费且不需要配置的服务（GTX / Edge / DeepLX）
 
 点击徽章可以快速跳到 API 设置页。
 
@@ -186,7 +186,8 @@ JSON Translate 仅支持单文件模式。
 <details>
 <summary>各服务默认值（参考）</summary>
 
-- GTX (Free)：100
+- GTX (Free)：整批分块翻译（约 5000 字符/块），不走逐行并发
+- Edge (Free)：100
 - 商用 MT（Google / Azure / DeepL）：20-100
 - 云端 LLM（Claude / Gemini / OpenAI / Qwen 等）：20
 - Custom 本地 LLM / TranslateGemma / DeepLX：10

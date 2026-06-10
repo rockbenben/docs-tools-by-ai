@@ -38,7 +38,8 @@ faq:
   - q: How do I use AI translation for free, without a paid API key?
     a: >-
       Start with the default GTX (Free) — zero config, fast, plain machine translation that's
-      plenty for batch subtitles. For free LLM translation, several listed providers offer free
+      plenty for batch subtitles; if it won't connect, switch to the equally free Edge (Free) or
+      DeepLX (Free), which take different routes. For free LLM translation, several listed providers offer free
       tiers: Google AI Studio (Gemini Flash family), OpenRouter (models with the :free suffix),
       Nvidia NIM, GitHub Models (just a GitHub account), SiliconFlow, and more. Note that
       overseas services need a suitable network environment. Only deploy locally for
@@ -75,11 +76,11 @@ faq:
       just waste tokens. Focus the prompt on translation style and quality.
   - q: GTX Free cannot connect or shows CORS errors?
     a: >-
-      GTX calls Google directly from your browser, so failures are almost always network-environment
-      issues, not a bug in the tool. Check in order: mainland China blocking (use a proxy, or switch
-      to DeepLX / Qwen-MT / DeepSeek), corporate/school network interception (confirm via a phone
-      hotspot), Google abuse protection (open translate.googleapis.com — a captcha page means you're
-      flagged; it clears after a break), or ad/privacy extensions (temporarily disable and refresh).
+      Two quick self-fixes first: (1) above the URL field, switch the gateway from Legacy gtx to
+      translate-pa (default); (2) switch to the free backups Edge (Free) or DeepLX (Free) — different
+      routes, fixes most cases in one step. Still failing? Check the network: mainland China blocking
+      (use a proxy) → corporate/school interception (confirm via a phone hotspot) → ad/privacy
+      extensions blocking the googleapis.com domain (temporarily disable and refresh).
   - q: Local model reporting cross-origin (CORS) or connection failure?
     a: >-
       For local models like Ollama or LM Studio, failures are usually caused by browser CORS or
@@ -183,7 +184,7 @@ If a particular model still does it frequently:
 
 ## How do I use AI translation for free, without a paid API key?
 
-- **Zero-config start**: the default **GTX (Free)** needs no key and runs fast — plain machine translation, but plenty for batch subtitles and everyday text
+- **Zero-config start**: the default **GTX (Free)** needs no key and runs fast — plain machine translation, but plenty for batch subtitles and everyday text. If it won't connect, switch to the equally free **Edge (Free)** or **DeepLX (Free)** — different routes, mutual backups
 - **Free LLM tiers**: several listed providers offer free quotas — **Google AI Studio** (Gemini Flash family), **OpenRouter** (models with the `:free` suffix), **Nvidia NIM**, **GitHub Models** (just a GitHub account — see the [API guide](./api.mdx#provider-specific-notes)), **SiliconFlow**, and more. Browse the service list — many providers are included precisely because they have a free tier
 - **Mind your network**: overseas services (Google, OpenRouter, …) need a suitable network environment — if they don't connect, check the network before blaming the config
 - Only **privacy-sensitive** content is worth deploying locally; otherwise free cloud APIs beat small local models on both speed and reliability (next question)
@@ -231,14 +232,18 @@ Format-preservation instructions ("keep line count / numbering / timecodes") are
 
 ## GTX Free cannot connect or shows CORS errors?
 
-GTX calls Google directly from your browser, so "service unavailable" messages or CORS errors in the console almost always mean a **network-environment** problem, not a bug in the tool. Check in order of likelihood:
+GTX calls Google's translation gateway directly from your browser. When you see "service unavailable" or CORS errors in the console, **try two self-fixes first — they resolve most cases in one step**:
 
-1. **Mainland China without a proxy**: `translate.googleapis.com` is blocked there (shows as timeouts) — use a proxy, or switch to the also-free DeepLX, or directly reachable Qwen-MT / DeepSeek
-2. **Corporate / school networks**: a gateway intercepts the request and returns its own block page, which the browser reports as a CORS error — confirm by trying another network (e.g. a phone hotspot) or a proxy
-3. **Google abuse protection**: after heavy use Google may redirect requests to a captcha page — open `translate.googleapis.com` in a tab; if you see a captcha, that's it. It clears on its own after a break
-4. **Browser extensions**: some ad/privacy blockers intercept the `googleapis.com` domain — temporarily disable and refresh
+1. **Switch the gateway**: above the URL field, change it from `Legacy gtx` to `translate-pa` (the default). The old `translate.googleapis.com/translate_a` endpoint has been tightened by Google's anti-abuse (many IPs get redirected to a captcha page, which the browser reports as CORS); the default `translate-pa` gateway is CORS-correct with better availability.
+2. **Switch to a free backup**: pick **Edge (Free)** or **DeepLX (Free)** from the dropdown — they take entirely different routes and are zero-config.
 
-> Before each run the tool probes GTX reachability and blocks the run with a clear message when the service is unreachable, so a doomed job never starts. For rate limits and the automatic slowdown, see [API guide → GTX Free essentials](./api.mdx#gtx-free-essentials).
+If neither helps, check your network environment:
+
+3. **Mainland China without a proxy**: the relevant Google domains may be blocked there (shows as timeouts) — use a proxy, or switch to directly reachable Qwen-MT / DeepSeek
+4. **Corporate / school networks**: a gateway intercepts the request and returns its own block page, which the browser reports as a CORS error — confirm by trying another network (e.g. a phone hotspot)
+5. **Browser extensions**: some ad/privacy blockers intercept the `googleapis.com` domain — temporarily disable and refresh
+
+> Before each run the tool probes the current free service's reachability and blocks the run with a clear message when it's unreachable, so a doomed job never starts. For rate limits and the automatic slowdown, see [API guide → Free machine translation essentials](./api.mdx#free-machine-translation-essentials).
 
 ## Local model reporting cross-origin (CORS) or connection failure?
 

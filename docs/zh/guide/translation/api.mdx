@@ -17,7 +17,8 @@ import SupportedLanguages from './_supported-languages.mdx';
 | 场景 | 推荐 | 为什么 |
 |---|---|---|
 | 第一次试用，没 API Key | **GTX (Free)** | 免费、零配置，默认就是它 |
-| 字幕、UI 文案、海量短句 | **GTX Free** 或 **Qwen-MT Flash** | 并发高、便宜 |
+| GTX 连不上，仍想免费 | **Edge (Free)** 或 **DeepLX (Free)** | 同样零配置，换条链路即可 |
+| 字幕、UI 文案、海量短句 | **GTX Free** 或 **Qwen-MT Flash** | 分块批量、便宜 |
 | 长文本、商务/文学翻译 | **DeepL** | 翻译质量最稳，整体连贯 |
 | **入门 AI 翻译 / 想用大模型省钱** | **DeepSeek** | 国产 LLM 性价比首选——中英文质量好，单价远低于 Claude / GPT |
 | 中英互译、要稳定 | **DeepSeek** / **Qwen-MT Plus** | 国内可直连、中英效果好 |
@@ -36,14 +37,15 @@ import SupportedLanguages from './_supported-languages.mdx';
 | Azure Translate  | ★★★★☆ | ★★★★★  | 语种最广（90+）                | 前 12 个月每月 200 万字符  |
 | Qwen-MT          | ★★★★★ | ★★★★★  | 中英互译、可指定行业领域       | 按 Token 计费，新用户有额度 |
 | TranslateGemma   | ★★★★☆ | ★★★★☆  | 本地翻译，隐私敏感场景         | 自托管免费                 |
-| GTX API（免费）  | ★★★☆☆ | ★★★☆☆  | 一般文本翻译                   | 共享服务，3 小时约 500 万字符 |
+| GTX API（免费）  | ★★★☆☆ | ★★★★☆  | 一般文本翻译，零配置默认       | 共享服务，限流自动降速     |
+| Edge API（免费） | ★★★★☆ | ★★★★☆  | GTX 的免费替补，链路不同       | 共享服务，限流自动降速     |
 
 要点说明：
 
 - **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。
 - **Qwen-MT** 是阿里云专为翻译训练的模型，详见下文 [Qwen-MT 使用要点](#qwen-mt-使用要点)。
 - **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / Ollama / llama.cpp 跑起来，详见下文 [本地模型接入](#本地模型接入)。
-- **GTX API** 免费但有调用频率限制，长任务建议用付费 API，详见下文 [GTX Free 使用要点](#gtx-free-使用要点)。
+- **GTX API / Edge API** 都是零配置的免费机器翻译，互为备胎——一个连不上就换另一个；细节见下文 [免费机器翻译使用要点](#免费机器翻译使用要点)。
 
 需要更稳定的服务，可自行申请商业 API Key，详见 [接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
@@ -90,19 +92,33 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 OpenAI 兼容接口的 URL 字段在你切走焦点时会自动补全为完整路径，避免常见的"少写 `/v1/chat/completions` 导致连不上"的问题。粘贴 `http://host:port` 或 `http://host:port/v1` 即可。
 
-## GTX Free 使用要点
+## 免费机器翻译使用要点
 
-GTX 是 Google 翻译的免费公共接口，零配置、打开即用，也是工具的**默认服务**。它从你的浏览器**直连** `translate.googleapis.com`，文本不经过本工具的服务器——但这也意味着可用性取决于**你所在网络到 Google 的链路**：同一时刻有人正常、有人报错，是共享免费接口的常态，并非工具故障。
+工具内置**三个零配置的免费机器翻译**——**GTX (Free)**、**Edge (Free)**、**DeepLX (Free)**，都不需要 API Key，从你的浏览器直连官方接口，文本不经过本工具的服务器。它们走**不同的链路**，互为备胎：一个连不上，下拉换另一个即可，不必申请任何 Key。GTX 是默认服务。
+
+| 服务 | 后端 | 默认网关 |
+| --- | --- | --- |
+| GTX (Free) | Google 翻译 | `translate-pa.googleapis.com`（网页翻译组件同款网关） |
+| Edge (Free) | 微软 Edge 浏览器内置翻译（Azure 引擎） | `edge.microsoft.com` 免费令牌 |
+| DeepLX (Free) | 社区 DeepLX 公共端点 | 工具内置公共地址 |
+
+### GTX 网关可切换
+
+GTX 默认走 `translate-pa.googleapis.com`（Google 网页翻译组件用的同一个网关，跨域规范、可用性好）。URL 输入框上方提供快捷切换：
+
+- **translate-pa（默认）**：推荐，多数网络环境可用
+- **Legacy gtx**：旧版 `translate.googleapis.com/translate_a` 端点。Google 已对它收紧反滥用策略（很多 IP 会被跳转到验证页，浏览器据此报 CORS），但封锁按 IP 信誉判定，部分地区/网络仍可用，故保留作备选
+- **自建镜像**：URL 填你自己用 Cloudflare Worker 等搭的镜像地址即可，工具按地址形态自动识别协议
 
 ### 速率限制与自动降速
 
-免费共享端点按使用方限流，短时间大量翻译（大文件、调高并发、多文件批量）可能触发限流。工具已内置自动处理：
+免费共享端点按使用方限流。GTX 现在采用**整批分块**翻译——把多行拼成约 5000 字符一块、一块一个请求，请求数相比逐行翻译大幅减少，日常使用基本不会触发限流。短时间超大批量仍可能限流，工具会自动处理：
 
 - 触发限流后**自动暂停**该服务的所有请求，稍候自动恢复，并提示「请求过于频繁，已自动暂停片刻后重试」
 - 期间翻译变慢但会继续推进，绝大多数情况无需任何操作
-- 若失败面板仍频繁出现限流提示：等几分钟再点「再试一次」（缓存会跳过已完成的行），或把高级设置中的**并发行数**调低；长期大批量任务建议换 DeepL / Qwen-MT / DeepSeek 等带 Key 的服务
+- 若失败面板仍频繁出现限流提示：等几分钟再点「再试一次」（缓存会跳过已完成的行），或换 **Edge (Free)** / **DeepLX (Free)** 这两个免费备胎；长期大批量任务建议换 DeepL / Qwen-MT / DeepSeek 等带 Key 的服务
 
-连不上或控制台出现 CORS 报错？几乎都是网络环境问题（大陆屏蔽、公司网络拦截、触发 Google 风控、浏览器扩展拦截），排查步骤见 [常见问题 → GTX 连不上](./faq.mdx#gtx-连不上或控制台出现-cors-报错怎么办)。
+连不上或控制台出现 CORS 报错？先**换网关或换 Edge (Free)**——多数情况一步解决；仍不行再排查网络环境（大陆屏蔽、公司网络拦截、浏览器扩展拦截），步骤见 [常见问题 → GTX 连不上](./faq.mdx#gtx-连不上或控制台出现-cors-报错怎么办)。
 
 ## Qwen-MT 使用要点
 
