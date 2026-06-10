@@ -43,7 +43,7 @@ Notes:
 - **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
 - **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
 - **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / Ollama / llama.cpp — see [Local Model Setup](#local-model-setup).
-- **GTX API** is free but rate-limited. Use a paid API for long-running jobs.
+- **GTX API** is free but rate-limited. Use a paid API for long-running jobs — see [GTX Free essentials](#gtx-free-essentials) below.
 
 For more reliable service, apply for a commercial API key — see the [API application guide](https://ttime.timerecord.cn/service/translate/google.html).
 
@@ -89,6 +89,20 @@ Many providers run separate endpoints for Mainland China, International, and US 
 ### URL Auto-Completion
 
 OpenAI-compatible URL fields auto-complete to the full path when focus leaves the field — paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest. This catches the most common "incomplete URL → connection failure" mistake.
+
+## GTX Free Essentials
+
+GTX is Google Translate's free public endpoint — zero-config, works out of the box, and the tool's **default service**. Requests go **directly from your browser** to `translate.googleapis.com`; your text never touches this tool's servers. The flip side: availability depends on **your network's path to Google** — the same moment working for one user and failing for another is normal for a shared free endpoint, not a bug in the tool.
+
+### Rate limits and automatic slowdown
+
+The shared free endpoint is rate-limited per user. Heavy bursts (large files, raised concurrency, multi-file batches) can trigger throttling. The tool handles this automatically:
+
+- When throttled it **pauses all requests** to the service and resumes on its own shortly after, showing "Rate limited — pausing briefly, will retry automatically"
+- Translation slows down but keeps going; in most cases no action is needed
+- If the failure panel keeps showing rate-limit messages: wait a few minutes and hit "Retry" (the cache skips completed lines), lower **concurrency** in Advanced Settings, or switch long batch jobs to a keyed service like DeepL / Qwen-MT / DeepSeek
+
+Can't connect, or seeing CORS errors in the console? It's almost always a network-environment issue (mainland China blocking, corporate network interception, Google abuse protection, or browser extensions) — see [FAQ → GTX Free cannot connect](./faq.mdx#gtx-free-cannot-connect-or-shows-cors-errors) for the checklist.
 
 ## Qwen-MT Essentials
 

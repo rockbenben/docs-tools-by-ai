@@ -43,7 +43,7 @@ import SupportedLanguages from './_supported-languages.mdx';
 - **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。
 - **Qwen-MT** 是阿里云专为翻译训练的模型，详见下文 [Qwen-MT 使用要点](#qwen-mt-使用要点)。
 - **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / Ollama / llama.cpp 跑起来，详见下文 [本地模型接入](#本地模型接入)。
-- **GTX API** 免费但有调用频率限制，长任务建议用付费 API。
+- **GTX API** 免费但有调用频率限制，长任务建议用付费 API，详见下文 [GTX Free 使用要点](#gtx-free-使用要点)。
 
 需要更稳定的服务，可自行申请商业 API Key，详见 [接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
@@ -89,6 +89,20 @@ import SupportedLanguages from './_supported-languages.mdx';
 ### URL 自动补全
 
 OpenAI 兼容接口的 URL 字段在你切走焦点时会自动补全为完整路径，避免常见的"少写 `/v1/chat/completions` 导致连不上"的问题。粘贴 `http://host:port` 或 `http://host:port/v1` 即可。
+
+## GTX Free 使用要点
+
+GTX 是 Google 翻译的免费公共接口，零配置、打开即用，也是工具的**默认服务**。它从你的浏览器**直连** `translate.googleapis.com`，文本不经过本工具的服务器——但这也意味着可用性取决于**你所在网络到 Google 的链路**：同一时刻有人正常、有人报错，是共享免费接口的常态，并非工具故障。
+
+### 速率限制与自动降速
+
+免费共享端点按使用方限流，短时间大量翻译（大文件、调高并发、多文件批量）可能触发限流。工具已内置自动处理：
+
+- 触发限流后**自动暂停**该服务的所有请求，稍候自动恢复，并提示「请求过于频繁，已自动暂停片刻后重试」
+- 期间翻译变慢但会继续推进，绝大多数情况无需任何操作
+- 若失败面板仍频繁出现限流提示：等几分钟再点「再试一次」（缓存会跳过已完成的行），或把高级设置中的**并发行数**调低；长期大批量任务建议换 DeepL / Qwen-MT / DeepSeek 等带 Key 的服务
+
+连不上或控制台出现 CORS 报错？几乎都是网络环境问题（大陆屏蔽、公司网络拦截、触发 Google 风控、浏览器扩展拦截），排查步骤见 [常见问题 → GTX 连不上](./faq.mdx#gtx-连不上或控制台出现-cors-报错怎么办)。
 
 ## Qwen-MT 使用要点
 

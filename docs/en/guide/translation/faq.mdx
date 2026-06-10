@@ -73,6 +73,13 @@ faq:
       ASS/VTT headers stay local and are re-inserted at their original positions after
       translation. The model never sees the structure, so format-preservation instructions
       just waste tokens. Focus the prompt on translation style and quality.
+  - q: GTX Free cannot connect or shows CORS errors?
+    a: >-
+      GTX calls Google directly from your browser, so failures are almost always network-environment
+      issues, not a bug in the tool. Check in order: mainland China blocking (use a proxy, or switch
+      to DeepLX / Qwen-MT / DeepSeek), corporate/school network interception (confirm via a phone
+      hotspot), Google abuse protection (open translate.googleapis.com — a captcha page means you're
+      flagged; it clears after a break), or ad/privacy extensions (temporarily disable and refresh).
   - q: Local model reporting cross-origin (CORS) or connection failure?
     a: >-
       For local models like Ollama or LM Studio, failures are usually caused by browser CORS or
@@ -213,6 +220,17 @@ An optional third column takes a target language code (`zh`, `ja`, …) so one f
 **No.** The tool sends only the dialogue text to the model — timestamps, cue numbers, and ASS/VTT headers all stay local and are re-inserted at their original positions after translation. The model never sees the structure.
 
 Format-preservation instructions ("keep line count / numbering / timecodes") are not just unnecessary — they waste tokens and can even coax the model into emitting extra content. Spend the prompt on **translation style and quality** instead (tone, domain terminology, target audience).
+
+## GTX Free cannot connect or shows CORS errors?
+
+GTX calls Google directly from your browser, so "service unavailable" messages or CORS errors in the console almost always mean a **network-environment** problem, not a bug in the tool. Check in order of likelihood:
+
+1. **Mainland China without a proxy**: `translate.googleapis.com` is blocked there (shows as timeouts) — use a proxy, or switch to the also-free DeepLX, or directly reachable Qwen-MT / DeepSeek
+2. **Corporate / school networks**: a gateway intercepts the request and returns its own block page, which the browser reports as a CORS error — confirm by trying another network (e.g. a phone hotspot) or a proxy
+3. **Google abuse protection**: after heavy use Google may redirect requests to a captcha page — open `translate.googleapis.com` in a tab; if you see a captcha, that's it. It clears on its own after a break
+4. **Browser extensions**: some ad/privacy blockers intercept the `googleapis.com` domain — temporarily disable and refresh
+
+> Before each run the tool probes GTX reachability and blocks the run with a clear message when the service is unreachable, so a doomed job never starts. For rate limits and the automatic slowdown, see [API guide → GTX Free essentials](./api.mdx#gtx-free-essentials).
 
 ## Local model reporting cross-origin (CORS) or connection failure?
 
