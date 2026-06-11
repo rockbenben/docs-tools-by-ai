@@ -10,6 +10,12 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.06.11: New LiteLLM self-hosted gateway; API Relay fully user-controlled with self-hosted relay support.
+  - **New LiteLLM provider**: one self-hosted OpenAI-compatible proxy fronting 100+ upstream models, with its own config slot (no need to occupy Custom). The URL is the credential (default `127.0.0.1:4000`), API Key optional (master key); the model field can stay empty when the proxy is started with `litellm --model` — it follows the server default
+  - **Tencent Hunyuan works in browsers again**: the official endpoint currently rejects CORS preflights (direct calls always fail), so it now routes through **API Relay by default** and works out of the box; the switch stays available to flip back to direct once Tencent fixes it
+  - **API Relay fully user-controlled**: YandexGPT moved from forced relay to "on by default, can be turned off"; all 12 relay-capable providers now accept a **self-hosted relay address** — the precedence is fixed at custom URL > relay switch > official direct, and the switch grays out with a note while a URL is filled in
+  - The relay now passes through the server's `Retry-After` header — rate-limit auto-slowdown through the relay is exactly as precise as direct calls
+  - Fix: CORS failures on Firefox / Safari now show the actionable "enable API Relay" hint too (previously only Chrome's error wording was recognized, burning 3 useless retries); all relay-related hints are localized into the 18 UI languages
 - 2026.06.10: Free machine translation overhaul — GTX gateway migration + new Edge (Free) + concurrency fix.
   - **GTX migrated to a new gateway**: the old `translate.googleapis.com/translate_a` endpoint was tightened by Google's anti-abuse (many IPs redirected to a captcha page, reported as CORS in the browser). It now uses the gateway behind Google's web-translate widget, `translate-pa.googleapis.com` — CORS-correct with better availability. The old endpoint stays as a **Legacy gtx** fallback; you can also paste a self-hosted mirror URL (protocol auto-detected from the address shape)
   - **New Edge API (Free)**: Microsoft Edge's built-in translator backend (Azure engine) — zero-config and free, on a completely different route from GTX, so if one can't connect you switch to the other. Free machine translation now has three options: GTX / Edge / DeepLX

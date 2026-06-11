@@ -16,7 +16,7 @@ description: Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆
 
 ### 🌍 翻译工具
 
-字幕、Markdown、JSON i18n 三种格式专用翻译，共享 7 种翻译 API + 23 种 AI 大模型，覆盖 120+ 语言。
+字幕、Markdown、JSON i18n 三种格式专用翻译，共享 7 种翻译 API + 24 种 AI 大模型，覆盖 120+ 语言。
 
 - [**Subtitle Translator**](./translation/subtitle-translator/) — SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出
 - [**MD Translator**](./translation/md-translator/) — Markdown 翻译，保留代码块、LaTeX、Front Matter

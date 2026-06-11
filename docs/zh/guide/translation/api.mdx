@@ -3,14 +3,14 @@ head:
   - - meta
     - property: og:title
       content: 翻译接口对比 - 经典 API 与大语言模型 | Tools By AI
-description: 工具集成了 7 种翻译 API 与 23 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
+description: 工具集成了 7 种翻译 API 与 24 种大语言模型，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
 ---
 
 import SupportedLanguages from './_supported-languages.mdx';
 
 # 翻译接口指南
 
-工具集成了 **7 种经典翻译 API** 和 **23 种大语言模型**，可按文本类型、预算与隐私需求自由选择。
+工具集成了 **7 种经典翻译 API** 和 **24 种大语言模型**，可按文本类型、预算与隐私需求自由选择。
 
 ## 我应该挑哪个接口？
 
@@ -51,7 +51,7 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 ## 大语言模型（LLM）
 
-支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、Xiaomi MiMo、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、YandexGPT (AI Studio)、OpenRouter、Groq、SiliconFlow、GitHub Models、Nvidia NIM、Azure OpenAI，以及兼容 OpenAI 协议的自定义接口。
+支持的 LLM 接口：DeepSeek、OpenAI、Claude、Gemini、Qwen、Moonshot (Kimi)、Zhipu GLM、Doubao、Xiaomi MiMo、MiniMax、Tencent Hunyuan、Baidu ERNIE、Cohere、xAI (Grok)、Mistral、Perplexity、YandexGPT (AI Studio)、OpenRouter、Groq、SiliconFlow、GitHub Models、Nvidia NIM、Azure OpenAI、LiteLLM（自建网关），以及兼容 OpenAI 协议的自定义接口。
 
 适合处理：
 
@@ -64,17 +64,18 @@ import SupportedLanguages from './_supported-languages.mdx';
 - **模型**：填所选接口提供的模型名；Azure OpenAI 填部署名。
 - **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
 - **思考模式**：让 AI 多想一步再翻译，质量更高但更慢/更贵——支持的模型 UI 会显示开关。开关**按模型独立保存**，切模型不影响别的设置。具体 UI 形态因 provider 而异：
-  - **三档调节**（off / low / medium / high）：Claude、Gemini、DeepSeek、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM、Perplexity Sonar Deep Research
-  - **两档开关**（off / on）：Doubao、Zhipu GLM、Moonshot (Kimi)、MiniMax、Xiaomi MiMo、Hunyuan TurboS、Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning（底层 API 只接受 on/off，不接受 effort）
+  - **三档调节**（off / low / medium / high）：Claude、Gemini、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM、OpenRouter、Groq (GPT-OSS)、Perplexity Sonar Deep Research
+  - **两档开关**（off / on）：DeepSeek（开启即最高档，底层 API 的中间档位对翻译无意义）、Doubao、Zhipu GLM、Moonshot (Kimi)、Xiaomi MiMo、SiliconFlow、ERNIE 5.0 Thinking、Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning（底层 API 只接受 on/off，不接受 effort）
   - **仅 low / high**：xAI Grok 4.3（API 限制）
   - **三态（off / on / auto）**：在支持思考的 provider 上填写**未列出的自定义模型**时（含 Mistral、Perplexity、自定义 OpenAI 兼容接口）。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off
-  - **选了即开启**（UI 不显示 toggle）：ERNIE 5.0-Thinking、Hunyuan 2.0-Thinking、Mistral Magistral、Perplexity Sonar Reasoning Pro、Grok 4.20 Reasoning / Multi-Agent
-  - **无思考开关**：GitHub Models、YandexGPT（网关/API 不支持 reasoning 参数）
+  - **选了即开启**（思考是模型自身特性，UI 不显示开关）：MiniMax M2.x、Tencent Hunyuan（TurboS / 2.0 Thinking / T1）、Mistral Magistral、Perplexity Sonar Reasoning Pro、Grok 4.20 Reasoning / Multi-Agent
+  - **无思考开关**：GitHub Models、YandexGPT（网关/API 不支持 reasoning 参数）、LiteLLM（网关不注入思考参数，跟随上游模型默认）
 
 ### 部分接口的特别说明
 
 - **GitHub Models**：用 GitHub PAT（需 `models:read` 权限）鉴权，免费额度按模型分级，适合没有付费 Key 的入门用户。
-- **YandexGPT (AI Studio)**：除 API Key 外还需填写 **Folder ID**（在 Yandex AI Studio 控制台的目录页获取）。模型字段填 SKU 名（如 `yandexgpt-5.1`，也提供 Qwen3、DeepSeek、GPT-OSS 等开源 SKU），或直接粘贴完整的 `gpt://<folder_id>/<model>/latest` URI。Yandex 官方接口无 CORS 头，浏览器无法直连，请求默认经内置代理转发。
+- **Tencent Hunyuan**：腾讯官方端点目前拒绝浏览器的跨域预检请求（直连必败），「中转 API」**默认开启**以保证开箱可用；官方修复后可在 API 设置中关掉开关改回直连。详见 [中转 API](#中转-api可控开关)。
+- **YandexGPT (AI Studio)**：除 API Key 外还需填写 **Folder ID**（在 Yandex AI Studio 控制台的目录页获取）。模型字段填 SKU 名（如 `yandexgpt-5.1`，也提供 Qwen3、DeepSeek、GPT-OSS 等开源 SKU），或直接粘贴完整的 `gpt://<folder_id>/<model>/latest` URI。Yandex 官方接口无 CORS 头，浏览器无法直连，「中转 API」**默认开启**（开关可关闭，也可改填自建中转地址）。
 
 ### 区域端点切换
 
@@ -86,11 +87,12 @@ import SupportedLanguages from './_supported-languages.mdx';
 | Moonshot (Kimi)    | 中国大陆 / 国际                                |
 | Zhipu GLM          | 中国大陆 / 国际（Z.ai）                        |
 | MiniMax            | 中国大陆 / 国际                                |
+| Xiaomi MiMo        | 按量付费 / Token Plan（中国 / 新加坡 / 欧洲）  |
 | Doubao（火山方舟） | 标准版 / Coding 套餐                           |
 
 ### URL 自动补全
 
-OpenAI 兼容接口的 URL 字段在你切走焦点时会自动补全为完整路径，避免常见的"少写 `/v1/chat/completions` 导致连不上"的问题。粘贴 `http://host:port` 或 `http://host:port/v1` 即可。
+自托管与多区域类接口（Custom、LiteLLM、TranslateGemma、Qwen / Qwen-MT、Doubao、Nvidia）的 URL 字段在切走焦点时会立即补全为完整路径；其余接口填写的自定义 URL 也会在请求发出前自动规范化。粘贴 `http://host:port` 或 `http://host:port/v1` 即可，不会再出现"少写 `/v1/chat/completions` 导致连不上"的问题。
 
 ## 免费机器翻译使用要点
 
@@ -155,9 +157,22 @@ Qwen-MT 是少数支持**原生术语表**的 MT 服务：启用 [术语表](./i
 
 Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自动提示并阻止使用（以应用内实际拦截为准）：如柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、维吾尔（ug）、阿姆哈拉（am）等数十种。
 
-## 内置 API 代理
+## 中转 API 与内置代理
 
-DeepL、Nvidia NIM、YandexGPT 等接口浏览器直连会被官方 CORS 策略拦截，工具默认通过自家代理转发请求。如果你在设置里填了自定义 API URL，代理会被绕过，请求直接发到你填的地址。
+部分接口的官方端点不允许浏览器直连（CORS 限制）。工具提供两类代理通道，文本都不经过本工具的服务器存储。
+
+### 中转 API（可控开关）
+
+DeepSeek、OpenAI、Claude、Qwen、Moonshot (Kimi)、Doubao、Zhipu GLM、Mistral、xAI (Grok)、Perplexity、Tencent Hunyuan、YandexGPT 这 12 个接口在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
+
+- 大多数接口**默认关闭**——直连遇到 CORS / 403 报错时，界面会用可行动提示引导你开启
+- **Hunyuan 与 YandexGPT 默认开启**：两家官方端点目前都无法从浏览器直连，默认开才能开箱即用；开关保留，官方修复后可自行切回直连
+- **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
+- 中转会透传服务器的 `Retry-After` 响应头，限流时的自动降速与直连一样精确
+
+### 内置代理（无开关）
+
+DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了自定义 API URL 时代理被绕过，请求直接发到你填的地址。
 
 ## 本地模型接入
 
@@ -174,6 +189,15 @@ DeepL、Nvidia NIM、YandexGPT 等接口浏览器直连会被官方 CORS 策略�
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 
 URL 输入框旁会列出这些常用地址作为快捷选项。
+
+### LiteLLM 自建网关
+
+[LiteLLM](https://docs.litellm.ai/docs/) 是把 100+ 上游模型统一成 OpenAI 协议的自建代理。服务列表里直接选 **LiteLLM** 即可——与 Custom 的差别在于独立的配置槽位：常驻 LiteLLM、偶尔切换其他自建端点时，不必来回改 Custom 的 URL。
+
+- 默认地址 `http://127.0.0.1:4000/v1/chat/completions`（litellm 默认端口），**URL 即凭证**
+- **API Key 可选**：本地裸跑无需填写；代理配置了 master / virtual key 时填上即可
+- **模型名可留空**：用 `litellm --model X` 启动（官方 quick start 方式）或设置了 `completion_model` 服务端默认时，留空即走服务端默认模型；config.yaml 多模型部署则填模型别名
+- LiteLLM 默认放行浏览器跨域请求，无需额外 CORS 配置
 
 ### TranslateGemma
 

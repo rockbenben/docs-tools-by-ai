@@ -3,14 +3,14 @@ head:
   - - meta
     - property: og:title
       content: Translation API Guide - Classic APIs and LLMs Compared | Tools By AI
-description: Tools By AI integrates 7 translation APIs and 23 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
+description: Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
 ---
 
 import SupportedLanguages from './_supported-languages.mdx';
 
 # Translation API Guide
 
-The tool integrates **7 classic translation APIs** and **23 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
+The tool integrates **7 classic translation APIs** and **24 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
 
 ## Which API should I pick?
 
@@ -51,7 +51,7 @@ For more reliable service, apply for a commercial API key — see the [API appli
 
 ## Large Language Models (LLMs)
 
-Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, YandexGPT (AI Studio), OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, plus any OpenAI-compatible endpoint.
+Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, YandexGPT (AI Studio), OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, LiteLLM (self-hosted gateway), plus any OpenAI-compatible endpoint.
 
 LLMs work best for:
 
@@ -64,17 +64,18 @@ Key parameters:
 - **Model**: enter the model name from your provider; for Azure OpenAI, enter the deployment name.
 - **Temperature**: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.
 - **Thinking mode**: lets the AI think before translating — higher quality, slower and pricier. Supported models show a toggle in the UI. The toggle is **stored per model** so switching models preserves each one's setting independently. The exact UI form depends on the provider:
-  - **Three levels** (off / low / medium / high): Claude, Gemini, DeepSeek, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM, Perplexity Sonar Deep Research
-  - **Binary toggle** (off / on): Doubao, Zhipu GLM, Moonshot (Kimi), MiniMax, Xiaomi MiMo, Hunyuan TurboS, Mistral (Medium 3.5 / Small 4), Cohere Command A Reasoning (underlying APIs accept on/off but not an effort param)
+  - **Three levels** (off / low / medium / high): Claude, Gemini, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM, OpenRouter, Groq (GPT-OSS), Perplexity Sonar Deep Research
+  - **Binary toggle** (off / on): DeepSeek (ON always uses the top tier — the API's middle tiers add nothing for translation), Doubao, Zhipu GLM, Moonshot (Kimi), Xiaomi MiMo, SiliconFlow, ERNIE 5.0 Thinking, Mistral (Medium 3.5 / Small 4), Cohere Command A Reasoning (underlying APIs accept on/off but not an effort param)
   - **Low / high only**: xAI Grok 4.3 (API limitation)
   - **Three-state (off / on / auto)**: when you enter an **unlisted custom model** on a thinking-capable provider (incl. Mistral, Perplexity, and the custom OpenAI-compatible endpoint). Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that 422 on a non-thinking SKU; defaults to Off
-  - **Always-on SKUs** (no toggle shown): ERNIE 5.0-Thinking, Hunyuan 2.0-Thinking, Mistral Magistral, Perplexity Sonar Reasoning Pro, Grok 4.20 Reasoning / Multi-Agent
-  - **No thinking toggle**: GitHub Models, YandexGPT (the gateway/API doesn't support reasoning params)
+  - **Always-on SKUs** (thinking is intrinsic to the model; no toggle shown): MiniMax M2.x, Tencent Hunyuan (TurboS / 2.0 Thinking / T1), Mistral Magistral, Perplexity Sonar Reasoning Pro, Grok 4.20 Reasoning / Multi-Agent
+  - **No thinking toggle**: GitHub Models, YandexGPT (the gateway/API doesn't support reasoning params), LiteLLM (the gateway injects no thinking params — upstream model defaults apply)
 
 ### Provider-Specific Notes
 
 - **GitHub Models**: authenticates with a GitHub PAT (needs the `models:read` scope); free quota is tiered per model — a good entry point if you don't have a paid key.
-- **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so browsers can't call it directly — requests route through the built-in proxy.
+- **Tencent Hunyuan**: the official endpoint currently rejects browser CORS preflights (direct calls always fail), so **API Relay is ON by default** to make it work out of the box. If Tencent fixes this, you can switch back to direct in API Settings. See [API Relay](#api-relay-user-controlled).
+- **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so **API Relay is ON by default** (the switch stays user-controllable, and you can point the URL at your own relay instead).
 
 ### Regional Endpoint Switcher
 
@@ -86,11 +87,12 @@ Many providers run separate endpoints for Mainland China, International, and US 
 | Moonshot (Kimi)      | Mainland CN / International                         |
 | Zhipu GLM            | Mainland CN / International (Z.ai)                  |
 | MiniMax              | Mainland CN / International                         |
+| Xiaomi MiMo          | Pay-as-you-go / Token Plan (CN / Singapore / Europe) |
 | Doubao (Volcano Ark) | Standard / Coding Plan                              |
 
 ### URL Auto-Completion
 
-OpenAI-compatible URL fields auto-complete to the full path when focus leaves the field — paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest. This catches the most common "incomplete URL → connection failure" mistake.
+Self-hosted and multi-region providers (Custom, LiteLLM, TranslateGemma, Qwen / Qwen-MT, Doubao, Nvidia) complete the URL to the full path the moment focus leaves the field; for every other provider, a custom URL is normalized automatically before each request is sent. Paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest — the classic "missing `/v1/chat/completions` → connection failure" mistake can't happen.
 
 ## Free machine translation essentials
 
@@ -155,9 +157,22 @@ Qwen-MT is one of the few MT services with **native glossary support**: with the
 
 Qwen-MT covers ~92 languages; a number of low-resource ones aren't covered and the UI auto-blocks them with a clear message (the in-app blocklist is authoritative): e.g. Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Uyghur (ug), Amharic (am), and dozens more.
 
-## Built-in API Proxy
+## API Relay & Built-in Proxy
 
-DeepL, Nvidia NIM, YandexGPT, and similar providers can't be called from the browser due to CORS. The tool routes those through a built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.
+Some providers' official endpoints block direct browser calls (CORS). The tool offers two proxy channels; text is never stored on our servers.
+
+### API Relay (user-controlled)
+
+12 providers — DeepSeek, OpenAI, Claude, Qwen, Moonshot (Kimi), Doubao, Zhipu GLM, Mistral, xAI (Grok), Perplexity, Tencent Hunyuan, and YandexGPT — expose an **"API Relay"** switch in API Settings. When on, requests route through our Cloudflare relay (only the request body and auth headers are forwarded):
+
+- Most providers default to **OFF** — when a direct call hits a CORS / 403 wall, the UI shows an actionable hint to enable it
+- **Hunyuan and YandexGPT default to ON**: both official endpoints currently can't be reached from browsers, so the relay is what makes them work out of the box. The switch stays available — flip back to direct if the upstream ever fixes CORS
+- **Self-hosted relay**: prefer your own relay? Put its address in the URL field. The precedence is fixed: **custom URL > relay switch > official direct** — with a URL filled in, the relay switch is grayed out with a note ("clear the URL to re-enable")
+- The relay passes through the server's `Retry-After` header, so rate-limit auto-slowdown is exactly as precise as direct calls
+
+### Built-in Proxy (no switch)
+
+DeepL and Nvidia NIM route through a separate built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.
 
 ## Local Model Setup
 
@@ -174,6 +189,15 @@ Want to run models locally for privacy? The tool works with any OpenAI-compatibl
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 
 These appear as quick-pick chips next to the URL field.
+
+### LiteLLM Self-Hosted Gateway
+
+[LiteLLM](https://docs.litellm.ai/docs/) is a self-hosted proxy that fronts 100+ upstream models behind one OpenAI-compatible API. Pick **LiteLLM** directly from the service list — versus Custom, it gives you a dedicated config slot, so running LiteLLM as your daily driver doesn't force you to rewrite Custom's URL every time you switch to another self-hosted endpoint.
+
+- Default address `http://127.0.0.1:4000/v1/chat/completions` (litellm's default port); **the URL is the credential**
+- **API Key optional**: not needed for a bare local proxy; fill it in if your proxy has a master / virtual key configured
+- **Model can stay empty**: when started with `litellm --model X` (the official quick-start) or with a `completion_model` server default, an empty model field follows the server's default; for multi-model config.yaml deployments, enter the model alias
+- LiteLLM allows browser cross-origin requests by default — no extra CORS setup
 
 ### TranslateGemma
 

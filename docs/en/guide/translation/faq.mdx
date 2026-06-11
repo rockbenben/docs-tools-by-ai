@@ -106,9 +106,10 @@ faq:
   - q: Why does DeepL go through a relay server?
     a: >-
       DeepL's official API can't be called directly from a web page (browser CORS restriction),
-      so the tool routes requests through a built-in relay — same for Nvidia NIM and YandexGPT.
-      The relay only forwards and never records your content; if you'd rather avoid it, enter a
-      custom API URL in settings and requests go straight to your endpoint.
+      so the tool routes requests through a built-in relay — same for Nvidia NIM. Hunyuan and
+      YandexGPT use the user-controlled "API Relay" switch instead (on by default, can be turned
+      off or pointed at your own relay). All channels only forward and never record your content;
+      a custom API URL in settings always takes precedence and goes straight to your endpoint.
   - q: Is my API Key saved on a server?
     a: >-
       No. The API Key and all settings are stored only in the local browser; no server can
@@ -270,9 +271,9 @@ Most likely you've configured `translategemma` as a regular LLM: picked "Custom 
 
 ## Why does DeepL go through a relay server?
 
-DeepL's official API can't be called directly from a web page (a browser CORS restriction), so the tool routes requests through a built-in relay — **Nvidia NIM and YandexGPT** work the same way. The relay only forwards requests and never records your content.
+DeepL's official API can't be called directly from a web page (a browser CORS restriction), so the tool routes requests through a built-in relay — **Nvidia NIM** works the same way. **Hunyuan and YandexGPT** use the user-controlled **"API Relay"** switch instead: their official endpoints currently can't be reached from browsers, so the switch defaults to ON but can be turned off at any time. All channels only forward requests and never record your content.
 
-Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own proxy) and requests go straight to your endpoint, bypassing the built-in relay. See [Translation API Guide → Built-in API Proxy](./api.mdx#built-in-api-proxy).
+Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own relay) — it takes precedence over every built-in channel and requests go straight to your endpoint. See [Translation API Guide → API Relay & Built-in Proxy](./api.mdx#api-relay--built-in-proxy).
 
 ## Is my API Key saved on a server?
 
