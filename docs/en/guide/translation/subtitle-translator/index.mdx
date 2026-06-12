@@ -84,6 +84,12 @@ faq:
       stem from framerate inconsistencies (23.976 vs 25 fps) in the source — fix with Aegisub or Subtitle Edit.
       For encoding, jschardet auto-detects UTF-8/UTF-16/GBK/Shift-JIS; if detection fails it defaults to UTF-8,
       so re-save source as UTF-8 via Notepad++ or VS Code before uploading.
+  - q: What is CPS in the post-translation QC, and when is a subtitle too fast?
+    a: >-
+      CPS (Characters Per Second) measures subtitle reading speed — the higher the value, the less time viewers
+      have to read it. Translated subtitles often run longer than the original and easily exceed the limit, so
+      the QC panel computes CPS, characters per line, line count, and duration per cue and highlights anything
+      over threshold. Switch between General / CJK presets; QC is read-only and never modifies your file.
   - q: Are subtitle files uploaded to your server? Is it private and secure?
     a: >-
       Fully client-side: subtitle file reading, parsing, and translation requests all happen in your browser —
@@ -124,6 +130,7 @@ To address issues in the market such as slow translation speeds, lack of batch p
 - **Context-Aware Translation** (AI models only): The AI translates based on context, improving the coherence and accuracy of dialogue.
 - **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .vtt / .lrc). Exports preserve the original filename; when translating into multiple languages, the language code is automatically appended as a suffix (e.g. `movie.zh.srt`, `movie.fr.srt`).
 - **Subtitle Extraction**: Supports extracting subtitle text for subsequent use in AI summarization, derivative works, and other applications.
+- **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
 - **Multiple API Options**: Built-in free / commercial translation APIs plus 20+ AI LLM endpoints (including local Ollama / LM Studio / TranslateGemma) — pick by budget and privacy needs.
 - **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
 
@@ -194,6 +201,10 @@ The 'Extract Text' button extracts the dialogue text without timecodes or cue nu
 ### How do I fix subtitle timing mismatch or encoding (□□□) issues after translation?
 
 The tool only translates text and never modifies timecodes. Timing mismatches after translation usually stem from framerate inconsistencies (23.976 vs 25 fps) in the source — fix with Aegisub or Subtitle Edit. For encoding, jschardet auto-detects UTF-8/UTF-16/GBK/Shift-JIS; if detection fails it defaults to UTF-8, so re-save source as UTF-8 via Notepad++ or VS Code before uploading.
+
+### What is CPS in the post-translation QC, and when is a subtitle too fast?
+
+CPS (Characters Per Second) measures subtitle reading speed — the higher the value, the less time viewers have to read it. Translated subtitles are often longer than the original and easily exceed the limit, so the QC panel computes CPS, characters per line, line count, and duration for every cue and highlights anything over the threshold in red. Switch between "General / CJK" presets — CJK subtitles use lower per-second and per-line limits. QC is read-only and never modifies your subtitle file; fix flagged cues in a subtitle editor or with the main site's text tools after export.
 
 ### Are subtitle files uploaded to your server? Is it private and secure?
 
