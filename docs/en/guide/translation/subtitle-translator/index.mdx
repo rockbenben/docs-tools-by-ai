@@ -56,6 +56,18 @@ faq:
       translation) or below (for consumption — primary is original). Export as ASS for colored dual-language
       subtitles, embed in Premiere/DaVinci Resolve, or upload to YouTube community subs, Vimeo, or any player
       supporting ASS format.
+  - q: How do I proofread and revise the translation after translating? Can I edit it line by line?
+    a: >-
+      Two features cover this — one for editing it yourself, one for letting an AI do it. (1) Side-by-side
+      Review: in single-file, translated-only export mode, after translation a panel appears below with the
+      original and the translation side by side, line by line. Edit any line you don't like in the translation
+      column, then click 'Apply & Download' to get the revised subtitle with timecodes preserved — ideal for
+      hand-checking and fixing machine-translation mistakes without touching the timeline. (2) Extract Text +
+      your own AI: 'Extract Text' exports the original dialogue with timecodes and cue numbers stripped
+      (auto-copied to clipboard), while the translation is copied separately from the result card's Copy button;
+      paste both the original and the translation into any AI and use your own prompt to proofread/revise the
+      translation against the source — ask for a change summary too if you like. Use Review to edit it yourself,
+      Extract Text plus an external AI to have it revised to your spec.
   - q: How many subtitle files can I batch translate at once? What about a whole season of episodes?
     a: >-
       Batch upload an entire season's subtitles for simultaneous translation with no hard file limit (actual
@@ -129,7 +141,8 @@ To address issues in the market such as slow translation speeds, lack of batch p
 - **Translation Cache**: Automatically caches translation results locally to avoid redundant calls, saving time and API costs.
 - **Context-Aware Translation** (AI models only): The AI translates based on context, improving the coherence and accuracy of dialogue.
 - **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .vtt / .lrc). Exports preserve the original filename; when translating into multiple languages, the language code is automatically appended as a suffix (e.g. `movie.zh.srt`, `movie.fr.srt`).
-- **Subtitle Extraction**: Supports extracting subtitle text for subsequent use in AI summarization, derivative works, and other applications.
+- **Subtitle Extraction**: One click extracts the original dialogue with timecodes and cue numbers stripped (auto-copied to clipboard) — for AI summarization, derivative works, or pairing with the translation to have an AI proofread/revise it.
+- **Side-by-side Review**: In single-file, translated-only export mode, after translation you can compare source and translation line by line, manually edit the translation, and Apply & Download — ideal for a hands-on line-by-line polishing pass.
 - **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
 - **Multiple API Options**: Built-in free / commercial translation APIs plus 20+ AI LLM endpoints (including local Ollama / LM Studio / TranslateGemma) — pick by budget and privacy needs.
 - **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
@@ -185,6 +198,15 @@ No. The tool extracts structural metadata (timecodes, cue numbers, ASS headers, 
 ### How do I create bilingual subtitles for YouTube or language learning?
 
 Select 'Bilingual' mode with your target language. Position translation above (for learning — focus on translation) or below (for consumption — primary is original). Export as ASS for colored dual-language subtitles, embed in Premiere/DaVinci Resolve, or upload to YouTube community subs, Vimeo, or any player supporting ASS format.
+
+### How do I proofread and revise the translation after translating? Can I edit it line by line?
+
+The tool offers two features — one to edit it yourself, one to let an AI do it:
+
+1. **Side-by-side Review (edit it yourself)**: In single-file, translated-only export mode, after translation a panel appears below with the original on the left and the translation on the right, line by line. Edit any line you don't like in the translation column, then click **Apply & Download** to get the revised subtitle with timecodes preserved. Ideal for hand-checking and fixing machine-translation mistakes without having to touch the timeline.
+2. **Extract Text + your own AI (let an AI do it)**: **Extract Text** exports the **original** dialogue with timecodes and cue numbers stripped (auto-copied to clipboard); the translation is copied separately from the result card's Copy button. Paste both the original and the translation into any AI and use your own prompt to proofread/revise the translation against the source — ask for a change summary too if you want — then organize or re-insert the result yourself.
+
+In short: use **Review** to edit it yourself line by line, use **Extract Text** plus an external AI to have it revised to your spec.
 
 ### How many subtitle files can I batch translate at once? What about a whole season of episodes?
 
