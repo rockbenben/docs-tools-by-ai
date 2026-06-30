@@ -10,7 +10,7 @@
 <script defer src="/static/js/lib-react.39eda44cfb.js"></script>
 <script defer src="/static/js/lib-router.5da0f123db.js"></script>
 <script defer src="/static/js/7424.36d688266e.js"></script>
-<script defer src="/static/js/index.20e954261b.js"></script>
+<script defer src="/static/js/index.bead2e38f0.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.14">
 <meta name="author" content="rockbenben">
@@ -27,7 +27,7 @@
 <meta name="description" content="Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.">
 <meta property="og:description" content="Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.">
 <meta property="og:title" content="Translation API Guide - Classic APIs and LLMs Compared | Tools By AI">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"Translation API Guide","name":"Translation API Guide","description":"Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/translation/api","mainEntityOfPage":"https://docs.newzone.top/en/guide/translation/api","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-06-11","articleSection":"Translation","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"Translation API Guide","name":"Translation API Guide","description":"Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/translation/api","mainEntityOfPage":"https://docs.newzone.top/en/guide/translation/api","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-06-30","articleSection":"Translation","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://docs.newzone.top/en"},{"@type":"ListItem","position":2,"name":"Guide","item":"https://docs.newzone.top/en/guide"},{"@type":"ListItem","position":3,"name":"Translation","item":"https://docs.newzone.top/en/guide/translation"},{"@type":"ListItem","position":4,"name":"Translation API Guide"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/en/guide/translation/api">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/translation/api">
@@ -38,7 +38,7 @@
 <meta property="og:locale:alternate" content="zh_CN">
 <meta name="twitter:title" content="Translation API Guide">
 <meta name="twitter:description" content="Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.">
-<meta property="article:modified_time" content="2026-06-11">
+<meta property="article:modified_time" content="2026-06-30">
 <meta property="article:section" content="Translation"></head>
 
   <body>
@@ -159,7 +159,8 @@
 <li><strong>Pick &quot;TranslateGemma&quot; directly from the service list</strong> — don&#x27;t go through &quot;Custom (OpenAI-compatible)&quot; with <code>translategemma-4b-it</code> as the model name. The two take entirely different code paths: the dedicated TranslateGemma service makes line-by-line calls tailored to the Gemma translation model&#x27;s I/O format, while Custom uses the generic LLM pipeline with batching and context markers — which causes dropped lines and slower runs on small (under 14B) models.</li>
 <li>The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp</li>
 <li><strong>API key is optional</strong>: leave it empty for a plain local server; if your deployment requires auth (LM Studio&#x27;s &quot;require API key&quot;, vLLM&#x27;s <code>--api-key</code>, or a reverse proxy in front), fill it in and requests carry an <code>Authorization: Bearer</code> header</li>
-<li>Recommended models: <code>translategemma-4b-it</code> (compact and fast), <code>translategemma-12b-it</code> (better quality), or <code>translategemma-27b-it</code> (best quality)</li>
+<li>Recommended models: <strong>for an ordinary home PC, start with <code>translategemma-4b-it</code></strong> — compact, fast, and clean output. <code>translategemma-12b-it</code> / <code>27b-it</code> give higher quality but demand far more VRAM and compute</li>
+<li><strong>12B&#x27;s &quot;multiple options&quot; noise</strong>: this is the model&#x27;s own behavior, not an integration issue. In testing, 12B often returns several candidate translations for the same sentence with no fixed format — the tool can&#x27;t filter them out, so the output is full of noise. On home hardware, stick with 4B; if you want to use 12B, verify the output is clean on a short sample before running a full batch</li>
 <li><strong>Prompt settings don&#x27;t apply</strong>: like Qwen-MT, it&#x27;s a machine-translation service — the prompt is built into the call format; system/user prompts only affect LLM providers</li>
 <li><strong>Source language must be explicit</strong> — auto-detect isn&#x27;t supported</li>
 <li><strong>Limited language coverage</strong>: only ~55 mainstream languages (Google&#x27;s WMT24++ benchmark scope). About 68 low-resource languages — including Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr) — are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage</li>
