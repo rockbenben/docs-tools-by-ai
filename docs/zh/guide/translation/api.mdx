@@ -206,7 +206,8 @@ Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练
 - **请在服务列表里直接选「TranslateGemma」**——不要走「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 模型名。两者是完全不同的代码路径：独立的 TranslateGemma 服务走逐行调用，专门匹配 Gemma 翻译模型的输入输出格式；Custom 走的是带批次/上下文标记的 LLM 通用路径，对 14B 以下的小模型容易漏行、速度也更慢。
 - 默认地址指向 LM Studio 1234 端口，可一键切换到 Ollama / llama.cpp
 - **API Key 可选**：本地裸跑无需填写；若服务端开了鉴权（LM Studio 的 "require API key"、vLLM 的 `--api-key`、或反向代理加的认证层），填上即可，请求会附带 `Authorization: Bearer` 头
-- 推荐模型：`translategemma-4b-it`（轻量快速）、`translategemma-12b-it`（质量更好）或 `translategemma-27b-it`（最强）
+- 推荐模型：**普通家用电脑首选 `translategemma-4b-it`**——轻量快速、输出干净。`translategemma-12b-it` / `27b-it` 质量更高，但显存与算力要求也更高
+- **12B 的「多选项」噪音**：这是模型自身行为，并非接入问题。实测 12B 常对同一句给出多个候选译法，且没有固定格式、工具无法自动过滤，译文里会夹带大量噪音。家用设备建议直接用 4B；要用 12B 时先用小段文本验证输出是否干净再批量跑
 - **Prompt 设置对它不生效**：和 Qwen-MT 一样属于机器翻译类服务，提示词已内置在调用格式里，系统/用户 Prompt 只对 LLM 类接口生效
 - **必须明确指定源语言**——这个模型不支持"自动检测"
 - **语言覆盖较小**：只支持约 55 种主流语言（对齐 Google WMT24++ benchmark）；约 68 种小语种——包括粤语 yue、博杰普尔 bho、沃洛夫 wo、阿拉贡 an、瓜拉尼 gn、库尔德 ckb/kmr——会被 UI 直接拦截。需要更广语种请改用 DeepL / Google / Azure / Qwen-MT
