@@ -26,11 +26,13 @@ Three format-specific translators (subtitle, Markdown, JSON i18n) sharing 7 tran
 
 ### 📝 Text Tools
 
-Four complementary text utilities covering **format conversion → content cleanup → chunking → general-purpose ops**.
+Six complementary text utilities covering **format conversion → content cleanup → chunking → joining → diffing → general-purpose ops**.
 
 - [**Chinese Conversion**](./text/chinese-conversion.mdx) — Simplified ↔ Traditional, regional variants
 - [**Novel Processor**](./text/novel-processor.mdx) — web-novel TXT formatting, ad removal, chapter fixes
-- [**Text Splitter**](./text/text-splitter.mdx) — split by chars / paragraphs / delimiter
+- [**Text Splitter**](./text/text-splitter.mdx) — split by symbol / chars / paragraphs
+- [**Text Joiner**](./text/text-joiner.mdx) — merge columns by template into CSV / SQL / JSON
+- [**Text Diff**](./text/text-diff.mdx) — two-pane diff, first-difference locator, .patch export
 - [**Text Toolbox**](./text/text-toolbox.mdx) — regex match, dedupe, batch prefix/suffix, line ops
 
 [→ Enter Text Tools](./text/)

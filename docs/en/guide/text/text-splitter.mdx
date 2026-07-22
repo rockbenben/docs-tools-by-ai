@@ -3,7 +3,7 @@ head:
   - - meta
     - property: og:title
       content: Text Splitter - Chunk long text by length or paragraph | Tools By AI
-description: Split long text into chunks by character count, by delimiter, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
+description: Split long text into chunks by delimiter, by character count, or by Chinese/English paragraph detection. Batch export or ZIP packaging for AI input prep and document editing.
 appUrl: https://tools.newzone.top/en/text-splitter
 appName: Text Splitter
 image: https://docs.newzone.top/img/text-splitter-en.webp
@@ -13,16 +13,16 @@ howto:
     - name: Paste or upload your long text
       text: Paste long text into the input box, or drag in a text file.
     - name: Pick a splitting mode
-      text: Fixed-size chunks (for AI input) → By Length; long Chinese text by paragraph → Chinese Paragraph; English text by sentence → English Paragraph.
-    - name: Configure delimiters (optional)
-      text: To align cuts to delimiters like `. ? !`, fill in the delimiter field.
+      text: Split at every period/question mark → Symbol; fixed-size chunks (for AI input) → Length; long Chinese text by paragraph → Chinese; English text by sentence → English.
+    - name: Configure delimiters or character count
+      text: In Symbol mode fill in the delimiters and set how many separators per segment; in Length mode set the character count, optionally with delimiters to snap boundaries.
     - name: Process and export
       text: Click Process. ≤ 3 segments download individually; > 3 segments auto-bundle as a ZIP.
 faq:
-  - q: What's the difference between the three splitting modes?
-    a: '"By Length" chunks text into blocks of a fixed character count (default 2000) and snaps boundaries to a delimiter if one is provided. "Chinese Paragraph" / "English Paragraph" run language-aware sentence detection — Chinese uses punctuation rules, English uses the compromise NLP library. Pick whichever matches your input language.'
-  - q: Why is there no length toggle for delimiter-only splitting?
-    a: Delimiter activation is implicit — purely controlled by whether the delimiter field has a value. Length > 0 + delimiter filled = chunk + snap. Length > 0 + delimiter empty = hard chunk. Length = 0 + delimiter filled = split at every delimiter (length ignored). Length = 0 + delimiter empty = error.
+  - q: What's the difference between the four splitting modes?
+    a: '"Symbol" splits at every delimiter, with an interval setting so you can cut only every N delimiters. "Length" chunks text into blocks of a fixed character count (default 2000) and snaps boundaries to the nearest delimiter if one is provided. "Chinese" / "English" run language-aware sentence detection — Chinese uses punctuation rules, English uses the compromise NLP library. Pick whichever matches your input language and target granularity.'
+  - q: Which mode do I use for delimiter-only splitting?
+    a: Symbol mode — it is the default. Fill in the delimiters and the text is cut at every occurrence, with no character-count involved. Want bigger segments? Raise "separators per segment" to 2 or 3 and adjacent units are merged. Earlier versions triggered this by setting length to 0; it is now its own mode, and the length field has a minimum of 1.
   - q: When does batch export package as ZIP?
     a: Above 3 segments. ≤ 3 segments download as individual files; > 3 are bundled into a single `<filename>_split_files.zip` to avoid spamming your downloads folder.
   - q: Why does the preview hide automatically sometimes?
@@ -33,7 +33,7 @@ faq:
 
 # Text Splitter
 
-The [Text Splitter](https://tools.newzone.top/en/text-splitter) chunks long text for use cases like preparing LLM context (ChatGPT, DeepSeek, Claude), document editing, and social media content prep. It offers **three splitting modes** — by length, by Chinese paragraph, by English paragraph — plus batch export and ZIP packaging.
+The [Text Splitter](https://tools.newzone.top/en/text-splitter) chunks long text for use cases like preparing LLM context (ChatGPT, DeepSeek, Claude), document editing, and social media content prep. It offers **four splitting modes** — symbol, length, Chinese paragraph, English paragraph — plus batch export and ZIP packaging.
 
 ![Text Splitter interface](/img/text-splitter-en.webp 'Text Splitter interface')
 
@@ -41,25 +41,34 @@ The [Text Splitter](https://tools.newzone.top/en/text-splitter) chunks long text
 
 1. Paste or upload your long text
 2. Pick a **mode**:
-   - Fixed-size chunks (for AI input) → **By Length**
-   - Long Chinese text by paragraph → **Chinese Paragraph**
-   - English text by sentence → **English Paragraph**
-3. To align cuts to delimiters (`. ? !` etc.), fill in the delimiter field
+   - Split at every period / question mark → **Symbol** (default)
+   - Fixed-size chunks (for AI input) → **Length**
+   - Long Chinese text by paragraph → **Chinese**
+   - English text by sentence → **English**
+3. Symbol mode: fill in delimiters (and optionally raise separators per segment). Length mode: set the character count, plus delimiters to snap cuts to `. ? !`
 4. Click **Process** — exports as individual files (≤ 3) or a ZIP bundle (> 3)
 
 :::
 
-## Three splitting modes
+## Four splitting modes
 
-Modes are picked via the Segmented at the top of the Configuration card. Each mode only shows its own config, so the panels stay focused.
+Modes are picked via the Segmented at the top of the Configuration card, labelled "Symbol / Length / Chinese / English" — hover any label for its full description. Each mode only shows its own config, so the panels stay focused.
 
-### 1. By length
+### 1. Symbol (default)
 
-Chunks text into blocks of a given character count. Default is 2000 — a reasonable block size for LLM context windows. The **delimiter** input is always visible — whether it activates is purely determined by whether the field has a value, no extra toggle needed:
+Pure delimiter splitting: the text is cut at every delimiter occurrence, the delimiter stays at the end of its segment, and no character limit applies.
 
-- **Length > 0 + delimiter filled**: chunk by length; boundaries snap to the nearest delimiter so sentences aren't cut mid-way
-- **Length > 0 + delimiter empty**: hard chunk by length, ignoring sentence boundaries
-- **Length = 0 (or empty) + delimiter filled**: ignore length entirely — split at every delimiter occurrence (delimiter is required)
+- **Delimiters**: required — they decide where the cuts happen
+- **Separators per segment**: defaults to 1 (cut at every delimiter). Set 2 to merge two adjacent units into one segment, 3 for three, and so on. Useful when you want sentence-based splitting but 2–3 sentences per segment
+
+Repeated or line-leading delimiters never produce empty segments — stray delimiters are folded into the neighbouring segment, so exporting the merged text reproduces your input.
+
+### 2. Length
+
+Chunks text into blocks of a given character count. Default is 2000 (minimum 1) — a reasonable block size for LLM context windows. The **delimiter** field is optional; filling it in is what activates it, no extra toggle needed:
+
+- **Delimiter filled**: chunk by length, with boundaries snapped to the nearest delimiter so sentences aren't cut mid-way
+- **Delimiter empty**: hard chunk by length, ignoring sentence boundaries
 
 The delimiter input accepts:
 
@@ -70,13 +79,13 @@ The delimiter input accepts:
 
 Delimiter splits keep the delimiter at the end of each segment.
 
-### 2. Chinese paragraph
+### 3. Chinese
 
-Detects Chinese paragraph boundaries using punctuation and line-break rules; paragraph interiors are preserved. Good for articles, blog posts, and other content where paragraph integrity matters.
+Detects Chinese paragraph boundaries using punctuation and line-break rules; paragraph interiors are preserved. Good for articles, blog posts, and other content where paragraph integrity matters. No extra config.
 
-### 3. English paragraph
+### 4. English
 
-Uses an English sentence algorithm to detect paragraph boundaries. Good for documents, emails, and papers.
+Uses the compromise NLP library's English sentence algorithm to detect boundaries, one sentence per segment. Good for documents, emails, and papers. No extra config.
 
 ## Shared settings
 
@@ -93,9 +102,10 @@ All modes share these:
 
 ## Common patterns
 
-- **LLM context prep**: length 2000–4000 with delimiters `。 ？ ！` or `. ? !` — boundaries auto-snap to sentence ends
-- **Sentence-level split**: length 0 + delimiters `。 ？ ！` (or `. ? !`) — one split at each delimiter
-- **Paragraph-level split**: use Chinese paragraph or English paragraph mode
-- **Code / Markdown split**: length mode with delimiter `\n\n` (literal `\n` supported)
+- **LLM context prep**: **Length** mode, 2000–4000 chars with delimiters `。 ？ ！` or `. ? !` — boundaries auto-snap to sentence ends
+- **Sentence-level split**: **Symbol** mode with delimiters `。 ？ ！` (or `. ? !`), interval 1
+- **Three sentences per segment**: **Symbol** mode with those delimiters and separators per segment set to 3
+- **Paragraph-level split**: **Chinese** or **English** mode
+- **Code / Markdown split**: **Length** mode with delimiter `\n\n` (literal `\n` supported)
 
 Everything runs in the browser — no uploads, no server round trips.

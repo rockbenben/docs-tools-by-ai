@@ -4,12 +4,12 @@ head:
   - - meta
     - property: og:title
       content: Text Toolbox - Regex, Filter, Sort, Batch Format on One Page | Tools By AI
-description: One-stop text-processing toolbox. Regex match, filter, dedup, sort, batch prefix/suffix, JSON beautify, smart paragraph split — all on a single page. Runs locally in your browser, no data uploaded.
+description: One-stop text-processing toolbox. Regex match, filter, dedup, sort, batch prefix/suffix, case conversion, JSON beautify, smart paragraph split — all on a single page. Runs locally in your browser, no data uploaded.
 faq:
   - q: What text operations does this tool support?
-    a: Regex extract/remove, keyword filtering, line-level dedup, sort (asc/desc), reverse, batch prefix/suffix, JSON beautify, smart paragraph split, adjacent-line swap, plus a few preset combos targeted at web/social-media data. All on one page, stackable.
+    a: Regex extract/remove, keyword filtering, line-level dedup, sort (asc/desc), reverse, batch prefix/suffix, case conversion (upper/lower/title/sentence), JSON beautify, smart paragraph split, CLI text cleanup, adjacent-line swap, plus a few preset combos targeted at web/social-media data. All on one page, stackable.
   - q: What if I don't know how to write regex?
-    a: The Regex Engine card ships with 5 common presets — URL (strict), URL (loose), Remove Index, Extract JSON Key, GPT cite markers. One click fills in the regex and the matching flags. For more complex patterns, describe what you need to ChatGPT/Claude and paste the generated regex back to iterate.
+    a: The Regex Engine panel ships with 4 common presets — URL (no params), URL (loose), Remove Index, Extract JSON Key. One click fills in the regex and the matching flags. For more complex patterns, describe what you need to ChatGPT/Claude and paste the generated regex back to iterate.
   - q: What does the "Smart Trim" toggle actually do?
     a: When enabled (default), most action buttons (match, sort, dedup, prefix/suffix, …) first trim per-line whitespace and skip empty lines. When off, the original line structure is preserved.
   - q: What's the difference between "Remove Matches" and "Run Match"?
@@ -25,7 +25,7 @@ howto:
     - name: Paste your text
       text: Drop the text into the input area (handles million-line files via streaming).
     - name: Pick and stack rules
-      text: From the Regex Engine, Filter/Sort, and Batch Rewrite panels, toggle the operations you want — regex match, dedupe, filter, batch prefix/suffix, URL extract are all stackable.
+      text: From the LINES / CASE quick strip and the REGEX / FORMAT / LINKS panels in the side rail, pick the operations you want — regex match, dedupe, filter, batch prefix/suffix, case conversion, URL extract are all stackable.
     - name: Apply and export
       text: Click Run to preview, then copy to clipboard or save as .txt. You can also pipe the result back into the input for a second pass.
 ---
@@ -39,21 +39,31 @@ howto:
 ## What problems does it solve?
 
 - **Extract specific content**: pull URLs, JSON keys, pattern-matching fields from a large body of text
-- **Clean up noise**: strip ads, GPT citation markers, HTML tags, blank lines
+- **Clean up noise**: strip ads, citation residue, HTML tags, blank lines
 - **Tidy terminal-copied text**: strip the quote bars and hard line wraps from Claude Code / terminal output and restore paste-ready paragraphs
 - **Batch formatting**: add prefixes/suffixes to each line — Markdown lists, CSV, SQL `IN` clauses
+- **Normalize case**: upper, lower, title case, sentence case
 - **Sort & organize**: asc/desc sort, reverse, dedup (with an exclusion list)
 - **Complex pipelines**: filter → regex → affix multi-step cleanups
 
 ## Page layout
 
-Top to bottom, three cards:
+The page is a **two-column layout**. The main column carries the primary flow; the side rail holds the more specialized panels:
+
+**Main column**
 
 1. **Source Text** — input area + file upload + the "Smart Trim" toggle (bottom right)
-2. **Regex Engine** — regex input + 5 presets + 3 flags + two action buttons
-3. **Line Tools** — line-level operations grouped by purpose
+2. **LINES** — organize / filter / prefix-suffix rows, with parameter inputs inline
+3. **CASE** — the four case-conversion buttons
+4. **Result pane** (appears once there's output) — copy / export / format / move-to-source
 
-When done, a **Result card** appears at the bottom with copy / export / format / move-to-source actions.
+**Side rail**
+
+- **REGEX** — regex input + 4 presets + 3 flags + Run Match / Remove Matches / Batch Task Extract
+- **FORMAT** — Format, Smart Split, CLI Text Cleanup, JSON Beautify
+- **LINKS** — Common Link Replace, Weibo Link Convert, Custom Operation
+
+Line operations and case conversion are the highest-frequency actions, so they sit between input and result; regex, whole-text reflow, and link converters are more specialized and live in the rail so the result pane stays on screen.
 
 ## Source Text card
 
@@ -61,28 +71,29 @@ When done, a **Result card** appears at the bottom with copy / export / format /
 - **Upload**: drag-and-drop or click; TXT, MD, JSON, CSV and other rich-text formats supported
 - **Smart Trim toggle** (default on): when on, almost every processing button first trims per-line whitespace and drops empty lines; when off, the original line structure is preserved
 
-## Regex Engine card
+## REGEX panel (side rail)
 
 - **Regex input**: any JavaScript regex pattern
-- **5 common presets** (CheckableTags): one click fills in the regex and sets the appropriate flags
-  - **URL (strict)**: matches plain `https://` URLs without trailing punctuation
+- **4 common presets** (CheckableTags): one click fills in the regex and sets the appropriate flags
+  - **URL (no params)**: matches plain `https://` URLs without trailing punctuation
   - **URL (loose)**: catches URLs containing brackets, semicolons, more punctuation cases
   - **Remove Index**: strips leading "1. ", "2、", "3) " line numbers
   - **Extract JSON Key**: pulls every key name out of a JSON blob (multiline)
-  - **GPT cite markers**: cleans `[1]`, `(cite...)` residue from GPT/Claude output
 - **3 flags**: global (g) / multiline (m) / case-insensitive (i)
-- **Two buttons**:
+- **Three buttons**:
   - **Run Match**: extract every match and list them; toast shows the count
   - **Remove Matches**: delete matches from the source; also collapses 3+ newlines to 2
+  - **Batch Task Extract**: a URL → number pairing pipeline — finds each line's URL, then scans for numbers attached to keywords like 点赞 / 转发 / 评论 / 播放 / 差 / 曝光 / 阅读 (Chinese social-media metrics) and outputs CSV grouped by metric
 
-## Line Tools card (grouped by purpose)
+## LINES panel (main column)
 
 ### Organize
 
 - **Sort Ascending / Descending**: alphabetical (Unicode order); click toggles direction
 - **Reverse**: invert line order
-- **Dedup**: drop fully duplicate lines (use with the "Exclude" textarea below to keep certain lines even when duplicated)
-- **Format**: drop blank lines + smart trim (or not, depending on the toggle)
+- **Adjacent Swap**: swap line pairs end-to-end (input must have an even line count; built for classification tasks where the number sits on the line above the link)
+- **Dedup**: drop fully duplicate lines
+- **Exclude** (the input on the same row): entries listed here are ignored by **Dedup** and persist locally. E.g. add `Home` and `About` to preserve those headings across repeated occurrences
 
 ### Filter
 
@@ -93,32 +104,34 @@ When done, a **Result card** appears at the bottom with copy / export / format /
 
 - **Prefix** input: prepended to every line (empty by default)
 - **Suffix** input: appended to every line (defaults to `,100`, edit freely)
+- **Regex Extract + Affix**: the button on the right of the same row — extracts using the regex from the REGEX panel, then batch-applies prefix/suffix in one step
 - Example: prefix `- `, empty suffix → convert plain text into a Markdown list
 - Example: prefix `'`, suffix `',` → convert a list of strings into a SQL `IN (...)` clause
 
-### Convert
+## CASE panel (main column)
 
+Four buttons, applied line by line across the whole text:
+
+- **UPPERCASE** / **lowercase**
+- **Title Case**: capitalize the first letter of every word
+- **Sentence case**: capitalize the first letter of every sentence, lowercase the rest
+
+## FORMAT panel (side rail)
+
+- **Format**: drop blank lines + smart trim (or not, depending on the toggle)
 - **Smart Split**: uses `compromise` English NLP for sentence boundaries + Chinese paragraph rules
 - **CLI Text Cleanup**: built for text copied out of Claude Code / a terminal — strips leading quote bars (`▎ ▌ │`) and indentation, reflows lines hard-wrapped at the terminal width back into full paragraphs (CJK lines join directly, Latin lines get a single space), and keeps list items and code blocks line-by-line. The result is auto-copied to the clipboard, ready to paste
 - **JSON Beautify**: lenient parse (handles unquoted keys, single quotes, comments) + 2-space indent
+
+## LINKS panel (side rail)
+
 - **Common Link Replace**: replace every `https://huggingface.co` with `https://modelscope.cn/models` — useful for switching HuggingFace links to a China-accessible mirror
-
-### Advanced (same row of buttons)
-
-- **Regex Extract + Affix**: extract via regex then batch-apply prefix/suffix in one step
-- **Batch Task Extract**: a URL → number pairing pipeline — finds each line's URL, then scans for numbers attached to keywords like 点赞 / 转发 / 评论 / 播放 / 差 / 曝光 / 阅读 (Chinese social-media metrics) and outputs CSV grouped by metric
-- **Adjacent Swap**: swap line pairs end-to-end (input must have an even line count)
+- **Weibo Link Convert**: batch-convert mobile Weibo (`m.weibo.cn`) links into PC `weibo.com` links plus the author's profile URL. Output is grouped into PC links / author profiles / unresolved; links carrying a uid resolve locally, detail pages need a network lookup for uid/bid, and each failure is annotated with its reason (no uid in link, uid/bid not found on the page, request failed)
 - **Custom Operation**: extract all URLs via the "URL (loose)" preset + reverse order + join with commas (handy for reverse-lookup URL lists)
 
-### Exclude (paired with Dedup)
+## Result pane
 
-- The multi-line textarea at the bottom of the Line Tools card
-- Used by **Dedup**: lines listed here are kept even when duplicated
-- Example: exclude `Home\nAbout` to preserve those headings across repeated occurrences
-
-## Result card
-
-When something has been produced, the Result card surfaces:
+When something has been produced, the result pane surfaces:
 
 - **Copy**: one-click clipboard copy
 - **Export**: download as `text-processed.txt`
@@ -129,7 +142,7 @@ When something has been produced, the Result card surfaces:
 
 ### Getting started
 
-- Try the presets first — Regex Engine card → click a tag
+- Try the presets first — REGEX panel in the side rail → click a tag
 - Test on a small slice before processing critical data
 - Stacked operations: filter → extract → affix solves most cleanups in three clicks
 

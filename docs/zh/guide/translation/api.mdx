@@ -63,6 +63,7 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 - **模型**：填所选接口提供的模型名；Azure OpenAI 填部署名。
 - **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
+  - **部分接口没有这个控件**：OpenAI（GPT-5.x 全系为推理模型，非默认温度直接报 400）、Claude（Opus 4.8 / Sonnet 5 / Fable 5 的 adaptive thinking 拒绝 temperature）、Gemini（3.x 官方建议保持默认 1.0，调低易导致循环输出）、Moonshot Kimi（k2.x 锁定温度）、Azure OpenAI。这几家不发送该参数、UI 也不显示输入框，直接用服务端默认值——想控制文风请改用系统提示词或思考强度。
 - **思考模式**：让 AI 多想一步再翻译，质量更高但更慢/更贵——支持的模型 UI 会显示开关。开关**按模型独立保存**，切模型不影响别的设置。具体 UI 形态因 provider 而异：
   - **三档调节**（off / low / medium / high）：Claude、Gemini、OpenAI GPT-5、Qwen3、Azure OpenAI、Nvidia NIM、OpenRouter、Groq (GPT-OSS)、Perplexity Sonar Deep Research
   - **两档开关**（off / on）：DeepSeek（开启即最高档，底层 API 的中间档位对翻译无意义）、Doubao、Zhipu GLM、Moonshot (Kimi)、Xiaomi MiMo、SiliconFlow、ERNIE 5.0 Thinking、Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning（底层 API 只接受 on/off，不接受 effort）

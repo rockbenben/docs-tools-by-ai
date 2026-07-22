@@ -157,7 +157,7 @@ One-click backup of every configuration: API credentials, model parameters, API 
 - **Timeout**: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.
 - **Max Tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
 - **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
-- **Custom export filename**: standardize filenames in batch exports. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}`, `{time}`. Example: `{name}_{lang}_{date}.{ext}`.
+- **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `_{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}_{lang}.{ext}`, or combinations like `{name}_{lang}_{date}.{ext}`.
 
 ### API Parameter Tuning
 
@@ -207,7 +207,9 @@ How many surrounding lines accompany each batch sent to the model — more = mor
 <details>
 <summary>Defaults per service (reference)</summary>
 
-- Cloud LLMs (Claude / Gemini / Nvidia / Azure OpenAI): 100
+- Cloud LLMs (Claude / Gemini / Nvidia / Azure OpenAI, …): 50
 - Custom local LLM: 30 (models under 14B tend to drop lines in long batches, hence the smaller default)
+
+Earlier versions defaulted cloud LLMs to 100. In practice an over-long context made models more likely to treat context lines as content to translate, shifting the output by a line, so the default was lowered to 50.
 
 </details>

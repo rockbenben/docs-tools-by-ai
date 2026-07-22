@@ -151,9 +151,39 @@ To address issues in the market such as slow translation speeds, lack of batch p
 
 Subtitle Translator supports multiple subtitle formats, including `.srt`, `.ass`, `.vtt`, and `.lrc`, and provides an automatic format matching feature:
 
-- **Bilingual Subtitles**: When checked, the translated text is inserted below the original, with the display order (top/bottom) configurable. For SRT / VTT sources you can additionally choose **ASS output**: original and translation get separate styles (Default 70pt white + Secondary 55pt cyan), letting you independently tweak font, color, and size in any subtitle editor.
+- **Bilingual Subtitles**: When checked, the translated text is inserted below the original, with the display order (top/bottom) configurable. For SRT / VTT sources you can additionally choose **ASS output**: original and translation get separate Default / Secondary styles, configurable right inside the tool (see [ASS style settings](#ass-style-settings)) — no external subtitle editor needed.
 - **Timeline Compatibility**: Supports time formats that omit the default hour, exceed 100 hours, and display 1-3 millisecond digits to ensure compatibility.
 - **Automatic Encoding Detection**: No need to manually select the encoding format; the tool automatically detects the subtitle file's encoding to prevent garbled text issues.
+
+## ASS Style Settings
+
+When exporting bilingual ASS, click the **ASS Style** button to open the settings drawer and adjust fonts, sizes, colors, and positioning visually. The generated ASS header is written against a 1920×1080 baseline (`PlayResX/PlayResY`), so players scale it proportionally to any resolution.
+
+### Four presets
+
+| Preset       | Translation / original size | Character                                                     |
+| ------------ | --------------------------- | ------------------------------------------------------------- |
+| **Default**  | 64 / 48 pt                  | White text, outline 3, shadow 1 — general purpose              |
+| **Large**    | 80 / 60 pt                  | White text, outline 4 — for TVs and casting at a distance      |
+| **Cinematic**| 64 / 48 pt                  | Gold translation (`#FFD700`) over white original, film-like    |
+| **Boxed**    | 64 / 48 pt                  | White text on a semi-transparent black box (~62% opaque), readable over bright footage |
+
+Changing any parameter switches the preset to **Custom**, which persists — reopen the drawer and your last configuration is still there.
+
+### Adjustable parameters
+
+- **Global**: font (leave blank to auto-pick per target language, or click "Read system fonts" to choose from installed ones), alignment (bottom center / top center), vertical margin (0–500)
+- **Translation style / Original style** (independent sets): font size (10–200), text color, outline color, outline (0–10), shadow (0–10)
+- **Box color**: shown for boxed styles only — both color and opacity adjustable (written as ASS `BorderStyle=3`, with the outline value acting as box padding)
+
+### Two layouts for native ASS bilingual
+
+When the source is already ASS / SSA, one more choice appears:
+
+- **Keep source styles** (default): preserve the source's `[V4+ Styles]` and inline tags, only inserting the translated lines. Right for releases that already carry fansub styling and effects
+- **Restyle**: discard the source styles, rebuild the header from your ASS Style config, and strip every inline override tag (`{\an8}`, `{\i1}`, `{\pos(...)}`, …). Suitable for dialogue-only subtitles — effects and karaoke get flattened
+
+Whether the source is `.ass` or `.ssa`, restyled output is always written as `.ass`.
 
 ## Context-Aware Translation
 

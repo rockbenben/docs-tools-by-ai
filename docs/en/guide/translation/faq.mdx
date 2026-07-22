@@ -205,7 +205,7 @@ The main value of local deployment is **privacy** (content never leaves your mac
 Try these in order of increasing cost:
 
 1. **Reset to defaults**: restore Translation Settings and re-test with a small segment — many "weird translations" come from previously changed parameters;
-2. **Tune temperature**: ≈0.2 for strict terminology / technical docs; 0.4–0.7 for everyday content; 0.8–1.0 for creative paraphrasing;
+2. **Tune temperature**: ≈0.2 for strict terminology / technical docs; 0.4–0.7 for everyday content; 0.8–1.0 for creative paraphrasing. Note that OpenAI, Claude, Gemini, Moonshot Kimi, and Azure OpenAI expose no temperature control (locked model-side — see the [API guide](./api.mdx)); steer those with the system prompt or thinking effort instead;
 3. **Enable context-aware translation**: dialogue and long-form text get noticeably more coherent;
 4. **Inconsistent names / terms**: pin them with the Glossary (next question);
 5. **Switch models**: mainstream online models (DeepSeek / Claude / GPT / Gemini — including their mini / flash tiers) are all capable enough; odd output is almost always a parameter or prompt issue, not the model. Small local models do have a real ceiling — see [Which model should I pick for local translation?](#which-model-should-i-pick-for-local-translation) above.

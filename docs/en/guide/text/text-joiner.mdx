@@ -1,0 +1,113 @@
+---
+title: Text Joiner
+head:
+  - - meta
+    - property: og:title
+      content: Text Joiner - Merge multi-column text row by row into CSV / SQL / JSON | Tools By AI
+description: Merge multiple text columns row by row using a template. Placeholders define each line's format, plus a line separator and overall prefix/suffix — one click produces CSV, SQL, JSON, or Markdown. Runs locally in your browser.
+appUrl: https://tools.newzone.top/en/text-joiner
+appName: Text Joiner
+image: https://docs.newzone.top/img/text-joiner-en.webp
+howto:
+  name: How to merge multi-column text with Text Joiner
+  steps:
+    - name: Fill in the columns
+      text: Paste each list into column 1, 2, … or paste multi-column data copied from Excel and let it split automatically.
+    - name: Write the row template
+      text: Reference the current row of each column with {1}, {2} — e.g. {1},{2} — or click one of the built-in presets.
+    - name: Configure the assembly
+      text: Set the line separator and the overall prefix/suffix as needed, e.g. "IN (" and ")" for SQL IN.
+    - name: Copy the result
+      text: The output updates live on the right; copy it when it looks right.
+faq:
+  - q: How do I merge two texts into "A,B" format?
+    a: Paste each text into column 1 and column 2, then click the CSV preset — rows are aligned by line number and emitted as "A,B".
+  - q: What if the columns have different row counts?
+    a: The default is "Pad" — output follows the longest column and missing cells become empty strings. Switch to "Truncate" to follow the shortest column and drop the extra rows.
+  - q: Can it generate SQL statements?
+    a: Yes. The "SQL VALUES" preset configures the template, line separator, and prefix/suffix so pasted data becomes a complete INSERT statement; the "SQL IN" preset emits an IN ('a', 'b') fragment.
+  - q: Can I batch-format a single column?
+    a: Yes. Set the column count to 1 and use the template to add prefixes, suffixes, or symbols to every line — it becomes a bulk line formatter.
+  - q: How many columns are supported? Is data uploaded?
+    a: Up to 8 columns. Everything is processed in your browser; nothing is uploaded.
+---
+
+# Text Joiner
+
+[Text Joiner](https://tools.newzone.top/en/text-joiner) solves the "two lists that need to be merged row by row" problem: names in one column and URLs in another to build Markdown links; a column of IDs to build a SQL `IN (...)`; several columns of tabular data to reassemble into CSV. **Row-by-row alignment plus template placeholders** — configure once, produce the whole batch.
+
+It is the inverse of [Text Splitter](./text-splitter.mdx), and pairs well with the batch prefix/suffix in [Text Toolbox](./text-toolbox.mdx) — that one only adds fixed affixes to a single column, whereas cross-column joining needs this tool.
+
+![Text Joiner interface](/img/text-joiner-en.webp 'Text Joiner interface')
+
+:::tip 30-second quickstart
+
+1. Fill in the **columns** on the left: one text per column, one entry per line
+2. Click a **preset** (CSV / Markdown link / SQL IN …) or write your own **row template** like `{1},{2}`
+3. The result updates live on the right — copy it
+
+:::
+
+## Column input
+
+- **Column count**: 1 to 8, adjust as needed
+- **Auto-split on spreadsheet paste**: multi-column content copied from Excel or Google Sheets can be pasted into any column box and is split by tabs across the columns ("Split as table: N rows × M columns"). Content beyond the column limit fills the first 8 and reports the overflow. Turn off the "Auto-split spreadsheet paste" switch if you'd rather it didn't
+- **Row counts**: each column header shows its current row count, making mismatches easy to spot
+- **Load example**: one click drops in runnable sample data
+
+## Row template
+
+The template decides what **each row** produces, referencing the current row of each column with `{1}`, `{2}`:
+
+| Template          | Input (columns 1 / 2)   | Output                    |
+| ----------------- | ----------------------- | ------------------------- |
+| `{1},{2}`         | `apple` / `apple.com`   | `apple,apple.com`         |
+| `- [{1}]({2})`    | `Site` / `https://…`    | `- [Site](https://…)`     |
+| `'{1}'`           | `A001`                  | `'A001'`                  |
+
+Column numbers you haven't defined are left as-is rather than replaced with empty strings. Clicking the `{N}` chip next to a column header inserts that placeholder at the cursor.
+
+### Built-in presets
+
+One click fills in all four settings — template, separator, prefix, suffix:
+
+- **CSV** / **Quoted CSV** / **TSV**: rebuild tabular data
+- **Markdown list** / **Markdown link**: `- {1} {2}` / `- [{1}]({2})`
+- **JSON array**: one object per row (`{"c1": "…", "c2": "…"}`), wrapped in `[ ]` and joined with `,`
+- **SQL IN**: emits `IN ('a', 'b', 'c')`
+- **SQL VALUES**: emits a full `INSERT INTO table (col1, col2) VALUES ('…', '…'), …;`
+
+Presets are generated from the current column count — set it to 3 and the CSV preset becomes `{1},{2},{3}`.
+
+## Assembly
+
+The structure is **prefix · row ⟨separator⟩ row · suffix**:
+
+- **Line separator**: what goes between rows — a newline `\n` by default; SQL IN uses `, `
+- **Overall prefix / suffix**: what wraps the entire result, e.g. `[\n` and `\n]` for a JSON array
+
+Separators and affixes accept escapes like `\n` and `\t`. The template itself is not escape-parsed, so type a real tab if you need one.
+
+## Row handling
+
+- **When columns differ in length**:
+  - **Pad** (default): follow the longest column, filling missing cells with empty strings
+  - **Truncate**: follow the shortest column, dropping the extra rows
+- **Skip fully empty rows** (on by default): a row where every column is empty produces no output
+
+## My templates
+
+Configurations you've tuned can be saved and reused:
+
+- **Save as / Update current / Delete**: manage several named configurations
+- **Export / Import config**: a JSON file containing all templates plus the current settings, for moving between machines or sharing with teammates
+
+## Common patterns
+
+- **Two columns into CSV**: names in one, values in the other → CSV preset
+- **URL list into Markdown**: titles in one, links in the other → Markdown link preset
+- **ID list into SQL**: one column of IDs → SQL IN preset, paste straight into a query
+- **Spreadsheet data into a database**: copy multiple columns from Excel → auto-split → SQL VALUES preset → complete INSERT
+- **Single-column batch formatting**: set the column count to 1 with a template like `{1} — done`
+
+Everything runs locally in your browser — **nothing is uploaded**.

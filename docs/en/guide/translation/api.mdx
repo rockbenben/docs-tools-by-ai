@@ -63,6 +63,7 @@ Key parameters:
 
 - **Model**: enter the model name from your provider; for Azure OpenAI, enter the deployment name.
 - **Temperature**: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.
+  - **Some providers have no temperature control**: OpenAI (the whole GPT-5.x line is reasoning-only and returns 400 on any non-default value), Claude (adaptive thinking on Opus 4.8 / Sonnet 5 / Fable 5 rejects temperature), Gemini (3.x officially recommends keeping the default 1.0 — lowering it can trigger looping output), Moonshot Kimi (k2.x locks it), and Azure OpenAI. For these the parameter is never sent and the input is hidden, so the server default applies — steer the tone with the system prompt or thinking effort instead.
 - **Thinking mode**: lets the AI think before translating — higher quality, slower and pricier. Supported models show a toggle in the UI. The toggle is **stored per model** so switching models preserves each one's setting independently. The exact UI form depends on the provider:
   - **Three levels** (off / low / medium / high): Claude, Gemini, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM, OpenRouter, Groq (GPT-OSS), Perplexity Sonar Deep Research
   - **Binary toggle** (off / on): DeepSeek (ON always uses the top tier — the API's middle tiers add nothing for translation), Doubao, Zhipu GLM, Moonshot (Kimi), Xiaomi MiMo, SiliconFlow, ERNIE 5.0 Thinking, Mistral (Medium 3.5 / Small 4), Cohere Command A Reasoning (underlying APIs accept on/off but not an effort param)

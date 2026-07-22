@@ -10,6 +10,20 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.07.11: Model lineup refresh; several providers no longer expose temperature.
+  - **Model updates**: OpenAI moves to the GPT-5.6 family (sol / terra / luna, with a new `max` reasoning effort tier; luna is the default low-cost high-volume pick), Claude switches to Opus 4.8 / Sonnet 5 / Fable 5 (adaptive thinking) plus Haiku 4.5 (extended thinking), Qwen defaults to 3.7 Plus, with Kimi and Gemini updated in step
+  - **Temperature control hidden per provider**: OpenAI (GPT-5.x is reasoning-only and returns 400 on non-default values), Claude (the adaptive generation rejects temperature), Gemini (3.x officially recommends keeping the default 1.0), Moonshot Kimi (k2.x locks it), and Azure OpenAI. These no longer send the parameter and the input is hidden — steer tone via the system prompt or thinking effort instead
+- 2026.06.30: Locatable failures and targeted retries.
+  - **Real source line numbers**: the failure panel now reports the actual line number in your source file (previously the in-batch index), so subtitle / Markdown / JSON failures can be checked in place
+  - **Retry only failed languages**: when whole languages fail in a multi-language run, retry just those — the successful ones aren't billed again
+  - Fixes: GTX now throws when the `translations` array comes back short or holey instead of silently blanking those lines; context-mode extraction is guarded against cross-line source echoes
+- 2026.06.29: Visual ASS style configuration for subtitles; much faster cache-hit reruns.
+  - **ASS style drawer**: 4 presets (Default / Large / Cinematic / Boxed) plus a persisted Custom slot; configurable font (can read installed system fonts), size, text color, outline color, outline, shadow, alignment, and vertical margin, with independent box color and opacity for boxed styles
+  - **"Restyle" for native ASS bilingual**: optionally discard the source styles, rebuild the header from your own ASS style, and strip every inline override tag (dialogue-only subtitles). `.ssa` sources are written out as `.ass` after restyling
+  - **Smart export filenames**: the default is now the clean `{name}.{ext}`; `_{lang}` is auto-injected only when one run targets multiple languages and the pattern lacks `{lang}`, so single-language exports stay tidy
+  - **Faster cache-hit reruns**: batched IndexedDB reads, adaptive auto-retry, and throttling skipped on cache hits
+  - **Context lines default 100 → 50**: an over-long context made models more likely to treat context as content and shift the output by a line
+  - Fixes: TranslateGemma bounds its output by input length so local models can't loop into a timeout; local-model (llm / translategemma) timeouts now show a method-specific hint
 - 2026.06.11: New LiteLLM self-hosted gateway; API Relay fully user-controlled with self-hosted relay support.
   - **New LiteLLM provider**: one self-hosted OpenAI-compatible proxy fronting 100+ upstream models, with its own config slot (no need to occupy Custom). The URL is the credential (default `127.0.0.1:4000`), API Key optional (master key); the model field can stay empty when the proxy is started with `litellm --model` — it follows the server default
   - **Tencent Hunyuan works in browsers again**: the official endpoint currently rejects CORS preflights (direct calls always fail), so it now routes through **API Relay by default** and works out of the box; the switch stays available to flip back to direct once Tencent fixes it
