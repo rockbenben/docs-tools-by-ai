@@ -20,7 +20,7 @@ howto:
 faq:
   - q: Can I insert multiple new nodes after a single target node at once?
     a: >-
-      Yes. Comma-separate multiple node names in the "New Nodes" field (both English and Chinese
+      Yes. Comma-separate multiple node names in the "New Node" field (both English and Chinese
       commas work). New nodes are inserted in the order you typed them, immediately after the target
       node. For example, target = `id`, new = `created_at, updated_at` adds both fields right after
       `id`.
@@ -36,12 +36,12 @@ faq:
       [JSON Node Edit](./json-node-edit.mdx) first to inspect or normalize it.
   - q: Will it lag on large files?
     a: >-
-      Enable "Large File Mode" for big JSON files (it hides the left text box and forces file upload).
+      For big JSON files, drop them into the upload area instead of pasting.
       All processing happens locally in your browser — files never leave your machine.
   - q: How do I assign values to the newly inserted nodes?
     a: >-
       This tool only inserts empty field placeholders. To fill values in bulk, use
-      [JSON Node Edit](./json-node-edit.mdx)'s "Direct value replacement" operation. To copy a value
+      [JSON Node Edit](./json-node-edit.mdx)'s "Replace Node Value" operation. To copy a value
       from another field, use [JSON Value Transformer](./json-value-transformer.mdx) with key
       mappings. Chaining these two tools covers most structure-adjustment workflows.
 ---
@@ -63,11 +63,11 @@ faq:
 1. **Input JSON Data**
    - Drag and drop to upload a JSON or text file.
    - Or directly paste the JSON content into the text box.
-   - For large JSON files, enable the "Large File Mode."
+   - For large JSON files, upload the file instead of pasting it.
 
 2. **Set Insertion Parameters**
    - **Target Node**: Enter the node name where you want to insert new nodes (this determines the insertion position).
-   - **New Nodes**: Enter the names of the nodes to be inserted, separated by commas.
+   - **New Node**: Enter the names of the nodes to be inserted, separated by commas.
 
 3. **Processing and Export**
    - Click the "Start Processing" button to execute the insertion.
@@ -80,7 +80,7 @@ faq:
 - The target node must exist in the JSON; otherwise, an error will be displayed.
 - New nodes will be inserted in the order they are entered, immediately after the target node.
 - If the node names are purely numeric, they will be automatically sorted by value and placed at the front.
-- For large JSON files, it is recommended to enable "Large File Mode" to improve performance.
+- For large JSON files, upload the file instead of pasting it — the page stays responsive.
 
 ## Use Cases
 

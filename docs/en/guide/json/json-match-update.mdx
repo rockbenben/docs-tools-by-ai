@@ -20,9 +20,10 @@ howto:
 faq:
   - q: Can I match two JSON files whose ID fields have different names?
     a: >-
-      Yes. "Original ID Field" defaults to `id` and "Target ID Field" defaults to `card_id` — both are
-      configurable independently. Once values match, the "Target Weight Field" (default `count`) is
-      written into the "Original Weight Field" (default `weight`), completing cross-dataset sync.
+      Yes. The "Match Fields" row pairs "Source Match Field" (default `id`) with "Target Match Field"
+      (default `card_id`), each configurable independently. Once values match, the "Target Update Field"
+      (default `count`) is written into the "Source Update Field" (default `weight`), completing
+      cross-dataset sync.
   - q: What if the target data is missing an ID? Will the original value get wiped?
     a: >-
       No. If no matching item is found in the target data for a given original ID, that entry is left
@@ -35,8 +36,9 @@ faq:
       behavior, rename titles containing "失效" before processing.
   - q: Will it lag on very large datasets?
     a: >-
-      Enable "Large File Mode" to hide the left text box and use file upload only — friendlier for big
-      datasets. All matching runs locally in your browser; data is never uploaded.
+      For big datasets, drop the file into the upload area rather than pasting it into the text box — that
+      skips rendering one huge string and keeps the page responsive. All matching runs locally in your
+      browser; data is never uploaded.
   - q: I just want to edit node values or add prefixes, not match by ID. What should I use?
     a: >-
       Use [JSON Node Edit](./json-node-edit.mdx) for JSONPath-based bulk prefix/suffix, find/replace,
@@ -63,10 +65,10 @@ faq:
    - You can also drag and drop `.txt` or `.json` files
 
 3. **Configure Matching Fields**:
-   - **Original ID Field**: The unique identifier field in your original data (default: `id`)
-   - **Target ID Field**: The corresponding ID field in your target data (default: `card_id`)
-   - **Original Weight Field**: The field in original data to be updated (default: `weight`)
-   - **Target Weight Field**: The field in target data containing new values (default: `count`)
+   - **Match Fields · source**: the unique identifier field in your original data (default: `id`)
+   - **Match Fields · target**: the corresponding ID field in your target data (default: `card_id`)
+   - **Update Fields · source**: the field in original data to be updated (default: `weight`)
+   - **Update Fields · target**: the field in target data containing new values (default: `count`)
 
 4. **Process Data**:
    - Click the "Start Process" button to execute the data matching and update
@@ -82,7 +84,7 @@ faq:
 
 ## Additional Features
 
-- **Large File Mode**: Check this option when processing larger datasets to hide the left text box and use file upload only
+- **Large-file friendly**: for bigger datasets, upload the file instead of pasting it into the text box
 - **Reset Upload**: Clear uploaded files and text box contents
 
 ## Data Format Examples

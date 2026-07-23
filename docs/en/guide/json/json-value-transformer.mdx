@@ -32,8 +32,8 @@ faq:
       etc. as placeholders, then hand off to a translator).
   - q: Will processing large JSON files be slow?
     a: >-
-      Check "Large File Mode" to handle extremely large JSON (hides the left text box and forces file
-      upload). All processing runs in your browser — files never leave your machine. Deeply nested
+      For extremely large JSON, drop the file into the upload area instead of pasting it.
+      All processing runs in your browser — files never leave your machine. Deeply nested
       structures may take longer.
   - q: What happens if an input or output key doesn't exist?
     a: >-
@@ -44,7 +44,7 @@ faq:
   - q: After copying fields, how do I actually translate them?
     a: >-
       Mapping only moves source values to target fields. To translate those fields, use
-      [JSON Translate](../../translation/json-translate/index.mdx)'s i18n mode or targeted-node mode
+      [JSON Translate](../translation/json-translate/index.mdx)'s i18n mode or targeted-node mode
       with any of 25+ engines (DeepSeek, Claude, GPT, etc.). To sync values from another dataset by an
       ID field, use [JSON Match & Update](./json-match-update.mdx).
 ---
@@ -90,7 +90,7 @@ The [JSON Key-Value Mapping Tool](https://tools.newzone.top/en/json-value-transf
 
 ### Advanced Features
 
-- **Large File Mode**: Check "Large File Mode" to process extremely large JSON files
+- **Large-file friendly**: upload extremely large JSON instead of pasting it
 - **File Upload**: Support for drag-and-drop or file selection upload
 - **Result Management**:
   - Copy complete JSON result
@@ -138,7 +138,7 @@ Preset mode automatically configures the following mapping relationships:
    - Specific error messages when keys don't exist
 
 4. **Performance Considerations**
-   - Enable large file mode when processing large JSON files
+   - Upload the file instead of pasting when processing large JSON files
    - Complex nested structures may require longer processing time
 
 Using this tool can significantly improve the efficiency of value conversion between JSON data structures, particularly suited for multilingual content processing and complex JSON restructuring scenarios.

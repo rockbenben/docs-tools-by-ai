@@ -16,9 +16,9 @@ howto:
     - name: Specify JSONPath
       text: Enter node path(s) in the "🔍 JSONPaths" field (e.g. `title`, `zh.title,en.title` — comma-separated for multiple).
     - name: Pick an operation
-      text: Add prefix/suffix / Find & replace / Direct value replacement — pick what you need.
+      text: Add Prefix / Add Suffix / Find Text / Replace Node Value — pick what you need.
     - name: Start processing
-      text: Click "Start processing". All matching nodes get edited at once.
+      text: Click "Start Processing". All matching nodes get edited at once.
 faq:
   - q: How do I edit multiple JSON nodes at different locations at once?
     a: >-
@@ -27,22 +27,25 @@ faq:
       supported, so every matching node is rewritten in a single pass.
   - q: Can I combine the three edit operations (prefix/suffix, find/replace, direct replace)?
     a: >-
-      Prefix/suffix and find/replace stack together. But "Direct value replacement" is exclusive —
+      Prefix/suffix and find/replace stack together. But "Replace Node Value" is exclusive —
       once enabled, the entire node value is overwritten and the other two operations are ignored.
       Common usage: combine prefix/suffix + find/replace, or use direct replace alone.
   - q: How do I auto-replace text with the matching language name in multilingual JSON?
     a: >-
-      Toggle "Multilingual Replacement". The tool reads the language code in the node path (zh, en,
-      ja, ko, es, fr, de, it, ru, pt, hi, ar, bn — 13 codes supported) and replaces your search text
-      with the corresponding language name, so you don't have to configure 13 separate find/replace rules.
+      Toggle "Language code → name". The tool reads the language code in the node path (zh, en,
+      ja, ko, es, fr, de, it, ru, pt, hi, ar, bn — 13 codes supported) and replaces the contents of
+      "Find Text" with the corresponding language name (`en` → `English`), so you don't have to configure
+      13 separate find/replace rules. Two conditions: the code must be a **whole path segment**
+      (`$['hi']['title']` matches `hi`, while the `es` inside `description` is not mistaken for Spanish),
+      and the toggle does nothing while "Find Text" is empty.
   - q: Will it lag on very large JSON files?
     a: >-
-      Check "Large Mode" for noticeably better performance on big files (it hides the left text box and
-      forces file upload). All processing runs locally in your browser — files are never uploaded, and
-      tens of megabytes work fine.
+      For big files, drag them into the upload area instead of pasting into the text box — noticeably
+      smoother. All processing runs locally in your browser — files are never uploaded, and tens of
+      megabytes work fine.
   - q: After editing, how do I translate the JSON into multiple languages?
     a: >-
-      Use [JSON Translate](../../translation/json-translate/index.mdx) — it supports 25+ engines,
+      Use [JSON Translate](../translation/json-translate/index.mdx) — it supports 25+ engines,
       JSONPath targeting, and i18n aggregation mode. To copy one field's value into another (for
       multilingual templating), use [JSON Value Transformer](./json-value-transformer.mdx) with preset
       mappings. All three tools share JSONPath semantics for a smooth pipeline.
@@ -58,7 +61,7 @@ faq:
 
 1. Paste or upload your JSON data
 2. Enter node path(s) in **🔍 JSONPaths** (e.g. `title`, `zh.title,en.title` — comma-separated)
-3. Pick an operation: **Add prefix/suffix** / **Find & replace** / **Direct value replacement**
+3. Pick an operation: **Add Prefix** / **Add Suffix** / **Find Text** / **Replace Node Value**
 4. Click **Start processing** — all matching nodes get edited at once
 
 :::
@@ -95,20 +98,20 @@ You can choose one or more of the following operations:
 ### 4. Advanced Settings
 
 - **Capitalize First Letter**: Automatically capitalize the first letter of node values (only applies to strings that begin with lowercase letters)
-- **Multilingual Replacement**: Based on language codes in the node path (e.g., zh, en, ja), automatically replace search text with corresponding language names
-- **Large Mode**: Provides better performance when processing large JSON files
+- **Language code → name**: reads the language code from the node path (e.g. zh, en, ja) and automatically replace search text with corresponding language names
+- **Large-file friendly**: upload large JSON instead of pasting it, avoiding a huge textarea render
 
 ### 5. Execute and View Results
 
-- Click the "Start processing" button to apply edits
+- Click the "Start Processing" button to apply edits
 - Processed JSON data will display on the right side
 - Use the "Copy", "Copy Node", or "Export File" buttons to save results
 
 ## Tips and Tricks
 
-- When processing multilingual JSON, enable the "Multilingual Replacement" feature to automatically replace specified text with language names corresponding to the path
+- When processing multilingual JSON, enable "Language code → name" to automatically replace specified text with language names corresponding to the path
 - Use "Replace Node Value" to completely replace found node values, ignoring other editing operations
-- Check "Large Mode" to improve performance when processing large JSON files
+- Upload the file instead of pasting when processing large JSON — the page stays responsive
 - Use commas to separate multiple JSONPaths to edit nodes in different locations simultaneously
 
 ## Supported Language Codes

@@ -32,16 +32,16 @@ faq:
     a: >-
       Strings, numbers, and booleans are supported. If a JSONPath hits an object or array node, the tool
       skips it and shows an error — drill the path deeper so it lands on a scalar field.
-  - q: Will it lag on large files? Is there a large-file mode?
+  - q: Will it lag on large files?
     a: >-
-      Enable "Large Mode" for better performance on big JSON files (it hides the left text box and routes
-      input through file upload). All processing runs locally in your browser — files never leave your
-      machine.
+      Drop the file into the upload area instead of pasting its contents, and you skip the cost of
+      rendering one huge string — tens of MB work fine. All processing runs locally in your browser —
+      files never leave your machine.
   - q: After extracting, how do I batch-edit or translate the results?
     a: >-
       For find/replace, prefix/suffix, or full overwrite on extracted nodes, use
       [JSON Node Edit](./json-node-edit.mdx). To translate i18n JSON into multiple languages, use
-      [JSON Translate](../../translation/json-translate/index.mdx). All three tools share JSONPath
+      [JSON Translate](../translation/json-translate/index.mdx). All three tools share JSONPath
       semantics, so they chain nicely.
 ---
 
@@ -63,4 +63,4 @@ faq:
 
 The tool supports extracting strings, numbers, and boolean values. If you attempt to extract an object or array, the tool will show an error message and skip that node.
 
-For large JSON files, enable "Large Mode" to work with bigger datasets more efficiently.
+For large JSON files, upload the file instead of pasting it to work with bigger datasets more efficiently.
