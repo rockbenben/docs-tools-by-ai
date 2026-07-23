@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: indexnow-action
-        uses: bojieyang/indexnow-action@v2
+        uses: bojieyang/indexnow-action@v3
         with:
           sitemap-location: 'https://docs.newzone.top/sitemap.xml'
           since: 4

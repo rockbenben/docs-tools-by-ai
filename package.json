@@ -6,18 +6,19 @@
   "scripts": {
     "build": "rspress build",
     "dev": "rspress dev",
-    "preview": "rspress preview"
+    "preview": "rspress preview",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.13"
+    "@rspress/core": "^2.0.18"
   },
   "devDependencies": {
-    "@rspress/plugin-llms": "^2.0.13",
-    "@rspress/plugin-sitemap": "^2.0.13",
+    "@rspress/plugin-llms": "^2.0.18",
+    "@rspress/plugin-sitemap": "^2.0.18",
     "@types/node": "^24",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   }
 }
