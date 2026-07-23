@@ -20,7 +20,7 @@ description: Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆
 
 - [**Subtitle Translator**](./translation/subtitle-translator/) — SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出
 - [**MD Translator**](./translation/md-translator/) — Markdown 翻译，保留代码块、LaTeX、Front Matter
-- [**JSON Translate**](./translation/json-translate/) — i18n JSON，按 key 选择性翻译、key 映射
+- [**JSON Translate**](./translation/json-translate/) — i18n JSON，按 key 选择翻译范围、key 映射
 
 [→ 进入翻译工具集](./translation/)
 

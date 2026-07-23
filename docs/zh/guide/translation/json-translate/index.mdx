@@ -24,7 +24,7 @@ faq:
     a: >-
       浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持 25+ 引擎：
       Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点
-      （Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、选择性 Key、i18n 多语言聚合
+      （Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、逐条翻译指定字段、i18n 多语言聚合
       5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
   - q: 翻译 JSON 用机器翻译还是 AI 大模型？怎么选最合适？
     a: >-
@@ -71,7 +71,7 @@ import Privacy from '../_privacy.mdx';
 # JSON 翻译工具｜i18n 多语言批量翻译与 JSONPath 精准定位
 
 :::tip 快速介绍
-JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、选择性翻译、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
+JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、逐条翻译指定字段、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
 :::
 
 :::tip 30 秒上手
@@ -130,19 +130,30 @@ JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具
 - 纯数字键可能与数组索引冲突——该问题已修复，但建议尽量避免仅由数字组成的键名以减少歧义。
 - 含点（.）的键名会被误解析为嵌套路径，建议使用不含点的键名或改用替代命名。
 
-### 选择性翻译
+### 逐条翻译指定字段
 
-此模式适用于扁平结构的 JSON 数据，可指定起始节点和需要翻译的字段名称。系统会从指定节点开始，查找所有对象中的目标字段并进行翻译。
+把 JSON 当成一张「条目列表」来处理：逐个条目取出同一个字段翻译，其余字段原样保留。
+
+**结构要求**：JSON 必须是**「条目 → 对象」两层结构**，即顶层每个键对应一个对象，字段在对象里。例如：
+
+```json
+{
+  "fetchError": { "message": "Request failed", "code": 500 },
+  "authError": { "message": "Invalid token", "code": 401 }
+}
+```
+
+配置「待翻译字段」= `message`，就只翻两条的 `message`，`code` 不动。
 
 **配置项**：
 
-- **起始键**：(可选) 指定从哪个键开始查找，适用于键顺序有意义的场景
-- **待翻译字段**：要翻译的具体字段名称，多个字段用逗号分隔
+- **起始键**：(可选) 从这个条目开始翻译，留空则从第一条开始。适用于键顺序有意义、只想翻后半部分的场景
+- **待翻译字段**：取每个条目里的这个字段翻译，**多个字段用逗号分隔**。注意：列出的字段只要有一个在所有条目里都找不到（或不是字符串值），整次翻译会直接报错中止，而不是跳过该字段
 
 **适用场景**：
 
-- 只需翻译扁平化结构中指定字段，如日志或错误信息的"message"字段
-- JSON 文件结构简单，字段重复出现但需部分处理
+- 日志 / 错误信息文件，只翻每条的 `message`，保留 `code`、`level` 等元数据
+- 条目结构统一、但只有一个字段需要本地化的配置文件
 
 ### i18n 模式
 
@@ -231,7 +242,7 @@ JSON 数据是以键值对的形式存储的，其中“键”（也称为“名
 
 ### 这个 JSON 翻译工具支持哪些翻译引擎和文件大小？
 
-浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持 25+ 引擎：Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点（Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、选择性 Key、i18n 多语言聚合 5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
+浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持 25+ 引擎：Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点（Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、逐条翻译指定字段、i18n 多语言聚合 5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
 
 ### 翻译 JSON 用机器翻译还是 AI 大模型？怎么选最合适？
 

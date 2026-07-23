@@ -25,7 +25,7 @@ faq:
       Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage.
       Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure,
       Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate
-      modes: all keys, specified-node (JSONPath), specified-key, selective-key, and i18n multi-language merge.
+      modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge.
       IndexedDB cache gives incremental builds — only changed keys re-call the API.
   - q: Should I use machine translation or AI/LLM for translating JSON? How do I choose?
     a: >-
@@ -80,7 +80,7 @@ import Privacy from '../_privacy.mdx';
 # JSON Translator | i18n Batch Translation with JSONPath
 
 :::tip Quick summary
-JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, selective translation, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
+JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, one field across all entries, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
 :::
 
 :::tip 30-second quickstart
@@ -139,19 +139,30 @@ In this mode, you can specify particular key names for translation. Two input op
 - Pure numeric keys can conflict with array indices — this issue has been fixed, but avoid numeric-only keys to reduce ambiguity.
 - Keys containing dots (.) are interpreted as nested paths; avoid dots in key names or rename them to prevent misinterpretation.
 
-### Selective Translation
+### One Field Across All Entries
 
-Ideal for flat JSON structures, this mode lets you specify a starting node and target field names. The system will search from the starting point and translate all matching fields in nested objects.
+Treats the JSON as a list of entries: it pulls the same field out of every entry, translates it, and leaves the rest untouched.
+
+**Structural requirement:** the JSON must be **two levels — entry → object**, i.e. each top-level key maps to an object holding the fields. For example:
+
+```json
+{
+  "fetchError": { "message": "Request failed", "code": 500 },
+  "authError": { "message": "Invalid token", "code": 401 }
+}
+```
+
+Set **Field to Translate** to `message` and only the two `message` values are translated; `code` is left alone.
 
 **Configuration Options:**
 
-- **Start Key** (optional): Indicates where to begin the search—useful when key order matters
-- **Fields to Translate**: Specify target field names; separate multiple fields with commas
+- **Start Key** (optional): start from this entry; leave blank to start from the first. Useful when key order is meaningful and you only want the later part
+- **Field to Translate**: the field taken from inside each entry — **separate multiple fields with commas**. Note: if any listed field is missing from every entry (or isn't a string value), the whole run aborts with an error rather than skipping that field
 
 **Best for:**
 
-- Translating fields like `"message"` in flattened data structures such as logs or error reports
-- Simple JSON files with recurring field names requiring partial translation
+- Log or error-message files where only each entry's `message` should be translated, keeping `code`, `level`, and other metadata intact
+- Config files with uniform entries where exactly one field needs localization
 
 ### i18n Mode
 
@@ -240,7 +251,7 @@ Currently, JsonTranslate does not support JSON keys that contain dots (`.`). Thi
 
 ### Which translation engines and file sizes does this JSON translator support?
 
-Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, selective-key, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
+Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
 
 ### Should I use machine translation or AI/LLM for translating JSON? How do I choose?
 

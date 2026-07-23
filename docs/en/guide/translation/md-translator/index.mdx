@@ -16,7 +16,7 @@ howto:
     - name: Pick source / target languages
       text: Pick a source language and one or more target languages (multi-target in one pass is supported).
     - name: Translate
-      text: Click Translate. Code blocks, LaTeX formulas, FrontMatter metadata, and links all stay intact. For arbitrary plain text, turn on "Plain Text Mode" to skip Markdown parsing entirely.
+      text: Click Translate. Code blocks, LaTeX formulas, FrontMatter metadata, and links all stay intact. For arbitrary plain text, switch "Format Mode" to "Ignore Formatting" to skip Markdown parsing entirely.
 faq:
   - q: Which free Markdown translation tool works best?
     a: >-
@@ -82,7 +82,7 @@ import Privacy from '../_privacy.mdx';
 # Markdown Translator | Preserve Code, LaTeX & Front Matter for Batch AI Translation
 
 :::tip Quick summary
-md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 120+ languages, simultaneous multi-language output, and a "Plain Text Mode" for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
+md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 120+ languages, simultaneous multi-language output, and an "Ignore Formatting" mode for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
 :::
 
 :::tip 30-second quickstart
@@ -91,13 +91,13 @@ md-translator is a free online tool purpose-built for translating technical docs
 2. Pick source/target language(s) — multiple targets at once is fine
 3. Click **Translate** — code blocks, LaTeX formulas, FrontMatter, and links all stay intact
 
-> Need to translate plain text? Turn on "Plain Text Mode" to skip Markdown parsing.
+> Need to translate plain text? Switch "Format Mode" to "Ignore Formatting" to skip Markdown parsing.
 
 :::
 
 Markdown has become the mainstream markup language across technical documentation, open-source projects, blogging, and more. However, most translation tools struggle to preserve Markdown’s original structure—especially when handling code blocks, LaTeX formulas, or structured metadata—often leading to broken formatting or lost semantics.
 
-[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Plain Text Translation Mode" further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 120+ languages, it can output multilingual results simultaneously—empowering content globalization.
+[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Ignore Formatting" mode further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 120+ languages, it can output multilingual results simultaneously—empowering content globalization.
 
 ![MD Translator Interface](/img/md-translator-en.webp 'MD Translator Interface')
 
@@ -129,9 +129,9 @@ Markdown documents also support **Context-Aware Translation** mode (AI models on
 Due to the complexity of Markdown structures, enabling context mode may increase the risk of model output formatting errors (e.g., unclosed code blocks, disordered list indentation). It is recommended to closely monitor the format integrity of the translation results when using this mode.
 :::
 
-### “Plain Text Translation Mode” for Any Document
+### "Ignore Formatting" for any plain text
 
-Beyond structured Markdown support, md-translator offers a **“Plain Text Translation Mode”** that bypasses format parsing and directly translates raw content. Whether it's Markdown, TXT, HTML, log files, or even messy technical notes, this mode ensures accurate and efficient translation.
+Beyond structured Markdown support, md-translator offers **Format Mode → "Ignore Formatting"**, which bypasses format parsing and directly translates raw content. Whether it's Markdown, TXT, HTML, log files, or even messy technical notes, this mode ensures accurate and efficient translation.
 
 You can also enhance consistency in terminology, context coherence, and translation style by customizing AI prompts—tailoring the output to your actual writing needs.
 
