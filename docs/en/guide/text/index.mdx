@@ -26,13 +26,13 @@ Six complementary plain-text utilities covering **format conversion → content 
 
 - **Browser-local**: file reading, parsing, and processing happen locally — sensitive data stays on your machine
 - **Batch input**: multi-document paste and multi-file upload throughout
-- **Protected dictionary**: Chinese Conversion and Novel Processor let you mark "do-not-process" terms (iPhone, OpenAI, custom names)
+- **Custom Replacement Rules**: Chinese Conversion and Novel Processor let you mark "do-not-process" terms (iPhone, OpenAI, custom names)
 - **Chainable**: split a huge doc → run regex cleanup → convert to Traditional
 
 ## Common Combinations
 
-- **Web-novel reading prep**: Novel Processor strips ads + fixes chapter headings → Chinese Conversion to TW Traditional → batch export
-- **AI prompt prep**: Text Splitter chunks a long doc into ~4K-token blocks → Text Toolbox regex-cleans each chunk → batch export .txt
+- **Web-novel reading prep**: Novel Processor strips ads + fixes chapter headings → Chinese Conversion to TW Traditional → export
+- **Machine-translation prep**: Text Splitter chunks a long doc at 5000 characters (the Google / DeepL free-tier cap) → Text Toolbox regex-cleans each chunk → export segment files
 - **Multilingual archive cleanup**: Text Toolbox filters out Japanese lines → Chinese Conversion to Simplified → Text Splitter by paragraph
 - **Spreadsheet data into a database**: paste Excel columns into Text Joiner → SQL VALUES preset builds the INSERT → verify against production with Text Diff
 - **Revision review**: drop the before/after drafts into Text Diff → export a `.patch` for the record

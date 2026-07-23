@@ -3,8 +3,8 @@ title: Chinese Converter Guide
 head:
   - - meta
     - property: og:title
-      content: Chinese Converter - Batch Simplified ↔ Traditional with Protected Dictionary | Tools By AI
-description: Browser-local Chinese converter. Simplified ↔ Traditional, Taiwan/HK regional vocabulary, Japanese Shinjitai, plus batch files, smart line break, and a user-editable protected dictionary (terms that won't be converted). Nothing uploaded.
+      content: Chinese Converter - Batch Simplified ↔ Traditional with Custom Replacement Rules | Tools By AI
+description: Browser-local Chinese converter. Simplified ↔ Traditional, Taiwan/HK regional vocabulary, Japanese Shinjitai, plus batch files, smart line break, and a user-editable custom replacement rules (terms that won't be converted). Nothing uploaded.
 image: https://docs.newzone.top/img/chinese-conversion-en.webp
 howto:
   name: How to use Chinese Converter
@@ -12,18 +12,18 @@ howto:
     - name: Paste or upload text
       text: Paste Simplified or Traditional Chinese text into the input area, or drop in batch TXT files.
     - name: Choose conversion direction
-      text: Pick the conversion direction (Simplified ↔ Taiwan Traditional ↔ HK Traditional ↔ Japanese Shinjitai). To preserve specific terms (names, brands), add them to the Protected Dictionary first.
+      text: Pick the conversion direction (Simplified ↔ Taiwan Traditional ↔ HK Traditional ↔ Japanese Shinjitai). To preserve specific terms (names, brands), add them to the Custom Replacement Rules first.
     - name: Convert and copy
       text: Conversion runs locally in real time. Copy the result — your text never leaves your machine.
 faq:
   - q: Which conversion directions are supported?
     a: Any pair among 6 codes — Simplified (`cn`), Traditional Taiwan (`tw`), Traditional Taiwan + regional vocab (`twp`), Traditional Hong Kong (`hk`), OpenCC-mode Traditional (`t`), and Japanese Shinjitai (`jp`). Two quick buttons (Trad→Simp, Simp→Trad) plus a Custom Language card to pick any source/target combination.
-  - q: What does the "Regional Vocabulary" toggle do?
+  - q: What does the "Convert Regional Terms" toggle do?
     a: It picks which Traditional variant the quick buttons use. ON → Simp ↔ `twp` (Taiwan vocab — 视频 ↔ 影片, 幼儿园 ↔ 幼稚園). OFF → Simp ↔ `t` (OpenCC standard — pure character conversion, no vocab swaps). The Custom Language card is unaffected — it uses whatever dropdowns are picked.
-  - q: What is the "Protected Dictionary"?
+  - q: What is the "Custom Replacement Rules"?
     a: A user-editable list of terms that should NOT be converted — e.g. add "软件" to the dictionary and Simp→Trad keeps it as "软件" instead of "軟體". `s2t` (Simp→Trad) and `t2s` (Trad→Simp) rules are managed independently. **Only applied when one side is Simplified** (cn→x or x→cn); pure Traditional pairs like tw↔hk skip the dictionary.
   - q: Can I batch-convert multiple files?
-    a: Yes. Drop multiple TXT files; results export under their original filenames. Toggle "Single-File Mode" to constrain the tool to one file at a time — a new upload replaces the current one.
+    a: Yes. Drop multiple TXT files; results export under their original filenames. Toggle "Single File Mode" to constrain the tool to one file at a time — a new upload replaces the current one.
   - q: Is anything uploaded to a server?
     a: No. Powered by [js-opencc](https://github.com/rockbenben/js-opencc) (a JS port of [OpenCC](https://github.com/BYVoid/OpenCC)), all conversion runs in the browser — your data never leaves your machine.
   - q: What does "Smart Line Break" do?
@@ -34,7 +34,7 @@ appName: Chinese Conversion
 
 # Chinese Converter
 
-[Chinese Converter](https://tools.newzone.top/en/chinese-conversion) is a fully-local Chinese text converter supporting Simplified, Traditional (Taiwan / Hong Kong / OpenCC mode), and Japanese Shinjitai — any direction. It exposes two quick buttons (Trad→Simp, Simp→Trad), a Custom Language card for arbitrary pairs, a user-editable protected dictionary, and batch file processing.
+[Chinese Converter](https://tools.newzone.top/en/chinese-conversion) is a fully-local Chinese text converter supporting Simplified, Traditional (Taiwan / Hong Kong / OpenCC mode), and Japanese Shinjitai — any direction. It exposes two quick buttons (Trad→Simp, Simp→Trad), a Custom Language card for arbitrary pairs, a user-editable custom replacement rules, and batch file processing.
 
 ![Chinese Converter interface](/img/chinese-conversion-en.webp 'Chinese Converter interface')
 
@@ -56,7 +56,7 @@ The tool uses 6 internal codes:
 Two columns:
 
 - **Left**: input area (upload + textarea) + two quick buttons + result card
-- **Right**: Conversion Settings + Custom Language + Protected Dictionary panel
+- **Right**: Conversion Settings + Custom Language + Custom Replacement Rules panel
 
 ## Quick conversion (left column)
 
@@ -65,7 +65,7 @@ Two primary action buttons:
 - **Trad → Simp**: from some Traditional form to Simplified
 - **Simp → Trad**: from Simplified to some Traditional form
 
-Which Traditional variant is used depends on the **Regional Vocabulary** toggle on the right:
+Which Traditional variant is used depends on the **Convert Regional Terms** toggle on the right:
 
 | Vocabulary toggle | Trad → Simp (t2s) actual | Simp → Trad (s2t) actual |
 | ----------------- | ------------------------ | ------------------------ |
@@ -80,18 +80,18 @@ For other combinations (tw↔hk, t↔jp, etc.):
 2. Pick the **Target Language** from the dropdown
 3. Click **Custom Convert**
 
-⚠️ Note: when a custom pair **doesn't touch Simplified** (e.g. tw↔hk), the protected dictionary doesn't apply. If you have rules defined, the tool shows a "rules inactive" hint.
+⚠️ Note: when a custom pair **doesn't touch Simplified** (e.g. tw↔hk), the custom replacement rules doesn't apply. If you have rules defined, the tool shows a "rules inactive" hint.
 
 ## Conversion Settings (right column)
 
 Four toggles:
 
-- **Regional Vocabulary**: controls the Traditional variant used by quick buttons (see table above). The Custom Language card is unaffected.
+- **Convert Regional Terms**: controls the Traditional variant used by quick buttons (see table above). The Custom Language card is unaffected.
 - **Smart Line Break**: re-merge wrap-broken lines based on Chinese end-of-sentence punctuation (OCR cleanup helper)
-- **Single-File Mode**: process one file at a time; uploading a new file replaces the current one
-- **Auto-Export After Conversion**: skip the preview and directly download the result — useful for batch runs
+- **Single File Mode**: process one file at a time; uploading a new file replaces the current one
+- **Auto Export After Conversion**: skip the preview and directly download the result — useful for batch runs
 
-## Protected Dictionary
+## Custom Replacement Rules
 
 The tool's power feature — a user-editable list of terms that should NOT be converted.
 
@@ -103,7 +103,7 @@ The tool's power feature — a user-editable list of terms that should NOT be co
 
 ### When it's applied
 
-The protected dictionary **only applies when one side is Simplified**:
+The custom replacement rules **only applies when one side is Simplified**:
 
 - ✅ `cn → tw/twp/hk/t/jp` → applies **s2t rules**
 - ✅ `tw/twp/hk/t/jp → cn` → applies **t2s rules**
@@ -112,7 +112,7 @@ The protected dictionary **only applies when one side is Simplified**:
 
 ### Managing rules
 
-Click "Manage Rules" on the Protected Dictionary panel (bottom-right) to open the drawer:
+Click "Manage Rules" on the Custom Replacement Rules panel (bottom-right) to open the drawer:
 
 - Switch between s2t / t2s direction tabs
 - Add, edit, delete individual rules (from → to)
@@ -138,13 +138,13 @@ After single-file conversion, the result card appears with:
 - **Export**: download under the original filename (or `jianfan.txt`)
 - **Edit in place**: modify the result text directly
 
-With "Auto-Export" enabled, the preview is skipped and the result downloads immediately.
+With "Auto Export" enabled, the preview is skipped and the result downloads immediately.
 
 ## Use cases
 
 - **Document localization**: sync content across Mainland / Taiwan / Hong Kong audiences
 - **OCR cleanup**: pair with Smart Line Break to repair scanned text
-- **Academic / classical texts**: use the protected dictionary to preserve proper names and technical terms
+- **Academic / classical texts**: use the custom replacement rules to preserve proper names and technical terms
 - **Content creation**: publish blogs and novels in both Simplified and Traditional versions
 - **Batch data**: process `.json` / `.csv` / multiple TXT files containing Chinese fields
 

@@ -7,7 +7,7 @@ head:
 description: One-stop text-processing toolbox. Regex match, filter, dedup, sort, batch prefix/suffix, case conversion, JSON beautify, smart paragraph split — all on a single page. Runs locally in your browser, no data uploaded.
 faq:
   - q: What text operations does this tool support?
-    a: Regex extract/remove, keyword filtering, line-level dedup, sort (asc/desc), reverse, batch prefix/suffix, case conversion (upper/lower/title/sentence), JSON beautify, smart paragraph split, CLI text cleanup, adjacent-line swap, plus a few preset combos targeted at web/social-media data. All on one page, stackable.
+    a: Regex extract/remove, delete lines by keyword, line-level dedup, sort (asc/desc), reverse, merge into one line, batch prefix/suffix, case conversion (upper/lower/title/sentence), JSON beautify, smart paragraph split, CLI text cleanup, adjacent-line swap, plus a few preset combos targeted at web/social-media data. All on one page, stackable.
   - q: What if I don't know how to write regex?
     a: The Regex Engine panel ships with 4 common presets — URL (no params), URL (loose), Remove Index, Extract JSON Key. One click fills in the regex and the matching flags. For more complex patterns, describe what you need to ChatGPT/Claude and paste the generated regex back to iterate.
   - q: What does the "Smart Trim" toggle actually do?
@@ -15,7 +15,7 @@ faq:
   - q: What's the difference between "Remove Matches" and "Run Match"?
     a: '"Run Match" extracts every hit and lists them out. "Remove Matches" does the opposite — it deletes hits from the source and keeps everything else, also collapsing 3+ consecutive newlines down to 2.'
   - q: Can I export the processed text?
-    a: Yes — one-click copy, save as `text-processed.txt`, or click "Result → Source" to feed the current result back into the input for further processing. Runs entirely in your browser — million-character files never leave your machine.
+    a: Yes — one-click copy, save as `text-processed.txt`, or click "Result ➔ Source" to feed the current result back into the input for further processing. Runs entirely in your browser — million-character files never leave your machine.
 appUrl: https://tools.newzone.top/en/text-toolbox
 appName: Text Toolbox
 image: https://docs.newzone.top/img/text-toolbox-en.webp
@@ -25,7 +25,7 @@ howto:
     - name: Paste your text
       text: Drop the text into the input area (handles million-line files via streaming).
     - name: Pick and stack rules
-      text: From the LINES / CASE quick strip and the REGEX / FORMAT / LINKS panels in the side rail, pick the operations you want — regex match, dedupe, filter, batch prefix/suffix, case conversion, URL extract are all stackable.
+      text: From the LINES / CASE quick strip and the REGEX / FORMAT / LINKS panels in the side rail, pick the operations you want — regex match, dedupe, delete lines, merge into one line, batch prefix/suffix, case conversion, URL extract are all stackable.
     - name: Apply and export
       text: Click Run to preview, then copy to clipboard or save as .txt. You can also pipe the result back into the input for a second pass.
 ---
@@ -43,7 +43,8 @@ howto:
 - **Tidy terminal-copied text**: strip the quote bars and hard line wraps from Claude Code / terminal output and restore paste-ready paragraphs
 - **Batch formatting**: add prefixes/suffixes to each line — Markdown lists, CSV, SQL `IN` clauses
 - **Normalize case**: upper, lower, title case, sentence case
-- **Sort & organize**: asc/desc sort, reverse, dedup (with an exclusion list)
+- **Sort & organize**: asc/desc sort, reverse, dedup (with a skip list)
+- **Many lines into one**: join a column with any separator, ready to paste into a spreadsheet or query
 - **Complex pipelines**: filter → regex → affix multi-step cleanups
 
 ## Page layout
@@ -53,15 +54,15 @@ The page is a **two-column layout**. The main column carries the primary flow; t
 **Main column**
 
 1. **Source Text** — input area + file upload + the "Smart Trim" toggle (bottom right)
-2. **LINES** — organize / filter / prefix-suffix rows, with parameter inputs inline
+2. **LINES** — sort / delete / merge / affix rows, with parameter inputs inline
 3. **CASE** — the four case-conversion buttons
 4. **Result pane** (appears once there's output) — copy / export / format / move-to-source
 
 **Side rail**
 
-- **REGEX** — regex input + 4 presets + 3 flags + Run Match / Remove Matches / Batch Task Extract
+- **REGEX** — regex input + 4 presets + 3 flags + Run Match / Remove Matches / Extract links with metrics
 - **FORMAT** — Format, Smart Split, CLI Text Cleanup, JSON Beautify
-- **LINKS** — Common Link Replace, Weibo Link Convert, Custom Operation
+- **LINKS** — HuggingFace → ModelScope, Weibo Link Convert, Extract links reversed
 
 Line operations and case conversion are the highest-frequency actions, so they sit between input and result; regex, whole-text reflow, and link converters are more specialized and live in the rail so the result pane stays on screen.
 
@@ -83,24 +84,31 @@ Line operations and case conversion are the highest-frequency actions, so they s
 - **Three buttons**:
   - **Run Match**: extract every match and list them; toast shows the count
   - **Remove Matches**: delete matches from the source; also collapses 3+ newlines to 2
-  - **Batch Task Extract**: a URL → number pairing pipeline — finds each line's URL, then scans for numbers attached to keywords like 点赞 / 转发 / 评论 / 播放 / 差 / 曝光 / 阅读 (Chinese social-media metrics) and outputs CSV grouped by metric
+  - **Extract links with metrics**: a URL → number pairing pipeline — finds each line's URL, then grabs the number next to it, groups by metric, and outputs one `link,number` per line. The metric words are seven hard-coded **Chinese** terms — 点赞 / 转发 / 评论 / 播放 / 差 / 曝光 / 阅读 — so it **only works on text containing those Chinese words**
 
 ## LINES panel (main column)
 
-### Organize
+The panel title spells out its four groups — **sort · delete · merge · affix** — one row each, with parameter inputs inline.
+
+### Sort
 
 - **Sort Ascending / Descending**: alphabetical (Unicode order); click toggles direction
 - **Reverse**: invert line order
-- **Adjacent Swap**: swap line pairs end-to-end (input must have an even line count; built for classification tasks where the number sits on the line above the link)
-- **Dedup**: drop fully duplicate lines
-- **Exclude** (the input on the same row): entries listed here are ignored by **Dedup** and persist locally. E.g. add `Home` and `About` to preserve those headings across repeated occurrences
+- **Adjacent Swap**: swaps lines in pairs. Blank lines are removed first (the remaining count must be even, otherwise it errors), a blank line is put back between each pair, and the result is copied automatically. Built for data where the number sits on the line above its link, feeding "Extract links with metrics"
 
-### Filter
+### Delete
 
-- Type comma-separated keywords, e.g. `ad,promo,channel`
-- Click "Filter Lines": delete every line containing any of the keywords; result lands in the Result card
+- **Deduplicate**: drop fully duplicate lines
+- **Skip when deduping** (the input on the same row): entries listed here are ignored by dedup and persist locally. E.g. add `Home` and `About` to preserve those headings across repeated occurrences
+- **Delete matching lines**: type comma-separated keywords in the input to its right (e.g. `ad,promo,channel`) and every line containing one of them is removed, the rest kept
 
-### Prefix / Suffix
+### Merge
+
+- **Merge into one line**: join multiple lines into a single line
+- **Join with** (the input on the same row): what goes between the lines. **Blank joins them directly**, and escapes like `\t` work
+- Example: set it to `, ` to turn a column into `A, B, C`; set it to `\t` for a tab-separated string you can paste straight into one Excel row
+
+### Affix
 
 - **Prefix** input: prepended to every line (empty by default)
 - **Suffix** input: appended to every line (defaults to `,100`, edit freely)
@@ -125,9 +133,9 @@ Four buttons, applied line by line across the whole text:
 
 ## LINKS panel (side rail)
 
-- **Common Link Replace**: replace every `https://huggingface.co` with `https://modelscope.cn/models` — useful for switching HuggingFace links to a China-accessible mirror
+- **HuggingFace → ModelScope**: swaps the `https://huggingface.co` prefix for `https://modelscope.cn/models` — useful where HuggingFace is hard to reach. It **does not check that the target exists**, so `datasets`, `spaces`, and other non-model paths turn into dead links; it also drops blank lines and copies the result automatically
 - **Weibo Link Convert**: batch-convert mobile Weibo (`m.weibo.cn`) links into PC `weibo.com` links plus the author's profile URL. Output is grouped into PC links / author profiles / unresolved; links carrying a uid resolve locally, detail pages need a network lookup for uid/bid, and each failure is annotated with its reason (no uid in link, uid/bid not found on the page, request failed)
-- **Custom Operation**: extract all URLs via the "URL (loose)" preset + reverse order + join with commas (handy for reverse-lookup URL lists)
+- **Extract links, reversed**: pull every link out, reverse their order, join them with commas on one line, and copy it automatically (handy for reverse-lookup URL lists). If the Delete row's keyword box has content, matching lines are **removed first**
 
 ## Result pane
 
@@ -136,7 +144,7 @@ When something has been produced, the result pane surfaces:
 - **Copy**: one-click clipboard copy
 - **Export**: download as `text-processed.txt`
 - **Format**: clean up extra blank lines in the result
-- **Result → Source**: pipe the result back into the input for the next step (great for multi-stage pipelines)
+- **Result ➔ Source**: pipe the result back into the input for the next step (great for multi-stage pipelines)
 
 ## Tips
 
@@ -149,7 +157,7 @@ When something has been produced, the result pane surfaces:
 ### Power moves
 
 - Keep **Smart Trim** on for almost every workflow
-- Chain multi-step pipelines via "Result → Source"
+- Chain multi-step pipelines via "Result ➔ Source"
 - When regex stumps you, describe the problem + sample input + expected output to ChatGPT/Claude
 
 Runs entirely in your browser — **no data is uploaded** — safe for sensitive material.

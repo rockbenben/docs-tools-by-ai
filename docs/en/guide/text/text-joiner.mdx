@@ -102,12 +102,29 @@ Configurations you've tuned can be saved and reused:
 - **Save as / Update current / Delete**: manage several named configurations
 - **Export / Import config**: a JSON file containing all templates plus the current settings, for moving between machines or sharing with teammates
 
-## Common patterns
+## Recipes
 
-- **Two columns into CSV**: names in one, values in the other → CSV preset
-- **URL list into Markdown**: titles in one, links in the other → Markdown link preset
-- **ID list into SQL**: one column of IDs → SQL IN preset, paste straight into a query
-- **Spreadsheet data into a database**: copy multiple columns from Excel → auto-split → SQL VALUES preset → complete INSERT
-- **Single-column batch formatting**: set the column count to 1 with a template like `{1} — done`
+The table below assumes column 1 = `Alice / Bob` and column 2 = `12 / 15`, and lists all four settings for each goal.
+
+| Goal                  | Line template    | Line separator | Global prefix                          | Global suffix | Output                                                   |
+| --------------------- | ---------------- | -------------- | -------------------------------------- | ------------- | -------------------------------------------------------- |
+| **CSV rows**          | `{1},{2}`        | `\n`           | —                                      | —             | `Alice,12` ⏎ `Bob,15`                                    |
+| **Markdown list**     | `- {1} ({2})`    | `\n`           | —                                      | —             | `- Alice (12)` ⏎ `- Bob (15)`                            |
+| **Markdown links**    | `- [{1}]({2})`   | `\n`           | —                                      | —             | `- [Alice](12)` ⏎ `- [Bob](15)`                          |
+| **SQL `IN (...)`**    | `'{1}'`          | `, `           | `IN (`                                 | `)`           | `IN ('Alice', 'Bob')`                                    |
+| **SQL `INSERT`**      | `('{1}', {2})`   | `,\n`          | `INSERT INTO t (name, score) VALUES\n` | `;`           | `INSERT INTO t (name, score) VALUES` ⏎ `('Alice', 12),` ⏎ `('Bob', 15);` |
+| **JSON array**        | `{"n": "{1}", "v": {2}}` | `,\n`  | `[\n`                                  | `\n]`         | `[` ⏎ `{"n": "Alice", "v": 12},` ⏎ `{"n": "Bob", "v": 15}` ⏎ `]` |
+| **Quote a single column** | `"{1}"`      | `,`            | —                                      | —             | `"Alice","Bob"`                                          |
+| **Batch shell commands** | `mv {1} {2}`  | `\n`           | —                                      | —             | `mv Alice 12` ⏎ `mv Bob 15`                              |
+
+Most of these have a one-click preset (CSV / TSV / Markdown list / Markdown link / JSON array / SQL IN / SQL VALUES / Quoted CSV) that fills all four settings for you — tweak from there.
+
+### Typical workflows
+
+- **Spreadsheet data into a database**: copy multiple columns from Excel → paste into any column box (auto-split) → click the **SQL VALUES** preset → copy out a complete `INSERT`
+- **Build a query filter from a list of IDs**: paste the IDs into column 1 → click the **SQL IN** preset → paste straight into `WHERE id IN (...)`
+- **Bulk link list for a doc**: titles in one column, URLs in the other → **Markdown link** preset → paste into your Markdown
+- **Single-column batch formatting**: set the column count to 1 with a template like `{1} — done`, turning it into a per-line affixer
+- **The inverse of Text Splitter**: use [Text Splitter](./text-splitter.mdx) to break a long text on separators → process it → join it back by template here
 
 Everything runs locally in your browser — **nothing is uploaded**.

@@ -16,16 +16,16 @@ howto:
     - name: Confirm the detected format
       text: The tool infers plain text / CSV / TSV / INI from the content and file extension — switch manually if it guessed wrong.
     - name: Toggle the ignore options you need
-      text: Ignore leading/trailing whitespace, ignore case, and character-level diff can be combined freely.
+      text: Ignore surrounding whitespace, ignore case, and character-level diff can be combined freely.
     - name: Step through and export
       text: Use Previous / Next to jump between diff blocks, then export a unified diff (.patch) if you need to share it.
 faq:
   - q: Which file formats can it compare?
     a: Plain text, CSV, TSV, INI, and JSON. The format is inferred from the file extension and content, and can be switched manually. CSV/TSV mode locates differences by column, INI mode compares key/value pairs, so structured changes are obvious at a glance. JSON is currently compared line by line.
   - q: What if the two texts differ so much the comparison times out?
-    a: A 3-second timeout guard stops the run and shows a notice instead of freezing the page. If you really need the result, click "Compare anyway" to force a full comparison (which may be slow). You can also switch to "Differences only" or reduce the context lines to focus the view.
+    a: A 3-second timeout guard stops the run and shows a notice instead of freezing the page. If you really need the result, click "Compare anyway" to force a full comparison (which may be slow). You can also switch to "Only differences" or reduce the context lines to focus the view.
   - q: How do I ignore whitespace or case differences?
-    a: Tick "Ignore leading/trailing whitespace" to skip differences caused by edge spacing, and "Ignore case" to skip letter-case differences. Both can be on at once — handy for comparing code or config files that were reformatted.
+    a: Tick "Ignore surrounding whitespace" to skip differences caused by edge spacing, and "Ignore case" to skip letter-case differences. Both can be on at once — handy for comparing code or config files that were reformatted.
   - q: Can I export the comparison?
     a: Yes. "Export diff" produces a standard unified diff (.patch) that works with git apply, code review tools, and version control systems.
   - q: Which encodings are supported?
@@ -73,11 +73,11 @@ Detection combines file extension and content, and can always be overridden:
 
 ## Comparison options
 
-- **Ignore leading/trailing whitespace**: skip differences caused by edge spacing
+- **Ignore surrounding whitespace**: skip differences caused by edge spacing
 - **Ignore case**: skip letter-case differences
 - **Character-level diff**: within a modified row, mark exactly which characters changed (off by default)
-- **Differences only**: fold away identical content, keeping just the diff blocks
-- **Context lines**: how many lines to keep around each difference when folding — "differences only" or ±N lines
+- **Only differences**: fold away identical content, keeping just the diff blocks
+- **Context lines**: how many lines to keep around each difference when folding — "Only differences" or ±N lines
 
 ## Views and navigation
 
@@ -105,6 +105,6 @@ Uploaded files are auto-detected as UTF-8, GBK, Big5, UTF-16LE, and other common
 - **Verify a config change**: drop in two `.ini` / `.env` files and read off which key's value moved
 - **Compare tabular data**: two exported CSVs, located down to the exact field
 - **Self-review before a PR**: compare local changes against the deployed version and export a `.patch`
-- **Proofread a translation**: enable "ignore leading/trailing whitespace" to see only substantive edits between revisions
+- **Proofread a translation**: enable "Ignore surrounding whitespace" to see only substantive edits between revisions
 
 Everything runs locally in your browser — **nothing is uploaded** — safe for sensitive configs and private code.

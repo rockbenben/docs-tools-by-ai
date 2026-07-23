@@ -4,7 +4,7 @@ head:
   - - meta
     - property: og:title
       content: Novel Processor - Batch Repair Web-Novel Layout, Trad/Simp Conversion, Chapter Reorder | Tools By AI
-description: Web novel layout messy and full of ads? One-click fix for line breaks, chapter titles, Trad/Simp conversion, ad removal — plus chapter reorder and protected dictionary. Batch processing, runs locally in your browser.
+description: Web novel layout messy and full of ads? One-click fix for line breaks, chapter titles, Trad/Simp conversion, ad removal — plus chapter reorder and custom replacement rules. Batch processing, runs locally in your browser.
 image: https://docs.newzone.top/img/novel-processor-en.webp
 howto:
   name: How to clean up web novels with Novel Processor
@@ -20,10 +20,10 @@ faq:
     a: Smart line break (re-merge broken lines), paragraph indent, chapter title formatting, full-width → half-width, Trad/Simp conversion, ad/downloader watermark cleanup, line-end digit stripping, adjacent duplicate-line removal. Every step is an independent toggle inside the three collapsible config sections on the right.
   - q: What's the difference between "Chapter Split" and "Chapter Reorder" buttons?
     a: '"Chapter Split" only breaks inline-written chapter titles onto their own lines — a lightweight pre-processing pass that leaves everything else untouched. "Chapter Reorder" sorts the entire novel by the numeric chapter index extracted from each title (第十二章, Chapter 5, etc.), useful for downloads with scrambled chapter order.'
-  - q: How do "Filter Words" and the "Filter Threshold" work together?
-    a: Filter Words accepts comma-separated keywords (e.g. `channel,downloader,group`) — every line containing any of them is removed. To avoid wiping legitimate text, set Filter Threshold to N → lines longer than N characters are exempt (kept even if they match a keyword). 0 disables the exemption. This lets you clean short watermark lines while preserving long body paragraphs.
-  - q: What's the "Protected Dictionary" and is it related to the Chinese Converter?
-    a: Yes — both tools share the same protected dictionary (same localStorage key). It defines terms that should NOT be converted during Trad/Simp transformation. It only applies when Trad/Simp conversion is actually enabled in Advanced Settings (set to t2s or s2t). When set to "None", the panel shows a "rules inactive" hint.
+  - q: How do "Content Filter" and "Protect long lines" work together?
+    a: Content Filter accepts comma-separated keywords (e.g. `channel,downloader,group`) — every line containing any of them is removed. To avoid wiping legitimate text, set Filter Threshold to N → lines longer than N characters are exempt (kept even if they match a keyword). 0 disables the exemption. This lets you clean short watermark lines while preserving long body paragraphs.
+  - q: What's the "Custom Replacement Rules" and is it related to the Chinese Converter?
+    a: Yes — both tools share the same custom replacement rules (same localStorage key). It defines terms that should NOT be converted during Trad/Simp transformation. It only applies when Trad/Simp conversion is actually enabled in Advanced Settings (set to t2s or s2t). When set to "None", the panel shows a "rules inactive" hint.
   - q: Is anything uploaded to a server?
     a: No. The entire pipeline runs in your browser — files never leave your machine.
 appUrl: https://tools.newzone.top/en/novel-processor
@@ -51,7 +51,7 @@ Typical pain points with downloaded novels:
 Two columns:
 
 - **Left**: file upload + text input + three primary action buttons + result card
-- **Right**: three-section configuration Collapse + Protected Dictionary panel
+- **Right**: three-section configuration Collapse + Custom Replacement Rules panel
 
 ## Left column: input & actions
 
@@ -87,9 +87,9 @@ When done, the result is auto-copied to clipboard and shown in the result card.
 - **Trim Spaces** (on): strip leading/trailing whitespace per line
 - **Remove Adjacent Duplicates** (off): drop only **consecutive** duplicate lines (not full-text dedup — preserves common short dialogue like "嗯" / "好")
 - **Special Start Text**: enter the novel title or a recurring header word — matching lines are forced into their own paragraph (prevents incorrect merging)
-- **Filter Words** + **Filter Threshold**:
-  - Filter Words: comma-separated keywords (`channel,downloader`) — every matching line gets dropped
-  - Filter Threshold: lines longer than N chars are exempt (kept even if they match) — protects body paragraphs. 0 disables the exemption.
+- **Content Filter** + **Protect long lines**:
+  - Content Filter: comma-separated keywords (`channel,downloader`) — every matching line gets dropped
+  - Protect long lines: lines longer than N characters are kept even if they match — protects body paragraphs. 0 disables the exemption.
 
 ### 3. Advanced Settings (collapsed by default)
 
@@ -98,9 +98,9 @@ When done, the result is auto-copied to clipboard and shown in the result card.
   - **Trad → Simp** → uses `tw → cn`
   - **Simp → Trad** → uses `cn → tw`
 - **Single-File Mode**: one file at a time
-- **Auto-Export** (visible only in single-file mode): skip preview and download directly
+- **Auto Export** (visible only in single-file mode): skip preview and download directly
 
-## Protected Dictionary (shared with Chinese Converter)
+## Custom Replacement Rules (shared with Chinese Converter)
 
 Bottom-right of the page:
 
@@ -133,20 +133,20 @@ After processing:
 - **Copy / Export / Edit in place**: same as Chinese Converter
 - **Result → Source**: pipe the result back into the input for further processing (rare)
 
-With "Auto-Export" enabled, the preview is skipped and the file downloads immediately.
+With "Auto Export" enabled, the preview is skipped and the file downloads immediately.
 
 ## Tips
 
 ### First-time use
 
 - Test on a small slice (1-2 chapters) first; tune the config before processing the full book
-- Start filter words with 1-2 obvious watermark terms; expand the list after verifying
+- Start the Content Filter with 1-2 obvious watermark terms; expand the list after verifying
 
 ### Power moves
 
-- **Filter Threshold is the key trick**: set it to ~50 (or the average paragraph length) to surgically delete short watermark lines while keeping long body paragraphs
+- **Protect long lines is the key trick**: set it to ~50 (or the average paragraph length) to surgically delete short watermark lines while keeping long body paragraphs
 - **Run Chapter Reorder standalone**: when you only want to fix chapter order, click Chapter Reorder directly — don't run the full Start Process pipeline
-- **Pre-edit Protected Dictionary**: for novels with rare Trad/Simp-mixed proper names, add them to the dictionary first, then run Start Process
+- **Pre-edit Custom Replacement Rules**: for novels with rare Trad/Simp-mixed proper names, add them to the dictionary first, then run Start Process
 
 ### When it shines
 
@@ -157,6 +157,6 @@ With "Auto-Export" enabled, the preview is skipped and the file downloads immedi
 
 ## Technical note
 
-For deeply-obfuscated watermarks (scrambled-character promotional content), combine **Filter Words** with **Filter Threshold** as a first pass. Extremely obfuscated patterns are best handled by the [Text Toolbox](./text-toolbox.mdx) with a custom regex, then fed back here for layout.
+For deeply-obfuscated watermarks (scrambled-character promotional content), combine **Content Filter** with **Protect long lines** as a first pass. Extremely obfuscated patterns are best handled by the [Text Toolbox](./text-toolbox.mdx) with a custom regex, then fed back here for layout.
 
 Runs entirely in your browser — **no data is uploaded**.
