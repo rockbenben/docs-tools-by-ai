@@ -45,7 +45,7 @@ Notes:
 
 - **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
 - **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
-- **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / Ollama / llama.cpp — see [Local Model Setup](#local-model-setup).
+- **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / llama.cpp / koboldcpp (**not Ollama** — see below) — see [Local Model Setup](#local-model-setup).
 - **MiLMMT-46** is Xiaomi's open-source translation model (also Gemma3-derived) — fewer languages, but it covers Cantonese. Also runs locally; see [MiLMMT](#milmmt).
 - **GTX API / Edge API** are both zero-config free machine translation that back each other up — if one can't connect, switch to the other. See [Free machine translation essentials](#free-machine-translation-essentials) below.
 
@@ -179,7 +179,7 @@ DeepL and Nvidia NIM route through a separate built-in proxy by default. If you 
 
 ## Local Model Setup
 
-Want to run models locally for privacy? The tool works with any OpenAI-compatible local server. For decent translation quality with a generic LLM, use `qwen3-14b` or larger (32B-class works even better); on limited VRAM, switch to the translation-specialized [TranslateGemma](#translategemma) — solid quality from 4B up.
+Want to run models locally for privacy? The tool works with any OpenAI-compatible local server. For decent translation quality with a generic LLM, use `qwen3-14b` or larger (32B-class works even better); on limited VRAM, switch to the translation-specialized [TranslateGemma](#translategemma) or [MiLMMT](#milmmt) — solid quality from 4B up (run those two on LM Studio / llama.cpp / koboldcpp, not Ollama — see below).
 
 > In mainland China, download models from [ModelScope](https://www.modelscope.cn/models) — far faster than direct Hugging Face access or LM Studio's built-in downloader, and the official TranslateGemma repos are mirrored there.
 
@@ -198,7 +198,19 @@ Lower "Call Parameters → Concurrent Lines" to **2-4** (or match your server's 
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 | koboldcpp  | `http://127.0.0.1:5001/v1/chat/completions`   |
 
-These four appear as quick-pick chips next to the URL field, **identical across Custom, TranslateGemma and MiLMMT**. Selecting one also surfaces that runtime's official docs link below the field — provider-level docs can't tell you how to get the server itself running.
+These appear as quick-pick chips next to the URL field. Selecting one also surfaces that runtime's official docs link below the field — provider-level docs can't tell you how to get the server itself running.
+
+:::danger Do not use Ollama for TranslateGemma / MiLMMT
+These two pre-render their prompt and POST it to `/v1/completions`; the whole design rests on the server applying no template of its own. **Ollama still applies the Modelfile template on that endpoint** — three lines of its own source (checked against `ollama/main`, 2026-08-22):
+
+1. `api/types.go`: `// Raw set to true means that no formatting will be applied to the prompt.`
+2. `openai/openai.go`: `FromCompleteRequest` builds `api.GenerateRequest` **without setting `Raw`** → defaults to `false`
+3. `server/routes.go`: `if !req.Raw { tmpl := m.Template … }`
+
+So the carefully pre-rendered prompt gets wrapped a second time — in whatever template the imported GGUF happened to carry, which the client cannot control. Quality degrades for no visible reason and nothing errors. That is why Ollama is **absent** from these two services' chips; use LM Studio / llama.cpp / koboldcpp instead.
+
+(Custom (OpenAI-compatible) uses `/v1/chat/completions`, where applying the template is exactly right — unaffected.)
+:::
 
 > **koboldcpp** is a single-file llama.cpp wrapper (no install, one .exe, built-in web UI). On its default port 5001 it serves both the KoboldAI API and an OpenAI-compatible one.
 
@@ -216,7 +228,7 @@ These four appear as quick-pick chips next to the URL field, **identical across 
 Google's translation-specialized Gemma model, trained specifically for translation quality. Quick notes:
 
 - **Pick "TranslateGemma" directly from the service list** — don't go through "Custom (OpenAI-compatible)" with `translategemma-4b-it` as the model name. The two take entirely different code paths: the dedicated TranslateGemma service makes line-by-line calls tailored to the Gemma translation model's I/O format, while Custom uses the generic LLM pipeline with batching and context markers — which causes dropped lines and slower runs on small (under 14B) models.
-- The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp
+- The default URL points to LM Studio on port 1234; one click switches to llama.cpp / koboldcpp. **Do not use Ollama** — see the warning above
 - **API key is optional**: leave it empty for a plain local server; if your deployment requires auth (LM Studio's "require API key", vLLM's `--api-key`, or a reverse proxy in front), fill it in and requests carry an `Authorization: Bearer` header
 - Recommended models: **for an ordinary home PC, start with `translategemma-4b-it`** — compact, fast, and clean output. `translategemma-12b-it` / `27b-it` give higher quality but demand far more VRAM and compute
 - **The model name can be left empty**: an empty field sends no model, so the server uses whatever it currently has loaded. Model ids are decided by the runtime (LM Studio, Ollama and llama.cpp each report their own, quantization suffixes included) — on a 404 "model not found", clearing the field is usually faster than guessing the name
@@ -230,7 +242,7 @@ Google's translation-specialized Gemma model, trained specifically for translati
 Xiaomi's open-source translation model [MiLMMT-46](https://huggingface.co/xiaomi-research/MiLMMT-46-12B-v1.0) (also Gemma3-derived; 1B / 4B / 12B, with community GGUF quants). Usage mirrors TranslateGemma, with one trap that's specific to it:
 
 - **Pick "MiLMMT" directly from the service list** — this matters even more here than for TranslateGemma. Xiaomi state on the model's discussion page that post-training **largely stripped away its instruction-following**: tags and instructions are treated as noise, not commands. Going through "Custom (OpenAI-compatible)" splices your system prompt straight into the model's input and wrecks the output. The dedicated MiLMMT service calls it line by line in the exact format from the official model card, with no prompt mixed in
-- The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp / koboldcpp
+- The default URL points to LM Studio on port 1234; one click switches to llama.cpp / koboldcpp. **Do not use Ollama** — see the warning above
 - **API key is optional**: leave it empty for a plain local server; fill it in if your deployment requires auth
 - Recommended models: the default `MiLMMT-46-4B-v1.0` suits a consumer GPU; 1B runs on CPU alone, 12B gives higher quality
 - **The model name must match what your runtime has loaded — when in doubt, leave it empty**: an empty field sends no model, so the server uses whatever is currently loaded. Faster than guessing the name after a 404

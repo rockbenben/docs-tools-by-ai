@@ -90,10 +90,14 @@ faq:
       ad blockers. Fix: temporarily disable ad/privacy extensions and refresh; enable CORS on
       the local service (set OLLAMA_ORIGINS=* for Ollama, check "Enable CORS" in LM Studio);
       if it still fails, check port conflicts and firewall restrictions.
-  - q: Running translategemma on Ollama is slow and dropping lines — what's wrong?
+  - q: Running translategemma on Ollama is slow, dropping lines, or translating badly — what's wrong?
     a: >-
-      Most likely it's configured as a regular LLM — "Custom (OpenAI-compatible)" with
-      translategemma as the model name. That path uses the generic LLM pipeline with batching
+      Two causes, both worth fixing. (1) Don't run TranslateGemma / MiLMMT on Ollama: they
+      pre-render the prompt and POST to /v1/completions, but Ollama still applies the Modelfile
+      template there (verifiable in its source), wrapping the prompt a second time — quality
+      degrades for no visible reason and nothing errors. Use LM Studio / llama.cpp / koboldcpp.
+      (2) Don't configure it as a regular LLM ("Custom (OpenAI-compatible)" with
+      translategemma as the model name): that path uses the generic LLM pipeline with batching
       and context markers, and small (under 14B) models struggle to preserve the prompt structure,
       causing dropped lines and slower runs. Fix: pick the dedicated "TranslateGemma" service
       from the dropdown — it makes line-by-line calls tailored to the Gemma translation model's
@@ -261,11 +265,17 @@ When using local models like Ollama or LM Studio, common causes for failure are 
 2.  Enable CORS for the local service according to the [Translation API Guide](./api.mdx#solving-cors-issues) (e.g., set `OLLAMA_ORIGINS=*`, check "Enable CORS" in LM Studio).
 3.  If it still fails, check for port conflicts and view the return status code in the **Network** panel. Company/Campus networks also need to ensure the firewall isn't blocking local ports.
 
-## Running translategemma on Ollama is slow and dropping lines — what's wrong?
+## Running translategemma on Ollama is slow, dropping lines, or translating badly — what's wrong?
 
-Most likely you've configured `translategemma` as a regular LLM: picked "Custom (OpenAI-compatible)" and filled in `translategemma-4b-it` (or similar) as the model name. That path uses the generic LLM pipeline with batching and context markers, and small (under 14B) models struggle to preserve the prompt's structure — you get dropped lines and slower runs.
+Two independent causes, and people usually hit both.
 
-✅ Fix: pick the dedicated "**TranslateGemma**" service from the dropdown. It uses a purpose-built line-by-line path that matches the Gemma translation model's I/O format and is the most reliable option for local small models. See [Translation API Guide → TranslateGemma](./api.mdx#translategemma).
+**① Drop Ollama.** TranslateGemma and MiLMMT pre-render their prompt and POST it to `/v1/completions`, which only works if the server applies no template of its own — and **Ollama still applies the Modelfile template on that endpoint** (`FromCompleteRequest` never sets `Raw`; `routes.go` does `if !req.Raw { tmpl := m.Template … }`). Your prompt gets wrapped a second time, quality degrades for no visible reason, **and nothing errors**. Use **LM Studio / llama.cpp / koboldcpp** instead — that is exactly why Ollama is missing from these two services' endpoint chips. See [Translation API Guide → Local Model Setup](./api.mdx#local-model-setup).
+
+**② Don't configure it as a regular LLM.** Picking "Custom (OpenAI-compatible)" and filling in `translategemma-4b-it` routes you through the generic LLM pipeline with batching and context markers; small (under 14B) models struggle to preserve that structure — dropped lines and slower runs.
+
+✅ Fix: pick the dedicated "**TranslateGemma**" or "**MiLMMT**" service from the dropdown. They use a purpose-built line-by-line path matching the translation model's I/O format, the most reliable option for local small models.
+
+> Related: frequent **timeouts** on these two are usually not the model but concurrency exceeding your server's parallel slots — see [Local Model Setup](./api.mdx#local-model-setup).
 
 ## A local thinking model is very slow or never produces output?
 

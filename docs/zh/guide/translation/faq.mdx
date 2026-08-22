@@ -68,12 +68,13 @@ faq:
       使用 Ollama、LM Studio 等本地模型失败，最常见原因是浏览器 CORS 或广告拦截。解决方法：先临时关闭
       广告/隐私扩展并刷新；再为本地服务启用 CORS（Ollama 设置 OLLAMA_ORIGINS=*，LM Studio 勾选
       Enable CORS）；仍失败则检查端口占用与防火墙拦截。
-  - q: 用 Ollama 跑 translategemma 模型，速度很慢/漏译怎么办？
+  - q: 用 Ollama 跑 translategemma 模型，速度很慢/漏译/质量差怎么办？
     a: >-
-      多半是把它当成普通 LLM 配置了——选了「Custom (OpenAI-compatible)」+ 填 translategemma 模型名。
-      这条路径会走带批次/上下文标记的通用 LLM 流程，14B 以下的小模型很难稳定还原结构，容易漏行、跑得也慢。
-      正确做法：在服务下拉里直接选「TranslateGemma」，它是逐行调用，匹配 Gemma 翻译模型的输入输出，
-      对本地小模型最稳定。
+      两个原因，都要改。① 别用 Ollama 跑 TranslateGemma / MiLMMT：这两个服务预渲染提示词后打
+      /v1/completions，而 Ollama 在这个端点上仍然会套 Modelfile 模板（源码可证），提示词被再包一层，
+      译文质量莫名其妙地差且不报错——改用 LM Studio / llama.cpp / koboldcpp。② 别把它当普通 LLM 配置
+      （选 Custom + 填 translategemma 模型名）：那条路径走带批次/上下文标记的通用 LLM 流程，14B 以下
+      的小模型很难稳定还原结构，容易漏行、也更慢。正确做法是在服务下拉里直接选「TranslateGemma」。
   - q: 本地思考模型翻译很慢、半天不出结果怎么办？
     a: >-
       Qwen3 等思考型模型默认先输出长段思考再给译文，算力有限的本地设备上每行要多等几十秒。处理：
@@ -230,11 +231,17 @@ GTX 从浏览器直连 Google 的翻译网关。看到「翻译服务暂时连�
 2. 根据 [翻译接口指南](./api.mdx#解决-cors-跨域) 启用本地服务的 CORS（如设置 `OLLAMA_ORIGINS=*`、在 LM Studio 勾选 Enable CORS）；
 3. 若仍失败，检查端口占用，并在 Network 面板查看返回状态码。公司/校园网络还需确认防火墙未拦截本地端口。
 
-## 用 Ollama 跑 translategemma 模型，速度很慢/漏译怎么办？
+## 用 Ollama 跑 translategemma 模型，速度很慢/漏译/质量差怎么办？
 
-多半是把 `translategemma` 当成普通 LLM 来配置了：选了「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 之类的模型名。这条路径走的是带批次/上下文标记的 LLM 通用流程，14B 以下的小模型很难稳定还原 prompt 里的结构，容易漏行、跑得也慢。
+两个独立的原因，往往同时中招。
 
-✅ 正确做法：在服务下拉里直接选「**TranslateGemma**」，它走的是专门的逐行调用，匹配 Gemma 翻译模型的输入输出格式，对本地小模型最稳定。详见 [翻译接口指南 → TranslateGemma](./api.mdx#translategemma)。
+**① 换掉 Ollama。** TranslateGemma 与 MiLMMT 都是把提示词**预渲染**后打 `/v1/completions`，前提是服务端不再套模板；而 **Ollama 在这个端点上仍然会套 Modelfile 模板**（`FromCompleteRequest` 不设 `Raw`，`routes.go` 里 `if !req.Raw` 就套模板），提示词被再包一层，译文质量莫名其妙地差**而且不报错**。改用 **LM Studio / llama.cpp / koboldcpp**——这也是为什么这两个服务的快捷地址里没有 Ollama。详见 [翻译接口指南 → 本地模型接入](./api.mdx#本地模型接入)。
+
+**② 别把它当普通 LLM 配置。** 选了「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 之类的模型名，走的是带批次/上下文标记的 LLM 通用流程，14B 以下的小模型很难稳定还原 prompt 里的结构，容易漏行、跑得也慢。
+
+✅ 正确做法：在服务下拉里直接选「**TranslateGemma**」或「**MiLMMT**」，它们走专门的逐行调用，匹配翻译模型的输入输出格式，对本地小模型最稳定。
+
+> 顺带：这两个服务频繁**超时**通常不是模型的问题，而是并发数超过了本地服务器的并行槽位——见 [本地模型接入](./api.mdx#本地模型接入) 里的说明。
 
 ## 本地思考模型翻译很慢、半天不出结果怎么办？
 

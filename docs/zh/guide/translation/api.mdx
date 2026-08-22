@@ -45,7 +45,7 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 - **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。
 - **Qwen-MT** 是阿里云专为翻译训练的模型，详见下文 [Qwen-MT 使用要点](#qwen-mt-使用要点)。
-- **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / Ollama / llama.cpp 跑起来，详见下文 [本地模型接入](#本地模型接入)。
+- **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / llama.cpp / koboldcpp 跑起来（**不要用 Ollama**，原因见下文），详见下文 [本地模型接入](#本地模型接入)。
 - **MiLMMT-46** 是小米开源的翻译专用模型（同样 Gemma3 派生），语种更少但覆盖粤语，同样要本地跑，详见下文 [MiLMMT](#milmmt)。
 - **GTX API / Edge API** 都是零配置的免费机器翻译，互为备胎——一个连不上就换另一个；细节见下文 [免费机器翻译使用要点](#免费机器翻译使用要点)。
 
@@ -179,7 +179,7 @@ DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了�
 
 ## 本地模型接入
 
-希望自己跑模型保护隐私？工具支持任何兼容 OpenAI 协议的本地服务。为了翻译质量，通用 LLM 建议 `qwen3-14b` 及以上参数规模（32B 级更好）；显存有限时可改用翻译专用的 [TranslateGemma](#translategemma)，4B 起就有不错的翻译质量。
+希望自己跑模型保护隐私？工具支持任何兼容 OpenAI 协议的本地服务。为了翻译质量，通用 LLM 建议 `qwen3-14b` 及以上参数规模（32B 级更好）；显存有限时可改用翻译专用的 [TranslateGemma](#translategemma) 或 [MiLMMT](#milmmt)，4B 起就有不错的翻译质量（这两个请用 LM Studio / llama.cpp / koboldcpp 跑，别用 Ollama——原因见下）。
 
 > 国内用户下载模型推荐 [魔搭 ModelScope](https://www.modelscope.cn/models)，比 Hugging Face 直连 / LM Studio 内置源快得多，TranslateGemma 官方仓库也有同步。
 
@@ -198,7 +198,19 @@ DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了�
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 | koboldcpp  | `http://127.0.0.1:5001/v1/chat/completions`   |
 
-URL 输入框旁会列出这四个地址作为快捷选项，**Custom、TranslateGemma、MiLMMT 三处完全一致**；点中哪个，下方就出现那个运行时的官方文档链接（先把服务跑起来、把模型名弄对，这一步的问题官方文档才答得了）。
+URL 输入框旁会列出这些地址作为快捷选项；点中哪个，下方就出现那个运行时的官方文档链接（先把服务跑起来、把模型名弄对，这一步的问题官方文档才答得了）。
+
+:::danger TranslateGemma / MiLMMT 请勿使用 Ollama
+这两个服务把提示词**预渲染**后打 `/v1/completions`，整条设计的前提是「服务端不再套任何模板」。**Ollama 在这个端点上仍然会套 Modelfile 模板**——源码三行为证（2026-08-22 核对 `ollama/main`）：
+
+1. `api/types.go`：`// Raw set to true means that no formatting will be applied to the prompt.`
+2. `openai/openai.go`：`FromCompleteRequest` 构造 `api.GenerateRequest` 时**没有设 `Raw`** → 默认 `false`
+3. `server/routes.go`：`if !req.Raw { tmpl := m.Template … }`
+
+结果是预渲染好的提示词被**再包一层**（包成什么取决于导入时那个 GGUF 带的模板，客户端完全控制不了），译文质量会莫名其妙地差，而且不报错。因此这两个服务的快捷选项里**没有 Ollama**——请用 LM Studio / llama.cpp / koboldcpp。
+
+（Custom (OpenAI-compatible) 走的是 `/v1/chat/completions`，Ollama 在那里套模板正是应该的，不受影响。）
+:::
 
 > **koboldcpp** 是单文件 exe 的 llama.cpp 封装（不用安装、双击就跑、自带网页界面），默认 5001 端口同时提供 KoboldAI 与 OpenAI 两套接口。
 
@@ -216,7 +228,7 @@ URL 输入框旁会列出这四个地址作为快捷选项，**Custom、Translat
 Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练。使用要点：
 
 - **请在服务列表里直接选「TranslateGemma」**——不要走「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 模型名。两者是完全不同的代码路径：独立的 TranslateGemma 服务走逐行调用，专门匹配 Gemma 翻译模型的输入输出格式；Custom 走的是带批次/上下文标记的 LLM 通用路径，对 14B 以下的小模型容易漏行、速度也更慢。
-- 默认地址指向 LM Studio 1234 端口，可一键切换到 Ollama / llama.cpp
+- 默认地址指向 LM Studio 1234 端口，可一键切换到 llama.cpp / koboldcpp。**不要用 Ollama**，原因见上方提示框
 - **API Key 可选**：本地裸跑无需填写；若服务端开了鉴权（LM Studio 的 "require API key"、vLLM 的 `--api-key`、或反向代理加的认证层），填上即可，请求会附带 `Authorization: Bearer` 头
 - 推荐模型：**普通家用电脑首选 `translategemma-4b-it`**——轻量快速、输出干净。`translategemma-12b-it` / `27b-it` 质量更高，但显存与算力要求也更高
 - **模型名可以留空**：留空就不发模型名，用你运行时当前加载的那个。模型 id 由运行时决定（LM Studio / Ollama / llama.cpp 各报各的，量化后缀也可能在里面），报 404「模型不存在」时，清空这个字段通常比猜名字快
@@ -230,7 +242,7 @@ Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练
 小米开源的翻译专用模型 [MiLMMT-46](https://huggingface.co/xiaomi-research/MiLMMT-46-12B-v1.0)（同为 Gemma3 派生，1B / 4B / 12B 三档，社区有 GGUF 量化）。与 TranslateGemma 用法几乎一致，但有一条它独有的坑：
 
 - **请在服务列表里直接选「MiLMMT」**——这一条比 TranslateGemma 更硬。小米在模型讨论区明确说明，后训练阶段模型的**指令跟随能力已被大幅剥离**，标签与指令会被当成正文噪声。走「Custom (OpenAI-compatible)」时系统提示词会被原样拼进输入，翻译质量直接崩坏；本工具的 MiLMMT 服务按官方模型卡的固定格式逐行调用，不掺任何提示词
-- 默认地址指向 LM Studio 1234 端口，可一键切到 Ollama / llama.cpp / koboldcpp
+- 默认地址指向 LM Studio 1234 端口，可一键切到 llama.cpp / koboldcpp。**不要用 Ollama**，原因见上方提示框
 - **API Key 可选**：本地裸跑无需填写；服务端开了鉴权时填上即可
 - 推荐模型：默认 `MiLMMT-46-4B-v1.0`（家用显卡够用），另有 1B（纯 CPU 可跑）与 12B（质量更高）
 - **模型名要与运行时里实际加载的一致，实在不确定就留空**：留空就不发模型名，用当前加载的那个。报 404「模型不存在」时这比猜名字快
