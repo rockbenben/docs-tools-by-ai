@@ -183,6 +183,12 @@ Want to run models locally for privacy? The tool works with any OpenAI-compatibl
 
 > In mainland China, download models from [ModelScope](https://www.modelscope.cn/models) — far faster than direct Hugging Face access or LM Studio's built-in downloader, and the official TranslateGemma repos are mirrored there.
 
+:::warning Timing out a lot? Fix concurrency first, not the model
+Local servers usually have **one parallel slot** (llama.cpp defaults to `--parallel 1`; LM Studio's Max Concurrent is single-digit), while this tool defaults to 10 concurrent lines. The surplus requests **queue on the server**, and each request's timeout clock starts the moment it is sent — on slow hardware the ones at the back of the queue expire before their turn ever comes.
+
+Lower "Call Parameters → Concurrent Lines" to **2-4** (or match your server's slot count) before raising "Advanced Settings → Timeout". Reducing concurrency rarely makes things slower: the server was computing them one at a time anyway.
+:::
+
 ### Default Endpoints
 
 | Tool       | Default endpoint                              |
