@@ -44,7 +44,7 @@ Pin fixed translations for names and domain terms so they stay consistent across
 3. **Violation retry**: if an LLM translation ignores a required term, the offending line is retried once with a stricter instruction, and the version with fewer violations wins
 4. **Post-hoc replacement net**: on every service, source words left untranslated in the output are replaced per the glossary (word boundaries for Latin terms, substring matching for CJK, longest term first) — so terms always land
 
-**Service support**: all LLM services + Qwen-MT. Plain MT APIs (GTX, Google, DeepL(X), Azure, TranslateGemma) have no in-model term channel, so the glossary card is hidden for them.
+**Service support**: all LLM services + Qwen-MT. Plain MT APIs (GTX, Google, DeepL(X), Azure, TranslateGemma, MiLMMT) have no in-model term channel, so the glossary card is hidden for them.
 
 **Matching**: case-insensitive (`AI` and `ai` both match). Glossary data lives in your browser's local storage and is never uploaded.
 
@@ -190,7 +190,7 @@ The max number of lines translated in parallel. **The default is already tuned p
 - Edge (Free): 100
 - Commercial MT (Google / Azure / DeepL): 20-100
 - Cloud LLMs (Claude / Gemini / OpenAI / Qwen, etc.): 20
-- Custom local LLM / TranslateGemma / DeepLX: 10
+- Custom local LLM / TranslateGemma / MiLMMT / DeepLX: 10
 
 </details>
 

@@ -44,7 +44,7 @@ description: 工具的核心特性介绍——多语言批量翻译、本地缓�
 3. **违规重试**：LLM 译文若没有采用指定译法，会自动用加强版指令对违规行单独重译一次，并保留违规更少的版本
 4. **译后兜底替换**：任何服务下，译文中残留的原文词都会按词条替换（拉丁词带词边界、CJK 子串匹配、长词优先），确保术语最终一定生效
 
-**支持范围**：所有 LLM 服务 + Qwen-MT。纯 MT 接口（GTX、Google、DeepL(X)、Azure、TranslateGemma）没有模型内术语通道，不显示术语表卡片。
+**支持范围**：所有 LLM 服务 + Qwen-MT。纯 MT 接口（GTX、Google、DeepL(X)、Azure、TranslateGemma、MiLMMT）没有模型内术语通道，不显示术语表卡片。
 
 **匹配规则**：匹配时不区分大小写（`AI` / `ai` 都命中）；术语表数据保存在浏览器本地，不会上传。
 
@@ -190,7 +190,7 @@ JSON Translate 仅支持单文件模式。
 - Edge (Free)：100
 - 商用 MT（Google / Azure / DeepL）：20-100
 - 云端 LLM（Claude / Gemini / OpenAI / Qwen 等）：20
-- Custom 本地 LLM / TranslateGemma / DeepLX：10
+- Custom 本地 LLM / TranslateGemma / MiLMMT / DeepLX：10
 
 </details>
 

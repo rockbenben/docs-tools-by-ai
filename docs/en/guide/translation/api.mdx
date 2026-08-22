@@ -37,6 +37,7 @@ For detailed comparisons and how to get API keys, keep reading ↓
 | Azure Translate  | ★★★★☆   | ★★★★★     | Widest language coverage (90+)    | 2M characters/month for the first year   |
 | Qwen-MT          | ★★★★★   | ★★★★★     | CN/EN translation, domain-tuned   | Pay-per-token, free tier for new users   |
 | TranslateGemma   | ★★★★☆   | ★★★★☆     | Local translation, privacy-first  | Free (self-hosted)                       |
+| MiLMMT-46        | ★★★★☆   | ★★★★☆     | Local translation, 46 languages incl. Cantonese | Free (self-hosted)     |
 | GTX API (Free)   | ★★★☆☆   | ★★★★☆     | General text, zero-config default | Shared service, auto-slows when throttled |
 | Edge API (Free)  | ★★★★☆   | ★★★★☆     | Free GTX backup, different route  | Shared service, auto-slows when throttled |
 
@@ -45,6 +46,7 @@ Notes:
 - **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
 - **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
 - **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / Ollama / llama.cpp — see [Local Model Setup](#local-model-setup).
+- **MiLMMT-46** is Xiaomi's open-source translation model (also Gemma3-derived) — fewer languages, but it covers Cantonese. Also runs locally; see [MiLMMT](#milmmt).
 - **GTX API / Edge API** are both zero-config free machine translation that back each other up — if one can't connect, switch to the other. See [Free machine translation essentials](#free-machine-translation-essentials) below.
 
 For more reliable service, apply for a commercial API key — see the [API application guide](https://ttime.timerecord.cn/service/translate/google.html).
@@ -93,7 +95,7 @@ Many providers run separate endpoints for Mainland China, International, and US 
 
 ### URL Auto-Completion
 
-Self-hosted and multi-region providers (Custom, LiteLLM, TranslateGemma, Qwen / Qwen-MT, Doubao, Nvidia) complete the URL to the full path the moment focus leaves the field; for every other provider, a custom URL is normalized automatically before each request is sent. Paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest — the classic "missing `/v1/chat/completions` → connection failure" mistake can't happen.
+Self-hosted and multi-region providers (Custom, LiteLLM, TranslateGemma, MiLMMT, Qwen / Qwen-MT, Doubao, Nvidia) complete the URL to the full path the moment focus leaves the field; for every other provider, a custom URL is normalized automatically before each request is sent. Paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest — the classic "missing `/v1/chat/completions` → connection failure" mistake can't happen.
 
 ## Free machine translation essentials
 
@@ -188,8 +190,9 @@ Want to run models locally for privacy? The tool works with any OpenAI-compatibl
 | LM Studio  | `http://127.0.0.1:1234/v1/chat/completions`   |
 | Ollama     | `http://127.0.0.1:11434/v1/chat/completions`  |
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
+| koboldcpp  | `http://127.0.0.1:5001/v1/chat/completions`   |
 
-These appear as quick-pick chips next to the URL field.
+These appear as quick-pick chips next to the URL field (koboldcpp is currently listed under MiLMMT only).
 
 ### LiteLLM Self-Hosted Gateway
 
@@ -212,6 +215,20 @@ Google's translation-specialized Gemma model, trained specifically for translati
 - **Prompt settings don't apply**: like Qwen-MT, it's a machine-translation service — the prompt is built into the call format; system/user prompts only affect LLM providers
 - **Source language must be explicit** — auto-detect isn't supported
 - **Limited language coverage**: only ~55 mainstream languages (Google's WMT24++ benchmark scope). About 68 low-resource languages — including Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr) — are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
+
+### MiLMMT
+
+Xiaomi's open-source translation model [MiLMMT-46](https://huggingface.co/xiaomi-research/MiLMMT-46-12B-v1.0) (also Gemma3-derived; 1B / 4B / 12B, with community GGUF quants). Usage mirrors TranslateGemma, with one trap that's specific to it:
+
+- **Pick "MiLMMT" directly from the service list** — this matters even more here than for TranslateGemma. Xiaomi state on the model's discussion page that post-training **largely stripped away its instruction-following**: tags and instructions are treated as noise, not commands. Going through "Custom (OpenAI-compatible)" splices your system prompt straight into the model's input and wrecks the output. The dedicated MiLMMT service calls it line by line in the exact format from the official model card, with no prompt mixed in
+- The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp / koboldcpp
+- **API key is optional**: leave it empty for a plain local server; fill it in if your deployment requires auth
+- Recommended models: the default `MiLMMT-46-4B-v1.0` suits a consumer GPU; 1B runs on CPU alone, 12B gives higher quality. **The model name must match what your runtime actually has loaded**
+- **Prompt settings, glossary and context translation all have no effect** — same reason as above: the model can't take instructions. Use an LLM provider or Qwen-MT when you need terminology control
+- **Source language must be explicit** — the prompt hard-codes the source language name; the model has no auto-detect mode
+- **46 languages**: **Cantonese (yue) is supported** (TranslateGemma is not), but **Ukrainian (uk), Serbian (sr) and the Baltic three are not**, and Indic coverage stops at Bengali / Hindi / Tamil / Urdu. Unsupported languages are blocked by the UI
+
+> Xiaomi say instruction-following and glossary support are planned for a future release. Until then, treat it as a pure MT engine.
 
 ### Solving CORS Issues
 
