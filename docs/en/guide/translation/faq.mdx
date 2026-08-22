@@ -47,9 +47,12 @@ faq:
       speed and quality.
   - q: Which model should I pick for local translation?
     a: >-
-      First choice is the translation-specialized TranslateGemma (from 4B up) — better quality
-      than same-size generic models with low VRAM needs; pick "TranslateGemma" directly in the
-      service list. For a generic LLM go 14B+ (Qwen3-14B / 32B, Gemma 3 27B); models under 8B
+      First choice is a translation-specialized model — TranslateGemma (from 4B) or Xiaomi's
+      MiLMMT (from 4B): better quality than same-size generic models with low VRAM needs; pick
+      either directly in the service list. They differ mainly in language coverage — MiLMMT
+      adds Cantonese, Kazakh, Lao and Burmese; TranslateGemma adds Ukrainian, Serbian, the
+      Baltic three and most Indic languages. For a generic LLM go 14B+ (Qwen3-14B / 32B,
+      Gemma 3 27B); models under 8B
       drop lines, scramble output, and can even crash on large batch jobs. In mainland China,
       download models from ModelScope. Local deployment is mainly for privacy — for
       non-sensitive content, free cloud APIs are better and easier.
@@ -194,7 +197,11 @@ If a particular model still does it frequently:
 
 In order of "good enough first":
 
-1. **Prefer the translation-specialized [TranslateGemma](./api.mdx#translategemma)** (from 4B up): trained specifically for translation, it beats same-size generic models with lower VRAM needs and faster runs. Pick **"TranslateGemma" directly in the service list**; it's a machine-translation service — prompts are built into the call format (system/user prompts don't apply), and the source language must be set explicitly
+1. **Prefer a translation-specialized model** (from 4B up): trained specifically for translation, they beat same-size generic models with lower VRAM needs and faster runs. Two options — pick either **directly in the service list** (not by typing a model name under Custom). Both are machine-translation services: prompts are built into the call format (system/user prompts don't apply), there is no glossary, and the source language must be set explicitly.
+   - [TranslateGemma](./api.mdx#translategemma) (Google, 53 languages): includes **Ukrainian, Serbian, the Baltic three** and most Indic languages (Marathi, Telugu, Kannada…)
+   - [MiLMMT](./api.mdx#milmmt) (Xiaomi, 47 languages): includes **Cantonese** plus Kazakh / Uzbek / Azerbaijani / Lao / Burmese / Khmer / Malay; **no Ukrainian or Serbian**
+
+   They share 39 languages. Any common pair (EN↔ZH/JA/KO/FR/DE/ES/RU) works on both — choose by the languages you actually need
 2. **Generic LLMs: 14B minimum** — Qwen3-14B / 32B, Gemma 3 27B, etc.; bigger is steadier. **Don't run large batch jobs on models under 8B** — they drop lines, scramble output, and long jobs can even crash the model
 3. **Download source**: in mainland China, [ModelScope](https://www.modelscope.cn/models) is far faster than direct Hugging Face / LM Studio's built-in downloader
 

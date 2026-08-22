@@ -144,7 +144,7 @@ To address issues in the market such as slow translation speeds, lack of batch p
 - **Subtitle Extraction**: One click extracts the original dialogue with timecodes and cue numbers stripped (auto-copied to clipboard) — for AI summarization, derivative works, or pairing with the translation to have an AI proofread/revise it.
 - **Side-by-side Review**: In single-file, translated-only export mode, after translation you can compare source and translation line by line, manually edit the translation, and Apply & Download — ideal for a hands-on line-by-line polishing pass.
 - **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
-- **Multiple API Options**: Built-in free / commercial translation APIs plus 20+ AI LLM endpoints (including local Ollama / LM Studio / TranslateGemma) — pick by budget and privacy needs.
+- **Multiple API Options**: Built-in free / commercial translation APIs plus 20+ AI LLM endpoints (including local Ollama / LM Studio / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
 - **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
 
 ## Subtitle Format Support
@@ -205,7 +205,7 @@ The API settings provide two parameters for fine-tuning this process:
 - **Simple fix**: Turn off the "Context-Aware Translation" toggle to switch to line-by-line concurrent mode (default 10 concurrent). Fast and reliable, at the cost of slightly reduced consistency between adjacent lines.
 - **Keep context**: Lower "Context Lines" to 20-30, and use a 14B+ instruction-tuned model (Qwen3-14B/32B, Gemma 3 27B-it, etc.).
 
-For pure translation needs, also consider the standalone **TranslateGemma** service in the service list (not by entering `translategemma` as a model name under "Custom OpenAI-compatible") — it's a seq2seq line-by-line service with no marker structure, the most reliable option for local deployment.
+For pure translation needs, also consider the standalone **TranslateGemma** or **MiLMMT** services in the service list (not by entering a model name under "Custom OpenAI-compatible") — they are seq2seq line-by-line services with no marker structure, the most reliable option for local deployment. Which one depends on the languages you need — see [FAQ: which model for local translation](../faq.mdx#which-model-should-i-pick-for-local-translation).
 
 ## Frequently Asked Questions
 

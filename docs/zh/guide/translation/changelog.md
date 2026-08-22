@@ -10,6 +10,10 @@ description: 查看翻译工具的完整更新历史。本页记录了从最初�
 
 待更新功能：对翻译后的字幕内容进行 AI 润色。
 
+- 2026.08.22: 新增本地翻译模型 MiLMMT；修复多行值被截半。
+  - **新增 MiLMMT-46**（小米开源的翻译专用模型，1B / 4B / 12B）：与 TranslateGemma 同类的本地自托管服务，支持 46 种语言。**含粤语**（TranslateGemma 不支持），但不含乌克兰语与塞尔维亚语。需在服务列表里**直接选「MiLMMT」**：官方已说明该模型后训练阶段剔除了指令跟随能力，走 Custom (OpenAI-compatible) 会把系统提示词当正文喂进去。无术语表、无上下文翻译、必须指定源语言
+  - **修复：本地翻译模型把多行内容截成一行**（TranslateGemma 一直存在此问题）。字幕与 Markdown 不受影响（上游就是逐行切的）；**JSON 翻译受影响** —— 值里带换行的多行描述会只剩第一行，且无任何提示。现在只在源文本自身单行时才做候选折叠
+  - **本地运行时快捷地址新增 koboldcpp**（5001 端口），且 Custom / TranslateGemma / MiLMMT 三处的四个快捷项完全一致；选中任一项都会显示该运行时的官方文档链接
 - 2026.07.11: 模型阵容更新；部分接口不再暴露温度参数。
   - **模型更新**：OpenAI 升级到 GPT-5.6 家族（sol / terra / luna，reasoning effort 新增 `max` 档，luna 为默认的低成本高并发档），Claude 换为 Opus 4.8 / Sonnet 5 / Fable 5（adaptive thinking）+ Haiku 4.5（extended thinking），Qwen 默认改为 3.7 Plus，Kimi、Gemini 等同步跟进
   - **温度控件按 provider 隐藏**：OpenAI（GPT-5.x 全系推理模型，非默认温度返回 400）、Claude（adaptive 世代拒绝 temperature）、Gemini（3.x 官方建议保持默认 1.0）、Moonshot Kimi（k2.x 锁定）、Azure OpenAI —— 这几家不再发送该参数，UI 输入框自动隐藏，改用系统提示词或思考强度控制文风
