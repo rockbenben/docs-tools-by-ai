@@ -213,6 +213,7 @@ Google's translation-specialized Gemma model, trained specifically for translati
 - The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp
 - **API key is optional**: leave it empty for a plain local server; if your deployment requires auth (LM Studio's "require API key", vLLM's `--api-key`, or a reverse proxy in front), fill it in and requests carry an `Authorization: Bearer` header
 - Recommended models: **for an ordinary home PC, start with `translategemma-4b-it`** — compact, fast, and clean output. `translategemma-12b-it` / `27b-it` give higher quality but demand far more VRAM and compute
+- **The model name can be left empty**: an empty field sends no model, so the server uses whatever it currently has loaded. Model ids are decided by the runtime (LM Studio, Ollama and llama.cpp each report their own, quantization suffixes included) — on a 404 "model not found", clearing the field is usually faster than guessing the name
 - **12B's "multiple options" noise**: this is the model's own behavior, not an integration issue. In testing, 12B often returns several candidate translations for the same sentence with no fixed format — the tool can't filter them out, so the output is full of noise. On home hardware, stick with 4B; if you want to use 12B, verify the output is clean on a short sample before running a full batch
 - **Prompt settings don't apply**: like Qwen-MT, it's a machine-translation service — the prompt is built into the call format; system/user prompts only affect LLM providers
 - **Source language must be explicit** — auto-detect isn't supported
@@ -225,7 +226,8 @@ Xiaomi's open-source translation model [MiLMMT-46](https://huggingface.co/xiaomi
 - **Pick "MiLMMT" directly from the service list** — this matters even more here than for TranslateGemma. Xiaomi state on the model's discussion page that post-training **largely stripped away its instruction-following**: tags and instructions are treated as noise, not commands. Going through "Custom (OpenAI-compatible)" splices your system prompt straight into the model's input and wrecks the output. The dedicated MiLMMT service calls it line by line in the exact format from the official model card, with no prompt mixed in
 - The default URL points to LM Studio on port 1234; one click switches to Ollama / llama.cpp / koboldcpp
 - **API key is optional**: leave it empty for a plain local server; fill it in if your deployment requires auth
-- Recommended models: the default `MiLMMT-46-4B-v1.0` suits a consumer GPU; 1B runs on CPU alone, 12B gives higher quality. **The model name must match what your runtime actually has loaded**
+- Recommended models: the default `MiLMMT-46-4B-v1.0` suits a consumer GPU; 1B runs on CPU alone, 12B gives higher quality
+- **The model name must match what your runtime has loaded — when in doubt, leave it empty**: an empty field sends no model, so the server uses whatever is currently loaded. Faster than guessing the name after a 404
 - **Prompt settings, glossary and context translation all have no effect** — same reason as above: the model can't take instructions. Use an LLM provider or Qwen-MT when you need terminology control
 - **Source language must be explicit** — the prompt hard-codes the source language name; the model has no auto-detect mode
 - **46 languages**: **Cantonese (yue) is supported** (TranslateGemma is not), but **Ukrainian (uk), Serbian (sr) and the Baltic three are not**, and Indic coverage stops at Bengali / Hindi / Tamil / Urdu. Unsupported languages are blocked by the UI
