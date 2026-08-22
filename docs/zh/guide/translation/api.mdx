@@ -192,7 +192,9 @@ DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了�
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 | koboldcpp  | `http://127.0.0.1:5001/v1/chat/completions`   |
 
-URL 输入框旁会列出这些常用地址作为快捷选项（koboldcpp 目前只在 MiLMMT 下列出）。
+URL 输入框旁会列出这四个地址作为快捷选项，**Custom、TranslateGemma、MiLMMT 三处完全一致**；点中哪个，下方就出现那个运行时的官方文档链接（先把服务跑起来、把模型名弄对，这一步的问题官方文档才答得了）。
+
+> **koboldcpp** 是单文件 exe 的 llama.cpp 封装（不用安装、双击就跑、自带网页界面），默认 5001 端口同时提供 KoboldAI 与 OpenAI 两套接口。
 
 ### LiteLLM 自建网关
 

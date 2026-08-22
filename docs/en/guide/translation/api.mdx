@@ -192,7 +192,9 @@ Want to run models locally for privacy? The tool works with any OpenAI-compatibl
 | llama.cpp  | `http://127.0.0.1:8080/v1/chat/completions`   |
 | koboldcpp  | `http://127.0.0.1:5001/v1/chat/completions`   |
 
-These appear as quick-pick chips next to the URL field (koboldcpp is currently listed under MiLMMT only).
+These four appear as quick-pick chips next to the URL field, **identical across Custom, TranslateGemma and MiLMMT**. Selecting one also surfaces that runtime's official docs link below the field — provider-level docs can't tell you how to get the server itself running.
+
+> **koboldcpp** is a single-file llama.cpp wrapper (no install, one .exe, built-in web UI). On its default port 5001 it serves both the KoboldAI API and an OpenAI-compatible one.
 
 ### LiteLLM Self-Hosted Gateway
 
