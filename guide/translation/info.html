@@ -5,13 +5,13 @@
 <title>功能说明 - Subtitle Translator, Markdown Translator &amp; JSON i18n Tools — Tools By AI Docs</title>
 <script>{;const saved = localStorage.getItem('rspress-theme-appearance');const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;const defaultTheme = 'auto';const theme = saved === 'light' || saved === 'dark' || saved === 'auto' ? saved : defaultTheme;const isDark = theme === 'auto' ? preferDark : theme === 'dark';document.documentElement.classList.toggle('dark', isDark);document.documentElement.classList.toggle('rp-dark', isDark);document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';}</script>
 <link href="/static/css/styles.56237a6f46.css" rel="stylesheet">
-<link rel="preload" href="/static/js/async/route-381c18dd2632.e1418b631a.js" as="script">
+<link rel="preload" href="/static/js/async/route-381c18dd2632.3ca259d279.js" as="script">
 <script defer src="https://s.newzone.top/tracker.js" data-website-id="fde645a1-fe64-4434-9edb-6923dbcd3614"></script>
 <script defer src="/static/js/styles.a38ced0249.js"></script>
 <script defer src="/static/js/lib-react.811b0e4bf9.js"></script>
 <script defer src="/static/js/lib-router.f5bc97169c.js"></script>
 <script defer src="/static/js/9038.cd5d872f11.js"></script>
-<script defer src="/static/js/index.e6c242629d.js"></script>
+<script defer src="/static/js/index.15ace41130.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.18">
 <meta name="author" content="rockbenben">
@@ -30,7 +30,7 @@
 <meta name="description" content="工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。">
 <meta property="og:description" content="工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。">
 <meta property="og:title" content="翻译工具功能说明 - 多语言、缓存与参数详解 | Tools By AI">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"功能说明","name":"功能说明","description":"工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。","inLanguage":"zh-CN","url":"https://docs.newzone.top/guide/translation/info","mainEntityOfPage":"https://docs.newzone.top/guide/translation/info","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-07-22","articleSection":"翻译工具","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"功能说明","name":"功能说明","description":"工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。","inLanguage":"zh-CN","url":"https://docs.newzone.top/guide/translation/info","mainEntityOfPage":"https://docs.newzone.top/guide/translation/info","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-08-22","articleSection":"翻译工具","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://docs.newzone.top/"},{"@type":"ListItem","position":2,"name":"指南","item":"https://docs.newzone.top/guide"},{"@type":"ListItem","position":3,"name":"翻译工具","item":"https://docs.newzone.top/guide/translation"},{"@type":"ListItem","position":4,"name":"功能说明"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/guide/translation/info">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/translation/info">
@@ -40,7 +40,7 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:title" content="功能说明">
 <meta name="twitter:description" content="工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。">
-<meta property="article:modified_time" content="2026-07-22">
+<meta property="article:modified_time" content="2026-08-22">
 <meta property="article:section" content="翻译工具"></head>
 
   <body>
@@ -74,7 +74,7 @@
 <li><strong>违规重试</strong>：LLM 译文若没有采用指定译法，会自动用加强版指令对违规行单独重译一次，并保留违规更少的版本</li>
 <li><strong>译后兜底替换</strong>：任何服务下，译文中残留的原文词都会按词条替换（拉丁词带词边界、CJK 子串匹配、长词优先），确保术语最终一定生效</li>
 </ol>
-<p><strong>支持范围</strong>：所有 LLM 服务 + Qwen-MT。纯 MT 接口（GTX、Google、DeepL(X)、Azure、TranslateGemma）没有模型内术语通道，不显示术语表卡片。</p>
+<p><strong>支持范围</strong>：所有 LLM 服务 + Qwen-MT。纯 MT 接口（GTX、Google、DeepL(X)、Azure、TranslateGemma、MiLMMT）没有模型内术语通道，不显示术语表卡片。</p>
 <p><strong>匹配规则</strong>：匹配时不区分大小写（<code>AI</code> / <code>ai</code> 都命中）；术语表数据保存在浏览器本地，不会上传。</p>
 <h3 class="rp-toc-include" id="长文本与并发优化"><a href="#长文本与并发优化" class="rp-header-anchor rp-link" aria-hidden="true">#</a>长文本与并发优化</h3>
 <p>针对大文档与批量任务做了专门优化：</p>
@@ -176,7 +176,7 @@ JSON Translate 仅支持单文件模式。</p></div></div>
 <li>Edge (Free)：100</li>
 <li>商用 MT（Google / Azure / DeepL）：20-100</li>
 <li>云端 LLM（Claude / Gemini / OpenAI / Qwen 等）：20</li>
-<li>Custom 本地 LLM / TranslateGemma / DeepLX：10</li>
+<li>Custom 本地 LLM / TranslateGemma / MiLMMT / DeepLX：10</li>
 </ul></details>
 <h4 class="rp-toc-include" id="上下文并发数"><a href="#上下文并发数" class="rp-header-anchor rp-link" aria-hidden="true">#</a>上下文并发数</h4>
 <ul>

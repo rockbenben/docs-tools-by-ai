@@ -5,13 +5,13 @@
 <title>Feature Guide - Subtitle Translator, Markdown Translator &amp; JSON i18n Tools — Tools By AI Docs</title>
 <script>{;const saved = localStorage.getItem('rspress-theme-appearance');const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;const defaultTheme = 'auto';const theme = saved === 'light' || saved === 'dark' || saved === 'auto' ? saved : defaultTheme;const isDark = theme === 'auto' ? preferDark : theme === 'dark';document.documentElement.classList.toggle('dark', isDark);document.documentElement.classList.toggle('rp-dark', isDark);document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';}</script>
 <link href="/static/css/styles.56237a6f46.css" rel="stylesheet">
-<link rel="preload" href="/static/js/async/route-b4be0458b05d.67673e6c49.js" as="script">
+<link rel="preload" href="/static/js/async/route-b4be0458b05d.41eb66f8df.js" as="script">
 <script defer src="https://s.newzone.top/tracker.js" data-website-id="fde645a1-fe64-4434-9edb-6923dbcd3614"></script>
 <script defer src="/static/js/styles.a38ced0249.js"></script>
 <script defer src="/static/js/lib-react.811b0e4bf9.js"></script>
 <script defer src="/static/js/lib-router.f5bc97169c.js"></script>
 <script defer src="/static/js/9038.cd5d872f11.js"></script>
-<script defer src="/static/js/index.e6c242629d.js"></script>
+<script defer src="/static/js/index.15ace41130.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.18">
 <meta name="author" content="rockbenben">
@@ -30,7 +30,7 @@
 <meta name="description" content="Core features of the translation tool — multilingual batch translation, local cache, glossary, context-aware translation, failed-line retry, and tuning guidance.">
 <meta property="og:description" content="Core features of the translation tool — multilingual batch translation, local cache, glossary, context-aware translation, failed-line retry, and tuning guidance.">
 <meta property="og:title" content="Translation Tool Features - Multilingual, Cache, and Tuning | Tools By AI">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"Feature Guide","name":"Feature Guide","description":"Core features of the translation tool — multilingual batch translation, local cache, glossary, context-aware translation, failed-line retry, and tuning guidance.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/translation/info","mainEntityOfPage":"https://docs.newzone.top/en/guide/translation/info","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-07-22","articleSection":"Translation","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"Feature Guide","name":"Feature Guide","description":"Core features of the translation tool — multilingual batch translation, local cache, glossary, context-aware translation, failed-line retry, and tuning guidance.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/translation/info","mainEntityOfPage":"https://docs.newzone.top/en/guide/translation/info","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-08-22","articleSection":"Translation","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://docs.newzone.top/en"},{"@type":"ListItem","position":2,"name":"Guide","item":"https://docs.newzone.top/en/guide"},{"@type":"ListItem","position":3,"name":"Translation","item":"https://docs.newzone.top/en/guide/translation"},{"@type":"ListItem","position":4,"name":"Feature Guide"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/en/guide/translation/info">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/translation/info">
@@ -40,7 +40,7 @@
 <meta property="og:locale:alternate" content="zh_CN">
 <meta name="twitter:title" content="Feature Guide">
 <meta name="twitter:description" content="Core features of the translation tool — multilingual batch translation, local cache, glossary, context-aware translation, failed-line retry, and tuning guidance.">
-<meta property="article:modified_time" content="2026-07-22">
+<meta property="article:modified_time" content="2026-08-22">
 <meta property="article:section" content="Translation"></head>
 
   <body>
@@ -74,7 +74,7 @@
 <li><strong>Violation retry</strong>: if an LLM translation ignores a required term, the offending line is retried once with a stricter instruction, and the version with fewer violations wins</li>
 <li><strong>Post-hoc replacement net</strong>: on every service, source words left untranslated in the output are replaced per the glossary (word boundaries for Latin terms, substring matching for CJK, longest term first) — so terms always land</li>
 </ol>
-<p><strong>Service support</strong>: all LLM services + Qwen-MT. Plain MT APIs (GTX, Google, DeepL(X), Azure, TranslateGemma) have no in-model term channel, so the glossary card is hidden for them.</p>
+<p><strong>Service support</strong>: all LLM services + Qwen-MT. Plain MT APIs (GTX, Google, DeepL(X), Azure, TranslateGemma, MiLMMT) have no in-model term channel, so the glossary card is hidden for them.</p>
 <p><strong>Matching</strong>: case-insensitive (<code>AI</code> and <code>ai</code> both match). Glossary data lives in your browser&#x27;s local storage and is never uploaded.</p>
 <h3 class="rp-toc-include" id="long-text--concurrency"><a href="#long-text--concurrency" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Long Text &amp; Concurrency</h3>
 <p>Tuned for large documents and batch jobs:</p>
@@ -176,7 +176,7 @@ This feature does plain string replacement only — no escape sequences (<code>\
 <li>Edge (Free): 100</li>
 <li>Commercial MT (Google / Azure / DeepL): 20-100</li>
 <li>Cloud LLMs (Claude / Gemini / OpenAI / Qwen, etc.): 20</li>
-<li>Custom local LLM / TranslateGemma / DeepLX: 10</li>
+<li>Custom local LLM / TranslateGemma / MiLMMT / DeepLX: 10</li>
 </ul></details>
 <h4 class="rp-toc-include" id="context-mode-concurrency"><a href="#context-mode-concurrency" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Context Mode Concurrency</h4>
 <ul>
