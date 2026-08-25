@@ -1,0 +1,112 @@
+---
+title: Command-line translation (CLI)
+head:
+  - - meta
+    - property: og:title
+      content: Command-line translation CLI - batch subtitle/Markdown/JSON translation | Tools By AI
+description: The translation engine ships a command-line entry point that reuses the exact same pipeline as the web app - batching, concurrency, retries, 429 cooldown, glossary, context translation and per-line caching all behave identically, across subtitles, Markdown and JSON.
+---
+
+# Command-line translation (CLI)
+
+The engine behind all three translation tools is **platform-agnostic TypeScript**, and the command-line entry point reuses **the same pipeline and the same format parsing/assembly code** as the web app — batching, concurrency, retries, 429 cooldown, glossary, context translation and per-line caching behave identically. Only the browser-specific pieces are swapped for Node equivalents (fetch / file cache / Ctrl-C cancellation).
+
+Good for: running a whole season of subtitles or an entire `docs/` tree through in one go, wiring translation into your own scripts or CI, and machines without a browser.
+
+:::tip Requires cloning the repository
+The CLI is not published as a standalone package — it ships with the source. Clone [rockbenben/web-tools-by-ai](https://github.com/rockbenben/web-tools-by-ai) (or a single-tool subproject: [subtitle-translator](https://github.com/rockbenben/subtitle-translator) / [md-translator](https://github.com/rockbenben/md-translator) / [json-translate](https://github.com/rockbenben/json-translate)) and run `yarn` to install. Node.js ≥ 20.9 required.
+:::
+
+Nothing extra to install — `tsx` is already in devDependencies:
+
+```bash
+yarn cli --help          # full parameter list
+yarn cli --list-formats  # which formats this checkout supports
+yarn cli --list-methods  # available translation services
+```
+
+## Examples
+
+```bash
+# Simplest: writes movie.zh.srt right next to movie.srt
+yarn cli -i movie.srt -t zh
+
+# Output directory + multiple targets → out/movie.ja.srt, out/movie.ko.srt
+yarn cli -i movie.srt -t ja -t ko -o out/
+
+# Mixed formats in one run
+yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
+
+# Bilingual subtitles (converted to ASS by default) → movie.zh_bilingual.ass
+yarn cli -i movie.srt -t zh --bilingual
+yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
+yarn cli -i movie.srt -t zh --bilingual --original-first   # original on top
+
+# Use the settings exported from the web UI (API key, prompts, glossary, retry params)
+yarn cli -i README.md -t ja -s ~/translate-settings.json
+
+# Point straight at a local LM Studio / Ollama
+yarn cli -i locale.json -t zh -m llm --url http://localhost:11434/v1 --model qwen3
+
+# Dedicated local MT models (translategemma / milmmt) have no auto-detect, so -f is required
+yarn cli -i movie.srt -f en -t zh -m milmmt --url http://localhost:1234/v1 --model MiLMMT-46-4B-v1.0
+
+# Force a format when the extension is unreliable; translate Markdown line-by-line with no protection
+yarn cli -i notes.txt -t zh --format markdown --md-raw
+```
+
+## Configure in the web UI, then load it with `-s`
+
+The settings file (`-s`) is exactly the JSON that the web UI's "Export settings" downloads — set up the service, key, prompts and glossary in the interface, then let the CLI read it instead of restating everything with flags. Both shells run the same sanitizer, so out-of-range values and malformed presets are dropped identically.
+
+## Where output goes
+
+|                       | Rule                                                                          |
+| --------------------- | ----------------------------------------------------------------------------- |
+| Directory             | **Next to the input file** by default; `-o <dir>` overrides (created if missing) |
+| Filename              | `<name>.<target>.<ext>`, e.g. `movie.srt` → `movie.zh.srt`                     |
+| The extension may change | Decided by the format adapter — bilingual subtitles convert to ASS by default → `movie.zh_bilingual.ass` |
+| Cache                 | `~/.translate-cli-cache.json` by default; `--cache-file` relocates it, `--no-cache` disables it |
+
+## Parameters
+
+| Parameter                            | Description                                            |
+| ------------------------------------ | ------------------------------------------------------ |
+| `-i, --input <file>`                 | Input file; repeatable                                 |
+| `-t, --to <lang>`                    | Target language; repeatable. Falls back to the settings file, then `zh` |
+| `-f, --from <lang>`                  | Source language. Falls back to the settings file, then auto-detect |
+| `-m, --method <method>`              | Translation service. Falls back to the settings file, then `gtxFreeAPI` (zero config) |
+| `-s, --settings <file>`              | Settings JSON exported from the web UI                 |
+| `-o, --out-dir <dir>`                | Output directory. Defaults to the input file's directory |
+| `--format <fmt>`                     | Force a format instead of inferring from the extension |
+| `--api-key` / `--url` / `--model`    | Override the selected service's key / endpoint / model |
+| `--relay` / `--no-relay`             | Force requests through / away from the shared relay (Node has no CORS, so direct is the default here) |
+| `--no-cache` / `--cache-file <file>` | Disable the cache / point it at a specific file        |
+
+**Subtitle-only**: `--bilingual`, `--original-first`, `--bilingual-format <ass|srt>` (default ass), `--no-context` (context batching is **ON** by default, matching the web app; this switch turns it off).
+
+**Markdown-only** (defaults match the web app item for item): `--md-raw` (translate whole lines, no placeholder protection); `--context` (context batching is **OFF** by default, this turns it on and implies `--md-raw` — context mode and placeholder protection are mutually exclusive); `--md-no-link-text` (link text is **translated** by default, this keeps the original); `--md-translate-frontmatter` / `--md-translate-code` / `--md-translate-latex` (all three are protected by default; opt in as needed).
+
+## Supported formats
+
+| Format   | Extensions                                |
+| -------- | ----------------------------------------- |
+| subtitle | `.srt` `.vtt` `.ass` `.ssa` `.lrc` `.sbv` |
+| markdown | `.md` `.markdown` `.mdx`                  |
+| json     | `.json`                                   |
+
+All three are built into the CLI itself, so every checkout carries them — `yarn cli` inside a single-tool subproject can still translate Markdown and JSON.
+
+## Exit codes
+
+| Code | Meaning                                                                            |
+| ---- | ---------------------------------------------------------------------------------- |
+| 0    | Everything translated                                                              |
+| 1    | Some lines soft-failed (the original is kept in the output) or a whole file failed |
+| 2    | Usage error (unknown flag, method / language / credential validation failed, corrupt settings file) — no output files are written |
+| 130  | Cancelled by the user (Ctrl-C)                                                     |
+
+## Differences from the web app
+
+- **Encoding detection is identical**: the CLI also auto-detects GBK / Big5 / UTF-16 and friends. When detection fails it reports `✖ … cannot read` and counts toward exit code 1 — it never guesses an encoding and writes mojibake.
+- **Bilingual ASS always uses the default style**: ASS styling is a web-app local preference and is not part of the exported settings file. Use the web app when you need custom ASS styles.

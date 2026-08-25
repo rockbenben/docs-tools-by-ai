@@ -22,7 +22,7 @@ faq:
     a: >-
       MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine,
       API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL —
-      25+ engines total, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and
+      35 engines total, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and
       Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual
       format repair.
   - q: How do I preserve code blocks and formulas when translating Markdown?
@@ -37,7 +37,7 @@ faq:
       AI/LLM is strongly recommended for technical content; machine translation is only good for quick previews.
       AI/LLM models recognize library names, function names, and variables in context without mistranslating
       them — Claude Sonnet leads on API doc terminology accuracy, DeepSeek delivers excellent value (de facto
-      standard for Chinese technical blogs), Gemini 3 Pro fits book-length documentation (1M-token context).
+      standard for Chinese technical blogs), Gemini 3.1 Pro fits book-length documentation (1M-token context).
       Machine translation (Google free, DeepL) is only suitable for quick previews — long Markdown docs get
       truncated and technical terms slip into everyday words. Engine configs are shared with
       [Subtitle Translator](../subtitle-translator/index.mdx) and [JSON Translator](../json-translate/index.mdx).
@@ -170,7 +170,7 @@ md-translator differentiates on two fronts: fully free + everything runs in your
 
 ### Which free Markdown translation tool works best?
 
-MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — 25+ engines total, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
+MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — 35 engines total, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
 
 ### How do I preserve code blocks and formulas when translating Markdown?
 
@@ -178,7 +178,7 @@ The tool uses a placeholder-protection strategy: code fences (```fenced code```)
 
 ### Should I use machine translation or AI/LLM for technical documentation? Which is best?
 
-AI/LLM strongly recommended — models recognize library names, function names, and variables in context without mistranslating them. **Claude Sonnet** leads on API doc terminology accuracy, **DeepSeek** delivers excellent value (de facto standard for Chinese technical blogs), **Gemini 3 Pro** fits book-length documentation (1M-token context). Machine translation only suits quick previews — long Markdown docs get truncated. Full engine comparison in the [API guide](../api.mdx); configs are shared across all three translation tools.
+AI/LLM strongly recommended — models recognize library names, function names, and variables in context without mistranslating them. **Claude Sonnet** leads on API doc terminology accuracy, **DeepSeek** delivers excellent value (de facto standard for Chinese technical blogs), **Gemini 3.1 Pro** fits book-length documentation (1M-token context). Machine translation only suits quick previews — long Markdown docs get truncated. Full engine comparison in the [API guide](../api.mdx); configs are shared across all three translation tools.
 
 ### How do I translate a GitHub README or an entire VitePress / Docusaurus doc site?
 

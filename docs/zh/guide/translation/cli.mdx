@@ -1,0 +1,112 @@
+---
+title: 命令行翻译（CLI）
+head:
+  - - meta
+    - property: og:title
+      content: 命令行翻译 CLI - 字幕/Markdown/JSON 批量翻译 | Tools By AI
+description: 翻译引擎自带命令行入口，与网页端共用同一条流水线：批处理、并发、重试、429 冷却、术语表、上下文翻译、逐行缓存行为完全一致，支持字幕 / Markdown / JSON 三种格式。
+---
+
+# 命令行翻译（CLI）
+
+三个翻译工具的引擎是**平台无关的纯 TypeScript**，命令行入口复用**同一条流水线和同一份格式解析 / 装配代码**——批处理、并发、重试、429 冷却、术语表、上下文翻译、逐行缓存的行为与网页端一致，只是把浏览器那几样依赖换成了 Node 实现（fetch / 文件缓存 / Ctrl-C 取消）。
+
+适合：整季字幕 / 整个 `docs/` 目录批量过一遍、接进自己的脚本或 CI、在没有浏览器的机器上跑。
+
+:::tip 需要克隆仓库
+CLI 不是独立发布的包，它随源码一起提供。先 `git clone` [rockbenben/web-tools-by-ai](https://github.com/rockbenben/web-tools-by-ai)（或单工具子项目 [subtitle-translator](https://github.com/rockbenben/subtitle-translator) / [md-translator](https://github.com/rockbenben/md-translator) / [json-translate](https://github.com/rockbenben/json-translate)）再 `yarn` 安装依赖。需要 Node.js ≥ 20.9。
+:::
+
+无需额外安装，`tsx` 已在 devDependencies 中：
+
+```bash
+yarn cli --help          # 完整参数
+yarn cli --list-formats  # 本 checkout 支持哪些格式
+yarn cli --list-methods  # 列出可用的翻译服务
+```
+
+## 示例
+
+```bash
+# 最简：输出 movie.zh.srt，就放在 movie.srt 旁边
+yarn cli -i movie.srt -t zh
+
+# 指定输出目录 + 多目标语言 → out/movie.ja.srt、out/movie.ko.srt
+yarn cli -i movie.srt -t ja -t ko -o out/
+
+# 多文件混格式，一次跑完
+yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
+
+# 双语字幕（默认转 ASS）→ movie.zh_bilingual.ass
+yarn cli -i movie.srt -t zh --bilingual
+yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
+yarn cli -i movie.srt -t zh --bilingual --original-first   # 原文在上
+
+# 用网页端导出的设置（API key、prompt、术语表、重试参数全带上）
+yarn cli -i README.md -t ja -s ~/translate-settings.json
+
+# 直接指定本地 LM Studio / Ollama
+yarn cli -i locale.json -t zh -m llm --url http://localhost:11434/v1 --model qwen3
+
+# 本地翻译专用模型（translategemma / milmmt）—— 它们没有自动检测，必须 -f
+yarn cli -i movie.srt -f en -t zh -m milmmt --url http://localhost:1234/v1 --model MiLMMT-46-4B-v1.0
+
+# 扩展名不可靠时强制格式；Markdown 不做保护、直译整行
+yarn cli -i notes.txt -t zh --format markdown --md-raw
+```
+
+## 先在网页端配好，再用 `-s` 读进来
+
+设置文件（`-s`）就是网页端「导出设置」下载的那个 JSON —— 在界面里把服务、密钥、prompt、术语表配好，命令行直接读，不必用一堆 flag 重复描述。两边用的是同一份消毒逻辑，越界数值与坏形状的预设两边都会被丢弃。
+
+## 保存位置
+
+|              | 规则                                                                  |
+| ------------ | --------------------------------------------------------------------- |
+| 目录         | 默认**输入文件旁边**；`-o <dir>` 覆盖（目录不存在会自动创建）         |
+| 文件名       | `<原名>.<目标语言>.<扩展名>`，如 `movie.srt` → `movie.zh.srt`          |
+| 扩展名可能变 | 由格式适配器决定，如双语字幕默认转 ASS → `movie.zh_bilingual.ass`      |
+| 缓存         | 默认 `~/.translate-cli-cache.json`，`--cache-file` 换位置，`--no-cache` 关闭 |
+
+## 参数
+
+| 参数                                 | 说明                                              |
+| ------------------------------------ | ------------------------------------------------- |
+| `-i, --input <file>`                 | 输入文件，可重复                                  |
+| `-t, --to <lang>`                    | 目标语言，可重复。默认取设置文件，否则 `zh`       |
+| `-f, --from <lang>`                  | 源语言。默认取设置文件，否则自动检测              |
+| `-m, --method <method>`              | 翻译服务。默认取设置文件，否则 `gtxFreeAPI`（免配置） |
+| `-s, --settings <file>`              | 网页端导出的设置 JSON                             |
+| `-o, --out-dir <dir>`                | 输出目录。默认与输入文件同目录                    |
+| `--format <fmt>`                     | 强制格式，不按扩展名推断                          |
+| `--api-key` / `--url` / `--model`    | 覆盖所选服务的密钥 / 端点 / 模型                  |
+| `--relay` / `--no-relay`             | 强制走 / 不走共享中转（Node 没有 CORS，这里默认直连） |
+| `--no-cache` / `--cache-file <file>` | 关闭缓存 / 指定缓存文件                           |
+
+**字幕专属**：`--bilingual`、`--original-first`、`--bilingual-format <ass|srt>`（默认 ass）、`--no-context`（上下文批处理默认**开**，与网页端一致，此开关关闭）。
+
+**Markdown 专属**（默认值与网页端逐项一致）：`--md-raw`（直译整行，不保护）；`--context`（上下文批处理默认**关**，此开关开启，并隐含 `--md-raw`——上下文模式与占位符保护互斥）；`--md-no-link-text`（链接文字默认**翻译**，此开关保留原文）；`--md-translate-frontmatter` / `--md-translate-code` / `--md-translate-latex`（这三类默认保护，按需 opt in）。
+
+## 支持的格式
+
+| 格式     | 扩展名                                  |
+| -------- | --------------------------------------- |
+| subtitle | `.srt` `.vtt` `.ass` `.ssa` `.lrc` `.sbv` |
+| markdown | `.md` `.markdown` `.mdx`                |
+| json     | `.json`                                 |
+
+三种格式内建于 CLI 本体，任何 checkout 都全带 —— 单工具子项目里的 `yarn cli` 一样能翻 Markdown 和 JSON。
+
+## 退出码
+
+| 码  | 含义                                                                     |
+| --- | ------------------------------------------------------------------------ |
+| 0   | 全部译出                                                                 |
+| 1   | 有软失败行（输出里保留原文）或整文件失败                                 |
+| 2   | 调用错误（未知参数、方法 / 语言 / 凭据校验不过、设置文件损坏）——不写任何输出文件 |
+| 130 | 用户取消（Ctrl-C）                                                       |
+
+## 与网页端的差异
+
+- **编码识别一致**：CLI 同样自动识别 GBK / Big5 / UTF-16 等编码；识别不出时报 `✖ … cannot read` 并计入退出码 1，**不会猜一个编码写出乱码**。
+- **双语 ASS 固定使用默认样式**：ASS 样式是网页端的本地偏好，导出的设置文件里不含它。需要自定义 ASS 样式请用网页端。

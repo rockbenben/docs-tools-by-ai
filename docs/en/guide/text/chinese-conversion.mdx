@@ -17,7 +17,7 @@ howto:
       text: Conversion runs locally in real time. Copy the result — your text never leaves your machine.
 faq:
   - q: Which conversion directions are supported?
-    a: Any pair among 6 codes — Simplified (`cn`), Traditional Taiwan (`tw`), Traditional Taiwan + regional vocab (`twp`), Traditional Hong Kong (`hk`), OpenCC-mode Traditional (`t`), and Japanese Shinjitai (`jp`). Two quick buttons (Trad→Simp, Simp→Trad) plus a Custom Language card to pick any source/target combination.
+    a: Any pair among 7 codes — Simplified (`cn`), Traditional Taiwan (`tw`), Traditional Taiwan + regional vocab (`twp`), Traditional Hong Kong (`hk`), Traditional Hong Kong + regional vocab (`hkp`), OpenCC-mode Traditional (`t`), and Japanese Shinjitai (`jp`). Two quick buttons (Trad→Simp, Simp→Trad) plus a Custom Language card to pick any source/target combination.
   - q: What does the "Convert Regional Terms" toggle do?
     a: It picks which Traditional variant the quick buttons use. ON → Simp ↔ `twp` (Taiwan vocab — 视频 ↔ 影片, 幼儿园 ↔ 幼稚園). OFF → Simp ↔ `t` (OpenCC standard — pure character conversion, no vocab swaps). The Custom Language card is unaffected — it uses whatever dropdowns are picked.
   - q: What is the "Custom Replacement Rules"?
@@ -34,13 +34,13 @@ appName: Chinese Conversion
 
 # Chinese Converter
 
-[Chinese Converter](https://tools.newzone.top/en/chinese-conversion) is a fully-local Chinese text converter supporting Simplified, Traditional (Taiwan / Hong Kong / OpenCC mode), and Japanese Shinjitai — any direction. It exposes two quick buttons (Trad→Simp, Simp→Trad), a Custom Language card for arbitrary pairs, a user-editable custom replacement rules, and batch file processing.
+[Chinese Converter](https://tools.newzone.top/en/chinese-conversion) is a fully-local Chinese text converter supporting Simplified, Traditional (Taiwan / Hong Kong, each with a character-form-only and a regional-vocabulary variant / OpenCC mode), and Japanese Shinjitai — any direction. It exposes two quick buttons (Trad→Simp, Simp→Trad), a Custom Language card for arbitrary pairs, a user-editable custom replacement rules, and batch file processing.
 
 ![Chinese Converter interface](/img/chinese-conversion-en.webp 'Chinese Converter interface')
 
 ## Supported language codes
 
-The tool uses 6 internal codes:
+The tool uses 7 internal codes:
 
 | Code  | Meaning                                                                       |
 | ----- | ----------------------------------------------------------------------------- |
@@ -48,6 +48,7 @@ The tool uses 6 internal codes:
 | `tw`  | Traditional Chinese (Taiwan) — character form only                            |
 | `twp` | Traditional Chinese (Taiwan) + regional vocabulary swaps (e.g. 视频↔影片)     |
 | `hk`  | Traditional Chinese (Hong Kong) — HK-specific forms                           |
+| `hkp` | Traditional Chinese (Hong Kong) + regional vocabulary swaps                   |
 | `t`   | OpenCC-mode Traditional — standard form conversion                            |
 | `jp`  | Japanese Shinjitai (modern kanji forms)                                       |
 

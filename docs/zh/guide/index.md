@@ -16,7 +16,7 @@ description: Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆
 
 ### 🌍 翻译工具
 
-字幕、Markdown、JSON i18n 三种格式专用翻译，共享 7 种翻译 API + 24 种 AI 大模型，覆盖 120+ 语言。
+字幕、Markdown、JSON i18n 三种格式专用翻译，共享 9 种翻译 API + 26 种大模型接口，覆盖 120+ 语言。
 
 - [**Subtitle Translator**](./translation/subtitle-translator/) — SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出
 - [**MD Translator**](./translation/md-translator/) — Markdown 翻译，保留代码块、LaTeX、Front Matter
@@ -26,7 +26,7 @@ description: Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆
 
 ### 📝 文本工具
 
-六款互补的纯文本处理工具，覆盖**格式转换 → 内容清洗 → 分段切片 → 合并拼接 → 差异核对 → 通用文本操作**。
+七款互补的纯文本处理工具，覆盖**格式转换 → 内容清洗 → 分段切片 → 合并拼接 → 差异核对 → 通用文本操作 → 表格批处理**。
 
 - [**中文转换**](./text/chinese-conversion.mdx) — 简繁体、台湾 / 香港地区词
 - [**小说处理**](./text/novel-processor.mdx) — 网文 TXT 排版、去广告、章节修复
@@ -34,6 +34,7 @@ description: Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆
 - [**文本拼接**](./text/text-joiner.mdx) — 多列按模板合并成 CSV / SQL / JSON
 - [**文本对照**](./text/text-diff.mdx) — 双栏 diff，定位首处差异，导出 .patch
 - [**多功能文本处理**](./text/text-toolbox.mdx) — 正则匹配、去重、批量加前后缀、行操作
+- [**数据批处理**](https://tools.newzone.top/zh/data-batch) — Excel 表格去重、列提取、批量加前缀（暂无独立指南）
 
 [→ 进入文本工具集](./text/)
 

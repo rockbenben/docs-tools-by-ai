@@ -43,7 +43,7 @@ howto:
 - **Tidy terminal-copied text**: strip the quote bars and hard line wraps from Claude Code / terminal output and restore paste-ready paragraphs
 - **Batch formatting**: add prefixes/suffixes to each line — Markdown lists, CSV, SQL `IN` clauses
 - **Normalize case**: upper, lower, title case, sentence case
-- **Sort & organize**: asc/desc sort, reverse, dedup (with a skip list)
+- **Sort & organize**: asc/desc sort, reverse, adjacent swap, whole-line dedupe
 - **Many lines into one**: join a column with any separator, ready to paste into a spreadsheet or query
 - **Complex pipelines**: filter → regex → affix multi-step cleanups
 
@@ -54,7 +54,7 @@ The page is a **two-column layout**. The main column carries the primary flow; t
 **Main column**
 
 1. **Source Text** — input area + file upload + the "Smart Trim" toggle (bottom right)
-2. **LINES** — sort / delete / merge / affix rows, with parameter inputs inline
+2. **LINES** — sort / delete / dedupe / merge / affix rows, with parameter inputs inline
 3. **CASE** — the four case-conversion buttons
 4. **Result pane** (appears once there's output) — copy / export / format / move-to-source
 
@@ -88,7 +88,7 @@ Line operations and case conversion are the highest-frequency actions, so they s
 
 ## LINES panel (main column)
 
-The panel title spells out its four groups — **sort · delete · merge · affix** — one row each, with parameter inputs inline.
+The panel title spells out its five groups — **sort · delete · dedupe · merge · affix** — one row each, parameters on the left and the verb on the right, so each row reads as "with this condition → do this".
 
 ### Sort
 
@@ -98,9 +98,18 @@ The panel title spells out its four groups — **sort · delete · merge · affi
 
 ### Delete
 
-- **Deduplicate**: drop fully duplicate lines
-- **Skip when deduping** (the input on the same row): entries listed here are ignored by dedup and persist locally. E.g. add `Home` and `About` to preserve those headings across repeated occurrences
-- **Delete matching lines**: type comma-separated keywords in the input to its right (e.g. `ad,promo,channel`) and every line containing one of them is removed, the rest kept
+One condition box feeds one button, and the row reads left to right as a sentence: **Delete · [match mode] · [terms] → Delete these lines**.
+
+- **Match mode** (dropdown):
+  - **Contains these words**: delete a line if any term appears anywhere in it (substring match)
+  - **Whole line matches**: delete only when the entire line is identical (leading/trailing spaces ignored)
+- **Terms to delete** (input): separate multiple conditions with **commas or newlines** (e.g. `ad,promo,channel`); the value persists locally
+- **Delete these lines**: matching lines go, the rest stay; the result lands in the result area below and never rewrites your source
+
+### Dedupe
+
+- **Deduplicate**: for identical lines, only the first is kept
+- It **does not read the Delete row's condition box** — which is why it sits on its own row with no input of its own. The old "skip when deduping" list was removed in the redesign
 
 ### Merge
 

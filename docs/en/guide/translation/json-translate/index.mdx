@@ -23,7 +23,7 @@ faq:
   - q: Which translation engines and file sizes does this JSON translator support?
     a: >-
       Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage.
-      Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure,
+      Supports 35 engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure,
       Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate
       modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge.
       IndexedDB cache gives incremental builds — only changed keys re-call the API.
@@ -33,7 +33,7 @@ faq:
       error messages) machine translation works — Google free tier costs nothing (5000 chars/call limit),
       DeepL and Azure Translate handle European languages well. For longer text (product descriptions,
       tutorials) use AI/LLM: DeepSeek is the value pick, Claude Sonnet handles terminology most reliably — add a
-      glossary in the System Prompt to lock brand names, SKUs, and API terms. Engine configs are shared with
+      glossary in the System prompt to lock brand names, SKUs, and API terms. Engine configs are shared with
       [Subtitle Translator](../subtitle-translator/index.mdx) and [Markdown Translator](../md-translator/index.mdx).
   - q: Does it support next-intl, i18next, vue-i18n, and react-intl JSON formats?
     a: >-
@@ -251,11 +251,11 @@ Currently, JsonTranslate does not support JSON keys that contain dots (`.`). Thi
 
 ### Which translation engines and file sizes does this JSON translator support?
 
-Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports 25+ engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
+Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports 35 engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
 
 ### Should I use machine translation or AI/LLM for translating JSON? How do I choose?
 
-Pick by JSON value length: short UI strings (button labels, menu items, error messages) — machine translation works (**Google free tier** costs nothing, 5000 chars/call limit); longer text (product descriptions, tutorials) — use AI/LLM (**DeepSeek** value pick, **Claude Sonnet** for terminology consistency, add a glossary in the System Prompt to lock brand names, SKUs, and API terms). Full engine comparison in the [API guide](../api.mdx); configs are shared across all three translation tools.
+Pick by JSON value length: short UI strings (button labels, menu items, error messages) — machine translation works (**Google free tier** costs nothing, 5000 chars/call limit); longer text (product descriptions, tutorials) — use AI/LLM (**DeepSeek** value pick, **Claude Sonnet** for terminology consistency, add a glossary in the System prompt to lock brand names, SKUs, and API terms). Full engine comparison in the [API guide](../api.mdx); configs are shared across all three translation tools.
 
 ### Does it support next-intl, i18next, vue-i18n, and react-intl JSON formats?
 

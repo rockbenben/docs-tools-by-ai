@@ -3,14 +3,14 @@ head:
   - - meta
     - property: og:title
       content: Translation API Guide - Classic APIs and LLMs Compared | Tools By AI
-description: Tools By AI integrates 7 translation APIs and 24 LLMs. This page helps you pick the right one and walks through local model setup and CORS configuration.
+description: Tools By AI integrates 9 machine-translation APIs and 26 LLM endpoints. This page helps you pick the right one and walks through local model setup and CORS configuration.
 ---
 
 import SupportedLanguages from './_supported-languages.mdx';
 
 # Translation API Guide
 
-The tool integrates **7 classic translation APIs** and **24 large language models**, so you can pick whichever fits your text type, budget, and privacy needs.
+The tool integrates **9 classic translation APIs** and **26 LLM endpoints**, so you can pick whichever fits your text type, budget, and privacy needs.
 
 ## Which API should I pick?
 
@@ -37,7 +37,7 @@ For detailed comparisons and how to get API keys, keep reading ↓
 | Azure Translate  | ★★★★☆   | ★★★★★     | Widest language coverage (90+)    | 2M characters/month for the first year   |
 | Qwen-MT          | ★★★★★   | ★★★★★     | CN/EN translation, domain-tuned   | Pay-per-token, free tier for new users   |
 | TranslateGemma   | ★★★★☆   | ★★★★☆     | Local translation, privacy-first  | Free (self-hosted)                       |
-| MiLMMT-46        | ★★★★☆   | ★★★★☆     | Local translation, 46 languages incl. Cantonese | Free (self-hosted)     |
+| MiLMMT-46        | ★★★★☆   | ★★★★☆     | Local translation, 47 languages incl. Cantonese | Free (self-hosted)     |
 | GTX API (Free)   | ★★★☆☆   | ★★★★☆     | General text, zero-config default | Shared service, auto-slows when throttled |
 | Edge API (Free)  | ★★★★☆   | ★★★★☆     | Free GTX backup, different route  | Shared service, auto-slows when throttled |
 
@@ -53,7 +53,10 @@ For more reliable service, apply for a commercial API key — see the [API appli
 
 ## Large Language Models (LLMs)
 
-Supported: DeepSeek, OpenAI, Claude, Gemini, Qwen, Moonshot (Kimi), Zhipu GLM, Doubao, Xiaomi MiMo, MiniMax, Tencent Hunyuan, Baidu ERNIE, Cohere, xAI (Grok), Mistral, Perplexity, YandexGPT (AI Studio), OpenRouter, Groq, SiliconFlow, GitHub Models, Nvidia NIM, Azure OpenAI, LiteLLM (self-hosted gateway), plus any OpenAI-compatible endpoint.
+26 LLM endpoints are supported, in two groups:
+
+- **Direct vendor APIs (16)**: DeepSeek, OpenAI, Claude, Gemini, Qwen, Kimi (Moonshot), Doubao (Volcano Ark), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun, Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio)
+- **Aggregators & self-hosted (10)**: OpenRouter, OpenCode Zen, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Nvidia NIM, Azure OpenAI, and **Custom (OpenAI-compatible)** — any OpenAI-protocol address goes here, with seven quick-pick URLs listed right above the field: LM Studio, Ollama, llama.cpp, koboldcpp, LiteLLM, Together AI, Fireworks AI
 
 LLMs work best for:
 
@@ -63,39 +66,40 @@ LLMs work best for:
 
 Key parameters:
 
-- **Model**: enter the model name from your provider; for Azure OpenAI, enter the deployment name.
+- **Model**: pick from the dropdown or type your own. Each dropdown row shows the friendly name above the real SKU, and the provider's default model carries a `default` tag; a SKU too new to be listed can simply be typed in. For Azure OpenAI, enter the deployment name.
 - **Temperature**: defaults to 0.7. Try 0.2 for technical content, 0.9 for marketing or creative paraphrasing.
-  - **Some providers have no temperature control**: OpenAI (the whole GPT-5.x line is reasoning-only and returns 400 on any non-default value), Claude (adaptive thinking on Opus 4.8 / Sonnet 5 / Fable 5 rejects temperature), Gemini (3.x officially recommends keeping the default 1.0 — lowering it can trigger looping output), Moonshot Kimi (k2.x locks it), and Azure OpenAI. For these the parameter is never sent and the input is hidden, so the server default applies — steer the tone with the system prompt or thinking effort instead.
-- **Thinking mode**: lets the AI think before translating — higher quality, slower and pricier. Supported models show a toggle in the UI. The toggle is **stored per model** so switching models preserves each one's setting independently. The exact UI form depends on the provider:
-  - **Three levels** (off / low / medium / high): Claude, Gemini, OpenAI GPT-5, Qwen3, Azure OpenAI, Nvidia NIM, OpenRouter, Groq (GPT-OSS), Perplexity Sonar Deep Research
-  - **Binary toggle** (off / on): DeepSeek (ON always uses the top tier — the API's middle tiers add nothing for translation), Doubao, Zhipu GLM, Moonshot (Kimi), Xiaomi MiMo, SiliconFlow, ERNIE 5.0 Thinking, Mistral (Medium 3.5 / Small 4), Cohere Command A Reasoning (underlying APIs accept on/off but not an effort param)
-  - **Low / high only**: xAI Grok 4.3 (API limitation)
-  - **Three-state (off / on / auto)**: when you enter an **unlisted custom model** on a thinking-capable provider (incl. Mistral, Perplexity, and the custom OpenAI-compatible endpoint). Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that 422 on a non-thinking SKU; defaults to Off
-  - **Always-on SKUs** (thinking is intrinsic to the model; no toggle shown): MiniMax M2.x, Tencent Hunyuan (TurboS / 2.0 Thinking / T1), Mistral Magistral, Perplexity Sonar Reasoning Pro, Grok 4.20 Reasoning / Multi-Agent
-  - **No thinking toggle**: GitHub Models, YandexGPT (the gateway/API doesn't support reasoning params), LiteLLM (the gateway injects no thinking params — upstream model defaults apply)
+  - **Five providers have no temperature control**: OpenAI (the whole GPT-5.x line is reasoning-only and returns 400 on any non-default value), Claude (adaptive/extended thinking on the listed SKUs rejects temperature), Gemini (3.x officially recommends keeping the default 1.0 — lowering it can trigger looping output), Kimi (Moonshot) (k2.x / k3 lock it), and Azure OpenAI. For these the parameter is never sent and the input is hidden, so the server default applies — steer the tone with the system prompt or thinking effort instead.
+- **Thinking mode**: lets the AI think before translating — higher quality, slower and pricier. Supported models get an extra dropdown below **Model**, and the choice is **stored per model**, so switching models preserves each one's setting. Four shapes:
+  - **Two levels (Off / On)**: DeepSeek (ON always uses the top tier — the API's middle tiers add nothing for translation), Doubao, Zhipu GLM, Xiaomi MiMo, MiniMax M3, Baidu ERNIE 5.0 Thinking, Mistral (Medium 3.5 / Small), Cohere Command A Reasoning, SiliconFlow — these APIs accept on/off but not an effort value
+  - **Four levels (Off / Low / Medium / High)**: every other thinking-capable provider, including Claude, OpenAI GPT-5.x, Gemini, Qwen3, Kimi (Moonshot), xAI Grok, GPT-OSS on Groq and Cerebras, Azure OpenAI, and the thinking-tagged models on OpenRouter
+  - **The lowest level reads Min, not Off**: when the vendor ships no "off" value at all, the bottom entry is labelled **Min** — the model still reasons and still bills, so calling it Off would be a lie. That applies to Gemini 3.x, xAI Grok 4.5 / 4.6, GPT-OSS on Groq and Cerebras, Kimi K3 / K2.6, plus the single SKU **Claude Fable 5** (officially Always on — an explicit disable returns 400; its siblings Opus 5 / Sonnet 5 / Haiku 4.5 can be turned off)
+  - **Three-state (Off / On / Auto)**: when you type an **unlisted custom model** on a thinking-capable provider. Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that error on a non-thinking SKU; defaults to Off
+  - **No thinking control at all**: StepFun, YandexGPT, OpenCode Zen, TokenHub, Atlas Cloud, Nvidia NIM, Custom (OpenAI-compatible). Aggregators front many upstreams whose "can thinking be disabled?" answer differs per model, so a blanket disable would hit models that don't accept one — they all follow the upstream model's server-side default instead
 
 ### Provider-Specific Notes
 
-- **GitHub Models**: authenticates with a GitHub PAT (needs the `models:read` scope); free quota is tiered per model — a good entry point if you don't have a paid key.
-- **Tencent Hunyuan**: the official endpoint currently rejects browser CORS preflights (direct calls always fail), so **API Relay is ON by default** to make it work out of the box. If Tencent fixes this, you can switch back to direct in API Settings. See [API Relay](#api-relay-user-controlled).
-- **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so **API Relay is ON by default** (the switch stays user-controllable, and you can point the URL at your own relay instead).
+- **TokenHub (Tencent)**: Tencent Hunyuan has moved to TokenHub, which resells DeepSeek / GLM / Kimi / MiniMax / MiMo alongside its own hy3. ⚠ **An API key alone is not enough** — each model must first be enabled on the console's "Online Inference" page (free trial or pay-as-you-go), otherwise every call returns 400 `401006` ("service ID does not exist"). The official endpoint only sends CORS headers on successful responses and answers every preflight with 405, so direct browser calls always fail and **API relay is ON by default**.
+- **OpenCode Zen**: an aggregator whose `(free)`-suffixed SKUs cost nothing to use — an account with billing details on file is required, but there is no prepayment. The upstream sends no CORS headers and answers preflights with a 404 page, so **API relay is ON by default** here too.
+- **Cerebras**: included for **speed**, not for its catalogue (both public models are also available on Groq / Nvidia / SiliconFlow). Cerebras advertises ~3000 tokens/s on gpt-oss-120b, which is very noticeable for the short, frequent requests line-by-line translation produces; it also grants 1M free tokens per day.
+- **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so **API relay is ON by default** (the switch stays user-controllable, and you can point the URL at your own relay instead).
+- **Removed from the service list**: GitHub Models (retired by GitHub on 2026-07-30), Perplexity Sonar (chat/completions shut down ahead of schedule), and the old Tencent Hunyuan endpoint (migrated to TokenHub). **LiteLLM** is no longer a separate entry — it is now a URL quick-pick under Custom (OpenAI-compatible); see [Self-hosted gateways and third-party inference platforms](#self-hosted-gateways-and-third-party-inference-platforms).
 
 ### Regional Endpoint Switcher
 
 Many providers run separate endpoints for Mainland China, International, and US regions. The official endpoints appear as quick-pick chips above the URL field — click to switch:
 
-| Provider             | Available regions                                   |
-| :------------------- | :-------------------------------------------------- |
-| Qwen / Qwen-MT       | Mainland CN / International / US                    |
-| Moonshot (Kimi)      | Mainland CN / International                         |
-| Zhipu GLM            | Mainland CN / International (Z.ai)                  |
-| MiniMax              | Mainland CN / International                         |
-| Xiaomi MiMo          | Pay-as-you-go / Token Plan (CN / Singapore / Europe) |
-| Doubao (Volcano Ark) | Standard / Coding Plan                              |
+| Provider           | Available regions                                    |
+| :----------------- | :--------------------------------------------------- |
+| Qwen / Qwen-MT     | Mainland CN / International / US                     |
+| Kimi (Moonshot)    | Mainland CN / International                          |
+| Zhipu GLM          | Mainland CN / International (Z.ai)                   |
+| MiniMax            | Mainland CN / International                          |
+| TokenHub (Tencent) | Mainland CN / International                          |
+| Xiaomi MiMo        | Pay-as-you-go / Token Plan (CN / Singapore / Europe) |
 
 ### URL Auto-Completion
 
-Self-hosted and multi-region providers (Custom, LiteLLM, TranslateGemma, MiLMMT, Qwen / Qwen-MT, Doubao, Nvidia) complete the URL to the full path the moment focus leaves the field; for every other provider, a custom URL is normalized automatically before each request is sent. Paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest — the classic "missing `/v1/chat/completions` → connection failure" mistake can't happen.
+Claude and every OpenAI-protocol provider (including Custom, TranslateGemma, MiLMMT, Qwen / Qwen-MT, Nvidia, and YandexGPT) complete the URL to its full path the moment focus leaves the field; for the rest, a custom URL is normalized automatically before each request is sent. Paste `http://host:port` or `http://host:port/v1` and the tool fills in the rest — the classic "missing `/v1/chat/completions` → connection failure" mistake can't happen.
 
 ## Free machine translation essentials
 
@@ -121,7 +125,7 @@ The shared free endpoints are rate-limited per user. GTX now translates in **bat
 
 - When throttled it **pauses all requests** to the service and resumes on its own shortly after, showing "Rate limited — pausing briefly, will retry automatically"
 - Translation slows down but keeps going; in most cases no action is needed
-- If the failure panel keeps showing rate-limit messages: wait a few minutes and hit "Retry" (the cache skips completed lines), switch to the **Edge (Free)** / **DeepLX (Free)** backups, or move long batch jobs to a keyed service like DeepL / Qwen-MT / DeepSeek
+- If the failure panel keeps showing rate-limit messages: wait a few minutes and hit "Retry failed lines" (the cache skips completed lines), switch to the **Edge (Free)** / **DeepLX (Free)** backups, or move long batch jobs to a keyed service like DeepL / Qwen-MT / DeepSeek
 
 Can't connect, or seeing CORS errors in the console? First **switch the gateway or try Edge (Free)** — that fixes most cases in one step. Still failing? Check your network environment (mainland China blocking, corporate network interception, browser extensions) — see [FAQ → GTX Free cannot connect](./faq.mdx#gtx-free-cannot-connect-or-shows-cors-errors) for the checklist.
 
@@ -131,13 +135,15 @@ Qwen-MT is a machine translation service (not a general LLM). It has no system-p
 
 ### Picking a Model
 
-You'll need to fill in the **Model** field manually:
+The **Model** field offers a dropdown, and you can also type a SKU yourself:
 
-| Model            | Characteristics                              | Best for                                  |
-| :--------------- | :------------------------------------------- | :---------------------------------------- |
-| `qwen-mt-plus`   | Highest quality, slower, premium pricing     | Literature, legal, medical translation    |
-| `qwen-mt-turbo`  | Balanced speed and quality                   | General documents, batch jobs             |
-| `qwen-mt-flash`  | Fastest and cheapest (**default**)           | Subtitles, UI strings, large short-text volumes |
+| Model           | Characteristics                          | Best for                                        |
+| :-------------- | :--------------------------------------- | :---------------------------------------------- |
+| `qwen-mt-plus`  | Highest quality, slower, premium pricing | Literature, legal, medical translation          |
+| `qwen-mt-flash` | Fastest and cheapest (**default**)       | Subtitles, UI strings, large short-text volumes |
+| `qwen-mt-lite`  | A cheaper lightweight tier               | High-volume jobs where quality matters less     |
+
+> The older `qwen-mt-turbo` has been deprecated by Alibaba Cloud and is no longer listed.
 
 ### Domain Hint
 
@@ -160,16 +166,17 @@ Qwen-MT is one of the few MT services with **native glossary support**: with the
 
 Qwen-MT covers ~92 languages; a number of low-resource ones aren't covered and the UI auto-blocks them with a clear message (the in-app blocklist is authoritative): e.g. Kyrgyz (ky), Turkmen (tk), Tajik (tg), Mongolian (mn), Malayalam (ml), Uyghur (ug), Amharic (am), and dozens more.
 
-## API Relay & Built-in Proxy
+## API relay & Built-in Proxy
 
 Some providers' official endpoints block direct browser calls (CORS). The tool offers two proxy channels; text is never stored on our servers.
 
-### API Relay (user-controlled)
+### API relay (user-controlled)
 
-12 providers — DeepSeek, OpenAI, Claude, Qwen, Moonshot (Kimi), Doubao, Zhipu GLM, Mistral, xAI (Grok), Perplexity, Tencent Hunyuan, and YandexGPT — expose an **"API Relay"** switch in API Settings. When on, requests route through our Cloudflare relay (only the request body and auth headers are forwarded):
+Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI, and Custom — 22 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao, Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun, Baidu ERNIE, Mistral, xAI (Grok), Cohere, YandexGPT, OpenRouter, OpenCode Zen, TokenHub, Groq, Cerebras, SiliconFlow, Atlas Cloud — exposes an **"API relay"** switch in API Settings. When on, requests route through our Cloudflare relay (only the request body and auth headers are forwarded):
 
 - Most providers default to **OFF** — when a direct call hits a CORS / 403 wall, the UI shows an actionable hint to enable it
-- **Hunyuan and YandexGPT default to ON**: both official endpoints currently can't be reached from browsers, so the relay is what makes them work out of the box. The switch stays available — flip back to direct if the upstream ever fixes CORS
+- **OpenCode Zen, TokenHub and YandexGPT default to ON**: none of the three can be reached from a browser today (the first two answer preflights with 404 / 405, Yandex sends no CORS headers at all), so the relay is what makes them work out of the box. The switch stays available — flip back to direct if an upstream ever fixes CORS
+- **Providers whose endpoint you own have no switch**: Custom, Azure OpenAI and Nvidia NIM point at an address you supply, so there is no fixed upstream for a relay to target; Gemini puts the model name in the URL path, which a pass-through relay can't forward
 - **Self-hosted relay**: prefer your own relay? Put its address in the URL field. The precedence is fixed: **custom URL > relay switch > official direct** — with a URL filled in, the relay switch is grayed out with a note ("clear the URL to re-enable")
 - The relay passes through the server's `Retry-After` header, so rate-limit auto-slowdown is exactly as precise as direct calls
 
@@ -186,7 +193,7 @@ Want to run models locally for privacy? The tool works with any OpenAI-compatibl
 :::warning Timing out a lot? Fix concurrency first, not the model
 Local servers usually have **one parallel slot** (llama.cpp defaults to `--parallel 1`; LM Studio's Max Concurrent is single-digit), while this tool defaults to 10 concurrent lines. The surplus requests **queue on the server**, and each request's timeout clock starts the moment it is sent — on slow hardware the ones at the back of the queue expire before their turn ever comes.
 
-Lower "Call Parameters → Concurrent Lines" to **2-4** (or match your server's slot count) before raising "Advanced Settings → Timeout". Reducing concurrency rarely makes things slower: the server was computing them one at a time anyway.
+Lower "Call Parameters → Concurrent lines" to **2-4** (or match your server's slot count) before raising "Advanced Settings → Timeout". Reducing concurrency rarely makes things slower: the server was computing them one at a time anyway.
 :::
 
 ### Default Endpoints
@@ -214,14 +221,20 @@ So the carefully pre-rendered prompt gets wrapped a second time — in whatever 
 
 > **koboldcpp** is a single-file llama.cpp wrapper (no install, one .exe, built-in web UI). On its default port 5001 it serves both the KoboldAI API and an OpenAI-compatible one.
 
-### LiteLLM Self-Hosted Gateway
+### Self-hosted gateways and third-party inference platforms
 
-[LiteLLM](https://docs.litellm.ai/docs/) is a self-hosted proxy that fronts 100+ upstream models behind one OpenAI-compatible API. Pick **LiteLLM** directly from the service list — versus Custom, it gives you a dedicated config slot, so running LiteLLM as your daily driver doesn't force you to rewrite Custom's URL every time you switch to another self-hosted endpoint.
+Besides the four local runtimes, **Custom (OpenAI-compatible)** offers three non-local quick-pick URLs — click to fill, no typing:
 
-- Default address `http://127.0.0.1:4000/v1/chat/completions` (litellm's default port); **the URL is the credential**
-- **API Key optional**: not needed for a bare local proxy; fill it in if your proxy has a master / virtual key configured
+| Quick pick | Default address | Notes |
+| --- | --- | --- |
+| LiteLLM | `http://127.0.0.1:4000/v1/chat/completions` | Self-hosted proxy fronting 100+ upstream models behind one OpenAI-compatible API; allows browser cross-origin requests by default, so no extra CORS setup |
+| Together AI | `https://api.together.xyz/v1/chat/completions` | Third-party inference platform hosting many open-weight models |
+| Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | Same idea |
+
+LiteLLM used to be its own service entry; it has been folded into Custom, because like Together and Fireworks it is simply "an OpenAI-protocol address" and doesn't need a dedicated slot. Everything about using it still holds:
+
+- **The URL is the credential**, and the **API key is optional** (skip it for a bare local proxy; fill it in if your proxy has a master / virtual key)
 - **Model can stay empty**: when started with `litellm --model X` (the official quick-start) or with a `completion_model` server default, an empty model field follows the server's default; for multi-model config.yaml deployments, enter the model alias
-- LiteLLM allows browser cross-origin requests by default — no extra CORS setup
 
 ### TranslateGemma
 
@@ -235,7 +248,7 @@ Google's translation-specialized Gemma model, trained specifically for translati
 - **12B's "multiple options" noise**: this is the model's own behavior, not an integration issue. In testing, 12B often returns several candidate translations for the same sentence with no fixed format — the tool can't filter them out, so the output is full of noise. On home hardware, stick with 4B; if you want to use 12B, verify the output is clean on a short sample before running a full batch
 - **Prompt settings don't apply**: like Qwen-MT, it's a machine-translation service — the prompt is built into the call format; system/user prompts only affect LLM providers
 - **Source language must be explicit** — auto-detect isn't supported
-- **Limited language coverage**: only ~55 mainstream languages (Google's WMT24++ benchmark scope). About 68 low-resource languages — including Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr) — are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
+- **Limited language coverage**: 53 mainstream languages are selectable in the tool (Google's WMT24++ benchmark scope). The other 69 — including Cantonese (yue), Bhojpuri (bho), Wolof (wo), Aragonese (an), Guarani (gn), Kurdish (ckb/kmr) — are blocked by the UI. Use DeepL / Google / Azure / Qwen-MT for broader coverage
 
 ### MiLMMT
 
@@ -248,7 +261,7 @@ Xiaomi's open-source translation model [MiLMMT-46](https://huggingface.co/xiaomi
 - **The model name must match what your runtime has loaded — when in doubt, leave it empty**: an empty field sends no model, so the server uses whatever is currently loaded. Faster than guessing the name after a 404
 - **Prompt settings, glossary and context translation all have no effect** — same reason as above: the model can't take instructions. Use an LLM provider or Qwen-MT when you need terminology control
 - **Source language must be explicit** — the prompt hard-codes the source language name; the model has no auto-detect mode
-- **46 languages**: **Cantonese (yue) is supported** (TranslateGemma is not), but **Ukrainian (uk), Serbian (sr) and the Baltic three are not**, and Indic coverage stops at Bengali / Hindi / Tamil / Urdu. Unsupported languages are blocked by the UI
+- **47 languages selectable** (Xiaomi brand it as 46 language families): **Cantonese (yue) is supported** (TranslateGemma is not), along with Kazakh / Uzbek / Azerbaijani / Lao / Burmese / Khmer / Malay; but **Ukrainian (uk), Serbian (sr) and the Baltic three are not**, and Indic coverage stops at Bengali / Hindi / Tamil / Urdu. Unsupported languages are blocked by the UI. 39 languages are shared with TranslateGemma
 
 > Xiaomi say instruction-following and glossary support are planned for a future release. Until then, treat it as a pure MT engine.
 

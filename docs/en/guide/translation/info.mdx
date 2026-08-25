@@ -63,20 +63,27 @@ LLMs occasionally drop a line, return an empty response, or break formatting. Wh
 
 - Failed lines automatically **fall back to the original text** — never empty, so the output is always usable
 - A red alert at the top of the result panel says how many lines failed
-- Click **Retry** to reissue only those — completed content stays as-is and isn't re-billed
+- Click **Retry failed lines** to reissue only those — completed content stays as-is and isn't re-billed
 - A copy button lets you grab the failed source rows for manual handling elsewhere
 
 **Multi-language batch mode**: when translating into multiple targets at once, if a whole target language fails (quota exhausted, model refusal, etc.), the failing language codes get aggregated into a dedicated panel. One-click copy them back into the "target languages" field to retry.
 
 > Network blips, 429 rate-limits, and 5xx errors retry automatically. Bad API key, timeouts, context-length-exceeded, and max_tokens truncation never retry. See [FAQ → Will failed translations retry?](./faq.mdx#will-failed-translations-retry-automatically-whats-not-retried) for the full list.
 
-### Cancel Translation
+### Cancel and the run-time settings lock
 
-Click the close button on the progress modal to abort a running batch. Already-translated lines are cached, so clicking "Translate" again resumes from where you stopped.
+While a translation runs, an **inline progress bar** sits above the result area (lines done / total, current language, current file) with a **Cancel** button on its right:
+
+- Cancelling **settles within a second** and the bar switches to "Stopped" — it doesn't just walk away
+- Every finished line is already in the cache, so clicking "Translate" again resumes from where you stopped and never bills twice — **the cache is the checkpoint**
+- **Settings and inputs are locked while running**: languages, provider, prompts, export format, advanced options, the upload area and the source textarea are all frozen. The whole run executes against the snapshot taken when you clicked "Translate": changing a setting mid-run structurally cannot affect the current run (yet the control would flip, so the UI would be lying), while swapping files or editing the source text mid-run genuinely **corrupts the result** (it clears the output being written, or leaves you exporting new source with old translations). Cancel first, change, translate again — the cost of doing so is now near zero
+- **Read-only actions stay available**: extract plain text, copy, and export work at any time
 
 ### RTL Language Auto-Adaptation
 
-Right-to-left languages (Arabic, Hebrew, Persian, Urdu) automatically render right-to-left in the textarea and result view — no manual configuration.
+Right-to-left languages (Arabic, Hebrew, Persian, Urdu) automatically render right-to-left in the textarea and result view — no manual configuration. Direction is resolved **per line**: in a file mixing Chinese, English and Arabic, each line is laid out by its own first strong-direction character, so an RTL line never inherits the block's LTR direction and end up with its punctuation on the wrong side.
+
+For bilingual ASS export, Persian (fa), Urdu (ur), Pashto (ps), Dari (prs), Sorani Kurdish (ckb) and Uyghur (ug) are all registered as Arabic-script, so pairing them with Chinese no longer assigns a Chinese font that has no Arabic glyphs (which exports a screen full of tofu boxes); Hebrew is its own script bucket. The ASS style drawer's preview also shows a sample sentence in the target script.
 
 ---
 
@@ -152,16 +159,16 @@ One-click backup of every configuration: API credentials, model parameters, API 
 
 ### General Options
 
-- **Use Cache**: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.
-- **Retry Count**: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.
+- **Use translation cache**: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.
+- **Retry count**: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.
 - **Timeout**: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.
-- **Max Tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
+- **Max tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
 - **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
 - **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `_{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}_{lang}.{ext}`, or combinations like `{name}_{lang}_{date}.{ext}`.
 
 ### API Parameter Tuning
 
-#### Chunk Size
+#### Chunk size
 
 Non-LLM APIs (Google / Azure) split long text into chunks before sending. **Chunk size** is the per-chunk character cap. Common limits:
 
@@ -179,7 +186,7 @@ Non-LLM APIs (Google / Azure) split long text into chunks before sending. **Chun
 
 The cooldown between chunked requests. Increase on poor networks or free APIs. For example, Azure Translate Free Tier works best at **5000 ms** or higher.
 
-#### Concurrent Lines
+#### Concurrent lines
 
 The max number of lines translated in parallel. **The default is already tuned per service** — free APIs run fast, paid APIs default to safe. Bump it up if you want speed, drop it on 429 rate-limits, otherwise leave it alone.
 
@@ -194,13 +201,13 @@ The max number of lines translated in parallel. **The default is already tuned p
 
 </details>
 
-#### Context Mode Concurrency
+#### Context mode concurrency
 
 - **Default**: 3 (1 for some providers)
 - **What it does**: in context-aware mode, how many "target lines" go into a single request. Each request also carries the surrounding context.
 - **Trade-off**: larger values give higher throughput but force the model to emit more lines per response, raising the chance of formatting drift. Smaller values are steadier but use more requests. Stick with 3 for documents/subtitles, push to 5 for plain text.
 
-#### Context Lines
+#### Context lines
 
 How many surrounding lines accompany each batch sent to the model — more = more coherent, but heavier requests. **The default is tuned**, normally no need to change. Drop it if you hit "context length exceeded"; raise it for better dialogue flow.
 

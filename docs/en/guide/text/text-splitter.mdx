@@ -26,7 +26,7 @@ faq:
   - q: Does the separator field have a default? Why does it differ by language?
     a: Yes. With the UI in Chinese, Traditional Chinese, or Japanese the default is `。 ？ ！`; every other language defaults to `. ? !`. The two sets are deliberately not merged, because a bare ASCII period often isn't a sentence marker in real text — merging them would cut `3.5` into "3." and "5", `config.json` into "config." and "json", and `tools.newzone.top` into three pieces. You can edit it anytime, or use the CJK / English-Latin preset buttons.
   - q: Why is the default character count 5000?
-    a: Because the remaining hard limit measured in characters comes from machine-translation APIs (both Google Translate and DeepL cap the free tier at 5000 characters per request), not from LLM context — GPT-5 is around 400K tokens and Claude / Gemini / DeepSeek are all at 1M, so 2000-character chunks accomplish nothing. Leaving the field empty falls back to 5000.
+    a: Because the remaining hard limit measured in characters comes from machine-translation APIs (both Google Translate and DeepL cap the free tier at 5000 characters per request), not from LLM context — GPT-5.6 is around 400K tokens and Claude / Gemini / DeepSeek are all at 1M, so 2000-character chunks accomplish nothing. Leaving the field empty falls back to 5000.
   - q: Can I merge the segments back into one text?
     a: Yes. "Copy Merged Text" joins every segment into one document on your clipboard; "Export Merged Text" saves that same document as a single .txt. Both use the "Merge Separator" in the config panel (two newlines by default — i.e. a blank line between segments — and escapes like `\n` and `\t` are supported). Note that Length and the sentence modes normalize newlines to spaces and drop blank lines first, so the merged output is re-joined text rather than your original layout.
   - q: When does "Export Segment Files" package as ZIP?
@@ -107,7 +107,7 @@ The two sets are deliberately kept apart, because a bare ASCII period is frequen
 
 Chunks text into blocks of a given character count. **Leaving it empty falls back to 5000** (minimum 1).
 
-5000 is the default because the remaining character-denominated hard limit comes from **machine-translation APIs** — Google Translate and DeepL both cap the free tier at 5000 characters per request and reject anything longer — whereas LLM context stopped being the bottleneck long ago (GPT-5 around 400K tokens; Claude / Gemini / DeepSeek at 1M, where a 2000-character chunk accomplishes nothing).
+5000 is the default because the remaining character-denominated hard limit comes from **machine-translation APIs** — Google Translate and DeepL both cap the free tier at 5000 characters per request and reject anything longer — whereas LLM context stopped being the bottleneck long ago (GPT-5.6 around 400K tokens; Claude / Gemini / DeepSeek at 1M, where a 2000-character chunk accomplishes nothing).
 
 This mode has its own **separate separator field**, used for something entirely different — it only **snaps the cut points**, and only when filled in:
 

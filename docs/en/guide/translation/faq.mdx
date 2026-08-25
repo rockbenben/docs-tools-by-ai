@@ -7,7 +7,7 @@ description: Translation empty or slow? Is my API key safe? This page answers co
 faq:
   - q: What if the translation result is empty, shows only the original text, or returns null?
     a: >-
-      If only a few lines show the original text, that's the failed-line fallback — click "Retry"
+      If only a few lines show the original text, that's the failed-line fallback — click "Retry failed lines"
       in the red panel to re-translate just those lines. If nothing translated at all, work
       through: click the API status badge → "Test Connection"; follow the on-page error message
       (bad key, quota exhausted, etc.); switch to free GTX and translate a small sample — if GTX
@@ -16,14 +16,14 @@ faq:
   - q: Will failed translations retry automatically? What's not retried?
     a: >-
       Yes. Network blips, rate limits (429), and temporary server errors (5xx) retry up to your
-      "Retry Count". Lines that still fail fall back to the original text and collect in a red
-      panel with one-click Retry. Errors where retrying can't help need a settings change
+      "Retry count". Lines that still fail fall back to the original text and collect in a red
+      panel with one-click Retry failed lines. Errors where retrying can't help need a settings change
       instead: bad key (401/403) → fix the API key; timeout → raise "Timeout"; text too long
-      (context length) → lower "Context Lines" or split the file; output truncated (max_tokens)
-      → raise "Max Tokens".
+      (context length) → lower "Context lines" or split the file; output truncated (max_tokens)
+      → raise "Max tokens".
   - q: Why is translation slow?
     a: >-
-      The most effective fix is raising "Concurrent Lines" — add 50–100% over the service
+      The most effective fix is raising "Concurrent lines" — add 50–100% over the service
       default, and dial back the moment you see 429 errors. Also: keep the cache on to reuse
       results; enable context-aware translation for AI models; switch to a faster service when
       in a hurry (free GTX far outpaces small local models); for small local models (under 14B)
@@ -33,15 +33,15 @@ faq:
       The tool ships multiple safeguards: when a model drops the line markers it no longer
       guesses positions by line number, and merged blocks are discarded and re-translated as a
       group. If a model still does it often (Gemini and Mistral break markers the most), switch
-      to a more format-faithful model (DeepSeek / Claude / GPT), lower "Context Mode Concurrency"
-      (e.g. 3 → 1), and use the red panel's Retry to fill the gaps.
+      to a more format-faithful model (DeepSeek / Claude / GPT), lower "Context mode concurrency"
+      (e.g. 3 → 1), and use the red panel's Retry failed lines to fill the gaps.
   - q: How do I use AI translation for free, without a paid API key?
     a: >-
       Start with the default GTX (Free) — zero config, fast, plain machine translation that's
       plenty for batch subtitles; if it won't connect, switch to the equally free Edge (Free) or
       DeepLX (Free), which take different routes. For free LLM translation, several listed providers offer free
       tiers: Google AI Studio (Gemini Flash family), OpenRouter (models with the :free suffix),
-      Nvidia NIM, GitHub Models (just a GitHub account), SiliconFlow, and more. Note that
+      Nvidia NIM, OpenCode Zen (the `(free)` SKUs), Cerebras (1M tokens/day), SiliconFlow, and more. Note that
       overseas services need a suitable network environment. Only deploy locally for
       privacy-sensitive content — otherwise free cloud APIs beat small local models on both
       speed and quality.
@@ -113,8 +113,8 @@ faq:
   - q: Why does DeepL go through a relay server?
     a: >-
       DeepL's official API can't be called directly from a web page (browser CORS restriction),
-      so the tool routes requests through a built-in relay — same for Nvidia NIM. Hunyuan and
-      YandexGPT use the user-controlled "API Relay" switch instead (on by default, can be turned
+      so the tool routes requests through a built-in relay — same for Nvidia NIM. OpenCode Zen, TokenHub and
+      YandexGPT use the user-controlled "API relay" switch instead (on by default, can be turned
       off or pointed at your own relay). All channels only forward and never record your content;
       a custom API URL in settings always takes precedence and goes straight to your endpoint.
   - q: Is my API Key saved on a server?
@@ -123,12 +123,13 @@ faq:
       access them.
   - q: Is there a CLI, API, or desktop version?
     a: >-
-      No — the tool is web-only: open and use, always up to date, with subtitles and API keys
-      stored only in your own browser. No desktop or portable builds are planned; CLI /
-      programmatic access is on the long-term roadmap. To cut down manual steps: batch mode
-      takes multiple files in one drag-and-drop; Import Settings pre-configures target languages
-      and everything else from a JSON file; multi-language mode accepts a pasted string of
-      language codes (zh, de, ru).
+      There is a CLI. The translation engine is platform-agnostic TypeScript, and the repo ships
+      a command-line entry point (`yarn cli`) that reuses the exact same pipeline as the web app —
+      batching, concurrency, retries, 429 cooldown, glossary, context translation and per-line
+      caching all behave identically. It handles subtitles, Markdown and JSON, and can read the
+      settings JSON exported from the web UI. See [Command-line translation](./cli.mdx). There is
+      no hosted API and no downloadable desktop build; on the web, batch mode, Import settings and
+      pasted language codes (zh, de, ru) cut down the manual steps.
 ---
 
 # FAQ
@@ -139,7 +140,7 @@ faq:
 
 Two different situations — check which one you have:
 
-**Only a few lines show the original text** — that's the failed-line fallback: lines that couldn't be translated keep the original text as a placeholder so the file structure stays intact. A red alert appears at the top of the result — click **Retry** to re-translate just those lines (completed content isn't re-billed). Usually it's a network blip or a flaky service; one or two retries clear it.
+**Only a few lines show the original text** — that's the failed-line fallback: lines that couldn't be translated keep the original text as a placeholder so the file structure stays intact. A red alert appears at the top of the result — click **Retry failed lines** to re-translate just those lines (completed content isn't re-billed). Usually it's a network blip or a flaky service; one or two retries clear it.
 
 **Nothing translated at all / large blanks / null** — the API isn't getting through. Work through these in order:
 
@@ -152,7 +153,7 @@ Still stuck? Press **F12** → **Network** → click "Translate" once more → o
 
 ## Will failed translations retry automatically? What's not retried?
 
-Yes — **network blips, rate limits (429), and temporary server errors (5xx)** retry automatically, up to your "Retry Count". Lines that still fail **fall back to the original text** (never empty) and collect in the red failure panel — click **Retry** to re-translate them in one go without re-billing completed content.
+Yes — **network blips, rate limits (429), and temporary server errors (5xx)** retry automatically, up to your "Retry count". Lines that still fail **fall back to the original text** (never empty) and collect in the red failure panel — click **Retry failed lines** to re-translate them in one go without re-billing completed content.
 
 For these errors retrying can't change the outcome, so the tool fails fast and you need a settings change:
 
@@ -160,21 +161,21 @@ For these errors retrying can't change the outcome, so the tool fails fast and y
 | --- | --- |
 | Bad key (401 / 403) | Re-check or replace the API Key |
 | Timeout | Raise "Timeout", or pick a faster service |
-| Text too long (context length exceeded) | Lower "Context Lines", or split the file |
-| Output truncated (max_tokens reached) | Raise "Max Tokens" (or set 0 = unlimited), or split the file |
+| Text too long (context length exceeded) | Lower "Context lines", or split the file |
+| Output truncated (max_tokens reached) | Raise "Max tokens" (or set 0 = unlimited), or split the file |
 
 Full mechanism: [Feature Guide → Failed-Line Retry](./info.mdx#failed-line-retry).
 
 ## Why is translation slow?
 
-The single most effective fix: **raise "Concurrent Lines"** — add 50%–100% over the current service's default, and dial back the moment 429 errors appear. Also:
+The single most effective fix: **raise "Concurrent lines"** — add 50%–100% over the current service's default, and dial back the moment 429 errors appear. Also:
 
 - **Keep the cache on** (default) — identical content is reused instantly on re-runs
 - **Enable "Context-Aware Translation" for AI models** — more coherent AND higher throughput
 - **In a hurry? Pick a faster service** — free GTX runs circles around small local models; paid DeepL is faster than Claude Opus
 - **Small local models (under 14B) need the opposite — context OFF**: small models drop lines in long batches; line-by-line concurrent mode is both faster and more reliable
 
-Defaults vary per service. See [Feature Guide → Concurrent Lines](./info.mdx#concurrent-lines).
+Defaults vary per service. See [Feature Guide → Concurrent lines](./info.mdx#concurrent-lines).
 
 ## Translated subtitles are out of order, or several lines got merged into one — what to do?
 
@@ -187,13 +188,15 @@ Some LLMs (**Gemini and Mistral** in particular) tend to break the markers the t
 If a particular model still does it frequently:
 
 1. **Switch to a more format-faithful model** — DeepSeek / Claude / GPT follow the line markers noticeably better
-2. **Lower "Context Mode Concurrency"** in API settings (e.g. 3 → 1) — the fewer lines per response, the less scrambling
-3. Broken lines land in the failure panel — click **Retry** to fill them in without re-billing completed content
+2. **Lower "Context mode concurrency"** in API settings (e.g. 3 → 1) — the fewer lines per response, the less scrambling
+3. Broken lines land in the failure panel — click **Retry failed lines** to fill them in without re-billing completed content
 
 ## How do I use AI translation for free, without a paid API key?
 
 - **Zero-config start**: the default **GTX (Free)** needs no key and runs fast — plain machine translation, but plenty for batch subtitles and everyday text. If it won't connect, switch to the equally free **Edge (Free)** or **DeepLX (Free)** — different routes, mutual backups
-- **Free LLM tiers**: several listed providers offer free quotas — **Google AI Studio** (Gemini Flash family), **OpenRouter** (models with the `:free` suffix), **Nvidia NIM**, **GitHub Models** (just a GitHub account — see the [API guide](./api.mdx#provider-specific-notes)), **SiliconFlow**, and more. Browse the service list — many providers are included precisely because they have a free tier
+- **Free LLM tiers**: several listed providers offer free quotas — **Google AI Studio** (Gemini Flash family), **OpenRouter** (models with the `:free` suffix), **OpenCode Zen** (the `(free)`-suffixed SKUs; an account with billing details is required, but there's no prepayment), **Cerebras** (1M tokens/day), **Nvidia NIM**, **SiliconFlow**, and more — see the [API guide](./api.mdx#provider-specific-notes). Browse the service list — many providers are included precisely because they have a free tier
+
+  > GitHub Models was retired by GitHub on 2026-07-30 and has been removed from the tool — don't go looking for it.
 - **Mind your network**: overseas services (Google, OpenRouter, …) need a suitable network environment — if they don't connect, check the network before blaming the config
 - Only **privacy-sensitive** content is worth deploying locally; otherwise free cloud APIs beat small local models on both speed and reliability (next question)
 
@@ -281,16 +284,16 @@ Two independent causes, and people usually hit both.
 
 **Thinking models** (e.g. the Qwen3 family, enabled by default) generate a long reasoning block before the actual translation — on limited hardware (a few tokens per second), every line waits tens of seconds for reasoning you never see. In order of effectiveness:
 
-1. **Turn thinking off**: append `/no_think` at the end of the system prompt (Translation Settings → System Prompt) — the Qwen3 family's soft switch; some community finetunes may not honor it
+1. **Turn thinking off**: append `/no_think` at the end of the system prompt (Translation Settings → System prompt) — the Qwen3 family's soft switch; some community finetunes may not honor it
 2. **Switch models**: pick an instruct variant, or select the translation-specialized [TranslateGemma](./api.mdx#translategemma) from the service list — no reasoning stage, solid quality from 4B, an order of magnitude faster
 3. **Check GPU offload**: single-digit tokens/s usually means most layers run on CPU — check the GPU settings in LM Studio / Ollama
 4. The Test Connection button shares the **"Request timeout"** setting with translation (default 180s) — raise it if reasoning genuinely takes that long
 
 ## Why does DeepL go through a relay server?
 
-DeepL's official API can't be called directly from a web page (a browser CORS restriction), so the tool routes requests through a built-in relay — **Nvidia NIM** works the same way. **Hunyuan and YandexGPT** use the user-controlled **"API Relay"** switch instead: their official endpoints currently can't be reached from browsers, so the switch defaults to ON but can be turned off at any time. All channels only forward requests and never record your content.
+DeepL's official API can't be called directly from a web page (a browser CORS restriction), so the tool routes requests through a built-in relay — **Nvidia NIM** works the same way. **OpenCode Zen, TokenHub (Tencent) and YandexGPT** use the user-controlled **"API relay"** switch instead: none of their official endpoints can be reached from a browser today, so the switch defaults to ON but can be turned off at any time. All channels only forward requests and never record your content.
 
-Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own relay) — it takes precedence over every built-in channel and requests go straight to your endpoint. See [Translation API Guide → API Relay & Built-in Proxy](./api.mdx#api-relay--built-in-proxy).
+Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own relay) — it takes precedence over every built-in channel and requests go straight to your endpoint. See [Translation API Guide → API relay & Built-in Proxy](./api.mdx#api-relay--built-in-proxy).
 
 ## Is my API Key saved on a server?
 
@@ -298,10 +301,12 @@ No. The API Key and all settings are stored only in the local browser; no server
 
 ## Is there a CLI, API, or desktop version?
 
-No — the tool is **web-only**: open and use, always up to date, nothing to install or update. Your subtitles and API keys live only in your own browser and never touch a server. Desktop / portable builds aren't planned; CLI / programmatic access is on the long-term roadmap (PRs welcome).
+**There is a CLI.** The engine behind all three translation tools is platform-agnostic TypeScript, and the repository ships a command-line entry point — clone it and run `yarn cli`. It reuses **the same pipeline and the same format parsing/assembly code** as the web app, so batching, concurrency, retries, 429 cooldown, glossary, context translation and per-line caching behave identically; only the browser-specific pieces (fetch, cache, cancellation) are swapped for Node equivalents. All three formats — subtitles, Markdown, JSON — are built in, and it reads the settings JSON you download from the web UI's "Export settings". Full usage: [Command-line translation](./cli.mdx).
 
-To cut down repetitive manual steps, combine these existing features for "semi-automation":
+**There is no hosted API, and no downloadable desktop build today**: the web app opens instantly, is always up to date, and needs no install or update. Your subtitles and API keys live only in your own browser and never touch a server.
+
+On the web, combine these existing features to cut down repetitive manual steps:
 
 - **Batch mode**: drag in multiple files at once — they queue automatically and download as a bundle
-- **Import Settings**: pre-configure target languages, API config, and every other parameter from a JSON file (see [Feature Guide → Settings Import/Export](./info.mdx#settings-importexport))
+- **Import settings**: pre-configure target languages, API config, and every other parameter from a JSON file (see [Feature Guide → Settings Import/Export](./info.mdx#settings-importexport))
 - **Quick language-code entry**: in multi-language mode, paste a string of codes (e.g. `zh, de, ru`) instead of clicking through the picker

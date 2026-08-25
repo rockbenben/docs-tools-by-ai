@@ -4,7 +4,7 @@ head:
   - - meta
     - property: og:title
       content: 字幕翻译器 - SRT/ASS/VTT/LRC 批量 AI 翻译与双语字幕生成 | Tools By AI
-description: 免费在线字幕翻译工具：批量处理 SRT、ASS、VTT、LRC 四种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 25+ 翻译引擎，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
+description: 免费在线字幕翻译工具：批量处理 SRT、ASS/SSA、VTT、LRC、SBV 六种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 35 种翻译引擎，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
 appUrl: https://tools.newzone.top/zh/subtitle-translator
 appName: Subtitle Translator
 image: https://docs.newzone.top/img/subtitle-translator-zh.webp
@@ -12,7 +12,7 @@ howto:
   name: 用 Subtitle Translator 翻译字幕的步骤
   steps:
     - name: 上传字幕文件
-      text: 拖入或粘贴 .srt / .ass / .vtt / .lrc 字幕文件到主界面。
+      text: 拖入或粘贴 .srt / .ass / .ssa / .vtt / .lrc / .sbv 字幕文件到主界面。
     - name: 选择目标语言
       text: 在右上角选目标语言；源语言默认 Auto 自动检测，也可手动指定。
     - name: 开始翻译
@@ -20,14 +20,15 @@ howto:
 faq:
   - q: 支持哪些字幕格式？SRT、ASS、VTT、LRC 都能翻译吗？
     a: >-
-      支持 SRT、ASS、VTT、LRC 四种格式。SRT/VTT 适配 YouTube、B 站、HTML5 播放器（YouTube 用 yt-dlp 导出、B 站在创作中心
-      下载）；ASS 适配 Aegisub 和动漫字幕组，行首位置标签（如 \an8）翻译后自动还原；LRC 适配音乐歌词文件。文件编码
+      支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式。SRT/VTT 适配 YouTube、B 站、HTML5 播放器（YouTube 用 yt-dlp 导出、B 站在创作中心
+      下载）；ASS/SSA 适配 Aegisub 和动漫字幕组，行首位置标签（如 \an8）翻译后自动还原；LRC 适配音乐歌词文件；SBV 是
+      YouTube 字幕编辑器的导出格式。文件编码
       （UTF-8/UTF-16/GBK/Shift-JIS）通过 jschardet 自动识别。复杂的 ASS 内联特效标签（颜色、动画、卡拉 OK）会被简化。
   - q: 字幕翻译用机器翻译还是 AI 大模型？哪个质量好、哪个便宜？
     a: >-
       便宜选机器翻译，高质量选 AI 大模型。机器翻译（MT）便宜或免费但对白语感平庸：Google 免费版零成本（长文本会被截断）、
       DeepL 欧洲语言顶尖、Qwen-MT 和 Azure Translate 同属此类。AI 大模型（LLM）按 token 计费但译文明显更自然——性价比
-      首选 DeepSeek（整季剧集大批量首选）；口语化质量首选 Claude Sonnet 或 GPT-5；超长字幕用 Gemini 3 Pro 的 1M token
+      首选 DeepSeek（整季剧集大批量首选）；口语化质量首选 Claude Sonnet 5 或 GPT-5.6；超长字幕用 Gemini 3.1 Pro 的长
       上下文。引擎配置在 [JSON 翻译](../json-translate/index.mdx)、[Markdown 翻译](../md-translator/index.mdx) 间共享，
       填一次到处可用。
   - q: 字幕里的人名、品牌名、专有名词怎么保持原文不被乱译？
@@ -91,11 +92,11 @@ import Privacy from '../_privacy.mdx';
 # 字幕翻译工具｜SRT/ASS/VTT/LRC 批量 AI 翻译指南
 
 :::tip 快速介绍
-Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SRT、ASS、VTT、LRC 四种格式和 120+ 种语言。通过分块压缩和并行翻译，1 秒即可处理一集电视剧字幕，并支持上下文关联翻译、本地缓存复用，以及多种免费 / 商业翻译 API 加 20+ 种大语言模型（含本地 Ollama / LM Studio / TranslateGemma）。
+Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式和 120+ 种语言。通过分块压缩和并行翻译，1 秒即可处理一集电视剧字幕，并支持上下文关联翻译、逐行实时上屏、本地缓存复用，以及 9 种免费 / 商业翻译 API 加 26 种大模型接口（含本地 Ollama / LM Studio / koboldcpp 与翻译专用的 TranslateGemma / MiLMMT）。
 :::
 
 :::tip 30 秒上手
-1. **拖入** 或 **粘贴** 字幕文件（`.srt` / `.ass` / `.vtt` / `.lrc`）
+1. **拖入** 或 **粘贴** 字幕文件（`.srt` / `.ass` / `.ssa` / `.vtt` / `.lrc` / `.sbv`）
 2. 选 **目标语言**（源语言默认 Auto 自动检测）
 3. 点 **翻译** —— 几秒导出，多语言时文件名自动带语言代码（如 `movie.zh.srt`、`movie.fr.srt`）
 
@@ -104,7 +105,7 @@ Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SR
 
 近年来，随着在线视频的兴起，国外热门影视作品的翻译多由视频平台完成，而原本活跃的字幕组则逐渐淡出人们的视野。然而，对于冷门视频和自制视频的字幕需求却未能得到有效满足，导致未配字幕的视频数量持续增加。为解决这一问题，可以用 Whisper 工具为这些生肉视频自动生成字幕，并通过翻译接口将其翻译成中文。具体操作步骤可参考文章：[找不到字幕？Whisper 让不懂外语的你也能看懂日剧](https://newzone.top/posts/2022-11-18-whisper_ai_subtitles.html)。
 
-针对市面上字幕翻译工具存在的翻译速度慢、不支持批量处理、需人工干预等问题，我开发了一款免费且功能全面的字幕翻译工具——[Subtitle Translator](https://tools.newzone.top/zh/subtitle-translator)。该工具支持 `.srt`、`.ass`、`.vtt`、`.lrc` 多种字幕格式，并具备秒级翻译速度，大幅提高翻译效率。我已成功转录超过 500 个视频，翻译后的字幕文件可在 [whisper-subtitles](https://github.com/rockbenben/whisper-subtitles) 查看。
+针对市面上字幕翻译工具存在的翻译速度慢、不支持批量处理、需人工干预等问题，我开发了一款免费且功能全面的字幕翻译工具——[Subtitle Translator](https://tools.newzone.top/zh/subtitle-translator)。该工具支持 `.srt`、`.ass`、`.ssa`、`.vtt`、`.lrc`、`.sbv` 多种字幕格式，并具备秒级翻译速度，大幅提高翻译效率。我已成功转录超过 500 个视频，翻译后的字幕文件可在 [whisper-subtitles](https://github.com/rockbenben/whisper-subtitles) 查看。
 
 ## 特色功能
 
@@ -114,16 +115,17 @@ Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SR
 - **批量翻译**：支持一次性处理上百份字幕文件，结束时汇总成功 / 失败统计（如"已导出 (3/5)"），无须逐个核对。
 - **翻译缓存**：自动本地缓存翻译结果，避免重复调用，节省时间和 API 费用。
 - **上下文关联翻译**（仅限 AI 模型）：AI 将结合上下文进行翻译，提高字幕对话的连贯性和准确性。
-- **格式兼容**：自动匹配主流字幕格式（.srt / .ass / .vtt / .lrc），导出文件与原文件名一致；翻译成多种语言时自动加语言代码后缀（如 `movie.zh.srt`、`movie.fr.srt`）。
+- **格式兼容**：自动匹配主流字幕格式（.srt / .ass / .ssa / .vtt / .lrc / .sbv），导出文件与原文件名一致；翻译成多种语言时自动加语言代码后缀（如 `movie.zh.srt`、`movie.fr.srt`）。
+- **逐行实时上屏**：翻译过程中，每译完一行立刻显示在进度条正下方的实时面板里（原文在上、译文在下，标物理源行号），不必等整批跑完才知道效果。未译出的行标琥珀色「未译出」，细节归下方的失败面板；面板跑完自动收起，中途上滚阅读也不会被拽回底部。
 - **字幕提取**：一键提取去掉时间码和序号的原文对白（自动复制到剪贴板），方便用于 AI 总结、二次创作，或配合译文交给 AI 校对/修订等场景。
 - **对照校对**：单文件、仅译文导出模式下，翻译完成后可逐行并排对照原文与译文，手动修改译文后一键「应用并下载」，适合人工逐句精修。
 - **译后质检**：翻译完成后自动检查每条字幕的语速（CPS，每秒字符数）、每行字数、行数与时长，超标处高亮，帮助发现"一闪而过"或"读不完"的字幕，可切换通用 / 中日韩两套阈值。
-- **多接口选择**：内置多种免费 / 商用翻译 API 以及 20+ 种 AI 大模型接口（含本地 Ollama / LM Studio / koboldcpp，与翻译专用的 TranslateGemma / MiLMMT），按预算与隐私需求自由选择。
+- **多接口选择**：内置 9 种免费 / 商用翻译 API 以及 26 种 AI 大模型接口（含本地 Ollama / LM Studio / llama.cpp / koboldcpp，与翻译专用的 TranslateGemma / MiLMMT），按预算与隐私需求自由选择。
 - **多语言支持与国际化**：支持 120+ 种主流语言（英语、中文、日语、韩语、法语、德语、西班牙语等），还可将同一字幕文件同时翻译成多种语言，满足国际化需求。
 
 ## 字幕格式支持
 
-Subtitle Translator 支持 `.srt`、`.ass`、`.vtt`、`.lrc` 等多种字幕格式，并提供自动格式匹配功能：
+Subtitle Translator 支持 `.srt`、`.ass`、`.ssa`、`.vtt`、`.lrc`、`.sbv` 多种字幕格式，并提供自动格式匹配功能：
 
 - **双语字幕**：翻译后的文本插入原字幕下方，可调整译文显示位置（上/下）；SRT / VTT 源还可在导出时选择 **ASS 输出**——原文与译文分别走 Default / Secondary 样式，样式可在工具内直接配置（见下方 [ASS 样式设置](#ass-样式设置)），无需另开字幕编辑器。
 - **时间轴兼容性**：支持省略默认小时、超过 100 小时的时间格式，以及 1~3 位毫秒显示，确保兼容性。
@@ -159,6 +161,17 @@ Subtitle Translator 支持 `.srt`、`.ass`、`.vtt`、`.lrc` 等多种字幕格�
 
 无论源文件是 `.ass` 还是 `.ssa`，重新排版后统一输出 `.ass`。
 
+## 翻译过程中的实时结果
+
+点「翻译」之后，结果区上方会出现一条**内联进度条**（已处理行数 / 总行数、当前语言、当前文件），右边就是**取消**按钮；进度条正下方是**实时结果面板**——每译完一行立刻上屏，不必等整批跑完。
+
+- 每条显示为两行：上面原文、下面译文，左侧标的是**原文件里的物理行号**（与下方失败面板报的坐标一致，照着跳能落到同一条字幕）
+- 没译出来的行标琥珀色「未译出」，只显示原文、不再复读一遍——细节归下方的失败面板
+- 面板只保留最近的一段窗口，长文件不会把页面撑爆；跑完自动收起，不占着结果区上方
+- 中途上滚阅读时**不会被拽回底部**，想跟随最新行滚回底部即可恢复自动跟随
+
+**运行中设置与输入一律锁定**（语言、Provider、prompt、导出格式、上传区、源文本框）：整轮翻译跑在你点「翻译」那一刻的快照上，改了要么不生效、要么坏结果。想改先点取消——取消 1 秒内落定，已译内容全在缓存里，改完再点「翻译」从断点继续，不重复扣费。只读动作（提取纯文本、复制、导出）不受影响。详见 [功能说明 → 取消翻译与运行中锁定](../info.mdx#取消翻译与运行中锁定)。
+
 ## 上下文关联翻译
 
 _上下文关联翻译_（AI 模型专用）会把字幕按批次送入大模型，同时附带少量前后语境，让角色对话更连贯、语气更自然。
@@ -185,11 +198,11 @@ API 设置里提供两个参数用于调优：
 
 ### 支持哪些字幕格式？SRT、ASS、VTT、LRC 都能翻译吗？
 
-支持 SRT、ASS、VTT、LRC 四种格式。SRT/VTT 适配 YouTube、B 站、HTML5 播放器（YouTube 用 yt-dlp 导出、B 站在创作中心下载）；ASS 适配 Aegisub 和动漫字幕组，行首位置标签（如 `\an8`）翻译后自动还原；LRC 适配音乐歌词文件。文件编码（UTF-8/UTF-16/GBK/Shift-JIS）通过 jschardet 自动识别。复杂的 ASS 内联特效标签（颜色、动画、卡拉 OK）会被简化。
+支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式。SRT/VTT 适配 YouTube、B 站、HTML5 播放器（YouTube 用 yt-dlp 导出、B 站在创作中心下载）；ASS/SSA 适配 Aegisub 和动漫字幕组，行首位置标签（如 `\an8`）翻译后自动还原；LRC 适配音乐歌词文件；SBV 是 YouTube 字幕编辑器的导出格式。文件编码（UTF-8/UTF-16/GBK/Shift-JIS）通过 jschardet 自动识别。复杂的 ASS 内联特效标签（颜色、动画、卡拉 OK）会被简化。
 
 ### 字幕翻译用机器翻译还是 AI 大模型？哪个质量好、哪个便宜？
 
-字幕对白优先选 AI 大模型——译文语感明显更自然。**DeepSeek** 性价比首选（整季剧集大批量适用）、**Claude Sonnet** 或 **GPT-5** 对白语感最强、**Gemini 3 Pro** 适合超长字幕（1M token 上下文）。要免费快速预览用 **Google**，欧洲语言用 **DeepL**。完整引擎对比与申请教程见 [接口指南](../api.mdx)，配置在三个翻译工具间共享。
+字幕对白优先选 AI 大模型——译文语感明显更自然。**DeepSeek** 性价比首选（整季剧集大批量适用）、**Claude Sonnet 5** 或 **GPT-5.6** 对白语感最强、**Gemini 3.1 Pro** 适合超长字幕。要免费快速预览用 **Google**，欧洲语言用 **DeepL**。完整引擎对比与申请教程见 [接口指南](../api.mdx)，配置在三个翻译工具间共享。
 
 ### 字幕里的人名、品牌名、专有名词怎么保持原文不被乱译？
 

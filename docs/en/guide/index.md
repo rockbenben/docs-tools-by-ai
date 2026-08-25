@@ -16,7 +16,7 @@ description: Tools By AI is a suite of free, AI-assisted online tools covering s
 
 ### 🌍 Translation Tools
 
-Three format-specific translators (subtitle, Markdown, JSON i18n) sharing 7 translation APIs and 24 LLMs across 120+ languages.
+Three format-specific translators (subtitle, Markdown, JSON i18n) sharing 9 translation APIs and 26 LLM endpoints across 120+ languages.
 
 - [**Subtitle Translator**](./translation/subtitle-translator/) — SRT / ASS / VTT / LRC with timecode alignment and bilingual output
 - [**MD Translator**](./translation/md-translator/) — Markdown that preserves code blocks, LaTeX, and Front Matter
@@ -26,7 +26,7 @@ Three format-specific translators (subtitle, Markdown, JSON i18n) sharing 7 tran
 
 ### 📝 Text Tools
 
-Six complementary text utilities covering **format conversion → content cleanup → chunking → joining → diffing → general-purpose ops**.
+Seven complementary text utilities covering **format conversion → content cleanup → chunking → joining → diffing → general-purpose ops → spreadsheet batch processing**.
 
 - [**Chinese Conversion**](./text/chinese-conversion.mdx) — Simplified ↔ Traditional, regional variants
 - [**Novel Processor**](./text/novel-processor.mdx) — web-novel TXT formatting, ad removal, chapter fixes
@@ -34,6 +34,7 @@ Six complementary text utilities covering **format conversion → content cleanu
 - [**Text Joiner**](./text/text-joiner.mdx) — merge columns by template into CSV / SQL / JSON
 - [**Text Diff**](./text/text-diff.mdx) — two-pane diff, first-difference locator, .patch export
 - [**Text Toolbox**](./text/text-toolbox.mdx) — regex match, dedupe, batch prefix/suffix, line ops
+- [**Data Batch**](https://tools.newzone.top/en/data-batch) — spreadsheet dedupe, column extraction, batch prefixes (no dedicated guide yet)
 
 [→ Enter Text Tools](./text/)
 

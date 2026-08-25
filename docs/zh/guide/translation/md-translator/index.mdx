@@ -21,7 +21,7 @@ faq:
   - q: 免费的 Markdown 翻译工具哪个好用？
     a: >-
       MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。
-      支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 等 25+ 引擎，覆盖 120+ 种目标语言。自动跳过
+      支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 等 35 种引擎，覆盖 120+ 种目标语言。自动跳过
       代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、
       VitePress、Docusaurus。
   - q: 翻译 Markdown 文档时如何保留代码块和公式？
@@ -33,7 +33,7 @@ faq:
   - q: 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
     a: >-
       技术文档强烈推荐 AI 大模型，机器翻译只适合快速预览。AI 大模型能识别上下文里的库名、函数名、变量名不乱译——
-      首选 Claude Sonnet（API 文档术语精度最高），DeepSeek 性价比极高（中文技术博客标配），Gemini 3 Pro 适合
+      首选 Claude Sonnet（API 文档术语精度最高），DeepSeek 性价比极高（中文技术博客标配），Gemini 3.1 Pro 适合
       整本书级长文档（1M token 上下文）。机器翻译（Google 免费版、DeepL）只适合快速预览：长 Markdown 文档会被
       截断、技术术语容易被误译成日常词。引擎配置可与
       [字幕翻译](../subtitle-translator/index.mdx)、[JSON 翻译](../json-translate/index.mdx) 共享。
@@ -162,7 +162,7 @@ md-translator 在两点上做差异化：完全免费 + 浏览器本地运行（
 
 ### 免费的 Markdown 翻译工具哪个好用？
 
-MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 等 25+ 引擎，覆盖 120+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
+MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 等 35 种引擎，覆盖 120+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
 
 ### 翻译 Markdown 文档时如何保留代码块和公式？
 
@@ -170,7 +170,7 @@ MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经
 
 ### 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
 
-技术文档强烈推荐 AI 大模型——能识别上下文里的库名、函数名、变量名不乱译。首选 **Claude Sonnet**（API 文档术语精度最高）、**DeepSeek** 性价比极高（中文技术博客标配）、**Gemini 3 Pro** 适合整本书级长文档（1M token 上下文）。机器翻译只适合快速预览，长 Markdown 文档会被截断。完整引擎对比见 [接口指南](../api.mdx)，配置在三个翻译工具间共享。
+技术文档强烈推荐 AI 大模型——能识别上下文里的库名、函数名、变量名不乱译。首选 **Claude Sonnet**（API 文档术语精度最高）、**DeepSeek** 性价比极高（中文技术博客标配）、**Gemini 3.1 Pro** 适合整本书级长文档（1M token 上下文）。机器翻译只适合快速预览，长 Markdown 文档会被截断。完整引擎对比见 [接口指南](../api.mdx)，配置在三个翻译工具间共享。
 
 ### 怎么翻译 GitHub README 或整个 VitePress、Docusaurus 文档站？
 
