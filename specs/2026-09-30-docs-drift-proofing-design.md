@@ -97,9 +97,10 @@ import 片段约定，且实测下划线前缀文件不会生成路由（`doc_bu
 **不做 `tools-list.mdx`**（同上砍掉）：`guide/index.md` 的工具一览是带编辑描述的 bullets
 （「SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出」），registry 里没有这类句子，生成只会覆盖掉内容。
 这里需要的修只是**去掉「七款」这类聚合计数**，属文字改写。`tools.json` 仍然生成——判据 5 的
-`appUrl` 校验要靠它，coverage 策略（哪些工具有页 / 只外链 / 不提及）另存一份
-`docs/data/coverage.json`（19 条，人工维护：`dataBatch` = `link`，`dataParserFlare` /
-`dataParserImgPrompt` = `hidden`，其余 = `page`）。
+`appUrl` 校验要靠它。覆盖策略（哪些工具有页 / 只外链 / 不提及）**不落成文件**：
+它只有三条例外（`dataBatch` 外链、`dataParserFlare` / `dataParserImgPrompt` 不提及），
+写在 `guide/index.md` 的正文里就够了；为三条例外建一份无人消费的 JSON 是死产物
+（实施时先造了 `coverage.json`，审计时发现没有消费者，已删）。
 
 片段**不带 frontmatter**（现有 `_supported-languages.mdx` 自带 og:description 却被 import，
 不生效但误导；生成物只出表格与句子，页面级 frontmatter 归各页自己写）。

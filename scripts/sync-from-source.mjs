@@ -80,13 +80,6 @@ const write = (p, text) => fs.writeFileSync(p, text, "utf8");
 write(path.join(DATA, "providers.json"), JSON.stringify(data.providers, null, 2) + "\n");
 write(path.join(DATA, "languages.json"), JSON.stringify(data.languages, null, 2) + "\n");
 write(path.join(DATA, "tools.json"), JSON.stringify(data.tools, null, 2) + "\n");
-if (!fs.existsSync(path.join(DATA, "coverage.json"))) {
-  // 文档覆盖策略是编辑决定，不来自源码：有页 / 只外链 / 不提及。
-  write(
-    path.join(DATA, "coverage.json"),
-    JSON.stringify({ dataBatch: "link", dataParserFlare: "hidden", dataParserImgPrompt: "hidden" }, null, 2) + "\n",
-  );
-}
 
 for (const name of FRAGMENT_NAMES) {
   for (const locale of ["zh", "en"]) {
