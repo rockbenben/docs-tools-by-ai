@@ -33,7 +33,7 @@ Seven complementary text utilities covering **format conversion → content clea
 - [**Text Splitter**](./text/text-splitter.mdx) — split by symbol / chars / paragraphs
 - [**Text Joiner**](./text/text-joiner.mdx) — merge columns by template into CSV / SQL / JSON
 - [**Text Diff**](./text/text-diff.mdx) — two-pane diff, first-difference locator, .patch export
-- [**Text Toolbox**](./text/text-toolbox.mdx) — regex match, dedupe, batch prefix/suffix, line ops
+- [**Multi-Function Text Processor**](./text/text-toolbox.mdx) — regex match, dedupe, batch prefix/suffix, line ops
 - [**Data Batch**](https://tools.newzone.top/en/data-batch) — spreadsheet dedupe, column extraction, batch prefixes (no dedicated guide yet)
 
 [→ Enter Text Tools](./text/)
