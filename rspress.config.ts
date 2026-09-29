@@ -1,7 +1,6 @@
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "@rspress/core";
-import { pluginLlms } from "@rspress/plugin-llms";
 import { pluginSitemap } from "@rspress/plugin-sitemap";
 import { pluginGeo } from "./geo/plugin-geo";
 
@@ -57,6 +56,9 @@ export default defineConfig({
     },
   ],
   themeConfig: {
+    // Rspress 2.0.19+：在页面上注入指向 llms.txt / llms-full.txt / 本页 Markdown 的
+    // 纯文本提示（SSG 输出里是视觉隐藏的纯文本节点，专给 AI 抓取用）。
+    injectLlmsHint: true,
     socialLinks: [
       {
         icon: "github",
@@ -65,29 +67,29 @@ export default defineConfig({
       },
     ],
   },
+  // 原生 llms / SSG-MD（替代 @rspress/plugin-llms）：主语言产出根级 llms.txt，
+  // 其余语言各自成目录；同时为每个页面生成可被 AI 直接读取的 .md 路由。
+  llms: {
+    llmsTxt: ({ lang, title, sections }) => {
+      // 关键词前置的标题按语言定制：AI 引擎把首行当第一信号。
+      const heading =
+        lang === "zh"
+          ? "字幕翻译器 · Markdown 翻译 · JSON i18n 翻译工具 - Tools By AI 中文文档"
+          : lang === "en"
+            ? "Subtitle Translator · Markdown Translator · JSON i18n Tools — Tools By AI Docs"
+            : (title ?? "");
+      const lines = [heading, ""];
+      for (const section of sections) {
+        lines.push(`## ${section.title}`, "");
+        for (const page of section.pages) {
+          lines.push(page.description ? `- [${page.title}](${page.link}): ${page.description}` : `- [${page.title}](${page.link})`);
+        }
+        lines.push("");
+      }
+      return lines.join("\n");
+    },
+  },
   plugins: [
-    pluginLlms([
-      {
-        llmsTxt: {
-          name: "llms.txt",
-          // Match the zh locale.title — popular-tool-first ordering so AI engines
-          // see the search-relevant keywords as the very first signal.
-          onTitleGenerate: () => "字幕翻译器 · Markdown 翻译 · JSON i18n 翻译工具 - Tools By AI 中文文档",
-        },
-        llmsFullTxt: false,
-        mdFiles: false,
-        include: ({ page }) => page.lang === "zh",
-      },
-      {
-        llmsTxt: {
-          name: "en/llms.txt",
-          onTitleGenerate: () => "Subtitle Translator · Markdown Translator · JSON i18n Tools — Tools By AI Docs",
-        },
-        llmsFullTxt: false,
-        mdFiles: false,
-        include: ({ page }) => page.lang === "en",
-      },
-    ]),
     pluginSitemap({
       siteUrl: SITE_URL,
     }),
