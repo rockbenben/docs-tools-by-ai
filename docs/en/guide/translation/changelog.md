@@ -10,10 +10,38 @@ description: See the complete update history for our translation tools. This pag
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.09.28: A Design QA pass — accessibility and visual consistency.
+  - **Keyboard focus rings are back**: antd's reset had flattened the browser's own focus-visible outline, so keyboard focus was effectively invisible
+  - **Accent text on surfaces in dark mode** now uses a brighter seed blue to clear WCAG AA; inline code in the Waline comments follows the body text colour (it was near-illegible in light mode)
+  - **Provider chips in the settings drawer** drop the role overrides that fought antd's own (axe flagged them critical); the rules table's empty header gets a visually hidden name; "back to top" changes from round to square to match the site's square-corner language
+  - The Text Splitter's preset button row now wraps at 390px instead of overflowing sideways; the feedback page title is an h1
+- 2026.09.27: A lighter first screen for Subtitle Translator.
+  - **The "translation timing", "review" and "multi-language settings" panels now load on demand** — their code isn't downloaded until you open them
+  - Links to the 365 series under "More tools" now carry the current interface language
+- 2026.09.26: Azure OpenAI moves to the v1 GA API.
+  - **The `apiVersion` (deployment version) field is gone from settings**: the request URL is now the resource root you supply plus the fixed `/openai/v1` suffix, and the model field still takes the deployment name
+  - Azure is folded into the openai-compat factory, deleting its hand-written service and reasoning-body builder; `reasoning_effort` is now delivered like any other endpoint
+  - Navigation gains a "365 Open Source Plan" entry; "More tools" drops Thousand Lives
+- 2026.09.24: Hungarian (Magyar) added — 19 interface languages now.
+- 2026.09.22: Custom (OpenAI-compatible) gains two endpoint quick-picks: **9Router** (port 20127 by default) and **OmniRoute** (20128, a TypeScript fork of 9Router) — both self-hosted OpenAI-compatible gateways, click to fill.
+- 2026.09.18: First-load weight trimmed further.
+  - Drawers and modals are **mounted on demand and destroyed on close** instead of sitting in the DOM
+  - Third-party scripts and route prefetching are deferred; `console` calls are stripped from production builds
+- 2026.09.17: **OpenCode Go** added (the subscription tier of OpenCode Zen).
+  - Same host, same account, same API key as Zen — only three things differ: the request path (`/zen/go/v1` vs `/zen/v1`), the SKUs on offer and the billing model. **Go is a $10/month subscription allowance** (the vendor converts it per model: 5 hours ≈ 20%, a week ≈ 50%, a month ≈ 100%), while Zen is a prepaid balance; officially one workspace can have exactly one Go subscriber
+  - The upstream sends no CORS headers, so **API relay is ON by default**
+- 2026.09.15: Two subscription-tier endpoints (Volcengine Coding Plan, Alibaba Bailian Token Plan) join the catalog but **stay out of the default dropdown** — they are separate product lines from the pay-as-you-go ones, and users who know why they want them can switch them on in settings.
+- 2026.08.31: Freer export and cache settings.
+  - **Choose a download folder**: browsers exposing the File System Access API (Chrome / Edge) can pick an export folder once and every export lands there; the browser refuses Desktop / Documents / Downloads themselves, so pick a subfolder
+  - **Single-file mode and cache settings are configured independently** — changing one no longer drags the other
 - 2026.08.24: RTL direction resolved per line; Arabic-script languages get proper ASS fonts.
   - **Text direction is now decided per line**: in a file mixing Chinese, English and Arabic, each line is laid out by its own first strong-direction character, so an RTL line no longer inherits the block's LTR direction and ends up with punctuation on the wrong side (applies to the source textarea, result area, live panel, failure panel and glossary drawer)
   - **Persian (fa), Urdu (ur), Pashto (ps), Dari (prs), Sorani Kurdish (ckb) and Uyghur (ug) are registered as Arabic-script**: they previously fell back to Latin, so pairing them with Chinese for a bilingual ASS export assigned a Chinese font with no Arabic glyphs — a screen full of tofu boxes in the player. Hebrew now has its own script bucket too
   - The ASS style drawer's preview shows a sample sentence in the target script (Hebrew users used to be shown an Arabic sentence)
+- 2026.08.22: New local translation model MiLMMT; multi-line values no longer truncated.
+  - **Added MiLMMT-46** (Xiaomi's open-source translation model, 1B / 4B / 12B): a self-hosted local service in the same class as TranslateGemma, covering 46 languages. **Cantonese is included** (TranslateGemma has none), but Ukrainian and Serbian are not. Pick **"MiLMMT" directly from the service list**: Xiaomi state that post-training stripped the model's instruction-following, so going through Custom (OpenAI-compatible) feeds your system prompt to it as body text. No glossary, no context translation, explicit source language required
+  - **Fix: local translation models truncated multi-line content to its first line** (present in TranslateGemma all along). Subtitles and Markdown were unaffected (they are split per line upstream); **JSON translation was affected** — a multi-line value silently lost everything after line 1. Candidate collapsing now applies only when the source text itself is a single line
+  - **koboldcpp added to the local-runtime quick picks** (port 5001), and the four picks are now identical across Custom / TranslateGemma / MiLMMT; selecting any of them surfaces that runtime's official docs link
 - 2026.08.21: Service catalogue overhaul — 5 providers added, 3 retired, model lists refreshed.
   - **Added**: StepFun, OpenCode Zen (its `(free)`-suffixed SKUs cost nothing), TokenHub (Tencent's new platform after the Hunyuan migration, also reselling DeepSeek / GLM / Kimi / MiniMax / MiMo), Cerebras (~3000 tokens/s on gpt-oss-120b plus 1M free tokens per day), and Atlas Cloud
   - **Retired**: GitHub Models (shut down by GitHub on 2026-07-30), Perplexity Sonar (chat/completions ended early), and the old Tencent Hunyuan endpoint (migrated to TokenHub)
@@ -21,10 +49,6 @@ Upcoming features: add AI polishing for translated subtitles.
   - **Model lists refreshed across the board**: dead ids removed, catalogues rebuilt from official listings. The model field is now a dropdown you can also type into, with the friendly name above the real SKU and a `default` tag on the provider's default model
   - **Thinking levels are now decided per SKU**: when a vendor ships no "off" value at all, the bottom level is labelled **Min** instead of Off — it still reasons and still bills, so Off would be a lie. Affects Gemini 3.x, Grok 4.5 / 4.6, GPT-OSS on Groq and Cerebras, Kimi K3 / K2.6, and the single SKU Claude Fable 5 (officially Always on); its siblings Opus 5 / Sonnet 5 / Haiku 4.5 can still be turned off
   - **API relay now covers 22 providers**: OpenCode Zen and TokenHub default to ON (their CORS preflights return 404 / 405, so direct browser calls always fail); the rest default to OFF and prompt you to enable it when a CORS wall is hit
-- 2026.08.22: New local translation model MiLMMT; multi-line values no longer truncated.
-  - **Added MiLMMT-46** (Xiaomi's open-source translation model, 1B / 4B / 12B): a self-hosted local service in the same class as TranslateGemma, covering 46 languages. **Cantonese is included** (TranslateGemma has none), but Ukrainian and Serbian are not. Pick **"MiLMMT" directly from the service list**: Xiaomi state that post-training stripped the model's instruction-following, so going through Custom (OpenAI-compatible) feeds your system prompt to it as body text. No glossary, no context translation, explicit source language required
-  - **Fix: local translation models truncated multi-line content to its first line** (present in TranslateGemma all along). Subtitles and Markdown were unaffected (they are split per line upstream); **JSON translation was affected** — a multi-line value silently lost everything after line 1. Candidate collapsing now applies only when the source text itself is a single line
-  - **koboldcpp added to the local-runtime quick picks** (port 5001), and the four picks are now identical across Custom / TranslateGemma / MiLMMT; selecting any of them surfaces that runtime's official docs link
 - 2026.08.12: Live line-by-line subtitle results; ASS / LRC detection fix.
   - **Live result panel**: every line appears directly under the progress bar the moment it's translated (original on top, translation below, tagged with the real source line number) — no waiting for the batch to finish. Untranslated lines are flagged amber as "not translated", with details left to the failure panel; the panel keeps only a recent window, collapses itself when the run ends, and scrolling up to read mid-run won't yank you back to the bottom
   - Fixed: some `.ass` / `.lrc` files were misdetected as another format, which "ate" the whole subtitle during translation
