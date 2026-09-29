@@ -31,8 +31,11 @@ jobs:
         run: yarn install
       # 补 rspress checkDeadLinks 的盲区：frontmatter 里的链接与图片路径
       # （正文链接由 rspress 自己校验，坏链会直接让下一步 build 失败）
-      - name: Check links
-        run: yarn check:links
+      # check:data 是防漂移闸门：只读 docs/data/*.json 与 docs/**，不需要源码仓
+      - name: Test gates
+        run: yarn test
+      - name: Check links and drift gates
+        run: yarn check
       - name: Build website
         run: yarn build
 
