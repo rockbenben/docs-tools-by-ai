@@ -7,7 +7,11 @@
     "build": "rspress build",
     "dev": "rspress dev",
     "preview": "rspress preview",
-    "check:links": "node scripts/check-links.mjs"
+    "sync": "node scripts/sync-from-source.mjs",
+    "test": "node --test \"scripts/__tests__/*.test.mjs\"",
+    "check:links": "node scripts/check-links.mjs",
+    "check:data": "node scripts/check-data.mjs",
+    "check": "node scripts/check-links.mjs && node scripts/check-data.mjs"
   },
   "dependencies": {
     "@rspress/core": "^2.0.18"
