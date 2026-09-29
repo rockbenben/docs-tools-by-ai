@@ -1,0 +1,3487 @@
+---
+url: /guide/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Tools By AI
+
+:::tip 一句话介绍
+[Tools By AI](https://tools.newzone.top/zh) 是一套**完全免费、浏览器本地运行**的在线工具集，覆盖翻译、JSON 处理、文本清洗三大场景。所有数据在你的浏览器里完成处理——敏感内容不会上传到服务器。
+:::
+
+## 工具一览
+
+### 🌍 翻译工具
+
+字幕、Markdown、JSON i18n 三种格式专用翻译，共享同一套翻译接口池（经典机器翻译 API 加大语言模型），覆盖 120+ 语言。
+
+- [**Subtitle Translator**](/guide/translation/subtitle-translator.md) — SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出
+- [**MD Translator**](/guide/translation/md-translator.md) — Markdown 翻译，保留代码块、LaTeX、Front Matter
+- [**JSON Translate**](/guide/translation/json-translate.md) — i18n JSON，按 key 选择翻译范围、key 映射
+
+[→ 进入翻译工具集](/guide/translation.md)
+
+### 📝 文本工具
+
+七款互补的纯文本处理工具，覆盖**格式转换 → 内容清洗 → 分段切片 → 合并拼接 → 差异核对 → 通用文本操作 → 表格批处理**。
+
+- [**中文转换**](/guide/text/chinese-conversion.md) — 简繁体、台湾 / 香港地区词
+- [**小说处理**](/guide/text/novel-processor.md) — 网文 TXT 排版、去广告、章节修复
+- [**文本分割**](/guide/text/text-splitter.md) — 按符号 / 字数 / 段落切分
+- [**文本拼接**](/guide/text/text-joiner.md) — 多列按模板合并成 CSV / SQL / JSON
+- [**文本对照**](/guide/text/text-diff.md) — 双栏 diff，定位首处差异，导出 .patch
+- [**多功能文本处理**](/guide/text/text-toolbox.md) — 正则匹配、去重、批量加前后缀、行操作
+- [**数据批处理**](https://tools.newzone.top/zh/data-batch) — Excel 表格去重、列提取、批量加前缀（暂无独立指南）
+
+[→ 进入文本工具集](/guide/text.md)
+
+### 🔧 JSON 工具
+
+七款互补的 JSON 处理工具，覆盖**读取 → 改值 → 加字段 → 跨数据集**，全部基于 JSONPath。
+
+- [**JSON Value Extractor**](/guide/json/json-value-extractor.md) — 读取：用 JSONPath 提取字段
+- [**JSON Node Edit**](/guide/json/json-node-edit.md) — 改值：批量加前后缀、替换、覆盖
+- [**JSON Node Inserter**](/guide/json/json-node-inserter.md) — 加字段：在指定节点后插入新字段
+- [**JSON Match & Update**](/guide/json/json-match-update.md) — 跨集同步：按 ID 字段合并两份数据
+
+[→ 进入 JSON 工具集（共 7 款）](/guide/json.md)
+
+## 三步上手
+
+1. **不需要注册**：所有工具都是免费 + 纯前端，打开就能用
+2. **不需要 API Key**（翻译工具）：默认走免费的 GTX 接口，想要高质量可在右上角填入 DeepSeek / Claude / GPT 的 Key
+3. **数据不出本机**：API Key 和翻译缓存都只存在浏览器 localStorage / IndexedDB
+
+***
+
+## 设计理念
+
+> AI 时代已经来临，每个人都能定制属于自己的专属工具。
+
+我非常喜欢用 AI 来编写工具或脚本，但老实说，我对目前 AI 的能力仍持保留态度。它确实能够协助我们完成一些基础、重复性的任务，但要达到理想效果，往往还差一截。
+
+因此，我更倾向于将 AI 作为**构建工具的辅助角色**，而不是完全交由它独立完成任务。如今流行的"AI 智能体"概念，本质上也是将多个 AI 工具组织成一个工作流，其核心仍然是人为设定明确的流程。
+
+我更喜欢的方式是：将具体任务"工具化"。借助 AI 的能力，开发出一个个可控、可用的独立工具，确保每一步流程都符合预期。
+
+[Tools By AI](https://tools.newzone.top/zh) 正是基于这一理念而构建的。它利用 AI 辅助编程的方式，把灵感变成可以落地的实用工具。而本文档，正是对这些工具的使用方法与实现逻辑的详细说明。
+
+
+
+---
+url: /guide/translation/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 翻译工具
+
+一套面向开发者与内容创作者的免费翻译工具，按文件格式拆分成三个专用工具，每个都针对格式特性做了深度优化：
+
+- [**Subtitle Translator**](/guide/translation/subtitle-translator.md) — 字幕翻译（SRT / ASS / VTT / LRC），支持双语、按时间轴对齐
+- [**MD Translator**](/guide/translation/md-translator.md) — Markdown 翻译，保留代码块、LaTeX、FrontMatter 不被破坏
+- [**JSON Translate**](/guide/translation/json-translate.md) — JSON i18n 翻译，按 key 选择翻译范围，支持 key 映射
+
+## 共同能力
+
+三个工具共享同一套翻译引擎与设置面板，配置可互导：
+
+- **多 API 选择**：经典机器翻译 API + 大语言模型接口双轨，覆盖免费、商业、自托管三类需求（[详见接口对比](/guide/translation/api.md)）
+- **120+ 语言** + 多语言一次翻译：把英文字幕一次性翻成中、日、德、法
+- **本地缓存**：参数一致直接命中，刷新不丢、跨标签页共享
+- **上下文翻译**：字幕/文档带上下文一起送给 AI，保证连贯
+- **失败行重试**：LLM 输出格式异常时仅重译失败行，不重复扣费
+- **隐私优先**：所有 API Key 与设置仅存在本地浏览器，不上传服务器
+- **命令行入口**：`yarn cli` 与网页端共用同一条流水线，字幕 / Markdown / JSON 都能批量翻（[命令行翻译](/guide/translation/cli.md)）
+
+## 如何选择
+
+| 我要翻译……                      | 用这个工具                        |
+| --------------------------- | ---------------------------- |
+| YouTube / 影视字幕              | Subtitle Translator          |
+| GitHub README、技术博客          | MD Translator                |
+| `i18n.json` / `locale.json` | JSON Translate               |
+| 任意纯文本                       | MD Translator 的「格式模式 → 忽略格式」 |
+
+## 三步开始
+
+1. 选一个翻译 API 并填入 API Key（或直接用免费的 GTX）
+2. 设置源语言和目标语言
+3. 上传文件或粘贴文本，点击翻译
+
+详细功能与参数调优请见 [功能说明](/guide/translation/info.md)。
+
+
+
+---
+url: /guide/translation/subtitle-translator/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 字幕翻译工具｜SRT/ASS/VTT/LRC 批量 AI 翻译指南
+
+:::tip 快速介绍
+Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式和 120+ 种语言。通过分块压缩和并行翻译，1 秒即可处理一集电视剧字幕，并支持上下文关联翻译、逐行实时上屏、本地缓存复用，以及免费与商用翻译 API 加 AI 大模型接口（含本地 Ollama / LM Studio / koboldcpp 与翻译专用的 TranslateGemma / MiLMMT）。
+:::
+
+:::tip 30 秒上手
+
+1. **拖入** 或 **粘贴** 字幕文件（`.srt` / `.ass` / `.ssa` / `.vtt` / `.lrc` / `.sbv`）
+2. 选 **目标语言**（源语言默认 Auto 自动检测）
+3. 点 **翻译** —— 几秒导出，多语言时文件名自动带语言代码（如 `movie.zh.srt`、`movie.fr.srt`）
+
+不需要 API Key 也能用——默认走免费的 **GTX**。要更高质量可在右上角 API 设置里切到 **DeepSeek**（性价比首选）/ DeepL / Claude，参考 [接口指南](/guide/translation/api.md)。
+:::
+
+近年来，随着在线视频的兴起，国外热门影视作品的翻译多由视频平台完成，而原本活跃的字幕组则逐渐淡出人们的视野。然而，对于冷门视频和自制视频的字幕需求却未能得到有效满足，导致未配字幕的视频数量持续增加。为解决这一问题，可以用 Whisper 工具为这些生肉视频自动生成字幕，并通过翻译接口将其翻译成中文。具体操作步骤可参考文章：[找不到字幕？Whisper 让不懂外语的你也能看懂日剧](https://newzone.top/posts/2022-11-18-whisper_ai_subtitles.html)。
+
+针对市面上字幕翻译工具存在的翻译速度慢、不支持批量处理、需人工干预等问题，我开发了一款免费且功能全面的字幕翻译工具——[Subtitle Translator](https://tools.newzone.top/zh/subtitle-translator)。该工具支持 `.srt`、`.ass`、`.ssa`、`.vtt`、`.lrc`、`.sbv` 多种字幕格式，并具备秒级翻译速度，大幅提高翻译效率。我已成功转录超过 500 个视频，翻译后的字幕文件可在 [whisper-subtitles](https://github.com/rockbenben/whisper-subtitles) 查看。
+
+## 特色功能
+
+!["批量翻译"](/img/subtitle-translator-zh.webp "批量翻译")
+
+- **秒级翻译**：利用字幕文本的分块压缩和并行处理技术，实现 1 秒翻译一集电视剧（GTX 接口稍慢）。
+- **批量翻译**：支持一次性处理上百份字幕文件，结束时汇总成功 / 失败统计（如"已导出 (3/5)"），无须逐个核对。
+- **翻译缓存**：自动本地缓存翻译结果，避免重复调用，节省时间和 API 费用。
+- **上下文关联翻译**（仅限 AI 模型）：AI 将结合上下文进行翻译，提高字幕对话的连贯性和准确性。
+- **格式兼容**：自动匹配主流字幕格式（.srt / .ass / .ssa / .vtt / .lrc / .sbv），导出文件与原文件名一致；翻译成多种语言时自动加语言代码后缀（如 `movie.zh.srt`、`movie.fr.srt`）。
+- **逐行实时上屏**：翻译过程中，每译完一行立刻显示在进度条正下方的实时面板里（原文在上、译文在下，标物理源行号），不必等整批跑完才知道效果。未译出的行标琥珀色「未译出」，细节归下方的失败面板；面板跑完自动收起，中途上滚阅读也不会被拽回底部。
+- **字幕提取**：一键提取去掉时间码和序号的原文对白（自动复制到剪贴板），方便用于 AI 总结、二次创作，或配合译文交给 AI 校对/修订等场景。
+- **对照校对**：单文件、仅译文导出模式下，翻译完成后可逐行并排对照原文与译文，手动修改译文后一键「应用并下载」，适合人工逐句精修。
+- **译后质检**：翻译完成后自动检查每条字幕的语速（CPS，每秒字符数）、每行字数、行数与时长，超标处高亮，帮助发现"一闪而过"或"读不完"的字幕，可切换通用 / 中日韩两套阈值。
+- **多接口选择**：内置免费与商用翻译 API 以及 AI 大模型接口（含本地 Ollama / LM Studio / llama.cpp / koboldcpp，与翻译专用的 TranslateGemma / MiLMMT），按预算与隐私需求自由选择。
+- **多语言支持与国际化**：支持 120+ 种主流语言（英语、中文、日语、韩语、法语、德语、西班牙语等），还可将同一字幕文件同时翻译成多种语言，满足国际化需求。
+
+## 字幕格式支持
+
+Subtitle Translator 支持 `.srt`、`.ass`、`.ssa`、`.vtt`、`.lrc`、`.sbv` 多种字幕格式，并提供自动格式匹配功能：
+
+- **双语字幕**：翻译后的文本插入原字幕下方，可调整译文显示位置（上/下）；SRT / VTT 源还可在导出时选择 **ASS 输出**——原文与译文分别走 Default / Secondary 样式，样式可在工具内直接配置（见下方 [ASS 样式设置](#ass-样式设置)），无需另开字幕编辑器。
+- **时间轴兼容性**：支持省略默认小时、超过 100 小时的时间格式，以及 1\~3 位毫秒显示，确保兼容性。
+- **自动编码识别**：无需手动选择编码格式，工具会自动识别字幕文件编码，避免乱码问题。
+
+## ASS 样式设置
+
+导出双语 ASS 时，点击「ASS 样式」按钮打开设置抽屉，可视化调整字体、字号、颜色与位置，生成的 ASS 头部按 1920×1080 基准写入（`PlayResX/PlayResY`），在播放器里按分辨率等比缩放。
+
+### 4 套预设
+
+| 预设      | 译文 / 原文字号  | 特点                              |
+| ------- | ---------- | ------------------------------- |
+| **默认**  | 64 / 48 pt | 白字、描边 3、阴影 1，通用场景               |
+| **大字号** | 80 / 60 pt | 白字、描边 4，适合投屏、电视等远距离观看           |
+| **电影感** | 64 / 48 pt | 译文金色（`#FFD700`）、原文白色，观感接近院线片    |
+| **底框**  | 64 / 48 pt | 白字 + 半透明黑色底框（约 62% 不透明），亮画面下也清晰 |
+
+改动任意参数后预设自动切换为**自定义**，并持久保存，下次打开仍是你上次调好的样式。
+
+### 可调参数
+
+- **全局**：字体（留空 = 按目标语言自动选择，也可点「读取系统字体」从已装字体里挑）、对齐（底部居中 / 顶部居中）、垂直边距（0–500）
+- **译文样式 / 原文样式**（两套各自独立）：字号（10–200）、字色、描边色、描边（0–10）、阴影（0–10）
+- **底框颜色**：仅底框类样式显示，颜色与透明度都可调（底层写入 ASS 的 `BorderStyle=3`，用描边值当作框内边距）
+
+### 原生 ASS 双语的两种排版
+
+源文件本身就是 ASS / SSA 时，多出一个模式选择：
+
+- **沿用源样式**（默认）：保留源文件自带的 `[V4+ Styles]` 与行内标签，只插入译文行。适合字幕组做过特效、样式的成品
+- **重新排版**：丢弃源样式，用上面配置的「ASS 样式」重建头部，并剥离所有行内覆盖标签（`{\an8}`、`{\i1}`、`{\pos(...)}` 等）。仅适合纯对白字幕——有特效、卡拉 OK 的字幕会被抹平
+
+无论源文件是 `.ass` 还是 `.ssa`，重新排版后统一输出 `.ass`。
+
+## 翻译过程中的实时结果
+
+点「翻译」之后，结果区上方会出现一条**内联进度条**（已处理行数 / 总行数、当前语言、当前文件），右边就是**取消**按钮；进度条正下方是**实时结果面板**——每译完一行立刻上屏，不必等整批跑完。
+
+- 每条显示为两行：上面原文、下面译文，左侧标的是**原文件里的物理行号**（与下方失败面板报的坐标一致，照着跳能落到同一条字幕）
+- 没译出来的行标琥珀色「未译出」，只显示原文、不再复读一遍——细节归下方的失败面板
+- 面板只保留最近的一段窗口，长文件不会把页面撑爆；跑完自动收起，不占着结果区上方
+- 中途上滚阅读时**不会被拽回底部**，想跟随最新行滚回底部即可恢复自动跟随
+
+**运行中设置与输入一律锁定**（语言、Provider、prompt、导出格式、上传区、源文本框）：整轮翻译跑在你点「翻译」那一刻的快照上，改了要么不生效、要么坏结果。想改先点取消——取消 1 秒内落定，已译内容全在缓存里，改完再点「翻译」从断点继续，不重复扣费。只读动作（提取纯文本、复制、导出）不受影响。详见 [功能说明 → 取消翻译与运行中锁定](/guide/translation/info.md#取消翻译与运行中锁定)。
+
+## 上下文关联翻译
+
+_上下文关联翻译_（AI 模型专用）会把字幕按批次送入大模型，同时附带少量前后语境，让角色对话更连贯、语气更自然。
+
+API 设置里提供两个参数用于调优：
+
+- **并发行数（Concurrent Lines）**：每批送入大模型翻译的正文行数。
+- **上下文行数（Context Lines）**：每批正文前后随行附带的上下文行数。
+
+### 调参策略
+
+- **提高数值**：吞吐更快、上下文更丰富，但请求更重，更容易碰到限速、token 或上下文上限，需要高配 API/LLM。
+- **降低数值**：单次请求更轻、容错更高，但模型可参考的现场语境会缩短。
+- **错误处理**：如果出现 429、空响应或「context length exceeded」等提示，先降低参数或增大请求间隔即可。
+
+⚠️ **本地小模型提示**：14B 以下的本地模型在上下文模式下容易出现错位或漏行（漏译的行会回退成原文）。两种解法：
+
+- **简单方案**：关闭"上下文关联翻译"开关，切换到逐行并发模式（默认 10 并发），速度快、不丢行，代价是上下句一致性略差。
+- **保留上下文**：将"上下文行数"降至 20-30，并尽量使用 14B+ 指令模型（Qwen3-14B/32B、Gemma 3 27B-it 等）。
+
+另外，纯翻译需求推荐使用服务列表里**独立的 TranslateGemma 或 MiLMMT**（不是在 Custom OpenAI-compatible 里填模型名）——它们是逐行翻译，无标记结构，对本地部署最稳定。选哪个看语种，见 [FAQ：本地部署怎么选模型](/guide/translation/faq.md#本地部署翻译怎么选模型)。
+
+## 常见问题
+
+### 支持哪些字幕格式？SRT、ASS、VTT、LRC 都能翻译吗？
+
+支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式。SRT/VTT 适配 YouTube、B 站、HTML5 播放器（YouTube 用 yt-dlp 导出、B 站在创作中心下载）；ASS/SSA 适配 Aegisub 和动漫字幕组，行首位置标签（如 `\an8`）翻译后自动还原；LRC 适配音乐歌词文件；SBV 是 YouTube 字幕编辑器的导出格式。文件编码（UTF-8/UTF-16/GBK/Shift-JIS）通过 jschardet 自动识别。复杂的 ASS 内联特效标签（颜色、动画、卡拉 OK）会被简化。
+
+### 字幕翻译用机器翻译还是 AI 大模型？哪个质量好、哪个便宜？
+
+字幕对白优先选 AI 大模型——译文语感明显更自然。**DeepSeek** 性价比首选（整季剧集大批量适用）、**Claude Sonnet 5** 或 **GPT-5.6** 对白语感最强、**Gemini 3.1 Pro** 适合超长字幕。要免费快速预览用 **Google**，欧洲语言用 **DeepL**。完整引擎对比与申请教程见 [接口指南](/guide/translation/api.md)，配置在三个翻译工具间共享。
+
+### 字幕里的人名、品牌名、专有名词怎么保持原文不被乱译？
+
+在「系统提示词」里写一份术语保留表，AI 大模型引擎都会遵循。例如：「保持原文：iPhone、OpenAI、Premiere、人名 John Smith」。剧集翻译尤其推荐——整季对白共享同一份术语词典，避免「黑客帝国」第 1 集叫这个、第 8 集变那个。机器翻译（Google、DeepL、Qwen-MT）不支持 prompt 自定义，需要人工后处理。
+
+### 系统提示词要不要加「保留行数、序号、时间轴」之类的格式指令？
+
+不需要。工具在本地把时间轴、序号、ASS 头、VTT cue id 等结构信息剥离出来，只把对白文本发给翻译引擎，译完按原索引回填——模型从头到尾看不到时间轴和序号，自然也无法弄乱。系统提示词只写翻译风格、术语表（见上一条）、人物语气即可；加格式保留指令反而会占用 token、可能让模型自作主张往输出里加多余的编号或时间码。这一点和市面上把整份 SRT/VTT 整体塞给模型的工具不同，本工具是结构化分离架构，时间轴 100% 由本地代码控制。
+
+### 怎么做 B 站、YouTube 的中英双语字幕？能用于语言学习吗？
+
+选择「双语」导出模式，译文位置可选在原文上方（学英语推荐）或下方（看外语剧推荐）。导出 ASS 格式可为原文和译文设置不同颜色、字体大小和位置，直接上传至 B 站字幕系统或 YouTube 社区字幕，Premiere/DaVinci Resolve 也可直接嵌入。
+
+### 翻译完想校对、修订译文怎么办？能逐句改吗？
+
+工具提供两个功能，分别对应「自己改」和「让 AI 改」：
+
+1. **对照校对（自己逐句改）**：单文件、仅译文导出模式下，翻译完成后页面下方会出现一个左右并排的面板——左边原文、右边译文，一行对一行。哪句译得不好，直接在译文列改，改完点「应用并下载」就拿到修订后的字幕，时间轴原样保留。适合亲手核对、修掉机翻的错，又不用自己去对时间轴。
+2. **提取纯文本 + 外部 AI（让 AI 改）**：「提取纯文本」导出的是去掉时间码和序号的**原文对白**（自动复制到剪贴板）；译文则从翻译结果区的「复制」按钮取。把原文和译文一起贴进任意 AI，用自己的提示词让它对照原文润色/校对译文，想让它顺带列一份改动摘要也行，改好再自行整理或回填。工具只负责把干净文本递出去，怎么改由你和你的 AI 决定。
+
+简单说：想自己逐句改用「对照校对」，想让 AI 按你的要求改用「提取纯文本」配合外部 AI。
+
+### 一次能批量翻译几个字幕文件？整季剧集怎么处理？
+
+支持批量上传整季字幕同时翻译，文件数无硬上限（实际受翻译引擎并发限制和 API 配额影响）。每个文件独立翻译并独立缓存（IndexedDB），中途刷新页面已译文件不丢失。剧集统一术语的写法见上文「人名、品牌名」那条。
+
+### 怎么把 SRT 转成 VTT 或 ASS？需要单独的字幕格式转换器吗？
+
+不需要。在翻译流程中选择目标语言和导出格式即可一键互转：SRT ↔ VTT、SRT/VTT → ASS、双语 ASS/SRT 均支持。VTT 转 SRT 时自动处理 `<c.classname>` 内联标签和 `<00:00:06.040>` 卡拉 OK 时间戳；转 ASS 会保留 `\an8` 等位置标签并套用默认样式。注意：源语言和目标语言相同时会被自动禁止，目前格式转换需要绑定一次实际翻译。
+
+### 能不能把字幕转成纯文本剧本？或者只导出部分台词？
+
+「提取纯文本」按钮可一键提取去掉时间码和序号的对白文本（自动复制到剪贴板），适合做语言学习材料、播客脚本回填、AI 喂料二次处理或转给配音演员。如需更精细的行级编辑（按关键词筛选、批量替换术语、加前后缀、去重排序），导出后用主站 [文本工具箱](https://tools.newzone.top/zh/text-toolbox) 的正则匹配和行操作功能配合更顺手；超长字幕想按时间或字数拆段，配合主站的 [文本分割](https://tools.newzone.top/zh/text-splitter) 处理。
+
+### 翻译后字幕时间轴对不上或出现乱码（□□□）怎么办？
+
+工具只翻译文本，时间轴完整保留不做任何修改。如翻译后时间对不上，通常是源文件帧率与目标视频不一致（23.976 vs 25 fps）所致，需用 Aegisub 或 Subtitle Edit 调整。乱码问题：工具通过 jschardet 自动识别 UTF-8/UTF-16/GBK/Shift-JIS 等编码，识别失败会回退到 UTF-8，此时请先用 Notepad++ 或 VS Code 另存为 UTF-8 再上传。
+
+### 译后质检里的 CPS 是什么？字幕语速怎么算超标？
+
+CPS（Characters Per Second，每秒字符数）衡量字幕的阅读速度，数值越高观众越来不及读完。翻译后的字幕往往比原文更长、容易超标，质检面板会逐条计算 CPS、每行字数、行数与时长，把超过阈值的标红。可切换「通用 / 中日韩」两套预设——中日韩字幕的每秒字数与每行字数阈值更低。质检是只读检查，不会改动你的字幕文件，发现问题后可在字幕编辑器或导出后用主站文本工具调整。
+
+### 字幕翻译会上传到服务器吗？隐私安全吗？
+
+完全前端处理：文件读取、解析、翻译请求都在浏览器内完成，原文不经过我们的服务器存储。LLM 引擎的请求直接从你的浏览器发往你配置的 API 端点（OpenAI、DeepSeek 等），API Key 仅保存在本地 localStorage。翻译缓存使用浏览器 IndexedDB，关闭页面也保留。
+
+源代码开源于 [rockbenben/subtitle-translator](https://github.com/rockbenben/subtitle-translator)，可自部署或审查实现。
+
+## 配置说明
+
+应用提供了丰富的翻译配置选项，详细信息请参考：
+
+- [功能说明](/guide/translation/info.md)：翻译缓存、多语言翻译等功能，配置分块大小、延迟时间等参数
+- [翻译接口指南](/guide/translation/api.md)：了解支持的翻译接口和 AI 大模型
+- [常见问题](/guide/translation/faq.md)：API Key 配置、本地模型连接、翻译速度等高频问答
+
+
+
+---
+url: /guide/translation/subtitle-translator/deploy.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Subtitle Translator 部署
+
+## 系统要求
+
+- [Node.js 20.9](https://nodejs.org/) 或更高版本
+- 支持 macOS、Windows（包括 WSL）和 Linux
+
+## 本地部署
+
+确保你已安装 [Node.js](https://nodejs.org/)。
+
+```shell
+# 安装依赖
+yarn
+
+# 本地开发
+yarn dev
+
+# 构建并启动
+yarn build && npx serve@latest out
+
+# 单一语言部署
+yarn build:lang en
+yarn build:lang zh
+yarn build:lang zh-hant
+```
+
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看结果。
+
+你可以通过修改 `src/app/[locale]/page.tsx` 开始编辑页面，保存后页面会自动更新。
+
+## Vercel 部署
+
+点击下方按钮，一键将 Subtitle Translator 部署到 Vercel 平台：
+
+[![Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fsubtitle-translator)
+
+通过 Vercel，你可以快速将项目托管，并且可以自动处理构建和部署，适合没有复杂服务器配置需求的用户。
+
+## Cloudflare Pages 部署
+
+点击下方按钮或链接 Fork 本项目，然后按照以下步骤在 Cloudflare Pages 上部署：
+
+👉 [Fork 本项目](https://github.com/rockbenben/subtitle-translator/fork)
+
+部署步骤：
+
+1. 登录 [Cloudflare Pages](https://pages.cloudflare.com/)
+2. 点击 **"Create a project"**
+3. 绑定你刚刚 Fork 的 GitHub 仓库
+4. 配置构建和部署参数：
+   - **构建命令**：`npm run build`
+   - **构建输出目录**：`out`
+   - **环境变量**：添加变量 `NODE_VERSION`，值设为 `22.14.0`
+5. 点击部署按钮，开始构建！
+
+🎉 完成后即可访问你的字幕翻译器页面！
+
+## Docker 部署
+
+如果你更倾向于在容器环境中运行应用程序，可以使用以下方法通过 Docker 容器运行 Subtitle Translator：
+
+```bash
+# 从 ghcr.io 拉取并运行
+docker run -d -p 3000:3000 --name subtitle-translator ghcr.io/rockbenben/subtitle-translator:latest
+
+# 或者从 Docker Hub 拉取并运行
+docker run -d -p 3000:3000 --name subtitle-translator rockben/subtitle-translator:latest
+```
+
+运行后，访问 [http://localhost:3000](http://localhost:3000) 即可使用。
+
+也可以通过 `docker-compose.yml` 来部署：
+
+```yaml
+services:
+  subtitle-translator:
+    image: ghcr.io/rockbenben/subtitle-translator:latest
+    container_name: subtitle-translator
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+```
+
+执行 `docker-compose up -d` 命令即可启动服务。
+
+
+
+---
+url: /guide/translation/md-translator/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Markdown 翻译工具｜保留代码块、公式、Front Matter 的 AI 批量翻译指南
+
+:::tip 快速介绍
+md-translator 是一款专为技术文档翻译设计的免费在线工具，能在翻译过程中精准保留 Markdown 的代码块、LaTeX 公式和结构化元数据不被破坏。支持 120+ 种语言、多语言同时输出，以及用于任意文本的"纯文本翻译模式"，是翻译开源文档与博客内容的首选。
+:::
+
+:::tip 30 秒上手
+
+1. 拖入或粘贴 Markdown 文件
+2. 选源/目标语言（支持一次翻成多种）
+3. 点 **翻译** —— 代码块、LaTeX 公式、FrontMatter、链接全部原样保留
+
+> 想翻任意纯文本？把「格式模式」切到「忽略格式」，即可绕过 Markdown 解析。
+
+:::
+
+在技术文档、开源项目、博客创作等领域，Markdown 已成为主流的文本标记语言。然而，大多数翻译工具在处理 Markdown 内容时，容易破坏其原有结构，尤其在涉及代码块、LaTeX 公式或结构化元数据时，常常导致格式错乱或语义丢失。
+
+[md-translator](https://tools.newzone.top/zh/md-translator) 致力于解决这一问题：在精准保留 Markdown 格式的同时，实现高质量翻译。其“纯文本翻译模式”更可用于处理任意类型的文本文档，实现格式保留与语言转换的灵活兼容。目前已支持 120+ 种语言，并可同时输出多语言结果，助力内容全球化。
+
+![MD Translator 界面](/img/md-translator-zh.webp "MD Translator 使用界面")
+
+## 特色功能
+
+### 原生支持 Markdown 元素结构
+
+md-translator 针对 Markdown 文档进行了深度适配，能够识别并还原以下常见语法：
+
+- FrontMatter 元数据（`---`）
+- 标题（`#`）
+- 引用块（`> 引用`）
+- 链接（`[text](URL)`）
+- 无序列表（`-` / `*` / `+`）
+- 有序列表（`1. 2. 3.`）
+- 强调文本（`**加粗**`，`_斜体_`）
+- 代码块（` ``` `）
+- 内联代码（`` `code` ``）
+- 行内 LaTeX 公式（`$公式$`）
+- 块级 LaTeX 公式（`$$公式$$`）
+
+其中，FrontMatter、代码块以及 LaTeX 公式均支持可选翻译，用户可根据实际需求灵活配置是否处理。
+
+### 上下文关联翻译 (Context-Aware)
+
+Markdown 文档同样支持**上下文关联翻译**模式（仅限 AI 模型）。该模式会将文档切分为若干片段，并附带前后文发送给大模型，从而显著提升段落间的连贯性和专业术语的一致性。
+
+:::warning 注意
+由于 Markdown 结构的复杂性，开启上下文模式可能会增加模型输出格式错误的风险（如代码块闭合异常、列表缩进错乱）。建议在开启该模式时，密切关注翻译结果的格式完整性。
+:::
+
+### 「忽略格式」：支持任意纯文本
+
+除了结构化 Markdown 支持，md-translator 还提供 **「格式模式 → 忽略格式」**，跳过格式解析，直接对原始内容进行语言转换。无论是 Markdown、TXT、HTML、日志文件，甚至是未经整理的技术笔记，都可通过该模式获得准确、高效的翻译结果。
+
+你还可以通过自定义 AI 提示词，进一步提升术语一致性、上下文连贯性以及整体翻译风格的统一性，使翻译输出更贴合你的实际写作需求。
+
+### 自动适配 RTL 语言
+
+自动识别并调整阿拉伯语、希伯来语、乌尔都语、波斯语等 RTL 语言的显示方向。
+
+### 扩展功能：提取纯净文本
+
+md-translator 还具备将 Markdown 内容转换为纯文本的能力，方便你进行二次处理或语义分析：
+
+- 自动去除所有 Markdown 标记符号
+- 隐藏代码块、链接等技术内容
+- 输出适合摘要提取、搜索索引或 NLP 处理的纯文本数据
+
+该功能非常适用于技术内容的摘要提取、语义分析、知识图谱构建等自动化应用场景。它导出的是去掉 Markdown 标记的**原文正文**；翻译完若想进一步润色/校对译文，可把它和译文（从翻译结果区复制）一起发给任意 AI，用你自己的提示词让它对照原文修订、按需附改动摘要。
+
+## 适用场景
+
+- 多语言技术文档的批量翻译
+- 开源项目说明文档的国际化
+- Markdown 博客内容的中英双语同步
+- 代码注释、公式说明等混合文档的格式保留翻译
+- 任何结构化/非结构化文本的语义翻译与提取
+
+## 与同类工具对比
+
+在开发 md-translator 之前，我测试过以下方案，但都因各自的局限未能满足需求：
+
+- **[GT4T](https://www.gt4t.cn/)**：支持把整个文件夹拖入批量翻译 Markdown，但仅商业付费授权——即使填入自己的 API Key 仍要付费，对个人用户不友好。
+- **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**：开源免费，基于网页版接口翻译。问题是速度慢，长文本处理容易中断。
+
+md-translator 在两点上做差异化：完全免费 + 浏览器本地运行（数据不出本机），并对 Markdown 结构与代码块/公式/FrontMatter 做了深度保留。
+
+## 常见问题
+
+### 免费的 Markdown 翻译工具哪个好用？
+
+MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 120+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
+
+### 翻译 Markdown 文档时如何保留代码块和公式？
+
+用占位符保护策略：代码块（`围栏代码`）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。Frontmatter 默认整块跳过，可在「翻译内容」勾选「翻译 frontmatter」一并处理；同样的开关可单独控制代码块、LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
+
+### 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
+
+技术文档强烈推荐 AI 大模型——能识别上下文里的库名、函数名、变量名不乱译。首选 **Claude Sonnet**（API 文档术语精度最高）、**DeepSeek** 性价比极高（中文技术博客标配）、**Gemini 3.1 Pro** 适合整本书级长文档（1M token 上下文）。机器翻译只适合快速预览，长 Markdown 文档会被截断。完整引擎对比见 [接口指南](/guide/translation/api.md)，配置在三个翻译工具间共享。
+
+### 怎么翻译 GitHub README 或整个 VitePress、Docusaurus 文档站？
+
+整个 `docs/` 目录批量上传，Front Matter 里的 `title`、`description` 字段勾选「翻译 Front Matter」一并处理，`slug` 和 `permalink` 字段不会被翻译。代码块、命令行示例、API 端点会自动跳过——只翻译注释和说明文本。翻译完直接放回原目录即可让框架按 `i18n.locales` 多语言路由识别。VitePress 用 `zh/`、`en/` 子目录，Docusaurus 用 `i18n/{locale}/` 结构。
+
+### 支持 GFM、MDX、Astro 这些 Markdown 方言吗？
+
+标准 CommonMark 和 GFM（GitHub Flavored Markdown）全支持，包括表格、任务列表、删除线、围栏代码块。MDX（带 JSX 组件的 Markdown）和 Astro Components：组件标签（如 `<Alert>`、`</Alert>`、带属性的 `<Alert title={var}>`）会作为整块占位符保护起来不参与翻译，而标签之间的纯文本会照常翻译（如 `<Alert>这段会被翻译</Alert>`）。复杂 MDX 想完全跳过格式可在「格式模式」里打开「忽略格式」开关，按纯文本翻译。
+
+### 有什么工具可以批量翻译技术博客文章？
+
+MDTranslator 支持批量上传多个 Markdown 文件，一键翻译为目标语言。保留 Front Matter 元数据，翻译后的文章可直接部署到 Hugo、Jekyll、Hexo 等博客框架。
+
+### 要翻译的不是 Markdown，是字幕或 JSON 配置文件怎么办？
+
+字幕文件（SRT/ASS/VTT/LRC）请用 [字幕翻译器](/guide/translation/subtitle-translator/index.md)，保留时间轴和 ASS 样式标签；JSON 国际化文件（i18next、next-intl、vue-i18n 那种 key-value 结构）请用 [JSON 翻译](/guide/translation/json-translate/index.md)，按 Key 路径选择性翻译，可保护占位符 `{name}`、`{count}` 不被破坏。三个翻译工具共享同一套引擎配置和 API Key，跨工具切换无需重复设置。
+
+### 翻译后的 Markdown 会上传到服务器吗？开源吗？
+
+完全前端处理：文件读取、解析、翻译请求都在浏览器内完成，原文不经过我们的服务器存储。LLM 引擎的请求直接从你的浏览器发往你配置的 API 端点（OpenAI、DeepSeek 等），API Key 仅保存在本地 localStorage。翻译缓存使用浏览器 IndexedDB，关闭页面也保留。
+
+源代码开源于 [rockbenben/md-translator](https://github.com/rockbenben/md-translator)，可自部署或审查实现。
+
+## 配置说明
+
+应用提供了丰富的翻译配置选项，详细信息请参考：
+
+- [功能说明](/guide/translation/info.md)：翻译缓存、多语言翻译等功能，配置分块大小、延迟时间等参数
+- [翻译接口指南](/guide/translation/api.md)：了解支持的翻译接口和 AI 大模型
+- [常见问题](/guide/translation/faq.md)：API Key 配置、本地模型连接、翻译速度等高频问答
+
+
+
+---
+url: /guide/translation/md-translator/deploy.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# MD Translator 部署
+
+## 系统要求
+
+- [Node.js 20.9](https://nodejs.org/) 或更高版本
+- 支持 macOS、Windows（包括 WSL）和 Linux
+
+## 本地部署
+
+确保你已安装 [Node.js](https://nodejs.org/)。
+
+```shell
+# 安装依赖
+yarn
+
+# 本地开发
+yarn dev
+
+# 构建并启动
+yarn build && npx serve@latest out
+
+# 单一语言部署
+yarn build:lang en
+yarn build:lang zh
+yarn build:lang zh-hant
+```
+
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看结果。
+
+你可以通过修改 `src/app/[locale]/page.tsx` 开始编辑页面，保存后页面会自动更新。
+
+## Vercel 部署
+
+点击下方按钮，一键将 MD Translator 部署到 Vercel 平台：
+
+[![Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fmd-translator)
+
+通过 Vercel，你可以快速将项目托管，并且可以自动处理构建和部署，适合没有复杂服务器配置需求的用户。
+
+## Cloudflare Pages 部署
+
+点击下方按钮或链接 Fork 本项目，然后按照以下步骤在 Cloudflare Pages 上部署：
+
+👉 [Fork 本项目](https://github.com/rockbenben/md-translator/fork)
+
+部署步骤：
+
+1. 登录 [Cloudflare Pages](https://pages.cloudflare.com/)
+2. 点击 **"Create a project"**
+3. 绑定你刚刚 Fork 的 GitHub 仓库
+4. 配置构建和部署参数：
+   - **构建命令**：`npm run build`
+   - **构建输出目录**：`out`
+   - **环境变量**：添加变量 `NODE_VERSION`，值设为 `22.14.0`
+5. 点击部署按钮，开始构建！
+
+🎉 完成后即可访问你的 Markdown 翻译工具！
+
+## Docker 部署
+
+如果你更倾向于在容器环境中运行应用程序，可以使用以下方法通过 Docker 容器运行 MD Translator：
+
+```bash
+# 从 ghcr.io 拉取并运行
+docker run -d -p 3000:3000 --name md-translator ghcr.io/rockbenben/md-translator:latest
+
+# 或者从 Docker Hub 拉取并运行
+docker run -d -p 3000:3000 --name md-translator rockben/md-translator:latest
+```
+
+运行后，访问 [http://localhost:3000](http://localhost:3000) 即可使用。
+
+也可以通过 `docker-compose.yml` 来部署：
+
+```yaml
+services:
+  md-translator:
+    image: ghcr.io/rockbenben/md-translator:latest
+    container_name: md-translator
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+```
+
+执行 `docker-compose up -d` 命令即可启动服务。
+
+
+
+---
+url: /guide/translation/json-translate/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 翻译工具｜i18n 多语言批量翻译与 JSONPath 精准定位
+
+:::tip 快速介绍
+JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、逐条翻译指定字段、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
+:::
+
+:::tip 30 秒上手
+
+1. 拖入或粘贴 JSON 文件
+2. 选 **翻译模式**：
+   - 全部 string 都翻 → **全局翻译**
+   - 只翻 `title` / `description` 等特定 key → **指定键名**
+   - 多语言 i18n 项目（每个对象添加目标语言字段）→ **i18n 模式**
+3. 选源/目标语言，点 **翻译** —— JSON 结构原样保留导出
+
+> JSON 翻译只支持单文件模式（不批量），适合精细处理。
+
+:::
+
+[JsonTranslate](https://tools.newzone.top/zh/json-translate)，一款专为开发者和内容创作者设计的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等大语言模型，助力项目国际化和本地化。无论你是在开发多语言网站、应用程序还是处理多语言数据集，JsonTranslate 都能提供简便的解决方案，轻松将 JSON 文件中的内容翻译为多种目标语言。
+
+![JSON Translate 工作流动画演示：拖入 JSON 文件、设置源/目标语言、一键批量翻译](/img/json-translate-zh.webp "JsonTranslate 使用示例")
+
+## 翻译模式说明
+
+### 全局翻译
+
+全局翻译会递归遍历整个 JSON 数据结构，对所有字符串类型的值进行翻译，同时保持原始 JSON 的层级与结构不变。
+
+**适用场景**：
+
+- 需要对整份 JSON 文件中的文本内容进行全面翻译
+- 无需复杂配置，一键翻译所有内容
+
+### 指定节点
+
+通过 JSONPath 表达式，精准定位一个或多个节点，仅翻译这些节点中的字符串内容。支持多个路径，用英文逗号分隔。
+
+**适用场景**：
+
+- JSON 数据具有清晰的层级结构，仅需翻译特定部分
+- 针对大型 JSON 文件，缩小翻译范围提高效率
+
+### 指定键名
+
+在此模式下，你可以指定特定的键名进行翻译。支持两种输入方式：
+
+- **简单模式**：直接在输入框中通过逗号（中英文均可）分隔需要翻译的键名，程序会将这些键的内容进行翻译。
+- **高级模式**：通过键名映射组件设置输入键与输出键的对应关系，翻译结果将写入新字段中，保留原字段不变。
+
+**适用场景**：
+
+- 仅需翻译特定字段，例如 `title`、`description` 等
+- 需要将翻译结果输出到不同字段，避免覆盖原数据
+
+**注意事项**：
+
+- 键名区分大小写。
+- 输入键与输出键数量须一致；映射会自动忽略不存在的键。至少需有一个有效映射才会执行翻译。
+- 纯数字键可能与数组索引冲突——该问题已修复，但建议尽量避免仅由数字组成的键名以减少歧义。
+- 含点（.）的键名会被误解析为嵌套路径，建议使用不含点的键名或改用替代命名。
+
+### 逐条翻译指定字段
+
+把 JSON 当成一张「条目列表」来处理：逐个条目取出同一个字段翻译，其余字段原样保留。
+
+**结构要求**：JSON 必须&#x662F;**「条目 → 对象」两层结构**，即顶层每个键对应一个对象，字段在对象里。例如：
+
+```json
+{
+  "fetchError": { "message": "Request failed", "code": 500 },
+  "authError": { "message": "Invalid token", "code": 401 }
+}
+```
+
+配置「待翻译字段」= `message`，就只翻两条的 `message`，`code` 不动。
+
+**配置项**：
+
+- **起始键**：(可选) 从这个条目开始翻译，留空则从第一条开始。适用于键顺序有意义、只想翻后半部分的场景
+- **待翻译字段**：取每个条目里的这个字段翻译，**多个字段用逗号分隔**。注意：列出的字段只要有一个在所有条目里都找不到（或不是字符串值），整次翻译会直接报错中止，而不是跳过该字段
+
+**适用场景**：
+
+- 日志 / 错误信息文件，只翻每条的 `message`，保留 `code`、`level` 等元数据
+- 条目结构统一、但只有一个字段需要本地化的配置文件
+
+### i18n 模式
+
+i18n 模式专为多语言场景设计，能在原有 JSON 结构中聚合多语言的字段内容。适合用于构建多语言网站或应用的翻译文件，或管理统一结构下的多语言配置。
+
+#### 工作原理
+
+- 使用选择的源语言作为源字段，比如源语言为 `zh`，源字段就是 `zh`。当源语言为 `auto` 时，源字段则为默认的 `en`。
+- 遍历 JSON 中所有包含源语言字段的对象，为每个对象新增目标语言字段（与源语言字段同级）。
+- 若目标语言字段已存在，则跳过翻译，避免覆盖已有内容。
+- 当同时启用 i18n 模式和多语言模式时，系统将创建一个包含源语言和所有目标语言的统一 JSON 结构，这对国际化项目特别有用。
+
+#### 示例
+
+```json
+{
+  "title": {
+    "en": "Settings"
+  }
+}
+```
+
+目标语言设定为 `zh`、`fr`，翻译结果：
+
+```json
+{
+  "title": {
+    "en": "Settings",
+    "zh": "设置",
+    "fr": "Paramètres"
+  }
+}
+```
+
+## 功能介绍
+
+### 映射翻译
+
+在使用指定键名模式时，你可以通过结果区的切换按钮，在单一键名模式和映射翻译模式之间切换。单一键名模式下，翻译的输入输出使用相同节点，而映射翻译模式则涉及不同节点的翻译。例如，节点 A 的值将翻译至节点 B，节点 C 的值翻译至节点 D。
+
+![JSON Translate 键映射模式截图：通过 source-target key 配对实现字段级精准翻译](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "映射翻译示例")
+
+### 如何使用 JSON 键名
+
+JSON 数据是以键值对的形式存储的，其中“键”（也称为“名称”）是一个字符串，用于唯一标识数据记录中的特定项目或元素，是数据检索和操作的基础。JsonTranslate 正是利用了 JSON 键名的标识作用来实现精准化识别翻译。
+
+以下是对示例中的几个键名的解释：
+
+- `downvote.message`：这是一个嵌套的键名。`downvote` 是外层对象的键名，而 `message` 是 `downvote` 对象内部的一个键名。
+- `提示词.message`：这里 `提示词` 是一个键名，它本身包含一个对象，该对象有一个键 `message`。
+- `share.owner`：这个键名包含了一个点（`.`），它是一个单独的键名而不是指示嵌套关系。在这种情况下，如果你想访问 `share.owner` 对象中的 `name`，你不能使用 `share.owner.name`，因为这会被错误解释为查找一个名为 `owner` 的对象内的 `name` 键，而实际上 `share.owner` 是一个完整的键名。
+
+```json
+{
+  "downvote": {
+    "message": "Downvote"
+  },
+  "提示词": {
+    "message": "prompt"
+  },
+  "share.owner": {
+    "name": "rabbit"
+  },
+  "data": {
+    "title": {
+      "id": "001",
+      "name": "cabbages"
+    }
+  },
+  "content": [
+    {
+      "id": "001",
+      "value": "Hello, cabbage."
+    },
+    {
+      "id": "002",
+      "value": "Hello, Radish."
+    }
+  ]
+}
+```
+
+目前，JsonTranslate 无法处理包含点（`.`）的 JSON 键名。这是因为点号在 JSONPath 中用于区分嵌套对象的键名，使得含点的键名可能被误解为多层嵌套对象。为避免这一问题，建议使用不含点的键名。
+
+## 常见问题
+
+### 这个 JSON 翻译工具支持哪些翻译引擎和文件大小？
+
+浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持全部翻译接口：Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点（Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、逐条翻译指定字段、i18n 多语言聚合 5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
+
+### 翻译 JSON 用机器翻译还是 AI 大模型？怎么选最合适？
+
+按 JSON 值长度选：短 UI 文案（按钮、菜单项、错误提示）用机器翻译够用——**Google 免费版** 零成本（限单条 5000 字符）；长文本（产品描述、教程）建议 AI 大模型——**DeepSeek** 性价比首选、**Claude Sonnet** 术语一致性最稳，可在「系统提示词」加术语保留表保护品牌名、SKU、API 术语。完整引擎对比见 [接口指南](/guide/translation/api.md)，配置在三个翻译工具间共享。
+
+### 支持 next-intl、i18next、vue-i18n、react-intl 这些 i18n 框架的 JSON 格式吗？
+
+全部支持。next-intl 和 vue-i18n 的嵌套对象结构、i18next 的扁平 key 命名空间、react-intl 的 ICU MessageFormat 占位符都能正确处理。`{name}`、`{count, plural, ...}`、`{0}` 等占位符在翻译时会被保留不会被改写。建议用「指定键名」模式只翻译值不动 Key，或用「i18n 模式」直接在原 JSON 上聚合多语言（如 `{en: "Settings", zh: "设置"}` 结构）。
+
+### 怎么把 JSON 一次翻译成多种语言？
+
+开启「多语言模式」后可同时选择多个目标语言，一次操作即可批量生成 en.json、ja.json、ko.json 等多语言文件，大幅节省国际化工作时间。
+
+### 用 JSONPath 怎么只翻译特定节点？比如只翻译商品名字段。
+
+「指定节点」模式接受标准 JSONPath 表达式：`$.products[*].name` 翻译所有商品的 name 字段，`$..title` 递归翻译所有 title 字段，多个路径用英文逗号分隔。配合「指定键名」的高级映射模式，还可以把翻译结果写入新字段（如 `name` → `name_zh`）而保留原文。注意：键名含点（.）会被误认为嵌套路径，建议避免。
+
+### JSON 翻译后键名和嵌套结构会乱吗？
+
+不会。工具只翻译值内容，键名、嵌套层级、数组结构全部原样保留，翻译后的 JSON 可直接用于 React、Vue 等前端 i18n 项目。
+
+### 翻译的不是 i18n JSON，是 Markdown 或字幕文件怎么办？
+
+Markdown 文档（.md、.mdx）请用 [Markdown 翻译](/guide/translation/md-translator/index.md)，会保留代码块、LaTeX 公式和 Front Matter 元数据；字幕文件（SRT/ASS/VTT/LRC）请用 [字幕翻译器](/guide/translation/subtitle-translator/index.md)，保留时间轴和 ASS 样式标签。三个翻译工具共享同一套引擎配置和翻译缓存，跨工具切换无需重新设置。
+
+### JSON 内容会上传到服务器吗？大文件会不会泄露隐私？
+
+完全前端处理：文件读取、解析、翻译请求都在浏览器内完成，原文不经过我们的服务器存储。LLM 引擎的请求直接从你的浏览器发往你配置的 API 端点（OpenAI、DeepSeek 等），API Key 仅保存在本地 localStorage。翻译缓存使用浏览器 IndexedDB，关闭页面也保留。
+
+JSON 工具的 IndexedDB 缓存还支持构建间增量更新——只有改动过的 Key 会重新调用 API，节省成本。源代码开源于 [rockbenben/json-translate](https://github.com/rockbenben/json-translate)，可自部署或审查实现。
+
+## 配置说明
+
+应用提供了丰富的翻译配置选项，详细信息请参考：
+
+- [功能说明](/guide/translation/info.md)：翻译缓存、多语言翻译等功能，配置分块大小、延迟时间等参数
+- [翻译接口指南](/guide/translation/api.md)：了解支持的翻译接口和 AI 大模型
+- [常见问题](/guide/translation/faq.md)：API Key 配置、本地模型连接、翻译速度等高频问答
+
+
+
+---
+url: /guide/translation/json-translate/deploy.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON Translate 部署
+
+## 系统要求
+
+- [Node.js 20.9](https://nodejs.org/) 或更高版本
+- 支持 macOS、Windows（包括 WSL）和 Linux
+
+## 本地部署
+
+确保你已安装 [Node.js](https://nodejs.org/)。
+
+```shell
+# 安装依赖
+yarn
+
+# 本地开发
+yarn dev
+
+# 构建并启动
+yarn build && npx serve@latest out
+
+# 单一语言部署
+yarn build:lang en
+yarn build:lang zh
+yarn build:lang zh-hant
+```
+
+在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看结果。
+
+你可以通过修改 `src/app/[locale]/page.tsx` 开始编辑页面，保存后页面会自动更新。
+
+## Vercel 部署
+
+点击下方按钮，一键将 JSON Translate 部署到 Vercel 平台：
+
+[![Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frockbenben%2Fjson-translate)
+
+通过 Vercel，你可以快速将项目托管，并且可以自动处理构建和部署，适合没有复杂服务器配置需求的用户。
+
+## Cloudflare Pages 部署
+
+点击下方按钮或链接 Fork 本项目，然后按照以下步骤在 Cloudflare Pages 上部署：
+
+👉 [Fork 本项目](https://github.com/rockbenben/json-translate/fork)
+
+部署步骤：
+
+1. 登录 [Cloudflare Pages](https://pages.cloudflare.com/)
+2. 点击 **"Create a project"**
+3. 绑定你刚刚 Fork 的 GitHub 仓库
+4. 配置构建和部署参数：
+   - **构建命令**：`npm run build`
+   - **构建输出目录**：`out`
+   - **环境变量**：添加变量 `NODE_VERSION`，值设为 `22.14.0`
+5. 点击部署按钮，开始构建！
+
+🎉 完成后即可访问你的 JSON 翻译工具！
+
+## Docker 部署
+
+如果你更倾向于在容器环境中运行应用程序，可以使用以下方法通过 Docker 容器运行 JSON Translate：
+
+```bash
+# 从 ghcr.io 拉取并运行
+docker run -d -p 3000:3000 --name json-translate ghcr.io/rockbenben/json-translate:latest
+
+# 或者从 Docker Hub 拉取并运行
+docker run -d -p 3000:3000 --name json-translate rockben/json-translate:latest
+```
+
+运行后，访问 [http://localhost:3000](http://localhost:3000) 即可使用。
+
+也可以通过 `docker-compose.yml` 来部署：
+
+```yaml
+services:
+  json-translate:
+    image: ghcr.io/rockbenben/json-translate:latest
+    container_name: json-translate
+    ports:
+      - '3000:3000'
+    restart: unless-stopped
+```
+
+执行 `docker-compose up -d` 命令即可启动服务。
+
+
+
+---
+url: /guide/translation/info.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 功能说明
+
+## 核心特性
+
+### 一次翻译，输出多语种
+
+可以把同一份文件同时翻译成多种语言，适合多语种字幕或国际化项目。例如把英文字幕一次性翻译成中文、日语、德语、法语，导出时按语言分别打包。当前支持 120+ 种语言，持续扩充中。
+
+### 翻译缓存
+
+翻译结果会自动保存在浏览器本地，参数一致时直接命中缓存，不重复消耗 API：
+
+- **持久化**：刷新或关闭浏览器不会丢
+- **大容量**：可以保存数百万条记录，不占内存
+- **可关闭**：调试 Prompt / 模型时可临时关闭，避免读到旧结果
+- **可清理**：在设置面板中一键清空所有缓存
+- **命中条件**：源文本 + 源/目标语言 + 服务关键参数（LLM 看 prompt/温度/思考强度，Qwen-MT 看 domains，传统 MT 仅看源文本）完全一致才命中；改温度、改 prompt、切换思考开关、增删术语表词条都会 miss
+
+### 术语表（Glossary）
+
+为人名、专有名词指定固定译法，保证整份文件乃至整个系列的译名一致——追剧字幕里的角色名、技术文档里的产品术语都不会再"一集一个译法"。
+
+**在哪里开启**：翻译设置面板中的「术语表」卡片（仅在所选服务支持时显示），主页面的 API 状态徽章旁也有术语表状态芯片，点击可直达。打开开关后若还没有术语表，会自动新建一个。
+
+**词条管理**：
+
+- 每条词条 = **原文词 → 指定译法**，并绑定一个**目标语言**——同一个词可以为不同目标语言各存一条译法，翻译时只应用当前目标语言的词条
+- 点「编辑词条」打开编辑器：行内增删改、搜索过滤、重复词警示，超过 50 条自动分页
+- **TSV 批量导入/导出**：每行「原文词 ⇥ 译法」（制表符分隔），可从 Excel / 表格软件直接复制；可选第 3 列填目标语言代码（如 `zh`、`ja`），一个文件即可导入多语言术语
+- 支持多套术语表**预设**（如按剧名 / 项目名建库），新建、重命名、删除、随设置导入导出
+
+**如何生效**（多层保障）：
+
+1. **LLM 服务**：只把当前文本实际命中的词条注入系统提示词（不会把几百条术语全塞进每个请求浪费 token）
+2. **Qwen-MT**：走官方原生 `translation_options.terms` 参数，模型直接按术语翻译，最可靠
+3. **违规重试**：LLM 译文若没有采用指定译法，会自动用加强版指令对违规行单独重译一次，并保留违规更少的版本
+4. **译后兜底替换**：任何服务下，译文中残留的原文词都会按词条替换（拉丁词带词边界、CJK 子串匹配、长词优先），确保术语最终一定生效
+
+**支持范围**：所有 LLM 服务 + Qwen-MT。纯 MT 接口（GTX、Google、DeepL(X)、Azure、TranslateGemma、MiLMMT）没有模型内术语通道，不显示术语表卡片。
+
+**匹配规则**：匹配时不区分大小写（`AI` / `ai` 都命中）；术语表数据保存在浏览器本地，不会上传。
+
+### 长文本与并发优化
+
+针对大文档与批量任务做了专门优化：
+
+- **并发控制**：可自定义请求速率，付费 API 跑满额度，免费 API 限流保护不被封
+- **大文件支持**：流式分块处理，超大文档不卡顿
+- **上下文关联翻译**：字幕与文档翻译会带上下文一起发给 AI，保证剧情/章节连贯
+- **失败行单独重试**：批次内出错的行单独标记，整批跑完后重试出错部分，不阻塞整体
+
+### 失败行重发
+
+LLM 偶尔会因格式输出错误、漏行、空响应导致部分内容翻译失败。这种情况下：
+
+- 失败的行会自动**回填原文**——不会留空，保证整份翻译可用
+- 结果区顶部出现红色提示，告诉你"N 行失败"
+- 点击 **「重试失败行」** 仅对失败的行重新请求，已完成的内容保持不变、不重复扣费
+- 也可以一键复制失败原文，粘到其他工具人工处理
+
+**多语言批量场景**：一次翻译成多种语言时，如果某种目标语言整体失败（配额耗尽、模型拒答等），失败的语言代码会聚合到独立面板，可以一键复制粘回"目标语言"字段重试。
+
+> 网络抖动、429 限流、5xx 错误会自动重试；API Key 错、超时、context length 超限、max_tokens 截断不会重试。详见 [FAQ → 翻译失败会自动重试吗](/guide/translation/faq.md#翻译失败会自动重试吗哪些错误不重试)。
+
+### 取消翻译与运行中锁定
+
+翻译进行中，结果区上方是一条**内联进度条**（已处理行数 / 总行数、当前语言、当前文件），右侧就是**取消**按钮：
+
+- 取消**1 秒内落定**，进度条转为「已停止」，不会一走了之
+- 已完成的行都已写进缓存，下次点「翻译」直接从断点继续、不重复扣费——**缓存就是断点**
+- **运行中设置与输入一律锁定**：语言、Provider、prompt、导出格式、高级项、上传区、源文本框在跑的时候都改不动。整条翻译链跑在你点「翻译」那一刻的快照上：运行中改设置结构上不会对本轮生效（控件却会翻转，界面等于在撒谎），运行中换文件或改源文本则**真的会坏结果**（会清掉正在写的译文产物，或让导出变成"新源文配旧译文"）。想改先取消——代价已经压到近乎为零
+- **只读动作不锁**：提取纯文本、复制、导出随时可用
+
+### RTL 语言自动适配
+
+阿拉伯语、希伯来语、波斯语、乌尔都语等从右向左书写的语言，文本框和结果区会自动切换到 RTL 显示，无需额外配置。书写方向是**逐行判定**的：一份中英夹阿拉伯语的文件，每一行各按自己的首个强方向字符排版，不会因为整块被判成 LTR 而让阿拉伯语行的标点跑到错误的一侧。
+
+导出双语 ASS 时，波斯语 fa、乌尔都语 ur、普什图语 ps、达里语 prs、索拉尼库尔德语 ckb、维吾尔语 ug 都已按阿拉伯字母登记，与中文配对时不会被指派成没有阿拉伯字形的中文字体（那会导出一屏豆腐块）；希伯来语单独成一类。ASS 样式抽屉的预览也会按目标文字系统显示对应语种的示例句。
+
+***
+
+## 使用模式
+
+### 批量 vs 单文件
+
+工具会根据上传内容自动切换：
+
+- **批量模式**（默认）：拖入多个文件，自动排队处理，完成后打包下载。
+- **单文件模式**：上传单文件或直接粘贴文本，可逐行预览校对、编辑修改。
+
+也可以在高级设置中手动锁定到单文件模式，方便校对。
+
+:::tip 提示
+JSON Translate 仅支持单文件模式。
+:::
+
+### 一键交换源/目标语言
+
+源语言和目标语言下拉框中间有一个 **⇄** 按钮，点击即可互换。源语言为"自动检测"或开启了多语言模式时按钮会变灰——这两种情况下不能互换。
+
+### 语言选择器
+
+所有目标语言按地理 + 使用人数分组（常用 / 欧洲 / 中东 / 中亚 / 南亚 / 东南亚 / 非洲 / 美洲与大洋洲），便于快速定位。多语言模式还提供 4 个快速预设按钮，一键合并选择：
+
+- **全球 Top 10**：英、中、西、法、日、葡、德、俄、印地、阿拉伯——使用人数最多的 10 种
+- **欧洲主流**：法、德、意、西、葡、荷、波等欧洲商用主要语言
+- **东亚**：中（简）、中（繁）、日、韩、粤语
+- **印度次大陆**：印地、孟加拉、泰米尔、马拉地、古吉拉特等
+
+单语言场景下还会记忆你最近选过的语言（最多 5 个），下次访问时显示在下拉顶部的"最近"分组。移动端自动切换为单列布局。
+
+### API 连接状态
+
+主页面顶部以徽章形式展示当前所选 API 的连接状态：
+
+- **未配置 / 需配置**：URL 或 API Key 还没填
+- **已填写**：信息齐全但还没测试
+- **测试中** → **✓ 已连接** 或 **连接失败**：测试结果
+- **Free API**：免费且不需要配置的服务（GTX / Edge / DeepLX）
+
+点击徽章可以快速跳到 API 设置页。
+
+### 配置预设：API、Prompt、术语表分开管理
+
+工具把 API 配置、Prompt 和术语表拆成三套独立的预设，互不干扰：
+
+- **API 预设**：保存当前服务的 URL、Key、模型、温度等。适合在本地 Ollama、远程网关、付费云端之间切换。
+- **Prompt 预设**：保存系统提示词和用户提示词。可以在"严谨术语"和"自由意译"两套提示词之间快速切换，不影响 API 配置。
+- **术语表预设**：按剧名 / 项目名维护多套译名词库，详见上文 [术语表](#术语表glossary)。
+
+三类预设都支持新建、加载、重命名、更新和删除，并随设置一同导入导出。
+
+### 翻译后处理
+
+翻译完成后可自动执行简单的字符串清理：
+
+- **字符过滤**：移除字幕里的 `♪ ♫` 等多余符号
+- **格式修正**：去掉冗余 HTML 标签
+
+:::tip 提示
+该功能仅做简单字符串替换，不支持 `\n`、`\t` 等转义字符。需要复杂处理请用文本分割工具。
+:::
+
+### 导出到指定目录
+
+导出默认进浏览器的下载目录。支持 File System Access API 的浏览器（Chrome / Edge）可以在结果区点「**导出目录**」选一个文件夹，此后所有导出直接落进那里；点「**恢复为下载目录**」改回默认。
+
+- 浏览器不允许把「桌面 / 文档 / 下载」这些用户目录本身选为导出目录，请选它们的子文件夹或任意其他文件夹
+- Firefox / Safari 没有这个接口，按钮不会出现，导出照旧走默认下载目录
+
+***
+
+## 高级设置
+
+### 设置导入/导出
+
+一键备份所有配置（API 凭据、模型参数、API 预设、Prompt 预设、术语表），生成的 JSON 可跨设备导入，方便团队共享或换电脑迁移。
+
+### 通用翻译选项
+
+- **使用缓存**：默认开启。参数一致时直接读缓存。调试时可临时关闭。
+- **重试次数**：请求失败时的最大重试次数。网络不稳或免费接口易限流时可以调高。
+- **超时时间**：单次请求超时阈值（秒）。AI 模型慢或长文本多时可以调大。「测试连接」按钮也使用同一阈值——测试不会比正式翻译更严格。
+- **最大输出 tokens（仅 Custom OpenAI-compatible）**：可选的输出封顶，主要用于防止本地小模型陷入重复输出循环，建议本地模型设 2048–4096。默认 0（不限制）。响应若被截断（`finish_reason=length`）会标为失败但不会重试。其他云端 LLM 用各自服务端的默认上限，不暴露此控件。
+- **翻译后移除字符**：在结果中自动移除指定字符或片段（如字幕里的 `♪`、多余的 `<i>` 标签）。
+- **自定义导出文件名**：默认 `{name}.{ext}` —— 单语言导出保持原文件名，干净不啰嗦；一次翻译成多种语言时，若模板里没有 `{lang}`，工具会自动在扩展名前补 `_{lang}`，避免多语言结果互相覆盖。支持占位符 `{name}`（原文件名）、`{lang}`（目标语言）、`{ext}`（扩展名）、`{date}`（本地日历日 YYYY-MM-DD）、`{time}`（HHMMss）。想固定带语言后缀，写成 `{name}_{lang}.{ext}` 即可；也可用 `{name}_{lang}_{date}.{ext}` 这类组合。
+
+### API 参数调优
+
+#### 分块大小
+
+非 LLM 接口（Google / Azure 等）会把长文本切成小块发送。**分块大小**就是每块的字符上限。常见接口的官方限制：
+
+| 接口                   | 单次最大字符  |
+| -------------------- | ------- |
+| DeepL API            | 128,000 |
+| DeepLX Free          | 1,000   |
+| Azure Translate      | 10,000  |
+| Google Translate Web | 5,000   |
+| Google Cloud API     | 30,000  |
+
+> ⚠️ Google Translate 网页版会破坏换行符，因此未启用分块。
+
+#### 延迟（毫秒）
+
+每两次分块请求之间的等待时间。网络较差或用免费 API 时建议加大。例如用 Azure Translate 免费版，建议设到 **5000 ms** 以上。
+
+#### 并发行数
+
+同时翻译的最大行数。**默认值已按服务调好**——免费 API 跑得快，付费 API 默认稳。觉得慢就调大，遇到 429 限流就调小，一般不用动。
+
+
+各服务默认值（参考）
+
+- GTX (Free)：整批分块翻译（约 5000 字符/块），不走逐行并发
+- Edge (Free)：100
+- 商用 MT（Google / Azure / DeepL）：20-100
+- 云端 LLM（Claude / Gemini / OpenAI / Qwen 等）：20
+- Custom 本地 LLM / TranslateGemma / MiLMMT / DeepLX：10
+
+#### 上下文并发数
+
+- **默认值**：3（部分接口为 1）
+- **作用**：开启上下文翻译时，每次发给模型的"待翻译目标行数"。每个请求会带上下文一起发。
+- **建议**：值越大单次吞吐越高，但模型同时输出多行容易格式错乱；值越小越稳，请求数也多。文档/字幕保持 3，普通文本可调到 5。
+
+#### 上下文行数
+
+AI 翻译时随每批送给模型的"前后文"行数——越大越连贯，但请求也越重。**默认值已调好**，一般不用动。遇到 "context length exceeded" 就调小；想要更好的对话连贯性可适当调大。
+
+
+各服务默认值（参考）
+
+- 云端 LLM（Claude / Gemini / Nvidia / Azure OpenAI 等）：50
+- Custom 本地 LLM：30（14B 以下小模型在长 batch 里容易漏行，所以默认值更小）
+早期版本云端 LLM 默认 100，实测过长的上下文反而更容易诱发"模型把上下文里的句子当成待译内容"的串行错位，故下调为 50。
+
+
+
+---
+url: /guide/translation/api.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 翻译接口指南
+
+工具集成了经典机器翻译 API 与大语言模型接口两类服务，可按文本类型、预算与隐私需求自由选择。具体名单与数量见下面两节（与应用的接口目录同源，随版本自动更新）。
+
+## 我应该挑哪个接口？
+
+| 场景                     | 推荐                                                      | 为什么                                      |
+| ---------------------- | ------------------------------------------------------- | ---------------------------------------- |
+| 第一次试用，没 API Key        | **GTX (Free)**                                          | 免费、零配置，默认就是它                             |
+| GTX 连不上，仍想免费           | **Edge (Free)** 或 **DeepLX (Free)**                     | 同样零配置，换条链路即可                             |
+| 字幕、UI 文案、海量短句          | **GTX Free** 或 **Qwen-MT Flash**                        | 分块批量、便宜                                  |
+| 长文本、商务/文学翻译            | **DeepL**                                               | 翻译质量最稳，整体连贯                              |
+| **入门 AI 翻译 / 想用大模型省钱** | **DeepSeek**                                            | 国产 LLM 性价比首选——中英文质量好，单价远低于 Claude / GPT  |
+| 中英互译、要稳定               | **DeepSeek** / **Qwen-MT Plus**                         | 国内可直连、中英效果好                              |
+| 技术文档、需要术语一致            | **DeepSeek**（性价比）/ **Claude**（顶级）/ **GPT** / **Gemini** | LLM 可用自定义 prompt 控风格                     |
+| 隐私敏感，要本地跑              | **TranslateGemma**                                      | 自托管免费，翻译专用模型质量好                          |
+| 沃洛夫、博杰普尔等小语种           | **DeepL**                                               | 含较多小语种，质量稳定（如 wo / an / gn 等 Google 不收的） |
+
+详细对比和申请方式往下看 ↓
+
+## 经典翻译 API
+
+| 接口               | 质量    | 稳定性   | 适合场景               | 免费额度              |
+| ---------------- | ----- | ----- | ------------------ | ----------------- |
+| DeepL            | ★★★★★ | ★★★★☆ | 长文本、商务/文学翻译        | 每月 50 万字符         |
+| DeepLX (Free)    | ★★★★☆ | ★★★☆☆ | DeepL 的免费替补，零配置换链路 | 公共实例免费，稳定性看实例     |
+| Google Translate | ★★★★☆ | ★★★★★ | UI 文案、短句           | 每月 50 万字符         |
+| Azure Translate  | ★★★★☆ | ★★★★★ | 语种最广（90+）          | 前 12 个月每月 200 万字符 |
+| Qwen-MT          | ★★★★★ | ★★★★★ | 中英互译、可指定行业领域       | 按 Token 计费，新用户有额度 |
+| TranslateGemma   | ★★★★☆ | ★★★★☆ | 本地翻译，隐私敏感场景        | 自托管免费             |
+| MiLMMT           | ★★★★☆ | ★★★★☆ | 本地翻译，47 语言（含粤语）    | 自托管免费             |
+| GTX API (Free)   | ★★★☆☆ | ★★★★☆ | 一般文本翻译，零配置默认       | 共享服务，限流自动降速       |
+| Edge API (Free)  | ★★★★☆ | ★★★★☆ | GTX 的免费替补，链路不同     | 共享服务，限流自动降速       |
+
+要点说明：
+
+- **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。**DeepLX (Free)** 是自建/公共实例那条免费链路，零配置即可换一条出口。
+- **Qwen-MT** 是阿里云专为翻译训练的模型，详见下文 [Qwen-MT 使用要点](#qwen-mt-使用要点)。
+- **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / llama.cpp / koboldcpp 跑起来（**不要用 Ollama**，原因见下文），详见下文 [本地模型接入](#本地模型接入)。
+- **MiLMMT**（在售权重 MiLMMT-46）是小米开源的翻译专用模型（同样 Gemma3 派生），语种更少但覆盖粤语，同样要本地跑，详见下文 [MiLMMT](#milmmt)。
+- **GTX API (Free) / Edge API (Free)** 都是零配置的免费机器翻译，互为备胎——一个连不上就换另一个；细节见下文 [免费机器翻译使用要点](#免费机器翻译使用要点)。
+
+需要更稳定的服务，可自行申请商业 API Key，详见 [接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
+
+## 大语言模型（LLM）
+
+
+支持的 LLM 接口共 27 个，分两组：
+
+- **厂商直连（16 家）**：DeepSeek、OpenAI、Claude、Gemini、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)
+- **聚合网关与自托管（11 家）**：OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)**
+
+末尾的 **Custom (OpenAI-compatible)** 是兜底项：任何兼容 OpenAI 协议的地址都填这一项，URL 输入框上方会列出可选的本地运行时与第三方网关快捷地址（见下文 [本地模型接入](#本地模型接入)）。
+
+适合处理：
+
+- 文学作品、技术文档等需要深度理解的内容
+- 需要保持术语风格一致的多语种资料
+- 想用自定义提示词控制翻译风格的场景
+
+主要参数：
+
+- **模型**：可以下拉选，也可以直接输入。下拉里每条显示“友好名 + 真实 SKU”两行，该接口的默认模型带 `default` 标签；厂商刚发布、清单里还没有的 SKU 手填即可。Azure OpenAI 填部署名——工具走的是 **v1 GA** 接口：URL 里填你的资源根，工具自动接上固定的 `/openai/v1` 后缀，所以设置里**已经没有 `apiVersion`（部署版本）这一项**了。
+- **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
+  - **五个接口没有这个控件**：OpenAI（GPT-5.x / 6.x 全系为推理模型，非默认温度直接报 400）、Claude（在册 SKU 的 adaptive / extended thinking 拒绝 temperature）、Gemini（3.x 官方建议保持默认 1.0，调低易导致循环输出）、Kimi (Moonshot)（k2.x / k3 锁定温度）、Azure OpenAI。这几家不发送该参数、UI 也不显示输入框，直接用服务端默认值——想控制文风请改用系统提示词或思考强度。
+- **思考模式**：让 AI 多想一步再翻译，质量更高但更慢/更贵。支持的模型会在「模型」下方多出一个下拉，选项**按模型独立保存**，切模型不影响别的设置。形态有四种：
+  - **两档（Off / On）**：DeepSeek（开启即最高档，底层 API 的中间档位对翻译无意义）、Doubao、Zhipu GLM、Xiaomi MiMo、MiniMax M3、Baidu ERNIE 5.0 Thinking、Mistral（Medium 3.5 / Small）、Cohere Command A Reasoning、SiliconFlow —— 这几家的底层 API 只接受 on/off，不接受 effort
+  - **四档（Off / Low / Medium / High）**：其余支持思考的接口，包括 Claude、OpenAI GPT-5.x / 6.x、Gemini、Qwen3、Kimi (Moonshot)、xAI Grok、Groq 与 Cerebras 的 GPT-OSS、Azure OpenAI，以及 OpenRouter 上带思考标记的模型
+  - **最低档标 Min 而不是 Off**：厂商压根没给关闭值的模型，最低一档改标 **Min** —— 它照常推理、照常计费，标成 Off 是撒谎。当前是 Gemini 3.x、xAI Grok 4.5 / 4.6、Groq 与 Cerebras 上的 GPT-OSS、Kimi K3 / K2.6，外加单个 SKU **Claude Fable 5**（官方标 Always on，发显式关闭直接 400；同门的 Opus 5 / Sonnet 5 / Haiku 4.5 都关得掉）
+  - **三态（Off / On / Auto）**：在支持思考的接口上填**未列出的自定义模型**时。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off
+  - **不显示思考控件**：StepFun、YandexGPT、OpenCode Zen、TokenHub、Atlas Cloud、Nvidia NIM、Custom (OpenAI-compatible)。聚合网关背后是多家上游，「能不能关思考」逐个型号不同，统一发关闭参数会打到不支持关闭的型号上，因此一律跟随上游模型的服务端默认
+
+### 部分接口的特别说明
+
+- **TokenHub（腾讯）**：腾讯混元已迁到 TokenHub，除自研 hy3 外还转售 DeepSeek / GLM / Kimi / MiniMax / MiMo。⚠ **光有 API Key 调不通** —— 每个模型都要先在控制台的「在线推理」页开通（开启免费体验或启用后付费），否则任何调用都返回 400 `401006`「输入的服务 ID 不存在」。官方端点只在成功响应上发 CORS 头、预检一律 405，浏览器直连必败，因此「中转 API」**默认开启**。
+- **OpenCode Zen**：聚合网关，模型清单里带 `(free)` 后缀的 SKU 用起来免费——需要注册并绑定账单信息，但不预付费。上游完全不发 CORS 头、预检返回 404 页面，因此「中转 API」同样**默认开启**。
+- **OpenCode Go**：与 OpenCode Zen **同一个 host、同一个账号、同一把 API Key**，只有三处不同——请求路径（`/zen/go/v1` 与 `/zen/v1`）、在售 SKU 集合、计费形态。Go 是 **$10/月的订阅额度**（官方按每个模型的月限额换算：跑满 5 小时 = 20%、一周 = 50%、一个月 = 100%），Zen 是充值余额——**别把 Go 写成「充值即用」**。官方限定一个 workspace 只能有一人订阅 Go。上游同样不发 CORS 头，「中转 API」**默认开启**。
+- **Cerebras**：收录它是为了**速度**而不是模型（两个公共模型在 Groq / Nvidia / SiliconFlow 上都调得到）。官方标称 gpt-oss-120b 约 3000 tokens/s，逐行翻译这类高频短请求体感明显；另有每日 100 万免费 token。
+- **YandexGPT (AI Studio)**：除 API Key 外还需填写 **Folder ID**（在 Yandex AI Studio 控制台的目录页获取）。模型字段填 SKU 名（如 `yandexgpt-5.1`，也提供 Qwen3、DeepSeek、GPT-OSS 等开源 SKU），或直接粘贴完整的 `gpt://<folder_id>/<model>/latest` URI。Yandex 官方接口无 CORS 头，浏览器无法直连，「中转 API」**默认开启**（开关可关闭，也可改填自建中转地址）。
+- **已从服务列表移除的接口**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）。**LiteLLM** 不再是独立条目，改为 Custom (OpenAI-compatible) 的一个 URL 快捷项，见下文 [自建网关与第三方推理平台](#自建网关与第三方推理平台)。
+
+### 区域端点切换
+
+不少接口在国内、海外、美国有不同的接入地址，URL 输入框上方会以快捷标签列出官方地址，点击即可切换：
+
+| 提供商             | 可选区域                             |
+| --------------- | -------------------------------- |
+| Qwen / Qwen-MT  | 中国大陆 / 国际 / 美国                   |
+| Kimi (Moonshot) | 中国大陆 / 国际                        |
+| Zhipu GLM       | 中国大陆 / 国际（Z.ai）                  |
+| MiniMax         | 中国大陆 / 国际                        |
+| TokenHub（腾讯）    | 中国大陆 / 国际                        |
+| Xiaomi MiMo     | 按量付费 / Token Plan（中国 / 新加坡 / 欧洲） |
+
+### URL 自动补全
+
+Claude 与全部走 OpenAI 协议的接口（含 Custom、TranslateGemma、MiLMMT、Qwen / Qwen-MT、Nvidia、YandexGPT 等）的 URL 字段，在切走焦点时会立即补全为完整路径；其余接口填写的自定义 URL 也会在请求发出前自动规范化。粘贴 `http://host:port` 或 `http://host:port/v1` 即可，不会再出现“少写 `/v1/chat/completions` 导致连不上”的问题。
+
+## 免费机器翻译使用要点
+
+工具内置**三个零配置的免费机器翻译**——**GTX (Free)**、**Edge (Free)**、**DeepLX (Free)**，都不需要 API Key，从你的浏览器直连官方接口，文本不经过本工具的服务器。它们走**不同的链路**，互为备胎：一个连不上，下拉换另一个即可，不必申请任何 Key。GTX 是默认服务。
+
+| 服务            | 后端                        | 默认网关                                      |
+| ------------- | ------------------------- | ----------------------------------------- |
+| GTX (Free)    | Google 翻译                 | `translate-pa.googleapis.com`（网页翻译组件同款网关） |
+| Edge (Free)   | 微软 Edge 浏览器内置翻译（Azure 引擎） | `edge.microsoft.com` 免费令牌                 |
+| DeepLX (Free) | 社区 DeepLX 公共端点            | 工具内置公共地址                                  |
+
+### GTX 网关可切换
+
+GTX 默认走 `translate-pa.googleapis.com`（Google 网页翻译组件用的同一个网关，跨域规范、可用性好）。URL 输入框上方提供快捷切换：
+
+- **translate-pa（默认）**：推荐，多数网络环境可用
+- **Legacy gtx**：旧版 `translate.googleapis.com/translate_a` 端点。Google 已对它收紧反滥用策略（很多 IP 会被跳转到验证页，浏览器据此报 CORS），但封锁按 IP 信誉判定，部分地区/网络仍可用，故保留作备选
+- **自建镜像**：URL 填你自己用 Cloudflare Worker 等搭的镜像地址即可，工具按地址形态自动识别协议
+
+### 速率限制与自动降速
+
+免费共享端点按使用方限流。GTX 现在采用**整批分块**翻译——把多行拼成约 5000 字符一块、一块一个请求，请求数相比逐行翻译大幅减少，日常使用基本不会触发限流。短时间超大批量仍可能限流，工具会自动处理：
+
+- 触发限流后**自动暂停**该服务的所有请求，稍候自动恢复，并提示「请求过于频繁，已自动暂停片刻后重试」
+- 期间翻译变慢但会继续推进，绝大多数情况无需任何操作
+- 若失败面板仍频繁出现限流提示：等几分钟再点「重试失败行」（缓存会跳过已完成的行），或换 **Edge (Free)** / **DeepLX (Free)** 这两个免费备胎；长期大批量任务建议换 DeepL / Qwen-MT / DeepSeek 等带 Key 的服务
+
+连不上或控制台出现 CORS 报错？先**换网关或换 Edge (Free)**——多数情况一步解决；仍不行再排查网络环境（大陆屏蔽、公司网络拦截、浏览器扩展拦截），步骤见 [常见问题 → GTX 连不上](/guide/translation/faq.md#gtx-连不上或控制台出现-cors-报错怎么办)。
+
+## Qwen-MT 使用要点
+
+阿里云的 Qwen-MT 是机器翻译类服务，与通用 LLM 不同——它没有 system prompt 概念，只用源/目标语言代码工作，因此 Prompt 设置对它不生效。
+
+### 模型选择
+
+API 设置的 **模型** 字段可下拉选择，也可手填：
+
+| 模型              | 特点             | 适合             |
+| --------------- | -------------- | -------------- |
+| `qwen-mt-plus`  | 质量最高，速度较慢、单价较高 | 文学、法律、医疗等高质量翻译 |
+| `qwen-mt-flash` | 最快最便宜（**默认值**） | 字幕、UI、海量短文本    |
+| `qwen-mt-lite`  | 更便宜的轻量档        | 大批量、对质量要求不高的场景 |
+
+> 旧的 `qwen-mt-turbo` 已被阿里云标记弃用，不再列在下拉里。
+
+### 领域提示（domains）
+
+`domains` 字段告诉模型当前文本所处的行业，让术语更专业。注意：**填一段英文自然语言**，不是关键词列表。阿里官方示例：
+
+```text
+The sentence is from Ali Cloud IT domain. It mainly involves computer-related
+software development and usage methods, including many terms related to computer
+software and hardware. Pay attention to professional troubleshooting terminologies
+and sentence patterns when translating. Translate into this IT domain style.
+```
+
+不需要时留空即可。
+
+### 原生术语表通道
+
+Qwen-MT 是少数支持**原生术语表**的 MT 服务：启用 [术语表](/guide/translation/info.md#术语表glossary) 后，命中的词条会通过官方 `translation_options.terms` 参数随请求发送，由模型在翻译时原生应用，比提示词注入更可靠。
+
+### 不支持的语言
+
+Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自动提示并阻止使用（以应用内实际拦截为准）：如柯尔克孜（ky）、土库曼（tk）、塔吉克（tg）、蒙古（mn）、马拉雅拉姆（ml）、维吾尔（ug）、阿姆哈拉（am）等数十种。
+
+## 中转 API 与内置代理
+
+部分接口的官方端点不允许浏览器直连（CORS 限制）。工具提供两类代理通道，文本都不经过本工具的服务器存储。
+
+### 中转 API（可控开关）
+
+
+除 Gemini、Nvidia NIM、Azure OpenAI、Custom (OpenAI-compatible) 之外的每个 LLM 接口（共 23 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)、OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
+
+YandexGPT (AI Studio)、OpenCode Zen、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
+
+- **上面点名的例外接口没有这个开关**：Custom 与 Azure OpenAI 的地址本就是你自己填的，中转没有固定上游可写；Nvidia NIM 走的是下一节的内置代理；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
+- **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
+- 中转会透传服务器的 `Retry-After` 响应头，限流时的自动降速与直连一样精确
+
+### 内置代理（无开关）
+
+DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了自定义 API URL 时代理被绕过，请求直接发到你填的地址。
+
+## 本地模型接入
+
+希望自己跑模型保护隐私？工具支持任何兼容 OpenAI 协议的本地服务。为了翻译质量，通用 LLM 建议 `qwen3-14b` 及以上参数规模（32B 级更好）；显存有限时可改用翻译专用的 [TranslateGemma](#translategemma) 或 [MiLMMT](#milmmt)，4B 起就有不错的翻译质量（这两个请用 LM Studio / llama.cpp / koboldcpp 跑，别用 Ollama——原因见下）。
+
+> 国内用户下载模型推荐 [魔搭 ModelScope](https://www.modelscope.cn/models)，比 Hugging Face 直连 / LM Studio 内置源快得多，TranslateGemma 官方仓库也有同步。
+
+:::warning 频繁超时？先改并发，不是改模型
+本地服务器多为**单并行槽**（llama.cpp 默认 `--parallel 1`，LM Studio 的 Max Concurrent 也只有个位数），而本工具默认并发 10。多出来的请求会在**服务端排队**，而每个请求的超时钟从发出就开始走 —— 慢机器上排在后面的请求会在还没轮到它时就超时。
+
+先把服务设置里的「调用参数 → 并发行数」降到 **2-4**（或调到与你服务器的并行槽数一致），再考虑提高「高级设置 → 超时时间」。降并发往往不会变慢：服务器本来就是一个一个算的。
+:::
+
+### 默认接口地址
+
+| 工具        | 默认接口地址                                       |
+| --------- | -------------------------------------------- |
+| LM Studio | `http://127.0.0.1:1234/v1/chat/completions`  |
+| Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
+| llama.cpp | `http://127.0.0.1:8080/v1/chat/completions`  |
+| koboldcpp | `http://127.0.0.1:5001/v1/chat/completions`  |
+
+URL 输入框旁会列出这些地址作为快捷选项；点中哪个，下方就出现那个运行时的官方文档链接（先把服务跑起来、把模型名弄对，这一步的问题官方文档才答得了）。
+
+:::danger TranslateGemma / MiLMMT 请勿使用 Ollama
+这两个服务把提示词**预渲染**后打 `/v1/completions`，整条设计的前提是「服务端不再套任何模板」。**Ollama 在这个端点上仍然会套 Modelfile 模板**——源码三行为证（2026-08-22 核对 `ollama/main`）：
+
+1. `api/types.go`：`// Raw set to true means that no formatting will be applied to the prompt.`
+2. `openai/openai.go`：`FromCompleteRequest` 构造 `api.GenerateRequest` 时**没有设 `Raw`** → 默认 `false`
+3. `server/routes.go`：`if !req.Raw { tmpl := m.Template … }`
+
+结果是预渲染好的提示词被**再包一层**（包成什么取决于导入时那个 GGUF 带的模板，客户端完全控制不了），译文质量会莫名其妙地差，而且不报错。因此这两个服务的快捷选项里**没有 Ollama**——请用 LM Studio / llama.cpp / koboldcpp。
+
+（Custom (OpenAI-compatible) 走的是 `/v1/chat/completions`，Ollama 在那里套模板正是应该的，不受影响。）
+:::
+
+> **koboldcpp** 是单文件 exe 的 llama.cpp 封装（不用安装、双击就跑、自带网页界面），默认 5001 端口同时提供 KoboldAI 与 OpenAI 两套接口。
+
+### 自建网关与第三方推理平台
+
+除了四个本地运行时，**Custom (OpenAI-compatible)** 的 URL 快捷项里还有五个非本地地址，选中即填、不必手打：
+
+| 快捷项          | 默认地址                                                     | 说明                                                   |
+| ------------ | -------------------------------------------------------- | ---------------------------------------------------- |
+| LiteLLM      | `http://127.0.0.1:4000/v1/chat/completions`              | 把 100+ 上游模型统一成 OpenAI 协议的自建代理；默认放行浏览器跨域，无需额外 CORS 配置 |
+| 9Router      | `http://127.0.0.1:20127/v1/chat/completions`             | 自托管 OpenAI 兼容网关                                      |
+| OmniRoute    | `http://127.0.0.1:20128/v1/chat/completions`             | 9Router 的 TypeScript 分支，同为自托管网关，默认端口不同               |
+| Together AI  | `https://api.together.xyz/v1/chat/completions`           | 第三方推理平台，托管大量开源权重                                     |
+| Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | 同上                                                   |
+
+LiteLLM 曾经是独立的服务条目，现已并入 Custom —— 它和 Together / Fireworks 一样只是「一个 OpenAI 协议地址」，独占一个服务槽位没有意义。原来那些用法照旧成立：
+
+- **URL 即凭证**，**API Key 可选**（本地裸跑不填；代理配置了 master / virtual key 时填上）
+- **模型名可留空**：用 `litellm --model X` 启动（官方 quick start 方式）或设置了 `completion_model` 服务端默认时，留空即走服务端默认模型；config.yaml 多模型部署则填模型别名
+
+### TranslateGemma
+
+Google 推出的翻译专用 Gemma 模型，针对翻译质量做了专门训练。使用要点：
+
+- **请在服务列表里直接选「TranslateGemma」**——不要走「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 模型名。两者是完全不同的代码路径：独立的 TranslateGemma 服务走逐行调用，专门匹配 Gemma 翻译模型的输入输出格式；Custom 走的是带批次/上下文标记的 LLM 通用路径，对 14B 以下的小模型容易漏行、速度也更慢。
+- 默认地址指向 LM Studio 1234 端口，可一键切换到 llama.cpp / koboldcpp。**不要用 Ollama**，原因见上方提示框
+- **API Key 可选**：本地裸跑无需填写；若服务端开了鉴权（LM Studio 的 "require API key"、vLLM 的 `--api-key`、或反向代理加的认证层），填上即可，请求会附带 `Authorization: Bearer` 头
+- 推荐模型：**普通家用电脑首选 `translategemma-4b-it`**——轻量快速、输出干净。`translategemma-12b-it` / `27b-it` 质量更高，但显存与算力要求也更高
+- **模型名可以留空**：留空就不发模型名，用你运行时当前加载的那个。模型 id 由运行时决定（LM Studio / Ollama / llama.cpp 各报各的，量化后缀也可能在里面），报 404「模型不存在」时，清空这个字段通常比猜名字快
+- **12B 的「多选项」噪音**：这是模型自身行为，并非接入问题。实测 12B 常对同一句给出多个候选译法，且没有固定格式、工具无法自动过滤，译文里会夹带大量噪音。家用设备建议直接用 4B；要用 12B 时先用小段文本验证输出是否干净再批量跑
+- **Prompt 设置对它不生效**：和 Qwen-MT 一样属于机器翻译类服务，提示词已内置在调用格式里，系统/用户 Prompt 只对 LLM 类接口生效
+- **必须明确指定源语言**——这个模型不支持"自动检测"
+- **语言覆盖较小**：工具内可选 53 种主流语言（对齐 Google WMT24++ benchmark），其余 69 种——包括粤语 yue、博杰普尔 bho、沃洛夫 wo、阿拉贡 an、瓜拉尼 gn、库尔德 ckb/kmr——会被 UI 直接拦截。需要更广语种请改用 DeepL / Google / Azure / Qwen-MT
+
+### MiLMMT
+
+小米开源的翻译专用模型 [MiLMMT-46](https://huggingface.co/xiaomi-research/MiLMMT-46-12B-v1.0)（同为 Gemma3 派生，1B / 4B / 12B 三档，社区有 GGUF 量化）。与 TranslateGemma 用法几乎一致，但有一条它独有的坑：
+
+- **请在服务列表里直接选「MiLMMT」**——这一条比 TranslateGemma 更硬。小米在模型讨论区明确说明，后训练阶段模型的**指令跟随能力已被大幅剥离**，标签与指令会被当成正文噪声。走「Custom (OpenAI-compatible)」时系统提示词会被原样拼进输入，翻译质量直接崩坏；本工具的 MiLMMT 服务按官方模型卡的固定格式逐行调用，不掺任何提示词
+- 默认地址指向 LM Studio 1234 端口，可一键切到 llama.cpp / koboldcpp。**不要用 Ollama**，原因见上方提示框
+- **API Key 可选**：本地裸跑无需填写；服务端开了鉴权时填上即可
+- 推荐模型：默认 `MiLMMT-46-4B-v1.0`（家用显卡够用），另有 1B（纯 CPU 可跑）与 12B（质量更高）
+- **模型名要与运行时里实际加载的一致，实在不确定就留空**：留空就不发模型名，用当前加载的那个。报 404「模型不存在」时这比猜名字快
+- **Prompt 设置、术语表、上下文翻译对它全部不生效**——原因同上，模型收不了指令。需要术语一致性请改用 LLM 类接口或 Qwen-MT
+- **必须明确指定源语言**——提示词里写死了源语言名，模型没有"自动检测"模式
+- **语言覆盖 47 种**（官方称 46 语言家族）：**支持粤语 yue**（TranslateGemma 不支持），另有哈萨克/乌兹别克/阿塞拜疆/老挝/缅甸/高棉/马来语；但**不含乌克兰语 uk、塞尔维亚语 sr、立陶宛/拉脱维亚/爱沙尼亚语**，印度语系只到孟加拉/印地/泰米尔/乌尔都。不支持的语种会被 UI 直接拦截。与 TranslateGemma 共同支持 39 种
+
+> 官方也说明下一版会补回指令跟随与术语表支持；在那之前，把它当纯机器翻译引擎用。
+
+### 解决 CORS 跨域
+
+浏览器调用本地模型时若连不上，最常见的两个原因：
+
+**步骤 1｜排查广告/隐私插件**：先暂时禁用浏览器的拦截扩展，刷新重试。
+
+**步骤 2｜为本地服务开启 CORS**：
+
+#### Ollama
+
+在 PowerShell（Win + X 打开终端）粘贴一行命令永久启用：
+
+```powershell
+[System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
+```
+
+> `*` 允许所有来源；想更严格可换成具体域名，例如 `http://192.168.2.20:3000`。
+
+设置后重启 Ollama 服务即可生效。临时启用也可以在启动时加环境变量：
+
+```bash
+OLLAMA_ORIGINS="*" ollama serve
+```
+
+#### LM Studio
+
+1. 打开左侧菜单的「Developer」图标
+2. 进入本地服务器设置页，点顶部「Settings」
+3. 勾选「Enable CORS」复选框
+
+![LM Studio CORS 配置截图](https://img.newzone.top/2025-06-18-09-36-55.png?imageMogr2/format/webp)
+
+完成后即可正常调用本地模型。仍连不上的话，检查端口占用情况和浏览器控制台的报错信息。（特别感谢 mrfragger 分享配置经验）
+
+
+### 常用
+
+| Code      | Native             | English             | 中文       |
+| --------- | ------------------ | ------------------- | -------- |
+| `en`      | English            | English             | 英语       |
+| `zh`      | 简体                 | Simplified Chinese  | 中文       |
+| `zh-hant` | 繁體                 | Traditional Chinese | 繁体中文     |
+| `es`      | Español            | Spanish             | 西班牙语     |
+| `fr`      | Français           | French              | 法语       |
+| `de`      | Deutsch            | German              | 德语       |
+| `ja`      | 日本語                | Japanese            | 日语       |
+| `ko`      | 한국어                | Korean              | 韩语       |
+| `hi`      | हिन्दी             | Hindi               | 印地语      |
+| `ar`      | العربية            | Arabic              | 阿拉伯语     |
+| `ru`      | Русский            | Russian             | 俄语       |
+| `pt-br`   | Português (Brasil) | Portuguese (Brazil) | 葡萄牙语（巴西） |
+| `id`      | Bahasa Indonesia   | Indonesian          | 印尼语      |
+| `vi`      | Tiếng Việt         | Vietnamese          | 越南语      |
+| `it`      | Italiano           | Italian             | 意大利语     |
+| `yue`     | 粵語                 | Cantonese           | 粤语       |
+
+### 欧洲
+
+| Code    | Native               | English               | 中文        |
+| ------- | -------------------- | --------------------- | --------- |
+| `pl`    | Polski               | Polish                | 波兰语       |
+| `uk`    | Українська           | Ukrainian             | 乌克兰语      |
+| `nl`    | Nederlands           | Dutch                 | 荷兰语       |
+| `ro`    | Română               | Romanian              | 罗马尼亚语     |
+| `el`    | Ελληνικά             | Greek                 | 希腊语       |
+| `hu`    | Magyar               | Hungarian             | 匈牙利语      |
+| `sv`    | Svenska              | Swedish               | 瑞典语       |
+| `cs`    | Čeština              | Czech                 | 捷克语       |
+| `pt-pt` | Português (Portugal) | Portuguese (Portugal) | 葡萄牙语（葡萄牙） |
+| `ca`    | Català               | Catalan               | 加泰罗尼亚语    |
+| `sr`    | Српски               | Serbian               | 塞尔维亚语     |
+| `bg`    | Български            | Bulgarian             | 保加利亚语     |
+| `hy`    | Հայերեն              | Armenian              | 亚美尼亚语     |
+| `da`    | Dansk                | Danish                | 丹麦语       |
+| `sq`    | Shqip                | Albanian              | 阿尔巴尼亚语    |
+| `fi`    | Suomi                | Finnish               | 芬兰语       |
+| `nb`    | Norsk bokmål         | Norwegian Bokmål      | 挪威语       |
+| `sk`    | Slovenčina           | Slovak                | 斯洛伐克语     |
+| `hr`    | Hrvatski             | Croatian              | 克罗地亚语     |
+| `be`    | Беларуская           | Belarusian            | 白俄罗斯语     |
+| `scn`   | Sicilianu            | Sicilian              | 西西里语      |
+| `ka`    | ქართული              | Georgian              | 格鲁吉亚语     |
+| `lmo`   | Lombard              | Lombard               | 伦巴第语      |
+| `lt`    | Lietuvių             | Lithuanian            | 立陶宛语      |
+| `gl`    | Galego               | Galician              | 加利西亚语     |
+| `bs`    | Bosanski             | Bosnian               | 波斯尼亚语     |
+| `sl`    | Slovenščina          | Slovenian             | 斯洛文尼亚语    |
+| `mk`    | Македонски           | Macedonian            | 马其顿语      |
+| `lv`    | Latviešu             | Latvian               | 拉脱维亚语     |
+| `et`    | Eesti                | Estonian              | 爱沙尼亚语     |
+| `is`    | Íslenska             | Icelandic             | 冰岛语       |
+| `mt`    | Malti                | Maltese               | 马耳他语      |
+| `cy`    | Cymraeg              | Welsh                 | 威尔士语      |
+| `ga`    | Gaeilge              | Irish                 | 爱尔兰语      |
+| `br`    | Brezhoneg            | Breton                | 布列塔尼语     |
+| `eu`    | Euskara              | Basque                | 巴斯克语      |
+| `yi`    | ייִדיש               | Yiddish               | 意第绪语      |
+| `lb`    | Lëtzebuergesch       | Luxembourgish         | 卢森堡语      |
+| `oc`    | Occitan              | Occitan               | 奥克语       |
+| `an`    | Aragonés             | Aragonese             | 阿拉贡语      |
+| `la`    | Latina               | Latin                 | 拉丁语       |
+| `eo`    | Esperanto            | Esperanto             | 世界语       |
+
+### 中东
+
+| Code  | Native | English          | 中文    |
+| ----- | ------ | ---------------- | ----- |
+| `tr`  | Türkçe | Turkish          | 土耳其语  |
+| `he`  | עברית  | Hebrew           | 希伯来语  |
+| `fa`  | فارسی  | Persian          | 波斯语   |
+| `ur`  | اردو   | Urdu             | 乌尔都语  |
+| `ps`  | پښتو   | Pashto           | 普什图语  |
+| `prs` | دری    | Dari             | 达里语   |
+| `ckb` | کوردی  | Central Kurdish  | 中库尔德语 |
+| `kmr` | Kurdî  | Northern Kurdish | 北库尔德语 |
+
+### 中亚
+
+| Code | Native     | English     | 中文    |
+| ---- | ---------- | ----------- | ----- |
+| `uz` | Oʻzbekcha  | Uzbek       | 乌兹别克语 |
+| `kk` | Қазақ тілі | Kazakh      | 哈萨克语  |
+| `ky` | Кыргызча   | Kyrgyz      | 吉尔吉斯语 |
+| `tk` | Türkmençe  | Turkmen     | 土库曼语  |
+| `az` | Azərbaycan | Azerbaijani | 阿塞拜疆语 |
+| `tg` | Тоҷикӣ     | Tajik       | 塔吉克语  |
+| `mn` | Монгол     | Mongolian   | 蒙古语   |
+| `ba` | Башҡортса  | Bashkir     | 巴什基尔语 |
+| `tt` | Татар теле | Tatar       | 鞑靼语   |
+| `ug` | ئۇيغۇرچە   | Uyghur      | 维吾尔语  |
+
+### 南亚
+
+| Code  | Native    | English   | 中文     |
+| ----- | --------- | --------- | ------ |
+| `bn`  | বাংলা     | Bengali   | 孟加拉语   |
+| `mr`  | मराठी     | Marathi   | 马拉地语   |
+| `te`  | తెలుగు    | Telugu    | 泰卢固语   |
+| `ta`  | தமிழ்     | Tamil     | 泰米尔语   |
+| `gu`  | ગુજરાતી   | Gujarati  | 古吉拉特语  |
+| `kn`  | ಕನ್ನಡ     | Kannada   | 卡纳达语   |
+| `pa`  | ਪੰਜਾਬੀ    | Punjabi   | 旁遮普语   |
+| `ml`  | മലയാളം    | Malayalam | 马拉雅拉姆语 |
+| `bho` | भोजपुरी   | Bhojpuri  | 博杰普尔语  |
+| `mai` | मैथिली    | Maithili  | 迈蒂利语   |
+| `ne`  | नेपाली    | Nepali    | 尼泊尔语   |
+| `si`  | සිංහල     | Sinhala   | 僧伽罗语   |
+| `as`  | অসমীয়া   | Assamese  | 阿萨姆语   |
+| `gom` | कोंकणी    | Konkani   | 孔卡尼语   |
+| `sa`  | संस्कृतम् | Sanskrit  | 梵语     |
+
+### 东南亚
+
+| Code  | Native             | English           | 中文         |
+| ----- | ------------------ | ----------------- | ---------- |
+| `th`  | ไทย                | Thai              | 泰语         |
+| `lo`  | ລາວ                | Lao               | 老挝语        |
+| `my`  | မြန်မာ             | Burmese           | 缅甸语        |
+| `km`  | ខ្មែរ              | Khmer             | 高棉语        |
+| `ms`  | Bahasa Melayu      | Malay             | 马来语        |
+| `fil` | Tagalog            | Filipino(Tagalog) | 菲律宾语（塔加拉语） |
+| `jv`  | Basa Jawa          | Javanese          | 爪哇语        |
+| `su`  | Basa Sunda         | Sundanese         | 巽他语        |
+| `ace` | Acèh               | Acehnese          | 亚齐语        |
+| `pag` | Salitan Pangasinan | Pangasinan        | 邦阿西楠语      |
+| `pam` | Kapampangan        | Pampangan         | 邦板牙语       |
+| `ceb` | Cebuano            | Cebuano           | 宿务语        |
+
+### 非洲
+
+| Code | Native            | English        | 中文    |
+| ---- | ----------------- | -------------- | ----- |
+| `sw` | Kiswahili         | Swahili        | 斯瓦希里语 |
+| `ha` | هَرْشٜىٰن هَوْسَا | Hausa          | 豪萨语   |
+| `am` | አማርኛ              | Amharic        | 阿姆哈拉语 |
+| `ig` | Igbo              | Igbo           | 伊博语   |
+| `wo` | Wolof             | Wolof          | 沃洛夫语  |
+| `xh` | isiXhosa          | Xhosa          | 科萨语   |
+| `zu` | isiZulu           | Zulu           | 祖鲁语   |
+| `af` | Afrikaans         | Afrikaans      | 南非荷兰语 |
+| `om` | Afaan Oromoo      | Oromo          | 奥罗莫语  |
+| `st` | Sesotho           | Southern Sotho | 南索托语  |
+| `tn` | Setswana          | Tswana         | 茨瓦纳语  |
+| `ts` | Xitsonga          | Tsonga         | 聪加语   |
+| `mg` | Malagasy          | Malagasy       | 马拉加西语 |
+| `ln` | Lingála           | Lingala        | 林加拉语  |
+
+### 美洲及大洋洲
+
+| Code | Native         | English        | 中文      |
+| ---- | -------------- | -------------- | ------- |
+| `ht` | Kreyòl ayisyen | Haitian Creole | 海地克里奥尔语 |
+| `qu` | Runa Simi      | Quechua        | 克丘亚语    |
+| `ay` | Aymar aru      | Aymara         | 艾马拉语    |
+| `gn` | Avañe'ẽ        | Guarani        | 瓜拉尼语    |
+| `mi` | Māori          | Maori          | 毛利语     |
+
+
+
+---
+url: /guide/translation/faq.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 常见问题
+
+> 通用排查：按 F12 打开浏览器开发者工具，切换到“网络”（Network）查看请求的 Response 详情，绝大多数报错都能在此定位。
+
+## 翻译结果为空、仅显示原文、null 怎么办？
+
+先分清两种情况：
+
+**只有少数行是原文** —— 这是"失败行回填"：个别行翻译失败时用原文占位，不破坏文件结构。结果区顶部会出现红色提示，点 **「重试失败行」** 只补译失败的行，已成功的内容不会重复扣费。多数是网络抖动或服务临时不稳，再试一两次通常就好。
+
+**整篇没翻 / 大面积空白 / null** —— 接口没跑通，按顺序排查：
+
+1. **测试连接**：点页面顶部的 API 状态徽章 → **「测试连接」**，几秒就能确认接口通不通；
+2. **看报错提示**：工具会把常见错误转成可读文案（Key 无效、额度用尽、超时等），照提示处理即可；
+3. **换免费接口对照**：切到 **GTX (Free)** 翻一小段——GTX 能翻，说明问题出在原接口的 Key / 配置 / 额度；GTX 也不行，说明是网络问题（代理、防火墙、地区限制）；
+4. **清缓存重试**：在设置里清空翻译缓存，排除旧结果干扰。
+
+仍未解决：按 **F12** → **Network/网络** → 重新点一次"翻译" → 点开最新的翻译请求，把 **Status**（如 401/429/5xx）和 **Response** 里的报错带上，[到 GitHub 反馈](https://github.com/rockbenben/subtitle-translator/issues)。
+
+## 翻译失败会自动重试吗？哪些错误不重试？
+
+会。**网络抖动、限流（429）、服务器临时错误（5xx）**&#x6309;"重试次数"自动重试。重试后仍失败的行会**回填原文**（不留空），并集中到结果区顶部的红色失败面板，点 **「重试失败行」** 一键补译，已完成的内容不重复扣费。
+
+下面这些错误重试也没用，工具会直接标记失败，需要你动手改设置：
+
+| 报错                            | 怎么办                               |
+| ----------------------------- | --------------------------------- |
+| Key 无效（401 / 403）             | 重新核对或更换 API Key                   |
+| 超时                            | 把「超时时间」调大，或换个更快的服务                |
+| 文本太长（context length exceeded） | 把「上下文行数」调小，或把文件拆小                 |
+| 输出被截断（max_tokens reached）     | 把「最大输出 tokens」调大（或设 0 不限制），或把文件拆小 |
+
+完整机制见 [功能说明 → 失败行重发](/guide/translation/info.md#失败行重发)。
+
+## 翻译速度为什么慢？
+
+最有效的一招：**把「并发行数」调大**——在当前服务默认值的基础上加 50%–100%，一旦出现 429 报错立即调回来。其他建议：
+
+- **保持缓存开启**（默认开）：相同内容直接复用，重跑几乎瞬间完成
+- **AI 模型开「上下文关联翻译」**：连贯性更好，吞吐也更高
+- **赶时间就换更快的服务**：免费 GTX 比本地小模型快得多；付费 DeepL 比 Claude Opus 快得多
+- **本地小模型（14B 以下）相反——要关上下文**：小模型在长批次里容易漏行，关掉"上下文关联翻译"改成逐行并发，反而又快又稳
+
+各服务默认并发不同，详见 [功能说明 → 并发行数](/guide/translation/info.md#并发行数)。
+
+## 字幕译文错位、几行被合并成一行怎么办？
+
+个别 LLM（实测 **Gemini、Mistral** 出现较多）会破坏工具用来对齐行序的标记，导致译文串行，或把相邻几条字幕合并翻译成一块。工具已内置多重防护：
+
+- 行标记丢失时**不再按行号猜测位置**，避免整段错位
+- 检测到"一条字幕吞掉后面几条"的合并块时，**丢弃该块并整组重译**，不会产生重复内容
+- 模型收到的指令中已明确禁止合并行
+
+如果某个模型仍频繁出现此问题：
+
+1. **换更守格式的模型**：DeepSeek / Claude / GPT 对行标记的遵守度明显更好
+2. 在 API 设置中**把「上下文并发数」调低**（如 3 → 1），单次输出行数越少越不容易乱
+3. 出错的行会进失败面板，点 **「重试失败行」** 补齐即可，不会重复扣费
+
+## 没有付费 API Key，怎么免费用 AI 翻译？
+
+- **零配置起步**：默认的 **GTX (Free)** 不需要任何 Key，速度也快——纯机器翻译，批量翻字幕、日常文本完全够用。连不上就换同样免费的 **Edge (Free)** 或 **DeepLX (Free)**，链路不同互为备胎
+- **免费 LLM 额度**：服务列表里不少接口提供免费档，常用的有 **Google AI Studio**（Gemini Flash 系列）、**OpenRouter**（带 `:free` 后缀的模型）、**OpenCode Zen**（带 `(free)` 后缀的 SKU，注册绑账单信息即可，不预付费）、**Cerebras**（每日 100 万 token）、**Nvidia NIM**、**SiliconFlow** 等，详见 [接口指南](/guide/translation/api.md#部分接口的特别说明)。多翻翻服务列表——很多接口就是因为有免费档才被收录的
+
+  > GitHub Models 已于 2026-07-30 被官方整家下线，工具里也已移除，别再找它了。
+- **注意网络环境**：Google、OpenRouter 等海外服务需要相应的网络环境，连不上先排查网络而不是配置
+- 只有**隐私敏感**的内容才值得本地部署；否则免费云端 API 比本地小模型又快又稳（见下一条）
+
+## 本地部署翻译，怎么选模型？
+
+按"够用优先"排序：
+
+1. **首选翻译专用模型**（4B 起）：针对翻译训练，质量高于同级通用模型，显存要求低、速度快。两个选择，都要在服务列表里**直接选**（不是在 Custom 里填模型名），且都是机器翻译类服务——内置提示词（系统/用户 Prompt 对它们不生效）、无术语表、需要手动指定源语言：
+
+   - [TranslateGemma](/guide/translation/api.md#translategemma)（Google，53 种语言）：含**乌克兰语、塞尔维亚语、立陶宛/拉脱维亚/爱沙尼亚语**与多数印度语系（马拉地、泰卢固、喀纳达……）
+   - [MiLMMT](/guide/translation/api.md#milmmt)（小米，47 种语言）：含**粤语**与哈萨克/乌兹别克/阿塞拜疆/老挝/缅甸/高棉/马来语；**不含乌克兰语与塞尔维亚语**
+
+   两家共同支持 39 种。常见语对（英↔中/日/韩/法/德/西/俄）两家都行，按你实际要的语种选就好
+2. **通用 LLM 至少 14B**：Qwen3-14B / 32B、Gemma 3 27B 等，越大越稳。**8B 以下小模型别用来跑大批量翻译**——容易漏行、输出错乱，长任务甚至会把模型跑崩
+3. **下载渠道**：国内从 [魔搭 ModelScope](https://www.modelscope.cn/models) 下载，比 LM Studio 内置源 / Hugging Face 直连快得多
+
+本地部署的主要价值是**隐私**（内容不出本机）。如果内容不敏感，用免费云端 API（见上一条）质量更高、也不占显卡。
+
+## AI 翻译质量不理想怎么办？
+
+按成本从低到高依次尝试：
+
+1. **恢复默认**：在"翻译设置"中重置，再用一小段文本复测——很多"翻得怪"是之前改过的参数导致的；
+2. **调温度**：术语严谨 / 技术文档 0.2 左右；日常内容 0.4–0.7；文学意译 0.8–1.0。注意 OpenAI、Claude、Gemini、Moonshot Kimi、Azure OpenAI 没有温度控件（模型侧锁定，见 [接口指南](/guide/translation/api.md)），这几家改用系统提示词或思考强度来控制文风；
+3. **开启上下文关联翻译**：对白、长文更连贯；
+4. **人名 / 术语不统一**：用术语表指定固定译法（见下一条）；
+5. **换模型**：在线主流模型（DeepSeek / Claude / GPT / Gemini，包括各家 mini / flash 轻量档）翻译能力都足够——输出异常基本是参数或提示词的问题，不是模型不行。本地小模型则确实存在天花板，选型见上文 [本地部署翻译，怎么选模型？](#本地部署翻译怎么选模型)
+
+## 怎么让人名、专有名词固定翻成同一个词？
+
+用**术语表**——不需要把术语塞进系统提示词，术语表更可靠（按请求注入命中词条、违规自动重译、译后兜底替换），还不浪费 token。
+
+使用方式：翻译设置 → **术语表** → 编辑词条，逐行添加"**原文词 → 指定译法**"（如 `Spike → 斯派克`），打开开关后自动对每次翻译生效。
+
+批量导入用 **TSV** 格式（制表符分隔，可从 Excel / 表格软件直接复制）：
+
+```text
+Spike	斯派克
+Bebop	比波普
+```
+
+可选第 3 列填目标语言代码（如 `zh`、`ja`），一个文件即可导入多语言术语。完整说明见 [功能说明 → 术语表](/guide/translation/info.md#术语表glossary)。
+
+## 自定义 Prompt 需要写"保留时间轴 / 行号 / 格式"吗？
+
+**不需要。** 工具只把对白文本发给模型——时间轴、序号、ASS/VTT 头等结构信息全部保留在本地，翻译完成后自动回填原位，模型根本看不到这些结构。
+
+Prompt 里写"保留行数 / 编号 / 时间码"不仅没用，还会浪费 token、甚至诱导模型输出多余内容。自定义 Prompt 只需专注**翻译风格和质量**（语气、领域术语、目标读者等）。
+
+## GTX 连不上或控制台出现 CORS 报错怎么办？
+
+GTX 从浏览器直连 Google 的翻译网关。看到「翻译服务暂时连不上」或控制台 CORS 字样时，**先做两步自救，多数情况一步解决**：
+
+1. **换网关**：URL 输入框上方把网关从 `Legacy gtx` 切到 `translate-pa`（默认）。旧版 `translate.googleapis.com/translate_a` 端点被 Google 收紧了反滥用策略，很多 IP 会被跳转到验证页、浏览器据此报 CORS；默认的 `translate-pa` 网关跨域规范、可用性更好。
+2. **换免费备胎**：下拉切到 **Edge (Free)** 或 **DeepLX (Free)**——它们走完全不同的链路，零配置即用。
+
+两步都不行，再排查网络环境：
+
+3. **中国大陆直连**：相关 Google 域名在大陆可能被屏蔽，表现为超时——需要代理，或改用国内可直连的 Qwen-MT / DeepSeek
+4. **公司 / 学校网络**：网关拦截请求并返回自己的提示页，浏览器据此报 CORS——换个网络（如手机热点）确认
+5. **浏览器拦截扩展**：部分广告/隐私扩展会拦截 `googleapis.com` 域，临时禁用后刷新重试
+
+> 翻译开始前工具会先探测当前免费服务的可用性，整体不可达时直接提示并阻止运行，不会让任务白跑。限速与自动降速机制见 [翻译接口指南 → 免费机器翻译使用要点](/guide/translation/api.md#免费机器翻译使用要点)。
+
+## 本地模型提示跨域 (CORS) 或连不上怎么办？
+
+使用 Ollama、LM Studio 等本地模型时，常见失败原因是浏览器 CORS 或广告拦截：
+
+1. 先临时关闭广告/隐私扩展并刷新；
+2. 根据 [翻译接口指南](/guide/translation/api.md#解决-cors-跨域) 启用本地服务的 CORS（如设置 `OLLAMA_ORIGINS=*`、在 LM Studio 勾选 Enable CORS）；
+3. 若仍失败，检查端口占用，并在 Network 面板查看返回状态码。公司/校园网络还需确认防火墙未拦截本地端口。
+
+## 用 Ollama 跑 translategemma 模型，速度很慢/漏译/质量差怎么办？
+
+两个独立的原因，往往同时中招。
+
+**① 换掉 Ollama。** TranslateGemma 与 MiLMMT 都是把提示词**预渲染**后打 `/v1/completions`，前提是服务端不再套模板；而 **Ollama 在这个端点上仍然会套 Modelfile 模板**（`FromCompleteRequest` 不设 `Raw`，`routes.go` 里 `if !req.Raw` 就套模板），提示词被再包一层，译文质量莫名其妙地差**而且不报错**。改用 **LM Studio / llama.cpp / koboldcpp**——这也是为什么这两个服务的快捷地址里没有 Ollama。详见 [翻译接口指南 → 本地模型接入](/guide/translation/api.md#本地模型接入)。
+
+**② 别把它当普通 LLM 配置。** 选了「Custom (OpenAI-compatible)」+ 填 `translategemma-4b-it` 之类的模型名，走的是带批次/上下文标记的 LLM 通用流程，14B 以下的小模型很难稳定还原 prompt 里的结构，容易漏行、跑得也慢。
+
+✅ 正确做法：在服务下拉里直接选「**TranslateGemma**」或「**MiLMMT**」，它们走专门的逐行调用，匹配翻译模型的输入输出格式，对本地小模型最稳定。
+
+> 顺带：这两个服务频繁**超时**通常不是模型的问题，而是并发数超过了本地服务器的并行槽位——见 [本地模型接入](/guide/translation/api.md#本地模型接入) 里的说明。
+
+## 本地思考模型翻译很慢、半天不出结果怎么办？
+
+Qwen3 等**思考型模型**默认先生成一长段思考过程、再输出正式译文——在算力有限的本地设备上（每秒只有几个 token），每行翻译都要先白等几十秒的思考。按效果排序：
+
+1. **关闭思考**：在「翻译设置 → 系统提示词」末尾加一行 `/no_think`（Qwen3 家族的软开关；部分社区微调模型可能不支持）
+2. **换非思考模型**：选 instruct 变体，或在服务列表直接选翻译专用的 [TranslateGemma](/guide/translation/api.md#translategemma)——无思考环节、4B 起质量就不错，比思考模型快一个数量级
+3. **确认 GPU 加载**：生成速度只有个位数 token/s，通常是模型大部分跑在 CPU 上——检查 LM Studio / Ollama 的 GPU 层数设置
+4. 「测试连接」与正式翻译共&#x7528;**「超时时间」**&#x8BBE;置（默认 180 秒）——思考时间确实很长时可适当调大
+
+## 为什么 DeepL 要经过中转服务器？
+
+DeepL 官方不允许网页直接调用它的 API（浏览器跨域限制），所以工具内置了中转通道代发请求——**Nvidia NIM** 同理。**OpenCode Zen、TokenHub（腾讯）、YandexGPT** 则走可控的「中转 API」开关：这三家的官方端点目前都无法从浏览器直连，开关默认开启、可随时关闭。所有通道都只做转发、不记录你的内容。
+
+介意经过第三方？在设置里填自定义 API URL（如自建中转），请求就会直连你填的地址、优先级高于一切内置通道。详见 [翻译接口指南 → 中转 API 与内置代理](/guide/translation/api.md#中转-api-与内置代理)。
+
+## API Key 会被保存到服务器吗？
+
+不会。API Key 与所有设置都只存储在本地浏览器，任何服务器都无法读取。
+
+## 有没有 CLI、API 或桌面版？
+
+**CLI 有。** 三个翻译工具的引擎是平台无关的纯 TypeScript，仓库里自带命令行入口，克隆后 `yarn cli` 即可用——它复用**同一条流水线和同一份格式解析/装配代码**，批处理、并发、重试、429 冷却、术语表、上下文翻译、逐行缓存的行为与网页端一致，只是把浏览器依赖换成了 Node 实现。字幕 / Markdown / JSON 三类格式都带，还能直接读网页端「导出设置」下载的那个 JSON。完整用法见 [命令行翻译](/guide/translation/cli.md)。
+
+**对外的托管 API 没有**，**可下载的桌面版目前也没有**：网页版打开即用、始终最新，无需安装和更新；字幕内容和 API Key 只存在你自己的浏览器里，不经过任何服务器。
+
+网页端想减少重复手动操作，可以组合这几个现有功能实现"半自动化"：
+
+- **批量模式**：一次拖入多个文件，自动排队处理、打包下载
+- **导入设置**：用 JSON 一次性预置目标语言、API 配置等全部参数（详见 [功能说明 → 设置导入/导出](/guide/translation/info.md#设置导入导出)）
+- **语言代码快速输入**：多语言模式下直接粘贴语言代码串（如 `zh, de, ru`），跳过手动勾选
+
+
+
+---
+url: /guide/translation/cli.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 命令行翻译（CLI）
+
+三个翻译工具的引擎是**平台无关的纯 TypeScript**，命令行入口复用**同一条流水线和同一份格式解析 / 装配代码**——批处理、并发、重试、429 冷却、术语表、上下文翻译、逐行缓存的行为与网页端一致，只是把浏览器那几样依赖换成了 Node 实现（fetch / 文件缓存 / Ctrl-C 取消）。
+
+适合：整季字幕 / 整个 `docs/` 目录批量过一遍、接进自己的脚本或 CI、在没有浏览器的机器上跑。
+
+:::tip 需要克隆仓库
+CLI 不是独立发布的包，它随源码一起提供。先 `git clone` [rockbenben/web-tools-by-ai](https://github.com/rockbenben/web-tools-by-ai)（或单工具子项目 [subtitle-translator](https://github.com/rockbenben/subtitle-translator) / [md-translator](https://github.com/rockbenben/md-translator) / [json-translate](https://github.com/rockbenben/json-translate)）再 `yarn` 安装依赖。需要 Node.js ≥ 20.9。
+:::
+
+无需额外安装，`tsx` 已在 devDependencies 中：
+
+```bash
+yarn cli --help          # 完整参数
+yarn cli --list-formats  # 本 checkout 支持哪些格式
+yarn cli --list-methods  # 列出可用的翻译服务
+```
+
+## 示例
+
+```bash
+# 最简：输出 movie.zh.srt，就放在 movie.srt 旁边
+yarn cli -i movie.srt -t zh
+
+# 指定输出目录 + 多目标语言 → out/movie.ja.srt、out/movie.ko.srt
+yarn cli -i movie.srt -t ja -t ko -o out/
+
+# 多文件混格式，一次跑完
+yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
+
+# 双语字幕（默认转 ASS）→ movie.zh_bilingual.ass
+yarn cli -i movie.srt -t zh --bilingual
+yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
+yarn cli -i movie.srt -t zh --bilingual --original-first   # 原文在上
+
+# 用网页端导出的设置（API key、prompt、术语表、重试参数全带上）
+yarn cli -i README.md -t ja -s ~/translate-settings.json
+
+# 直接指定本地 LM Studio / Ollama
+yarn cli -i locale.json -t zh -m llm --url http://localhost:11434/v1 --model qwen3
+
+# 本地翻译专用模型（translategemma / milmmt）—— 它们没有自动检测，必须 -f
+yarn cli -i movie.srt -f en -t zh -m milmmt --url http://localhost:1234/v1 --model MiLMMT-46-4B-v1.0
+
+# 扩展名不可靠时强制格式；Markdown 不做保护、直译整行
+yarn cli -i notes.txt -t zh --format markdown --md-raw
+```
+
+## 先在网页端配好，再用 `-s` 读进来
+
+设置文件（`-s`）就是网页端「导出设置」下载的那个 JSON —— 在界面里把服务、密钥、prompt、术语表配好，命令行直接读，不必用一堆 flag 重复描述。两边用的是同一份消毒逻辑，越界数值与坏形状的预设两边都会被丢弃。
+
+## 保存位置
+
+|        | 规则                                                                  |
+| ------ | ------------------------------------------------------------------- |
+| 目录     | 默认**输入文件旁边**；`-o <dir>` 覆盖（目录不存在会自动创建）                              |
+| 文件名    | `<原名>.<目标语言>.<扩展名>`，如 `movie.srt` → `movie.zh.srt`                  |
+| 扩展名可能变 | 由格式适配器决定，如双语字幕默认转 ASS → `movie.zh_bilingual.ass`                    |
+| 缓存     | 默认 `~/.translate-cli-cache.json`，`--cache-file` 换位置，`--no-cache` 关闭 |
+
+## 参数
+
+| 参数                                   | 说明                                |
+| ------------------------------------ | --------------------------------- |
+| `-i, --input <file>`                 | 输入文件，可重复                          |
+| `-t, --to <lang>`                    | 目标语言，可重复。默认取设置文件，否则 `zh`          |
+| `-f, --from <lang>`                  | 源语言。默认取设置文件，否则自动检测                |
+| `-m, --method <method>`              | 翻译服务。默认取设置文件，否则 `gtxFreeAPI`（免配置） |
+| `-s, --settings <file>`              | 网页端导出的设置 JSON                     |
+| `-o, --out-dir <dir>`                | 输出目录。默认与输入文件同目录                   |
+| `--format <fmt>`                     | 强制格式，不按扩展名推断                      |
+| `--api-key` / `--url` / `--model`    | 覆盖所选服务的密钥 / 端点 / 模型               |
+| `--relay` / `--no-relay`             | 强制走 / 不走共享中转（Node 没有 CORS，这里默认直连） |
+| `--no-cache` / `--cache-file <file>` | 关闭缓存 / 指定缓存文件                     |
+
+**字幕专属**：`--bilingual`、`--original-first`、`--bilingual-format <ass|srt>`（默认 ass）、`--no-context`（上下文批处理默认**开**，与网页端一致，此开关关闭）。
+
+**Markdown 专属**（默认值与网页端逐项一致）：`--md-raw`（直译整行，不保护）；`--context`（上下文批处理默认**关**，此开关开启，并隐含 `--md-raw`——上下文模式与占位符保护互斥）；`--md-no-link-text`（链接文字默认**翻译**，此开关保留原文）；`--md-translate-frontmatter` / `--md-translate-code` / `--md-translate-latex`（这三类默认保护，按需 opt in）。
+
+## 支持的格式
+
+| 格式       | 扩展名                                       |
+| -------- | ----------------------------------------- |
+| subtitle | `.srt` `.vtt` `.ass` `.ssa` `.lrc` `.sbv` |
+| markdown | `.md` `.markdown` `.mdx`                  |
+| json     | `.json`                                   |
+
+三种格式内建于 CLI 本体，任何 checkout 都全带 —— 单工具子项目里的 `yarn cli` 一样能翻 Markdown 和 JSON。
+
+## 退出码
+
+| 码   | 含义                                           |
+| --- | -------------------------------------------- |
+| 0   | 全部译出                                         |
+| 1   | 有软失败行（输出里保留原文）或整文件失败                         |
+| 2   | 调用错误（未知参数、方法 / 语言 / 凭据校验不过、设置文件损坏）——不写任何输出文件 |
+| 130 | 用户取消（Ctrl-C）                                 |
+
+## 与网页端的差异
+
+- **编码识别一致**：CLI 同样自动识别 GBK / Big5 / UTF-16 等编码；识别不出时报 `✖ … cannot read` 并计入退出码 1，**不会猜一个编码写出乱码**。
+- **双语 ASS 固定使用默认样式**：ASS 样式是网页端的本地偏好，导出的设置文件里不含它。需要自定义 ASS 样式请用网页端。
+
+
+
+---
+url: /guide/translation/changelog.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 更新日志
+
+待更新功能：对翻译后的字幕内容进行 AI 润色。
+
+- 2026.09.28: Design QA 一轮——无障碍与视觉一致性。
+  - **键盘焦点环找回**：antd 的 reset 把浏览器自带的 focus-visible 环压成浅蓝，现在焦点重新看得见
+  - **暗色主题下的强调色文字**：卡片底上的小号强调色文字改用量子蓝，够到 WCAG AA；Waline 评论区行内代码字色接回正文色（此前亮色主题下几乎看不清）
+  - **设置抽屉的服务芯片**去掉与 antd 自带 role 冲突的覆盖（axe 判 critical）；规则表空表头补上视觉隐藏的列名；「回到顶部」由圆形改方形，归入全站直角语言
+  - 文本分割的预设按钮行在 390px 窄屏允许换行，消除横向溢出；反馈页标题升为 h1
+- 2026.09.27: 字幕翻译首屏更轻。
+  - **「翻译耗时」「复核面板」「多语言设置」改为按需加载**：不打开就不下载对应代码，首屏 JS 明显变小
+  - 「更多工具」里的 365 系列链接现在按当前界面语言传参
+- 2026.09.26: Azure OpenAI 迁到 v1 GA 接口。
+  - **设置里删掉了 `apiVersion`（部署版本）这一项**：请求地址 = 你填的资源根 + 固定的 `/openai/v1` 后缀，模型栏仍填部署名
+  - Azure 并入 openai-compat 工厂，手写 service 与专用请求体构造函数一并删除，`reasoning_effort` 随接口目录正常下发
+  - 导航新增「365 Open Source Plan」入口；「更多工具」移除《千世书》
+- 2026.09.24: 界面新增匈牙利语（Magyar），界面语种增至 19 种。
+- 2026.09.22: Custom (OpenAI-compatible) 的端点快捷项新增 **9Router**（默认 20127）与 **OmniRoute**（默认 20128，9Router 的 TypeScript 分支），选中即填地址。
+- 2026.09.18: 首屏继续瘦身。
+  - 抽屉与弹窗改为**按需挂载 / 关闭即销毁**，不再常驻 DOM
+  - 第三方脚本与路由预取延后，生产构建移除 `console`
+- 2026.09.17: 收录 **OpenCode Go**（OpenCode Zen 的订阅套餐线）。
+  - 与 Zen 同 host、同账号、同一把 API Key，只有请求路径（`/zen/go/v1` 与 `/zen/v1`）、在售 SKU 集合、计费形态三处不同：**Go 是 $10/月的订阅额度**（官方按每个模型的月限额换算：跑满 5 小时 ≈ 20%、一周 ≈ 50%、一个月 ≈ 100%），Zen 是充值余额；官方限定一个 workspace 只能有一人订阅 Go
+  - 上游不发 CORS 头，「中转 API」**默认开启**
+- 2026.09.15: 两个订阅套餐端点（火山 Coding Plan、阿里 Bailian Token Plan）收进接口目录，但**默认不在下拉里显示**——它们是按量线之外的独立产品线，知道自己在做什么的用户可在设置里自行开启。
+- 2026.08.31: 导出与缓存设置更自由。
+  - **指定下载目录**：支持 File System Access API 的浏览器（Chrome / Edge）可选定一个导出目录，此后所有导出直接落进去；浏览器不允许把「桌面 / 文档 / 下载」本身选为目标，请选子文件夹
+  - **单文件模式与缓存设置可自由配置**，两项不再互相牵连
+- 2026.08.24: RTL 语言逐行判定书写方向；阿拉伯字母语言补齐 ASS 字体。
+  - **书写方向改为逐行判定**：中英夹阿拉伯语的文件里每一行各按自己的首个强方向字符排版，不再因整块被判成 LTR 而让 RTL 行的标点跑到错误一侧（源文本框、结果区、实时面板、失败面板、术语表抽屉全部生效）
+  - **波斯语 fa、乌尔都语 ur、普什图语 ps、达里语 prs、索拉尼库尔德语 ckb、维吾尔语 ug 登记为阿拉伯字母**：此前它们回落到拉丁，与中文配对导出双语 ASS 时会被指派没有阿拉伯字形的中文字体，播放器里就是一屏豆腐块。希伯来语也从阿拉伯桶里拆出来单列
+  - ASS 样式抽屉的预览改为按目标文字系统显示对应语种的示例句（此前希伯来语用户看到的是一句阿拉伯语）
+- 2026.08.22: 新增本地翻译模型 MiLMMT；修复多行值被截半。
+  - **新增 MiLMMT-46**（小米开源的翻译专用模型，1B / 4B / 12B）：与 TranslateGemma 同类的本地自托管服务，支持 46 种语言。**含粤语**（TranslateGemma 不支持），但不含乌克兰语与塞尔维亚语。需在服务列表里**直接选「MiLMMT」**：官方已说明该模型后训练阶段剔除了指令跟随能力，走 Custom (OpenAI-compatible) 会把系统提示词当正文喂进去。无术语表、无上下文翻译、必须指定源语言
+  - **修复：本地翻译模型把多行内容截成一行**（TranslateGemma 一直存在此问题）。字幕与 Markdown 不受影响（上游就是逐行切的）；**JSON 翻译受影响** —— 值里带换行的多行描述会只剩第一行，且无任何提示。现在只在源文本自身单行时才做候选折叠
+  - **本地运行时快捷地址新增 koboldcpp**（5001 端口），且 Custom / TranslateGemma / MiLMMT 三处的四个快捷项完全一致；选中任一项都会显示该运行时的官方文档链接
+- 2026.08.21: 服务目录大换血——新增 5 家、下线 3 家、模型清单全面刷新。
+  - **新增**：StepFun（阶跃星辰）、OpenCode Zen（带 `(free)` 后缀的 SKU 免费）、TokenHub（腾讯混元迁移后的新平台，另转售 DeepSeek / GLM / Kimi / MiniMax / MiMo）、Cerebras（gpt-oss-120b 官方标称约 3000 tokens/s，另有每日 100 万免费 token）、Atlas Cloud
+  - **下线**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）
+  - **LiteLLM 并入 Custom**：不再占用独立服务条目，改为 Custom (OpenAI-compatible) 的 URL 快捷项，与新增的 Together AI / Fireworks AI 并列；原有用法（URL 即凭证、API Key 可选、模型名可留空）一字未改
+  - **模型清单全面刷新**：各家清掉失效 id、按官方清单重列；模型输入框改为「下拉 + 自由输入」，每条显示友好名与真实 SKU 两行，该接口的默认模型带 `default` 标签
+  - **思考档位改为逐 SKU 判定**：厂商压根没给关闭值的模型，最低档由 Off 改标 **Min**——它照常推理、照常计费，标 Off 是撒谎。涉及 Gemini 3.x、Grok 4.5 / 4.6、Groq 与 Cerebras 上的 GPT-OSS、Kimi K3 / K2.6，以及单个 SKU Claude Fable 5（官方标 Always on）；同门的 Opus 5 / Sonnet 5 / Haiku 4.5 仍关得掉
+  - **中转 API 覆盖面扩大到 22 个接口**：OpenCode Zen 与 TokenHub 默认开启（两家的跨域预检分别返回 404 / 405，浏览器直连必败），其余默认关闭、遇 CORS 时按提示自行开启
+- 2026.08.12: 字幕翻译逐行实时上屏；ASS / LRC 识别修复。
+  - **实时结果面板**：每译完一行立刻显示在进度条正下方（原文在上、译文在下，左侧标原文件里的物理行号），不必等整批跑完才知道效果；未译出的行标琥珀色「未译出」，细节归下方失败面板；面板只保留最近窗口、跑完自动收起，中途上滚阅读不会被拽回底部
+  - 修复：`.ass` / `.lrc` 在部分内容形态下被误判成其他格式，导致整份字幕被"翻译吃掉"
+- 2026.08.09: 整段翻译的分块逐行营救；凭据失败整轮快停。
+  - **分块行数不符改为逐行营救**：整段机器翻译（GTX / DeepL / DeepLX / Azure）整段发出、按行拆回，服务一旦并行或拆行就会从分歧点起整段错位。现在按**块**校验行数，不符时清掉该块缓存并**逐行重发**（一行进一行出，错位物理上不可能），只有单独重发仍失败的行才保留原文并记入失败面板——不再把一次服务抖动放大成一大段未翻译
+  - **凭据失败快停只认 401 / 403**：一把坏 Key 会让之后每个语言、每个文件同样失败，所以整轮直接停下。判据收紧为数值状态码——一段含 "Forbidden" 字样的代理页 / 挑战页不会再误掐整批
+  - **编码识别收紧**：无 BOM 的 UTF-16 / UTF-32 不再被当成 UTF-8 读进来（那会把一份 NUL 夹花的垃圾逐行计费翻译、写出、还报成功）
+- 2026.08.02: 新增命令行翻译（CLI）；进度条内联化 + 取消按钮 + 运行中锁定设置。
+  - **命令行入口**：翻译引擎抽成平台无关模块，`yarn cli` 与网页端共用**同一条流水线和同一份格式解析 / 装配代码**——批处理、并发、重试、429 冷却、术语表、上下文翻译、逐行缓存行为完全一致；字幕 / Markdown / JSON 三种格式全带，可直接读网页端导出的设置 JSON。用法见 [命令行翻译](/guide/translation/cli.md)
+  - **进度条从弹窗改为内联**：显示已处理行数 / 总行数、当前语言、当前文件，右侧就是取消按钮；取消 **1 秒内落定**并转为「已停止」，已译内容全在缓存里，再点「翻译」从断点继续、不重复扣费
+  - **运行中锁定设置与输入**：语言、Provider、prompt、导出格式、上传区、源文本框在跑的时候一律锁定——整轮跑在点「翻译」那一刻的快照上，运行中改要么结构上不生效（而控件会翻转，界面等于在撒谎），要么真会坏结果（清掉正在写的译文、或让导出变成"新源文配旧译文"）。只读动作（提取纯文本、复制、导出）不受影响
+- 2026.07.11: 模型阵容更新；部分接口不再暴露温度参数。
+  - **模型更新**：OpenAI 升级到 GPT-5.6 家族（sol / terra / luna，reasoning effort 新增 `max` 档，luna 为默认的低成本高并发档），Claude 换为 Opus 4.8 / Sonnet 5 / Fable 5（adaptive thinking）+ Haiku 4.5（extended thinking），Qwen 默认改为 3.7 Plus，Kimi、Gemini 等同步跟进
+  - **温度控件按 provider 隐藏**：OpenAI（GPT-5.x 全系推理模型，非默认温度返回 400）、Claude（adaptive 世代拒绝 temperature）、Gemini（3.x 官方建议保持默认 1.0）、Moonshot Kimi（k2.x 锁定）、Azure OpenAI —— 这几家不再发送该参数，UI 输入框自动隐藏，改用系统提示词或思考强度控制文风
+- 2026.06.30: 失败面板可定位、可精准重试。
+  - **真实源文件行号**：失败面板显示的是原文件里的实际行号（此前是批次内序号），字幕 / Markdown / JSON 都能直接跳回去核对
+  - **仅重译失败语言**：多语言批量翻译中某几种语言整体失败时，可只对失败语言重试，已成功的语言不重复扣费
+  - 修复：GTX 返回长度不足或有空洞的 translations 数组时直接抛错，不再静默把整行译成空白；上下文模式的抽取增加跨行原文回声防护
+- 2026.06.29: 字幕 ASS 样式可视化配置；缓存命中大幅提速。
+  - **ASS 样式设置抽屉**：4 套预设（默认 / 大字号 / 电影感 / 底框）+ 自定义并持久保存；可调字体（支持读取系统字体）、字号、字色、描边色、描边、阴影、对齐、垂直边距；底框样式的框色与透明度独立可调
+  - **原生 ASS 双语新增「重新排版」**：可选放弃源文件样式、用自己的 ASS 样式重建头部并剥离所有行内覆盖标签（仅适合纯对白字幕）；`.ssa` 源在重新排版后统一输出 `.ass`
+  - **智能导出文件名**：默认改为干净的 `{name}.{ext}`，仅在一次翻译多种语言且模板未含 `{lang}` 时自动补 `_{lang}`，单语言导出不再带冗余后缀
+  - **缓存命中重跑提速**：IndexedDB 改批量读取、自适应自动重试，命中缓存时跳过限流节流
+  - **上下文行数默认 100 → 50**：过长上下文反而更容易诱发模型把上下文当正文的串行错位
+  - 修复：TranslateGemma 按输入长度限制输出，避免本地模型无限重复导致超时；本地模型（llm / translategemma）超时给出针对性提示
+- 2026.06.11: 新增 LiteLLM 自建网关；中转 API 全面可控、支持自建中转。
+  - 新增 **LiteLLM** 接入：一个 OpenAI 协议代理背后聚合 100+ 上游模型，独立配置槽位（不必占用 Custom）。URL 即凭证（默认 `127.0.0.1:4000`）、API Key 可选（master key）；`litellm --model` 启动时模型名可留空跟随服务端默认
+  - **Tencent Hunyuan 恢复浏览器可用**：官方端点目前拒绝跨域预检（直连必败），现默认经「中转 API」转发、开箱即用；开关保留，官方修复后可切回直连
+  - **中转 API 全面可控**：YandexGPT 由强制中转改为「默认开、可关闭」；12 个支持中转的接口现在都可改填**自建中转地址**——优先级固定为 自定义 URL > 中转开关 > 官方直连，URL 已填时开关置灰并提示
+  - 中转通道透传服务器的 `Retry-After` 响应头——经中转的限流自动降速与直连一样精确
+  - 修复：Firefox / Safari 遇 CORS 失败现在同样显示「请开启中转 API」的可行动提示（此前只识别 Chrome 的报错文案，会白白重试 3 次）；中转相关提示全部本地化为 18 种界面语言
+- 2026.06.10: 免费机器翻译升级——GTX 迁移网关 + 新增 Edge (Free) + 并发治理。
+  - **GTX 迁移到新网关**：旧版 `translate.googleapis.com/translate_a` 端点被 Google 收紧反滥用策略（很多 IP 被跳转验证页，浏览器报 CORS），改用其网页翻译组件同款网关 `translate-pa.googleapis.com`——跨域规范、可用性更好。原端点保留为 **Legacy gtx** 备选；也支持填自建镜像 URL（按地址形态自动识别协议）
+  - **新增 Edge API (Free)**：微软 Edge 浏览器内置翻译后端（Azure 引擎），零配置免费、链路与 GTX 完全不同——一个连不上换另一个即可。至此免费机器翻译有三选：GTX / Edge / DeepLX
+  - **GTX 并发治理**：改为整批分块翻译（约 5000 字符/块、一块一请求），请求数相比逐行翻译大幅减少，日常使用基本不再触发限流；银幕式进度预览在分块模式下同样实时显示
+  - 修复：TranslateGemma 删除多余的 `/models` 健康检查——部分 LM Studio 版本不路由该端点，导致「测试连接正常、实际翻译被阻断」；现与测试按钮走完全相同的请求路径
+- 2026.06.10: 限流自适应 + 报错提示全面 i18n。
+  - **429 自适应降速**：任一服务触发限流时，自动暂停该服务的全部请求、稍后自动恢复（优先按服务器的 `Retry-After` 等待，否则 1s→60s 指数退避，恢复时刻随机错峰防二次突发），并提示「请求过于频繁，已自动暂停片刻后重试」。GTX Free 因此得以保留高并发默认值——平时全速，被限流时自动减速
+  - **报错提示全面 i18n**：HTTP 状态码（密钥无效、余额不足、模型不存在、参数不支持、限流、配额用尽、服务器错误等 11 类）映射为 18 种界面语言的可行动提示；失败面板、工具报错、测试按钮统一显示「原始原因 + 提示」；网络错误与超时也改为本地化文案，不再出现 "Failed to fetch" 黑话
+  - **「测试连接」超时跟随「超时时间」设置**（原固定 30 秒）：慢速本地思考模型不再出现"测试失败、翻译却能跑"的误报；测试超时单独归类显示
+  - 修复：TranslateGemma 预检与翻译服务统一 URL 规范化——局域网裸地址（如 `http://192.168.x.x:1234`）不再出现「设置页测试通过、实际翻译被阻断」的矛盾
+- 2026.06.10: 新增**术语表（Glossary）**&#x529F;能。
+  - 为人名 / 专有名词指定固定译法，按目标语言生效；支持多套预设（按剧名 / 项目名建库）、TSV 批量导入导出（可选第 3 列目标语言代码，一个文件导入多语言术语）、编辑器搜索 / 重复词警示 / 分页
+  - 多层生效保障：LLM 按请求注入命中词条（不浪费 token）；Qwen-MT 走官方原生 `translation_options.terms` 参数；译文未采用指定译法时自动对违规行加强重译一次；最后还有译后兜底替换，确保术语一定生效
+  - 适用范围：全部 LLM 服务 + Qwen-MT；纯 MT 接口（GTX / Google / DeepL / Azure / TranslateGemma）无模型内术语通道，不显示术语表卡片
+  - 主页面 API 状态徽章旁新增术语表状态芯片，显示启用状态与词条数，点击直达设置
+- 2026.06.09: 稳定性与可访问性加固。
+  - 对翻译引擎、字幕 / Markdown / JSON / 文本各工具组做了一轮对抗式审查加固：占位符与代码围栏保护、格式边界处理、无效路径 / 正则给出明确报错而非静默跳过
+  - 字幕翻译错位修复：批次内标记丢失时不再按行号猜测位置，避免译文串行
+  - 可访问性：新增跳转正文链接与导航 landmark，工具控件全部支持键盘操作
+- 2026.06.06: 新增 YandexGPT (AI Studio)。
+  - 新增 LLM 提供商 **YandexGPT (AI Studio)**：API Key + Folder ID 鉴权，内置 YandexGPT 5.1 / Alice AI / Qwen3 / DeepSeek / GPT-OSS 等 SKU，也可直接粘贴完整 `gpt://` 模型 URI；官方接口无 CORS 头，默认经内置代理转发
+  - TranslateGemma 新增**可选 API Key**：适配 LM Studio "require API key"、vLLM `--api-key`、反向代理鉴权等加锁部署
+- 2026.06.01: 新增 GitHub Models；思考控制全面化。
+  - 新增 LLM 提供商 **GitHub Models**：用 GitHub PAT（`models:read` 权限）鉴权，免费额度按模型分级（GPT-4.1 / 4.1 Mini / 4o Mini、Mistral Medium 3、Phi-4、Llama 3.3 70B），适合没有付费 Key 的入门用户；该网关不支持 reasoning 参数，故不显示思考开关
+  - 思考控制全面化：Mistral（Medium 3.5 / Small 4）、Cohere Command A Reasoning 由「选了即开启」改为 **off / on** 开关；Perplexity Sonar Deep Research 支持 **off / low / medium / high** 三档
+  - 自定义（未列出）模型在支持思考的 provider 上新增 **三态控制 off / on / auto**：off 显式关闭、on 开启、auto 省略参数跟随模型默认（严格 provider 对非思考模型会报错时的兜底）；默认 off
+  - 修复：provider 选择守卫改为纯派生，避免旧 bundle 静默覆盖用户的选择
+- 2026.05.26: 翻译引擎深度调优。
+  - Custom (OpenAI-compatible) 新增可选 maxTokens 上限，防止本地小模型陷入重复输出循环；Claude / Gemini / OpenAI-compat 同步加上 `finish_reason=length` 截断检测
+  - Custom 本地 LLM 默认 contextWindow 从 100 降到 30，适配 14B 以下的小模型
+  - 失败处理升级：单行失败自动回填原文（保证输出可用）；多语言批量翻译中整语言失败聚合到独立面板，可一键复制语言代码重试
+  - SRT / VTT 双语模式新增 **ASS 输出** 选项，原文 / 译文走独立样式（Default / Secondary），方便后期独立调整字体颜色大小
+  - 友好错误提示：NetworkError / 超时 / 级联中止给出可读文案，不再 "Failed to fetch" 一刀切
+  - Thinking 模式按模型独立保存开关状态；UI 自动区分三档（off/low/med/high）/ 二档（off/on）/ 仅 low-high 三种 effort 形态；intrinsic-thinking SKU 不再误显示 toggle
+  - 语言选择器升级：122 种语言按地理 + 使用人数分组；多语言模式新增 "Top 10 / 欧洲 / 东亚 / 印度次大陆" 4 个预设，单语言场景记忆最近 5 个选过的语言；移动端单列布局
+  - DeepLX 在服务下拉中下移到 DeepL 后面（品牌成组，稳定版在前）
+- 2026.05.06: 服务目录 v2 大版本更新。
+  - 新增 MT 服务 **TranslateGemma**（Google 翻译专用 Gemma 衍生模型，本地自托管）
+  - 新增 LLM 提供商：MiniMax、Tencent Hunyuan（混元）、Baidu ERNIE（千帆）、Cohere
+  - 各提供商支持区域端点快速切换（Mainland CN / International / US 等）
+  - DeepSeek、NVIDIA NIM、Claude 等支持 Thinking 模式 + 推理强度（low / medium / high）
+  - Custom (OpenAI-compatible) 新增不发送 system 消息开关，兼容 Gemma 系列 chat template
+  - URL 字段 onBlur 自动补全 `/v1/chat/completions`，避免误用 Responses / 旧 completions API
+  - 新增独立的 Prompt 预设管理（与 LLM API 预设解耦，可自由组合）
+  - 主页面新增 API Status 状态徽章 + 一键源/目标语言互换
+  - 修复：关闭缓存时仍在写入 IndexedDB；LLM-backed MT (Qwen-MT / TranslateGemma) retry 行为对齐 LLM
+- 2025.07.29：支持 AI 模式下的上下文关联翻译。
+- 2025.03.20：完成 i18n 化；修复缓存 key 等已知 bug；项目开源。
+- 2025.02.28：LLM 模型翻译时支持自定义系统提示词和用户提示词。
+- 2025.02.27: 增强双语字幕的时间轴兼容性，支持省略默认小时、超过 100 小时的时间格式，以及 1 至 3 位数的毫秒显示。
+- 2025.02.21: 支持一次性批量翻译成多种语言。
+- 2025.02.08：修复多文件模式下的编码识别问题；新增 OpenAI 和 Groq 的 接口（有其他接口可反馈）。
+- 2025.02.06：新增 Siliconflow API；为 LLM 模型添加 temperature 设置，控制 AI 翻译随机性。
+- 2025.02.05: 修复分块翻译时忽略空行和 DeeplX 换行符错误的问题；为不同 API 单独设置分块翻译参数。
+- 2025.01.18: 支持自动识别上传文件的编码；可以设置翻译内容显示在原字幕的上一行或下一行。
+- 2025.01.13：新增 DeepLX 自部署接口；将翻译 API 设置改为独立组件，简化前端设置逻辑。
+- 2025.01.10：新增 DeepSeek 翻译接口。修复 DeepLX 字幕换行问题；优化翻译语言搜索识别（中英搜索支持）。
+- 2024.12.19：自动识别单文件与多文件模式；新增自动识别源语言；优化单文件翻译后的文件导出命名规则。
+- 2024.12.12: 使用 pLimit 限制并发模式，大幅减少免费 API 的报错问题。
+- 2024.10.12：为 GTX API 添加了自定义延迟设置。（根据反馈，原设置在超过 150 次后容易达到上限，数量较低时则无需调整）
+- 2024.09.08：增加 GTX API 的分批翻译限制，确保翻译的稳定性。新增繁体中文支持。
+- 2024.09.07：优化对 webvtt 格式的识别；默认双语字幕格式为 .ass，并兼容多行字幕的双语处理。
+- 2024.09.06：为翻译结果添加本地缓存，提升重复内容的翻译速度。
+- 2024.09.05：跳过纯数字或字符内容，避免不必要的翻译。
+- 2024.08.13：新增双语字幕输出功能。
+- 2024.07.11：在单文件模式下，自动匹配字幕格式。
+- 2024.07.06：新增对 vtt 和 ass 格式字幕的支持。
+- 2024.07.05：字幕翻译语言支持扩展至 35 种。
+- 2024.06.26：新增仅提取字幕内容的功能。
+
+
+
+---
+url: /guide/text/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 文本工具集
+
+七款互补的纯文本处理工具，覆盖**格式转换 → 内容清洗 → 分段切片 → 合并拼接 → 差异核对 → 通用文本操作 → 表格批处理**。全部浏览器本地运行，敏感数据不外发。
+
+## 如何选择
+
+| 我要做…                        | 用这个                                                          |
+| --------------------------- | ------------------------------------------------------------ |
+| 简繁体互转、台湾 / 香港地区词            | [**中文转换**](/guide/text/chinese-conversion.md)                |
+| 网络小说排版、章节标题修复、去广告           | [**小说处理**](/guide/text/novel-processor.md)                   |
+| 长文本按符号 / 字数 / 段落切分          | [**文本分割**](/guide/text/text-splitter.md)                     |
+| 多列文本按模板合并成 CSV / SQL / JSON | [**文本拼接**](/guide/text/text-joiner.md)                       |
+| 比对两段文本或文件，定位首处差异            | [**文本对照**](/guide/text/text-diff.md)                         |
+| 正则匹配、去重、批量加前后缀、行操作          | [**多功能文本处理**](/guide/text/text-toolbox.md)                   |
+| Excel 表格按前两列去重、提取第三列、批量加前缀  | [**数据批处理**](https://tools.newzone.top/zh/data-batch)（暂无独立指南） |
+
+## 共同能力
+
+- **浏览器本地**：文件读取、解析、处理都在本地完成，敏感数据不外发
+- **批量处理**：支持一次粘贴多份文本 / 批量上传文件
+- **自定义替换规则**：中文转换、小说处理都支持自定义"不处理"的词组（如 iPhone、OpenAI 等专有名词）
+- **可链式使用**：先用文本分割切大文档 → 用文本处理跑正则 → 用中文转换出繁体版
+
+## 典型组合
+
+- **网文阅读优化**：小说处理去广告 + 修章节标题 → 中文转换转繁体台湾 → 导出
+- **机器翻译预处理**：长文档用文本分割按字数切到 5000 字符（Google / DeepL 免费版单次上限）→ 多功能文本处理跑正则清洗 → 导出分段文件
+- **多语言资料整理**：多功能文本处理过滤掉日文行 → 中文转换转简体 → 文本分割按段落切片
+- **表格数据入库**：Excel 多列粘进文本拼接 → SQL VALUES 预设生成 INSERT → 与线上数据用文本对照核对
+- **改稿核对**：改前改后两份文稿丢进文本对照 → 导出 `.patch` 存档
+
+
+
+---
+url: /guide/text/chinese-conversion.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 简繁转换工具
+
+[简繁转换工具](https://tools.newzone.top/zh/chinese-conversion) 是一款本地运行的中文文本转换工具，支持简体、繁体（台湾 / 香港，各含纯字形与带地区词汇两档 / OpenCC 模式）、日本新字体之间任意方向的转换。提供两个快捷按钮（繁→简、简→繁）+ 自定义语言对 + 用户可编辑的自定义替换规则 + 批量文件处理。
+
+![简繁转换工具界面](/img/chinese-conversion-zh.webp "简繁转换工具使用界面")
+
+## 支持的语言代号
+
+工具内部使用 7 个语言代号：
+
+| 代号    | 含义                                                    |
+| ----- | ----------------------------------------------------- |
+| `cn`  | 简体中文                                                  |
+| `tw`  | 繁体中文（台湾），仅字形转换                                        |
+| `twp` | 繁体中文（台湾）+ 地区词汇转换 —— 在 tw 基础上额外转换台湾词汇（视频↔影片、幼儿园↔幼稚園 等） |
+| `hk`  | 繁体中文（香港），香港本地字形                                       |
+| `hkp` | 繁体中文（香港）+ 地区词汇转换 —— 在 hk 基础上额外转换香港词汇                  |
+| `t`   | OpenCC 模式繁体，标准字形转换                                    |
+| `jp`  | 日本新字体（Shinjitai）                                      |
+
+## 页面布局
+
+页面分两栏：
+
+- **左栏**：输入区（上传 + 文本框）+ 两个快捷按钮 + 结果卡
+- **右栏**：转换设置 + 自定义语言 + 自定义替换规则面板
+
+## 快捷转换（左栏）
+
+两个主操作按钮：
+
+- **繁→简**：从某种繁体转到简体
+- **简→繁**：从简体转到某种繁体
+
+按钮使用哪种"繁体"由右侧「转换设置」中的**词汇转换**开关决定：
+
+| 词汇转换开关 | 繁→简 (t2s) 等价 | 简→繁 (s2t) 等价 |
+| ------ | ------------ | ------------ |
+| 开启     | `twp → cn`   | `cn → twp`   |
+| 关闭     | `t → cn`     | `cn → t`     |
+
+## 自定义语言（右栏）
+
+需要 tw↔hk、t↔jp 等其他组合时使用：
+
+1. 在「源语言」下拉中选择输入语言
+2. 在「目标语言」下拉中选择输出语言
+3. 点击「自定义转换」执行
+
+⚠️ 注意：自定义替换规则只对涉及简体的转换生效（如 s2t、t2s）。选用不涉及简体的语言对（如 tw↔hk）时，已有的保护词条会被跳过，工具会显示"当前规则未生效"提示。
+
+## 转换设置（右栏）
+
+4 个开关：
+
+- **词汇转换**：控制快捷按钮的繁体类型（见上表）。"自定义语言"卡片不受此开关影响
+- **智能换行**：开启后根据中文标点合并断行（OCR 修复利器）
+- **单文件模式**：开启后一次仅处理一个文件，新上传的文件替换当前文件
+- **自动导出**：开启后转换结果直接下载为文件，不在页面显示预览（适合大批量处理）
+
+## 自定义替换规则
+
+工具的进阶功能，允许用户定义"不被转换"的词组清单。
+
+### 工作机制
+
+- **s2t 规则**：简→繁方向生效（`from` 是简体词，`to` 是希望保留的繁体写法）
+- **t2s 规则**：繁→简方向生效
+- 两套规则独立管理、独立存储
+
+### 何时应用
+
+保护规则**仅在涉及简体的转换方向**生效：
+
+- ✅ `cn → tw/twp/hk/t/jp` → 应用 **s2t 规则**
+- ✅ `tw/twp/hk/t/jp → cn` → 应用 **t2s 规则**
+- ❌ `tw ↔ hk`、`t ↔ jp` 等纯繁体间转换 → 不应用规则
+- ❌ 总开关关闭时 → 不应用任何规则
+
+### 管理保护规则
+
+点击右下角自定义替换规则面板的「管理规则」按钮，打开抽屉：
+
+- 切换 s2t / t2s 方向 tab
+- 增删改单条规则（from → to）
+- 批量导入/导出（与小说排版工具共享同一份词典）
+
+### 典型用法
+
+- 把"机器人"加进 s2t 规则的"to"字段保留为"机器人"，避免被转成"機器人"（常见技术词）
+- 把"软件"加进 s2t 规则强制保留简体写法
+- 把繁体人名加入 t2s 规则避免被错误简化
+
+## 文件上传
+
+- 拖拽或点击上传，支持 `.txt`、`.csv`、`.json`、`.md` 等富文本格式
+- 默认多文件模式，可上传一批一起处理
+- 多文件状态下文本框被隐藏，处理完每个文件按原名导出
+
+## 结果区
+
+单文件转换完成后显示结果卡，提供：
+
+- **复制**：一键复制结果
+- **导出文件**：以原文件名（或 `jianfan.txt`）下载
+- **编辑结果**：直接修改结果文本
+
+启用「自动导出」时跳过结果显示直接下载。
+
+## 适用场景
+
+- 文档本地化：两岸三地内容同步（简体陆版 / 繁体台版 / 繁体港版）
+- OCR 文本优化：结合智能换行修复扫描识别后的断行
+- 学术 / 古籍：处理繁体文献时使用自定义替换规则保留专有名词
+- 内容创作：博客、小说一键产出简繁双版本
+- 批量数据：处理含中文字段的 `.json` / `.csv` / 多个 TXT
+
+## 为什么是本地运行？
+
+本工具基于 [js-opencc](https://github.com/rockbenben/js-opencc)（[OpenCC](https://github.com/BYVoid/OpenCC) 的 JavaScript 移植）开发，字典从 OpenCC 官方同步。完全在浏览器本地执行，文件**不上传服务器**，敏感数据可放心处理。
+
+
+
+---
+url: /guide/text/novel-processor.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 小说文本整理器
+
+[小说文本整理器](https://tools.newzone.top/zh/novel-processor) 是专门为网络小说、电子书等长篇文本设计的一站式整理工具。能自动修复格式错乱、清理广告水印、规范章节标题、按章节重排、可选繁简转换 —— 让杂乱的小说文本变得整齐易读。
+
+![小说文本整理器界面](/img/novel-processor-zh.webp "小说文本整理器使用界面")
+
+## 这个工具能解决什么问题？
+
+下载的小说常见痛点：
+
+- **排版乱**：段落不分、章节连写、空行混乱
+- **广告水印**：下载器标记、群号推广、"分卷阅读"
+- **格式不统一**：繁简混杂、全角/半角字符乱
+- **断行错乱**：句子被错误打断、不该断的地方多空行
+- **章节错位**：目录乱序、章节标题没换行
+
+## 页面结构
+
+左右两栏布局：
+
+- **左栏**：文件上传 + 文本输入 + 三个主操作按钮 + 结果卡
+- **右栏**：三段式配置 Collapse + 自定义替换规则面板
+
+## 左栏：输入与操作
+
+### 文件上传
+
+- 拖拽或点击上传，支持 TXT、MD 等文本格式
+- 默认多文件模式，可同时拖入整个小说合集
+- 单文件模式下（在高级设置里开启）新上传会替换当前文件
+
+### 三个主操作按钮
+
+| 按钮       | 行为                                                        |
+| -------- | --------------------------------------------------------- |
+| **开始处理** | 跑完整流程：按右侧配置依次执行换行、清理、章节、过滤等所有勾选项                          |
+| **章节分割** | 只做一件事 —— 把行内连写的章节标题拆成独立行，其他内容不动                           |
+| **章节重排** | 从每章标题里提取序号（第十二章 / Chapter 5 / 第三卷第四章 等），按序号重排整本小说。无序号章节置后 |
+
+完成后内容会自动复制到剪贴板并显示在结果卡。
+
+## 右栏：三段配置（Collapse）
+
+### 1. 排版（默认展开）
+
+- **智能换行**（默认开）：根据中文标点、纯数字行、特殊起始符判断段落边界，重新合并/分段
+  - 子开关 **段落缩进**（仅在智能换行启用时显示，默认开）：每段开头加 `\t` 缩进，更像正规书籍
+- **智能分段**（默认关）：长段落按句子算法（compromise 英文 NLP + 中文标点）拆分成更短的段落，手机阅读更友好
+
+### 2. 内容清理（默认折叠）
+
+- **章节标题格式化**（默认开）：识别"第X章"、"Chapter N"等格式并规范化
+- **合并重复章节标题**：同一章标题重复出现时（包括紧邻重复、仅全/半角标点差异的"近似重复"）合并为一条，自动保留信息更完整的那条
+- **清除行尾数字**（默认关）：仅对长度 ≥ 10 的行移除末尾数字（避免误删短标题里的年份）
+- **修整空格**（默认开）：移除每行首尾空格
+- **去除相邻重复行**（默认关）：仅删除**相邻**重复行（不是全文去重，避免误删频繁出现的短对白如"嗯"、"好"）
+- **特殊起始文本**输入：填小说名或常见标题词。匹配的行会强制独立成段（避免被误合并）
+- **内容筛选** + **保护长行**：
+  - 内容筛选：逗号分隔的关键词（`群号,下载器`），所有含这些词的整行被删除
+  - 保护长行：字数超过 N 的行即使含关键词也保留（保护正文）；填 0 表示不启用
+
+### 3. 高级设置（默认折叠）
+
+- **繁简转换** Segmented：
+  - **不转换** → 跳过此步
+  - **繁→简** → 使用 `tw → cn` 转换
+  - **简→繁** → 使用 `cn → tw` 转换
+- **单文件模式**：限制为一次只处理一个文件
+- **自动导出**：处理完直接下载，跳过页面预览（仅单文件模式可见）
+
+## 自定义替换规则（与简繁转换工具共享）
+
+页面右下角的「自定义替换规则」面板：
+
+- **总开关**：启用 / 禁用全部规则
+- 显示当前 s2t / t2s 规则数量
+- **管理规则**按钮：打开抽屉，增删改单条规则、批量导入/导出
+- **失效提示**：若繁简转换模式设为"不转换"，面板下方提示"规则当前未生效"
+
+工具与「简繁转换」共享同一份自定义替换规则（同 localStorage 键），一处编辑两处生效。仅在高级设置的繁简转换实际启用时才参与处理。
+
+## 自动处理流程（开始处理按钮）
+
+按钮触发的完整管道：
+
+1. **繁简转换**（如启用）：应用对应的保护规则
+2. **规范换行 + 清理小说杂质**：统一 `\r\n` → `\n`、移除常见下载器水印 / `分卷阅读` 标记 / 等号横线行
+3. **全角转半角**：英文字母、数字、标点统一为半角
+4. **章节标记格式化**：把 `第X章：` 中的冒号换为空格、压缩章节标记后的多余空格
+5. **章节分割**（如启用）：拆分行内连写的章节标题
+6. **关键词过滤**（如填了）：删除含关键词的整行（受阈值豁免保护）
+7. **行尾数字清除**（如启用）：长行去掉末尾数字
+8. **智能分段**（如启用）：长段落拆分
+9. **智能换行 / 段落缩进**：合并断句、分段、加缩进、压缩多余空行
+
+## 结果区
+
+完成后底部出现结果卡：
+
+- 自动复制到剪贴板
+- **复制 / 导出文件 / 编辑结果**：与简繁转换工具一致
+- **结果 → 原文本**：把结果填回输入区做下一步（少用）
+
+启用「自动导出」时跳过结果显示直接下载。
+
+## 使用建议
+
+### 第一次使用
+
+- 先用一小段（1-2 章）测试效果，调好配置再处理整本
+- 关键词过滤先填 1-2 个明显的水印词，确认无误后再扩充清单
+
+### 进阶技巧
+
+- **保护长行是核心**：设成 50（或文本平均段落长度）能精确删除短水印行而保留长正文
+- **章节重排单独跑**：只想理顺章节顺序时点章节重排，不要走"开始处理"全流程
+- **自定义替换规则预先编辑**：简繁混杂的稀有人名先加入词典，再走"开始处理"
+
+### 适用场景
+
+- 从盗版小说站下载的格式混乱文本
+- 爬虫 / 自动下载器获取的小说合集
+- OCR / PDF 复制后的长篇文本
+- 准备导入 Kindle / Moon+ Reader / 微信读书前的预处理
+
+## 技术说明
+
+对于复杂的混淆水印（故意打乱字符顺序的推广信息），可以用「内容筛选」+「保护长行」组合处理。极复杂的混淆建议先用 [多功能文本处理](/guide/text/text-toolbox.md) 配合自定义正则处理后，再交给本工具做排版。
+
+工具完全在浏览器本地运行，**不上传任何数据**。
+
+
+
+---
+url: /guide/text/text-splitter.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 文本分割器
+
+[文本分割器](https://tools.newzone.top/zh/text-splitter) 是一款长文本处理工具，适用于 ChatGPT、DeepSeek 等 AI 模型的上下文切分，以及分段发布、逐句翻译、字幕稿整理等场景。工具提供**四种切分模式**：符号、长度、中文、英文，结果可复制成合并全文，也可每段导出为独立文件。
+
+![文本分割器界面](/img/text-splitter-zh.webp "文本分割器使用界面")
+
+:::tip 30 秒上手
+
+1. 粘贴或上传长文本（非 UTF-8 文件请直接上传，别粘贴）
+2. 选 **切分模式**：
+   - 按标点、逗号、竖线等符号断行 → **符号**（默认）
+   - 切成固定字符块 → **长度**
+   - 中文长文按整句 → **中文**
+   - 英文按整句 → **英文**
+3. 符号模式：填分隔符 + 用「每段分隔符数」定粒度；长度模式：填字符数（留空 = 5000）
+4. 点执行 → 「复制合并文本」/「导出合并文本」/「导出分段文件」三选一
+
+:::
+
+## 四种切分模式
+
+四种模式通过配置卡顶部的 Segmented 选择器切换，标签为「符号 / 长度 / 中文 / 英文」，鼠标悬停可看到每种模式的详细说明。每种模式只显示自己的配置项，互不干扰。
+
+### 1. 符号（默认）
+
+按你填的分隔符切分：每命中一个分隔符切出一个**最小段**，分隔符保留在段尾；再按「每段分隔符数」把相邻的最小段合并成最终结果。
+
+**两个参数**
+
+- **分隔符**：决定在哪里切。多个符号用**空格**隔开，命中任意一个都会切
+- **每段分隔符数**：默认 1，即每个分隔符都断一行；填 N 表示每 N 个最小段合成一段。末尾不足 N 个的残余单独成一段
+
+**按逗号切分的例子**
+
+以 `苹果,香蕉,橙子,葡萄,西瓜,芒果` 为例，分隔符填 `,`：
+
+| 每段分隔符数 | 结果段数 | 输出                                           |
+| ------ | ---- | -------------------------------------------- |
+| `1`    | 6 段  | `苹果,` / `香蕉,` / `橙子,` / `葡萄,` / `西瓜,` / `芒果` |
+| `2`    | 3 段  | `苹果,香蕉,` / `橙子,葡萄,` / `西瓜,芒果`                |
+| `3`    | 2 段  | `苹果,香蕉,橙子,` / `葡萄,西瓜,芒果`                     |
+
+换成句末标点也是同一套逻辑：分隔符填 `。 ？ ！`、每段分隔符数填 `3`，就是**每三句合成一段**。
+
+**默认分隔符随界面语言**
+
+- 中文 / 繁体中文 / 日文界面：`。 ？ ！`
+- 其他语言界面：`. ? !`
+
+两套不合并成一份，是因为裸 ASCII 句点在真实文本里常常不是句末标记 —— 合并后 `3.5` 会被切成 `3.` 和 `5`、`config.json` 被切成 `config.` 和 `json`、`tools.newzone.top` 被切成三段。输入框下方的「中日韩」「英文/拉丁」两个预设按钮可一键切换。
+
+**分隔符输入框支持**
+
+- 手动输入任意符号，多个用空格隔开，如 `, ; |` 或 `。 ？ ！ . ? !`（中英混排）
+- 多字符分隔符，如 `……`、`---`
+- 转义字符：`\n`（换行）、`\r`（回车）、`\t`（制表符）、`\s`（空格）、`\\`（反斜杠）
+- 正则特殊字符按字面处理，填 `.` 就是切句点，不会被当成"任意字符"
+
+**边界行为**
+
+- 连续出现的分隔符（如 `一句。。两句`）归并到前一段，不产生空段
+- 位于开头的分隔符积攒为下一段的前缀
+- 因此把结果用同样的连接方式合并回去，可以还原原始字符
+
+**一个都没命中时**：会提示「分隔符未在文本中出现」并且不做切分。阿拉伯语 `؟`、印地语 danda `।`、泰语无句末标点等情况不在默认值覆盖范围内，需要手动填该语言的实际标点，或改用分段模式。
+
+### 2. 长度
+
+按设定的字符数把文本切成块。**留空即回落到 5000 字符**（最小 1）。
+
+选 5000 是因为如今以字符计的硬限制主要来自**机器翻译 API**——Google 翻译与 DeepL 免费版都是 5000 字符/次，超了直接被拒；而 LLM 上下文早已不是瓶颈（GPT-5.6 约 400K token，Claude / Gemini / DeepSeek 均 1M token，切成 2000 字符等于没切）。
+
+这个模式下方还有一个**独立的分隔符字段**，用途与符号模式完全不同——它只用于**对齐切点**，填了才生效：
+
+- **填了分隔符**：按长度切块，切点自动回退到最近的分隔符，避免句子被拦腰截断
+- **留空**：硬按长度切，不管句子边界
+
+:::warning 两个分隔符字段是独立的
+符号模式的「分隔符」和长度模式的对齐分隔符**各存各的**，因为二者对"空"的含义相反：前者空 = 没得切（所以有默认值），后者空 = 就是要纯硬切（所以没有默认值）。改其中一个不会影响另一个。
+:::
+
+该模式会先把换行统一成空格再切分。
+
+### 3. 中文
+
+按中文标点和段落规则识别整句边界后切分，一句一段。适合中文文章、博客、字幕稿的逐句处理。无需额外配置。
+
+中英混排也用这个模式——它同时识别中文（`。！？`）和英文（`. ! ?`）句末标点，不会在单词中间切断。
+
+### 4. 英文
+
+用 compromise NLP 库的英文句子算法识别边界，每句一段。适合英文文档、邮件、论文。无需额外配置。
+
+## 合并分隔符
+
+配置卡下半部分（分隔线以下）是「切完拿什么」的设置。**合并分隔符**决定「复制合并文本」和「导出合并文本」时各段之间用什么连接：
+
+- 默认两个换行符 `\n\n`，即段与段之间空一行
+- 支持 `\n`、`\t`、`\s` 等转义字符
+- 留空即回落到默认的两个换行符
+- 设置会被记住，下次打开仍是你上次填的值
+
+想拼成一行 CSV？填 `,`。想拼成不带空行的连续文本？填 `\n`。
+
+:::tip 合并结果不等于原始排版
+「长度」与「中文」「英文」分段模式会先把换行压成空格、丢弃空行，所以合并回去得到的是重新拼接的文本，不是原文的排版。需要严格还原原文时用「符号」模式——它保留分隔符，合并可还原。
+:::
+
+## 通用设置
+
+- **隐藏结果**：切分结果过多（超过 500 段时自动触发）可开启本项隐藏预览，避免页面卡顿。此时仍可正常导出，也可点「仍要显示」强制渲染。
+- **导出文件名**：自定义导出文件的基础名。默认用上传的文件名，未上传则用 `split_text`，派生的文件固定 `.txt` 后缀。
+
+## 结果与导出
+
+结果区三个按钮按「动作 × 形态」区分：
+
+| 按钮         | 做什么                                            |
+| ---------- | ---------------------------------------------- |
+| **复制合并文本** | 用合并分隔符把所有分段接成一份全文，复制到剪贴板                       |
+| **导出合并文本** | 同一份全文，存成单个 `.txt` 文件                           |
+| **导出分段文件** | 每段一个文件；**超过 3 段自动打包**为 `<文件名>_split_files.zip` |
+
+此外每段卡片右上角有单独的复制按钮，点击后图标变为打勾确认。
+
+## 场景配方
+
+### 按符号切分
+
+| 场景           | 模式 | 分隔符           | 每段分隔符数 |
+| ------------ | -- | ------------- | ------ |
+| 逗号列表逐项拆开     | 符号 | `,`           | `1`    |
+| 逗号列表每 3 项一组  | 符号 | `,`           | `3`    |
+| 中文长文逐句拆开     | 符号 | `。 ？ ！`       | `1`    |
+| 中文长文每 3 句一段  | 符号 | `。 ？ ！`       | `3`    |
+| 中英混排逐句拆开     | 符号 | `。 ？ ！ . ? !` | `1`    |
+| CSV / 日志按字段拆 | 符号 | `, ; \|`      | `1`    |
+| 按空行分段（保留原排版） | 符号 | `\n\n`        | `1`    |
+| 按制表符拆表格列     | 符号 | `\t`          | `1`    |
+| 省略号分隔的小说对白   | 符号 | `……`          | `1`    |
+
+### 按长度切分
+
+- **喂给机器翻译 API**：长度模式，字符数留空（= 5000，正好卡在 Google / DeepL 免费版上限），分隔符填 `。 ？ ！` 或 `. ? !`，切点自动对齐句末
+- **喂给本地小模型**：长度模式，字符数按模型上下文调小（如 2000），分隔符同上
+- **代码 / Markdown 按块切**：长度模式 + 对齐分隔符填 `\n\n`
+
+### 按整句切分
+
+- **分段发布到社交平台**：中文用「中文」模式、英文用「英文」模式保证句子完整，再用「导出分段文件」按 1/N、2/N 依次发布。各平台上限参考：Twitter 280、Threads 500、微博 140、小红书 1000、豆瓣广播 140、LinkedIn 3000
+- **逐句翻译 / 字幕稿整理**：中文或英文模式，一句一行，方便逐条对照
+
+### 与其他工具搭配
+
+- 切出来的块是 i18n JSON 片段 → 用 [JSON 翻译](/guide/translation/json-translate.md) 批量翻译并保留键名结构
+- 切出来的块是 Markdown 章节 → 用 [Markdown 翻译](/guide/translation/md-translator.md) 保留代码块与 Front Matter
+- 需要先去重、正则提取、抽 URL 再投喂 AI → 先过一遍 [多功能文本处理](/guide/text/text-toolbox.md)
+- 切完还想按模板重新拼装（如拼成 CSV、SQL） → 用 [文本拼接](/guide/text/text-joiner.md)
+
+## 编码与文件
+
+非 UTF-8 编码的文件（法语 GBK、日语 Shift-JIS、韩语 EUC-KR 等）请**直接上传文件**而不是粘贴内容——工具会自动检测编码，避免乱码。
+
+工具完全在浏览器本地运行，不会上传任何内容到服务器。
+
+
+
+---
+url: /guide/text/text-joiner.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 文本拼接
+
+[文本拼接](https://tools.newzone.top/zh/text-joiner)（Text Joiner）解决的是"两份列表要按行合起来"的问题：一列是名称、一列是链接，要拼成 Markdown 链接；一列是 ID，要拼成 SQL `IN (...)`；几列表格数据要拼回 CSV。**逐行按行号对齐 + 模板占位符**，一次配置批量出结果。
+
+它与 [文本分割](/guide/text/text-splitter.md) 正好互为逆操作，也常与 [多功能文本处理](/guide/text/text-toolbox.md) 的批量前后缀配合使用——后者只能给单列加固定前后缀，跨列拼接得用本工具。
+
+![文本拼接界面](/img/text-joiner-zh.webp "文本拼接使用界面")
+
+:::tip 30 秒上手
+
+1. 左侧填 **列输入**：第 1 列、第 2 列各粘一份文本（每行一条）
+2. 点一个**预设**（CSV / Markdown 链接 / SQL IN…），或自己写**逐行模板**如 `{1},{2}`
+3. 右侧结果实时更新，确认后复制
+
+:::
+
+## 列输入
+
+- **输入列数**：1～8 列，按需增减
+- **Excel / 表格粘贴自动拆列**：从 Excel、Google Sheets 复制的多列内容，粘贴到任意一个列框，会按 Tab 自动拆到各列（提示「已按表格拆分：N 行 × M 列」）。超过列数上限时只填入前 8 列并给出提示。不想要这个行为可以关掉「Excel/表格粘贴自动拆列」开关
+- **行数显示**：每列标题旁显示当前行数，方便发现两列行数不一致
+- **加载示例**：不确定怎么用时，点一下就有可运行的样例数据
+
+## 逐行模板
+
+模板决定**每一行**输出什么，用 `{1}`、`{2}` 引用各列的当前行：
+
+| 模板             | 输入（第 1 / 2 列）      | 输出                  |
+| -------------- | ------------------ | ------------------- |
+| `{1},{2}`      | `苹果` / `apple`     | `苹果,apple`          |
+| `- [{1}]({2})` | `官网` / `https://…` | `- [官网](https://…)` |
+| `'{1}'`        | `A001`             | `'A001'`            |
+
+未定义的列号会原样保留，不会被替换成空字符串。点击列标题旁的 `{N}` 芯片可直接把该占位符插入模板光标处。
+
+### 内置预设
+
+点击即填好模板、连接符与前后缀四项配置：
+
+- **CSV** / **引号 CSV** / **TSV**：表格数据回填
+- **Markdown 列表** / **Markdown 链接**：`- {1} {2}` / `- [{1}]({2})`
+- **JSON 数组**：每行输出一个对象（`{"c1": "…", "c2": "…"}`），整体包上 `[ ]` 并用 `,` 连接
+- **SQL IN**：输出 `IN ('a', 'b', 'c')`
+- **SQL VALUES**：输出完整的 `INSERT INTO table (col1, col2) VALUES ('…', '…'), …;`
+
+预设按当前列数动态生成——把列数改成 3，CSV 预设自动变成 `{1},{2},{3}`。
+
+## 整体拼接
+
+结构是 **前缀 · 行 ⟨连接符⟩ 行 · 后缀**：
+
+- **行间连接符**：每行之间插入什么，默认换行 `\n`；SQL IN 用 `, `
+- **整体前缀 / 后缀**：整个结果的开头与结尾，例如 JSON 数组的 `[\n` 与 `\n]`
+
+连接符与前后缀支持 `\n`、`\t` 等转义字符（模板本身不做转义解析，需要真 Tab 就直接输入 Tab）。
+
+## 处理方式
+
+- **列行数不同时**：
+  - **补空**（默认）：按最长列输出，缺失的位置代入空字符串
+  - **截断**：按最短列输出，多余的行丢弃
+- **跳过全空行**（默认开启）：某一行所有列都为空时不输出该行
+
+## 我的模板
+
+自己调好的配置可以存下来复用：
+
+- **另存为模板 / 更新到当前模板 / 删除模板**：按名字管理多套配置
+- **导出配置 / 导入配置**：导出 JSON 文件（含所有模板与当前设置），换设备或分享给同事时导入即可
+
+## 场景配方
+
+下表以第 1 列 = `Alice / Bob`、第 2 列 = `12 / 15` 为例，列出每种场景的完整四项配置。
+
+| 场景                 | 逐行模板                     | 行间连接符 | 整体前缀                                   | 整体后缀  | 输出                                                                       |
+| ------------------ | ------------------------ | ----- | -------------------------------------- | ----- | ------------------------------------------------------------------------ |
+| **CSV 行**          | `{1},{2}`                | `\n`  | —                                      | —     | `Alice,12` ⏎ `Bob,15`                                                    |
+| **Markdown 列表**    | `- {1}（{2}）`             | `\n`  | —                                      | —     | `- Alice（12）` ⏎ `- Bob（15）`                                              |
+| **Markdown 链接**    | `- [{1}]({2})`           | `\n`  | —                                      | —     | `- [Alice](12)` ⏎ `- [Bob](15)`                                          |
+| **SQL `IN (...)`** | `'{1}'`                  | `, `  | `IN (`                                 | `)`   | `IN ('Alice', 'Bob')`                                                    |
+| **SQL `INSERT`**   | `('{1}', {2})`           | `,\n` | `INSERT INTO t (name, score) VALUES\n` | `;`   | `INSERT INTO t (name, score) VALUES` ⏎ `('Alice', 12),` ⏎ `('Bob', 15);` |
+| **JSON 数组**        | `{"n": "{1}", "v": {2}}` | `,\n` | `[\n`                                  | `\n]` | `[` ⏎ `{"n": "Alice", "v": 12},` ⏎ `{"n": "Bob", "v": 15}` ⏎ `]`         |
+| **单列加引号**          | `"{1}"`                  | `,`   | —                                      | —     | `"Alice","Bob"`                                                          |
+| **批量改文件名**         | `mv {1} {2}`             | `\n`  | —                                      | —     | `mv Alice 12` ⏎ `mv Bob 15`                                              |
+
+以上大多有对应的一键预设（CSV / TSV / Markdown 列表 / Markdown 链接 / JSON 数组 / SQL IN / SQL VALUES / 引号 CSV），点一下即把四项配置填好，再按需微调。
+
+### 典型工作流
+
+- **表格数据入库**：Excel 复制多列 → 粘进任意列框自动拆列 → 点 **SQL VALUES** 预设 → 复制出完整 `INSERT` 语句
+- **给一批 ID 拼查询条件**：把 ID 列表粘进第 1 列 → 点 **SQL IN** 预设 → 直接粘进 `WHERE id IN (...)`
+- **给文档批量做外链列表**：标题一列、URL 一列 → **Markdown 链接** 预设 → 粘进 Markdown 文档
+- **单列批量格式化**：把「输入列数」调成 1，模板写 `{1} —— 已完成`，就是一个逐行加前后缀的工具
+- **与文本分割互为逆操作**：用 [文本分割](/guide/text/text-splitter.md) 把长文按符号切成多段 → 处理完再用本工具按模板拼回去
+
+工具完全在浏览器本地运行，**不上传任何数据**。
+
+
+
+---
+url: /guide/text/text-diff.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 文本对照
+
+[文本对照](https://tools.newzone.top/zh/text-diff)（Text Diff）是一款离线的双栏文本 / 文件比对工具。它不只是把差异标红，还会用一句话直接告诉你**第几行、第几个字段起不同**——省去在满屏红绿高亮里找起点的时间。
+
+![文本对照界面](/img/text-diff-zh.webp "文本对照使用界面")
+
+:::tip 30 秒上手
+
+1. 左右两栏分别粘贴文本，或直接拖入两个文件
+2. 看一眼顶部的格式识别结果（纯文本 / CSV / TSV / INI / JSON），不对就手动切
+3. 顶部横幅会直接写明**首处差异**的位置，点「跳转」定位
+4. 需要给别人时点「导出 diff」，得到可 `git apply` 的 `.patch`
+
+:::
+
+## 首处差异定位
+
+这是本工具与常规 diff 最大的区别：横幅用自然语言写清第一处差异在哪，措辞随格式变化：
+
+| 格式        | 提示样例                   |
+| --------- | ---------------------- |
+| CSV / TSV | 第 12 行，第 3 列「price」起不同 |
+| INI       | 第 8 行，键「timeout」的值不同   |
+| 纯文本       | 第 5 行，第 17 个字符起不同      |
+| 整行增删      | 第 20 行：B 中新增了一行        |
+
+配合「上一处 / 下一处」按钮可逐块跳转，顶部同时显示「第 i / 共 n 块」。
+
+## 格式识别
+
+工具按扩展名 + 内容双重判定，支持手动覆盖：
+
+- **纯文本**：逐行比对
+- **CSV / TSV**：先猜分隔符（`,` `\t` `;` `|` 中挑列数最稳定的一个），再按列比对，支持带引号字段与 `""` 转义
+- **INI**：按键值对比，直接告诉你哪个键的值变了
+- **JSON**：目前按文本行比对（顶部会有提示）
+
+## 比对选项
+
+- **忽略首尾空白**：忽略每行首尾空格造成的差异
+- **忽略大小写**：忽略字母大小写差异
+- **字符级比对**：在"修改"行内部再标出具体改了哪几个字符，默认关闭
+- **仅看差异**：折叠相同内容，只保留差异块
+- **上下文行数**：折叠时每处差异前后保留几行，可选「仅差异行」或前后 N 行
+
+## 视图与导航
+
+- **并排 / 行内**：双栏并排视图与统一的行内视图随时切换
+- **放大**：全屏铺满，长文件对比时用
+- **交换 A/B**：一键互换两侧内容
+- **折叠区展开**：相同内容折叠为「⋯ 隐藏 N 行相同（点击展开）」，需要时点开
+- **统计**：顶部显示相似度百分比、A/B 各自行数，以及「N 处差异 · X 改 / Y 增 / Z 删」
+
+## 性能保护
+
+两侧差异过大时，行级比对可能耗时很久。工具内置 **3 秒超时**：超时即停下并提示「比对已超时」，页面不会假死。确实需要完整结果时点「仍要比对」，此次强制运行不设超时上限。任何内容改动都会重新启用超时保护。
+
+## 编码识别
+
+上传文件时自动识别 UTF-8、GBK、Big5、UTF-16LE 等常见编码并显示识别结果，判断不准可手动切换重新解码。对比不同系统导出的 CSV、老项目里的 GBK 配置文件、Windows 日志时尤其有用。
+
+## 导出
+
+- **复制 A / 复制 B**：把某一侧内容复制走
+- **导出 diff**：生成标准 unified diff（`.patch`），可直接 `git apply`，或丢进代码评审工具。文件名默认取自右侧 B 的文件名
+
+## 常见用法
+
+- **核对配置改动**：两份 `.ini` / `.env` 拖进来，直接看哪个键的值变了
+- **表格数据比对**：两份导出的 CSV，按列定位到底是哪个字段被改动
+- **代码评审前自查**：本地改动与线上版本对比后导出 `.patch`
+- **翻译稿校对**：开「忽略首尾空白」比对修订前后的译文，只看实质改动
+
+工具完全在浏览器本地运行，**不上传任何数据**，可放心对比敏感配置与私有代码。
+
+
+
+---
+url: /guide/text/text-toolbox.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 多功能文本处理
+
+[多功能文本处理](https://tools.newzone.top/zh/text-toolbox)（Multi-Function Text Processor）把日常最常用的清洗、提取、格式化操作集中在一个页面上。它的核心不是"一堆按钮各点各的"，而是**操作目录 + 步骤链**：每点一个操作就往链尾加一步，链从上往下执行，上一步的输出就是下一步的输入，结果实时算出来。
+
+![多功能文本处理界面](/img/text-toolbox-zh.webp "多功能文本处理使用界面")
+
+## 这个工具能解决什么问题？
+
+- **提取特定内容**：从大段文本里找出网址、JSON 键名、特定模式的字段
+- **清理冗余信息**：删广告行、去引用残留、去空行、整行去重
+- **整理终端复制的文本**：去掉 Claude Code / 终端输出的引用竖线和硬折行，还原成可粘贴的整段
+- **批量格式化**：给每行加前缀后缀，转成 Markdown 列表、CSV、SQL `IN (...)`
+- **统一大小写**：全部大写 / 全部小写 / 词首大写 / 句首大写
+- **数据排序整理**：升降序、反转、相邻行交换
+- **多行并一行**：用任意连接符把一列内容接成单行
+- **多步组合任务**：先删行、再正则、最后加前后缀——一次点齐，链帮你跑完
+
+## 页面结构
+
+两栏布局。左栏自上而下：
+
+1. **原文**面板 —— 输入 / 上传 / 智能清理开关 / 清空
+2. **处理结果**面板 —— 只读结果，上方一行是步骤链的步骤标签
+3. **PRESET**（预设）—— 选择预设、存为预设、更新预设、删除预设
+4. **LINES**（逐行整理）—— 排序 / 重复行 / 删行 / 合并 / 每行加字
+5. **CASE**（大小写转换）—— 四个转换按钮
+
+右栏：
+
+- **REGEX**（正则引擎）—— 正则框、常用预设、匹配模式、替换、执行匹配 / 移除匹配内容 / 提取链接与互动数、配对提取
+- **FORMAT**（转换）—— 智能分段、格式化文本、命令行文本整理、JSON 美化、微博链接转换
+
+宽度不足 960px 时塌成单列。高频的行操作和大小写转换放在离结果最近的地方，更专项的正则与格式转换收进右栏，避免把结果区顶出屏幕。
+
+## 原文区
+
+- **粘贴**：直接把内容粘进「原文」框（占位提示「或在此输入、粘贴文本」）
+- **文件上传**：点面板头部的「点击或将文件拖拽至此上传」，支持 TXT、MD、JSON、CSV 等文本格式；上传后文件名显示为标签，可单独删除
+- **智能清理 / 原始模式**：面板头部的开关。开着时（默认）绝大多数操作执行前先剪掉每行首尾空格、跳过空行；关掉显示「原始模式」，保留原始行结构
+- **清空**：同时清掉输入内容与已上传文件，步骤链一起清空
+- 面板底部实时显示「字符 · 行」统计
+
+超过约 100 万字符时输入框转为只读并给出提示，但处理与导出仍按全文进行。
+
+## 步骤链
+
+链是这个工具的主干，理解它就没必要记按钮顺序：
+
+- **加一步 = 点一个操作按钮**。点下去的那一刻，控制台各输入框的当前值会被**快照**进这一步；之后再改输入框不会回头影响已经加好的步骤。
+- **执行顺序就是点击顺序**，从上往下。`evaluateChain` 从原文开始，每步的输出喂给下一步，所以链上连着点五步不等于要手动跑五遍。
+- **异步步骤串行等待**：「智能分段」和「微博链接转换」需要联网或分句，链会等它们算完再走下一步。
+- **原文永不被改写**：所有操作只读原文、写结果。
+- 链的可见形态是结果区上方一行步骤标签（chip），左边写「已应用 N 步」，右边有「清除步骤」。每个标签显示「操作名 · 参数摘要」，例如 `删行 · 广告,推广`、`每行加字 · 1000----`。
+- **点标签弹出该步的参数浮层**，改完立刻只影响这一步；标签右侧的 `×` 是「撤掉这一步」。
+- **没有拖拽排序**：想调顺序就 `×` 掉再按想要的次序重点一遍，或者点「结果 ➔ 原文」把当前结果变成新起点重做。
+- **校验不过就不入链**：比如「删掉这些行」在关键词为空时、正则为空或非法时，点了只弹提示，不会往链上加一步。
+- 链存在浏览器 localStorage 的 `text-toolbox-chain` 里，刷新后还在；读回时认不出的操作会被整条丢弃，缺的参数用出厂默认补齐。
+
+:::tip 什么时候用「结果 ➔ 原文」
+链是一次性的表达：调参数、删步骤都能改。只有当你想把当前结果当作**新的输入**、另起一串完全不同的处理时才用它——它会清空步骤链，把结果写回原文。
+:::
+
+## PRESET 预设
+
+预设就是**存下来的步骤链**（含每一步自己的参数），用来一键复用常见组合。
+
+- **选择预设**：下拉里每项第二行预览该预设的步骤序列（超过四步折成 `… +N`）
+- **存为预设**：链非空时可用，弹窗填「预设名称」后保存
+- **更新预设 / 删除预设**：只对你自己存的预设开放
+- 载入预设是**替换**当前链，不是追加
+- 链和你载入的预设不一致时，下拉会显示「已修改（原：某某）」提醒你还没存回去
+- 出厂内置三条，不可改不可删：
+  - **提取链接并倒序** —— 执行匹配（宽松 URL）› 反转顺序 › 合并为一行（连接符 `,`）
+  - **提取 URL 并去重排序** —— 执行匹配（严格 URL）› 去重 › 排序（升序）
+  - **HuggingFace 转 ModelScope** —— 执行替换：`https://huggingface.co` → `https://modelscope.cn/models`
+- 用户预设与当前选中项分别存在 localStorage 的 `text-toolbox-presets` 和 `text-toolbox-activePresetId`；**预设不支持导入导出**，换浏览器要重新组
+
+:::warning 改链之前先想清楚
+内置预设不可修改，是为了保证「别人写的链」不会在你手里悄悄变味。想改造它，载入后存成一个新名字，而不是覆盖。
+:::
+
+## LINES 逐行整理
+
+带标题写明这一带有什么：**逐行整理：排序 · 删行 · 去重 · 合并 · 加字**。每行左侧是参数、右侧是动词，整行读成「用这个条件 → 做这件事」。
+
+### 排序
+
+- **升序排列 / 降序排列**：按 Unicode 字符串顺序排序，按钮显示的是下一次会按哪个方向排，点一下翻转
+- **反转顺序**：行顺序前后颠倒
+- **相邻行交换**：两两交换相邻行。先删空行（剩下的行数必须是偶数，否则报错），交换后在每对之间插回一个空行。适用于数值在链接上一行、后面要接「提取链接与互动数」的场景
+
+### 删行
+
+一个条件框喂一个按钮：**删行 · \[匹配方式] · \[内容] → 删掉这些行**。
+
+- **匹配方式**（分段控件）：
+  - **含这些词**：行里出现任一关键词就删（子串匹配）
+  - **整行相同**：整行完全一样才删（忽略首尾空格）
+- **要删掉的内容**：多个条件用**逗号或换行**分隔（如 `广告,推广,群号`），内容本地保存
+- **删掉这些行**：命中删掉、其余保留，结果输出到结果区，不改原文
+
+### 去重
+
+- **去重**：整行相同的只保留第一条，保留空行
+- 它**不读上面「删行」的条件框**，所以单独占一行、不带输入框
+
+### 合并
+
+- **合并为一行**：把多行接成一行
+- **连接符**：用什么把各行连起来，**留空即直接相接**，支持 `\t`、`\n`、`\s`、`\\` 等转义字符
+- 例：连接符填 `, ` → 一列清单变成 `A, B, C`；填 `\t` → 变成可直接粘进 Excel 一行的制表符分隔串
+
+### 每行加字
+
+- **前缀**框：每行开头加的内容，出厂默认是 `1000----`（可直接清空）
+- **后缀**框：每行结尾加的内容，出厂默认为空
+- 这一行的按钮叫**应用**，「每行加字」是行标签
+- 示例：前缀 `- `、后缀空 → 纯文本一键转成 Markdown 列表
+- 示例：前缀 `'`、后缀 `',` → 字符串列表转成 SQL `IN (...)` 子句
+
+## CASE 大小写转换
+
+一个操作、四个快捷按钮，对全文逐行生效，不动空行与缩进：
+
+- **全部大写** / **全部小写**
+- **词首大写**：每个单词首字母大写（Title Case）
+- **句首大写**：每句首字母大写，其余转小写（Sentence case）
+
+## REGEX 正则引擎
+
+控件自上而下：
+
+- **正则输入框**（占位「输入正则表达式…」）：任意 JavaScript 正则，出厂默认是严格 URL 匹配
+- **常用预设**：四个标签，点一下填入对应正则并带上该预设需要的标志
+  - **URL（无参数）**：标准 `https://` 链接，不带尾部标点
+  - **URL（宽松匹配）**：兼容括号、分号等更多场景
+  - **去序号（.、）**：行首的 `1. `、`2、`、`3) `
+  - **提取 JSON 键名**：多行模式下抓所有键名
+- **匹配模式**：全局匹配 (g) / 多行模式 (m) / 忽略大小写 (i)，出厂只有 g 开着
+- **替换**：「替换为…」框 + **执行替换** 按钮。替换内容是**字面量**，不做 `$1` 分组引用
+- **执行匹配**：把命中内容逐行列出
+- **移除匹配内容**：删掉命中部分、其余保留，并把连续换行压到两个
+- **提取链接与互动数**：按 7 个**中文**指标词（点赞 / 转发 / 评论 / 播放 / 差 / 曝光 / 阅读）分组，每行输出「链接,数值」——只对含这些中文词的文本有效
+- **配对提取**：**提取并配对** 按钮 + 「配对正则」「模板」两个框。锚点用上方那个共用正则框（不再单独一个输入框），逐行取第一个匹配，再用配对正则在同一行的锚点之外抓取，按模板输出，`$0` 是锚点全文、`$1` 是配对捕获组；配对值全是数字时结果里另附合计
+
+## FORMAT 转换
+
+- **智能分段**：长文按段重排，旁边用分段控件选 **中文分段 / 英文分段**（英文用 `compromise` 识别句边界，中文走段落规则）
+- **格式化文本**：移除空行，并按「智能清理」开关决定是否 trim 每行首尾空格
+- **命令行文本整理**：专治从 Claude Code / 终端复制的文本——去掉行首引用竖线（`▎ ▌ │`）与缩进，把按终端宽度硬折的行合回整段（中文直接拼接、英文补单空格），列表项与代码块逐行保留。**这是唯一依赖空行的操作**，所以链上如果前面有会丢空行的步骤，点它时会当场提示「上一步已丢弃空行，本步无法按段落分段」
+- **JSON 美化**：宽容解析（未加引号的键、单引号、注释都认）+ 2 空格缩进重排
+- **微博链接转换**：把手机版微博（`m.weibo.cn`）链接批量转成 PC 端 `weibo.com` 链接并附博主主页。只含 uid 的链接可本地推导，详情页要联网解析 uid/bid；没解析出来的条目会在结果文本里逐条标注原因（链接不含 uid / 页面未匹配到 uid/bid / 网络请求失败 / 不是已识别的微博链接）
+
+:::tip 微博转换要联网
+「微博链接转换」的详情页解析需要发请求，因此较慢，链会等它跑完再走下一步。离线或网络受限时这一步会失败，链上其余步骤照常工作。「智能分段」不联网，它慢是因为要逐句判断边界。
+:::
+
+## 结果区
+
+- 标题是**处理结果**，永远只读（底部有锁标与「只读模式」说明）。想改内容就改原文或调步骤，而不是直接在结果里编辑
+- 链为空时，宽屏会显示一个空槽提示「点下方的操作，结果会出现在这里」
+- 三个动作从左到右：**结果 ➔ 原文**（把结果写回原文并清除步骤）、**复制**、**导出**（存为 `text-processed.txt`）
+- 底部同样显示「字符 · 行」统计
+
+## 使用建议
+
+- 先按**目标倒推顺序**：要「清洗后加前后缀」，就点 删行 → 去重 → 每行加字，别点完再加
+- 常用组合存成预设，下次一键载入；内置那三条直接可用
+- 处理重要数据前先用一小段试跑，看清每步标签上的参数摘要是否符合预期
+- 写不出正则时让 AI 帮忙：给需求、一段输入样例、期望输出
+- 组合任务优先用链，而不是反复点「结果 ➔ 原文」——后者会清掉步骤
+
+工具完全在浏览器本地运行，**不上传任何数据**（除「微博链接转换」需要联网解析），可放心处理敏感信息。
+
+
+
+---
+url: /guide/json/index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 工具集
+
+七款互补的 JSON 处理工具，覆盖从**读取** → **改值** → **加字段** → **跨数据集**的全流程。全部基于 JSONPath，可链式配合使用。
+
+## 如何选择
+
+| 我要做…                 | 用这个                                                                   |
+| -------------------- | --------------------------------------------------------------------- |
+| 从复杂 JSON 提取特定字段      | [**JSON Value Extractor**](/guide/json/json-value-extractor.md)       |
+| 批量加前后缀 / 替换 / 覆盖值    | [**JSON Node Edit**](/guide/json/json-node-edit.md)                   |
+| 在指定节点后插入新字段          | [**JSON Node Inserter**](/guide/json/json-node-inserter.md)           |
+| 排序 JSON 数组（可按字段分组）   | [**JSON Sort & Classify**](/guide/json/json-sort-classify.md)         |
+| 交换两个键的值              | [**JSON Value Swapper**](/guide/json/json-value-swapper.md)           |
+| 跨 JSON 字段拷贝 / 键映射重构  | [**JSON Value Transformer**](/guide/json/json-value-transformer.md)   |
+| 按 ID 字段同步两份 JSON 数据集 | [**JSON Match & Update**](/guide/json/json-match-update.md)           |
+| 把 i18n JSON 翻译成多语言   | [JSON Translate](/guide/translation/json-translate/index.md)（在翻译工具集里） |
+
+## 共同能力
+
+- **浏览器本地处理**：JSON 解析、JSONPath 查询、所有编辑操作都在本地完成，原文不上传服务器
+- **JSONPath 通用语法**：`$..title`、`$.products[*].name`、嵌套路径如 `zh.name`，七个工具语法一致
+- **大文件友好**：超大 JSON 直接拖文件进上传区，不必粘进文本框，几十 MB 也不卡浏览器
+- **链式使用**：先用 Extractor 取出关心的字段，再用 Node Edit 批量改，最后用 Sort & Classify 重排——一条流水线下来无需写脚本
+
+## 典型组合
+
+- **i18n 字典清洗**：Value Extractor 抽出所有 `title` 字段 → 翻译/审校 → Node Edit 覆盖回去
+- **产品库重排**：Sort & Classify 按品类分组 + 价格降序 → Node Edit 批量加促销前缀
+- **数据集同步**：从主数据库导出 JSON A、从 CRM 导出 JSON B → Match & Update 按 ID 把 B 的最新字段同步到 A
+
+
+
+---
+url: /guide/json/json-value-extractor.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 值提取器
+
+[JSON 值提取器](https://tools.newzone.top/zh/json-value-extractor) 使用 JSONPath 表达式从 JSON 数据中提取特定值。只需指定要提取的节点路径，并可选择为提取的值添加前缀和后缀。
+
+![JSON 值提取器界面](/img/json-value-extractor-zh.webp "JSON 值提取器使用界面")
+
+## 使用方法
+
+1. 上传 JSON 文件或在文本区域粘贴 JSON 内容
+2. 输入 JSONPath 表达式（无需包含开头的 $）来提取值
+   - 示例：`data.title` 提取 data 下的所有 title 值
+   - 示例：`messages[*].text` 提取所有消息中的文本
+3. 可选择为每个提取的值添加前缀和后缀文本
+   - 使用 `{value}` 作为占位符，在前缀/后缀中包含提取的值
+4. 点击"开始处理"提取值
+
+该工具支持提取字符串、数字和布尔值。如果尝试提取对象或数组，工具将显示错误消息并跳过该节点。
+
+对于大型 JSON 文件，用文件上传代替粘贴，可以更高效地处理大数据集。
+
+
+
+---
+url: /guide/json/json-node-edit.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 节点批量编辑
+
+[JSON 节点编辑器](https://tools.newzone.top/zh/json-node-edit) 可以批量查找 JSON 数据中的特定节点，并对其值进行编辑操作。你可以为找到的节点值添加前缀、后缀，或进行文本替换，还可以直接替换整个节点值或进行多语言替换等高级操作。
+
+![JSON 节点批量编辑界面](/img/json-node-edit-zh.webp "JSON 节点批量编辑使用界面")
+
+:::tip 30 秒上手
+
+1. 粘贴或上传 JSON 数据
+2. 在 **🔍 JSONPaths** 输入要改的节点路径（如 `title`、`zh.title,en.title`，逗号分隔多条）
+3. 选操作：**加前后缀** / **查找替换** / **直接替换值**
+4. 点 **开始处理** —— 所有匹配的节点会被批量改写
+
+:::
+
+## 功能概述
+
+- **批量编辑**：支持同时查找和编辑多个 JSON 节点（使用逗号分隔）
+- **复杂路径**：支持嵌套键名访问（如：`zh.title`）和 JSONPath 语法
+- **多种操作**：添加前缀、添加后缀、查找替换、替换节点的值
+- **语言代码转语言名**：读取路径中的语言代码，把「查找文本」替换为对应语言名称
+- **首字母大写**：可选择性地将节点值首字母自动大写
+- **文件操作**：支持文件上传、下载和剪贴板复制
+
+## 使用方法
+
+### 1. 输入 JSON 数据
+
+- 在左侧文本框中粘贴 JSON 数据，或
+- 使用拖放区域上传 JSON 或 TXT 文件
+
+### 2. 指定 JSONPath
+
+- 在 "🔍 JSONPaths" 输入框中输入要查找的节点路径
+- 多个路径使用逗号分隔，如：`title,description` 或 `zh.name,en.name`
+
+### 3. 配置编辑操作
+
+你可以选择以下任一或多个操作：
+
+- **添加前缀/后缀**：在节点值前/后添加特定文本
+- **查找替换**：搜索节点值中的特定文本并替换为新文本
+- **直接替换值**：将整个节点值替换为指定的新值
+
+### 4. 高级设置
+
+- **首字母大写**：自动将节点值首字母转为大写（仅适用于以小写字母开头的字符串）
+- **多语言替换**：根据节点路径中的语言代码（如：zh、en、ja），自动将查找文本替换为对应语言名称
+- **大文件友好**：大型 JSON 走文件上传，避免超大字符串渲染拖慢页面
+
+### 5. 执行并查看结果
+
+- 点击 "开始处理" 按钮应用编辑
+- 右侧显示处理后的 JSON 数据
+- 使用 "复制"、"复制节点" 或 "导出文件" 按钮保存结果
+
+## 使用技巧
+
+- 处理多语言 JSON 时，启用 "多语言替换" 功能，可自动将指定文本替换为路径中对应的语言名称
+- 使用「替换节点的值」可完全覆盖找到的节点值，忽略其他编辑操作
+- 处理大型 JSON 文件时，用文件上传代替粘贴，页面更流畅
+- 使用逗号分隔多个 JSONPath，可同时编辑多个不同位置的节点
+
+## 支持的语言代码
+
+工具支持在多语言替换模式下识别以下语言代码：中文 (zh)、英文 (en)、日文 (ja)、韩文 (ko)、西班牙语 (es)、法语 (fr)、德语 (de)、意大利语 (it)、俄语 (ru)、葡萄牙语 (pt)、印地语 (hi)、阿拉伯语 (ar)、孟加拉语 (bn)。
+
+
+
+---
+url: /guide/json/json-node-inserter.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 节点插入工具
+
+[JSON 节点插入工具](https://tools.newzone.top/zh/json-node-inserter) 是一个高效的数据结构优化工具，可在 JSON 文档中的指定节点后插入一个或多个新节点，使数据结构更加合理与高效。
+
+![JSON 节点插入工具界面](/img/json-node-inserter-zh.webp "JSON 节点插入工具使用界面")
+
+## 功能特点
+
+- 可在指定节点后精确插入多个新节点
+- 多节点插入支持逗号分隔（支持中英文逗号）
+- 批量插入节点，提高数据处理效率
+
+## 使用方法
+
+1. **输入 JSON 数据**
+   - 拖拽上传 JSON 或文本文件
+   - 或直接在文本框中粘贴 JSON 内容
+   - 对于大型 JSON 文件，改用文件上传而不是粘贴
+
+2. **设置插入参数**
+   - **目标节点**：输入要查找的节点名称（确定插入位置）
+   - **新节点**：输入要插入的节点名称，多个节点用逗号分隔
+
+3. **处理与导出**
+   - 点击"开始处理"按钮执行插入操作
+   - 处理结果将显示在下方文本区域
+   - 可选择复制完整结果、仅复制节点值或下载处理后的文件
+
+## 使用提示
+
+- 确保输入的 JSON 格式正确，否则将无法处理
+- 目标节点必须存在于 JSON 中，否则将提示错误
+- 新节点将按照输入顺序插入到目标节点后
+- 节点名称如为纯数字，将按数值大小自动排序并置于前面
+- 对于大型 JSON 文件，建议用文件上传代替粘贴，页面更流畅
+
+## 应用场景
+
+- 优化 JSON 配置文件结构
+- 调整 API 响应数据格式
+- 批量添加新属性到现有数据结构
+- 快速调整系统配置参数顺序
+
+
+
+---
+url: /guide/json/json-sort-classify.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 排序与分组
+
+[JSON 排序与分组](https://tools.newzone.top/zh/json-sort-classify) 把混乱的 JSON 数组按规则重排。核心是一套"单字段排序"策略；再外加一个可选的"按字段分组"包裹——**两者复用同一套排序策略，不用学两遍**。
+
+![JSON 排序与分组工具界面](/img/json-sort-classify-zh.webp "JSON 排序与分组工具使用界面")
+
+:::tip 30 秒上手
+
+1. 粘贴或上传 JSON 数组
+2. 选 **排序方式**（自定义顺序 / 数值升序 / 数值降序）
+3. 填 **排序字段**（按哪个 key 的值排，如 `name`、`price`）
+4. （可选）填 **分组字段** —— 想先分桶就填，否则留空对整数组排序
+5. 点 **处理** —— JSON 数组按规则重排
+
+:::
+
+## 工作方式
+
+**分组字段（可选）**
+
+- 留空：对整个数组做一次排序
+- 填写：按该字段把元素分桶（桶按"首次出现"顺序排列），组内再排序
+
+**排序方式 + 排序字段** 始终生效，无论是否分组。三种策略：
+
+| 策略    | 说明                                          |
+| ----- | ------------------------------------------- |
+| 自定义顺序 | 下方文本框按行写出期望顺序。**列表里没出现的值、以及空列表**，都会保持首次出现顺序 |
+| 数值升序  | 按 `排序字段` 的数值从小到大                            |
+| 数值降序  | 按 `排序字段` 的数值从大到小                            |
+
+## 示例一：单字段自定义排序
+
+```json
+[{ "name": "苹果" }, { "name": "香蕉" }, { "name": "橙子" }]
+```
+
+让顺序变为"香蕉、苹果、橙子"：
+
+- 分组字段：留空
+- 排序方式：自定义顺序
+- 排序字段：`name`
+- 自定义顺序：
+
+```
+香蕉
+苹果
+橙子
+```
+
+## 示例二：先分组，组内按数值升序
+
+```json
+[
+  { "type": "水果", "price": 5 },
+  { "type": "饮料", "price": 3 },
+  { "type": "水果", "price": 2 },
+  { "type": "饮料", "price": 8 }
+]
+```
+
+按 `type` 分组，组内按 `price` 从小到大：
+
+- 分组字段：`type`
+- 排序方式：数值升序
+- 排序字段：`price`
+
+结果：水果先出现所以排在前（price 升序），饮料在后（price 升序）。
+
+## 三种常见用法
+
+- **仅分组，不重排组内**：分组字段 = 类别键；策略选"自定义顺序"，自定义顺序留空 → 组内保持原始顺序。
+- **按字段分组再按另一字段排序**：分组字段 = 类别键；策略选数值升/降序，排序字段 = 数值键。
+- **全局自定义顺序**：分组字段留空；策略选"自定义顺序"，把期望顺序一行一个写进文本框。
+
+## 其他
+
+- **文件上传**：拖放 JSON 文件，免去复制粘贴。
+- **JSONPath**：字段输入支持嵌套路径（如 `zh.name`）。
+- **导出**：结果可直接复制或下载。
+
+
+
+---
+url: /guide/json/json-value-swapper.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 键值互换
+
+[JSON 键值互换工具](https://tools.newzone.top/zh/json-value-swapper) 可以自动交换 JSON 数组中两个指定键的值，让你的数据处理变得更加便捷。
+
+![JSON 键值互换工具界面](/img/json-value-swapper-zh.webp "JSON 键值互换工具使用界面")
+
+## 功能特点
+
+- 自动检测并显示 JSON 中所有可用的键名
+- 交换 JSON 数组对象中两个键的值
+
+## 使用步骤
+
+1. **输入 JSON 数据**：
+   - **上传文件**：将包含 JSON 数组的文件拖放到上传区域，或点击选择文件（支持 .json 和 .txt 格式）
+   - **粘贴数据**：直接在文本框中粘贴你的 JSON 数组数据
+
+2. **选择要交换的键**：
+   - 系统会自动分析你的数据并显示所有可用的键名
+   - 点击显示的键名按钮快速选择，或在输入框中手动输入"键 1"和"键 2"
+   - 这两个键的值将在处理过程中被互相交换
+
+3. **执行交换操作**：
+   - 点击"交换值"按钮处理数据
+   - 如果某些对象缺少指定的键，系统会显示提示信息
+
+4. **管理结果**：
+   - 交换完成后，结果将显示在下方区域
+   - 你可以：
+     - 复制完整结果到剪贴板
+     - 复制不带包装的 JSON 节点
+     - 导出为 JSON 文件，文件名会自动添加时间戳
+
+## 高级选项
+
+- **重置**：清除所有已上传文件、输入内容和结果
+- **大文件友好**：处理较大的 JSON 数据时改用文件上传，避免文本框渲染拖慢页面
+
+## 注意事项
+
+- 本工具仅支持交换 JSON 数组中对象的第一层键值，不支持嵌套对象中子键的交换
+- JSON 键名区分大小写，请确保输入正确的键名
+- 如果数组中的部分对象缺少指定的键，系统会继续处理并给出提示
+- 在处理重要数据前，建议先备份原始数据
+- 确保你的 JSON 格式正确，工具只能处理有效的 JSON 数据
+
+通过这个简单易用的工具，你可以快速交换 JSON 数组中的键值对，节省数据处理时间，提高工作效率。
+
+
+
+---
+url: /guide/json/json-value-transformer.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 键值映射工具
+
+## 功能概述
+
+[JSON 键值映射工具](https://tools.newzone.top/zh/json-value-transformer) 用于在 JSON 数据结构间执行值映射和转换操作。该工具允许用户定义键映射关系，将源 JSON 中特定路径的值复制到目标路径，同时保持 JSON 结构的完整性。
+
+![JSON 键值映射工具界面](/img/json-value-transformer-zh.webp "JSON 键值映射工具使用界面")
+
+### 主要应用场景
+
+- 多语言内容转换：将源语言内容复制到多个目标语言字段
+- 数据结构重组：在复杂 JSON 结构间迁移数据
+- 大规模 JSON 数据处理：支持处理大型 JSON 文件
+- JSON 路径映射：使用 JSONPath 语法进行精确数据定位
+
+## 使用指南
+
+### 基本操作流程
+
+1. **选择映射模式**
+   - 在配置卡片顶部的分段控件上选择"自定义映射"或"预设映射 · AIShort"
+   - 预设映射针对 AIShort 多语言处理进行了优化，选中后会直接列出所有 11 个目标键名
+
+2. **设置键映射关系**
+   - **自定义映射模式**：添加输入键和输出键对
+   - **预设映射模式**：自动加载默认的多语言映射配置（`en.prompt` 到多种语言）
+
+3. **提供源 JSON 数据**
+   - 在文本区域粘贴 JSON 内容
+   - 或通过拖放区域上传 `.json` 或 `.txt` 文件
+
+4. **执行转换**
+   - 点击"开始处理"按钮启动转换过程
+   - 系统会验证输入和输出键是否存在于 JSON 中
+
+5. **处理结果**
+   - 转换后的 JSON 将显示在结果区域
+   - 可以复制完整结果、复制特定节点或下载结果文件
+
+### 高级功能
+
+- **大文件友好**：超大 JSON 走文件上传处理
+- **文件上传**：支持拖放或选择文件上传
+- **结果管理**：
+  - 复制完整 JSON 结果
+  - 复制特定 JSON 节点
+  - 下载处理后的 JSON 文件
+
+## 键映射详解
+
+### 映射语法
+
+工具使用 JSONPath 语法定位 JSON 中的元素：
+
+- 使用点符号表示路径，如 `en.prompt`
+- 系统将查找指定路径的值，并将其复制到目标路径
+
+### 预设映射配置
+
+预设模式自动配置以下映射关系：
+
+- `en.prompt` → `ar.prompt` (阿拉伯语)
+- `en.prompt` → `bn.prompt` (孟加拉语)
+- `en.prompt` → `de.prompt` (德语)
+- `en.prompt` → `es.prompt` (西班牙语)
+- `en.prompt` → `fr.prompt` (法语)
+- `en.prompt` → `hi.prompt` (印地语)
+- `en.prompt` → `it.prompt` (意大利语)
+- `en.prompt` → `ja.prompt` (日语)
+- `en.prompt` → `ko.prompt` (韩语)
+- `en.prompt` → `pt.prompt` (葡萄牙语)
+- `en.prompt` → `ru.prompt` (俄语)
+
+## 注意事项
+
+1. **JSON 格式验证**
+   - 输入必须是有效的 JSON 格式
+   - 转换前会进行预处理和验证
+
+2. **键路径验证**
+   - 确保输入和输出键都存在于 JSON 中
+   - 系统会检查并提示无效键路径
+
+3. **错误处理机制**
+   - 输入为空时会显示错误提示
+   - JSON 格式无效时会提示错误
+   - 键不存在时会显示具体错误信息
+
+4. **性能考虑**
+   - 处理大型 JSON 时建议用文件上传代替粘贴
+   - 复杂的嵌套结构可能需要更长处理时间
+
+使用此工具可显著提高 JSON 数据结构间值转换的效率，特别适合多语言内容处理和复杂 JSON 重构场景。
+
+
+
+---
+url: /guide/json/json-match-update.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 数据匹配与更新工具
+
+[JSON 数据匹配工具](https://tools.newzone.top/zh/json-match-update) 通过 ID 字段把来源数据集的值同步到目标数据集对应字段中——常用于把外部更新的计数、评分等单条属性批量回填到主数据集。
+
+![JSON 数据匹配与更新工具界面](/img/json-match-update-zh.webp "JSON 数据匹配与更新工具使用界面")
+
+## 使用步骤
+
+1. **准备数据**：
+   - **原始数据**：包含需要更新的完整 JSON 数据集
+   - **目标数据**：包含计数值的 JSON 数据集
+
+2. **输入数据**：
+   - 在左侧文本框中粘贴或上传原始 JSON 数据
+   - 在右侧文本框中粘贴目标 JSON 数据（含计数值）
+   - 支持拖拽上传`.txt`或`.json`文件
+
+3. **配置匹配字段**：
+   - **匹配字段 · 源**（`源数据匹配字段`）：原始数据中的唯一标识字段（默认 `id`）
+   - **匹配字段 · 目标**（`目标数据匹配字段`）：目标数据中的对应 ID 字段（默认 `card_id`）
+   - **更新字段 · 源**（`源数据更新字段`）：原始数据中需要被更新的字段（默认 `weight`）
+   - **更新字段 · 目标**（`目标数据更新字段`）：目标数据中包含新值的字段（默认 `count`）
+
+4. **处理数据**：
+   - 点击"开始处理"按钮执行数据匹配与更新
+
+5. **处理结果**：
+   - 更新后的数据会显示在下方结果区域
+   - 可以复制完整结果、仅复制 JSON 节点内容或下载更新后的文件
+
+## 特殊规则
+
+- 若原始数据中某条目的中文标题 (`zh.title`) 包含"失效"字样，该条目的权重会被自动设为 0
+- 若目标数据中找不到原始数据某 ID 的对应项，该条目保持不变
+
+## 额外功能
+
+- **大文件友好**：处理较大数据集时改用文件上传，不要粘贴进文本框
+- **重置上传**：清除已上传的文件和文本框内容
+
+## 数据格式示例
+
+原始数据格式：
+
+```json
+[
+  {
+    "id": 12345,
+    "weight": 10,
+    "zh": {
+      "title": "示例标题"
+    }
+    // 其他字段...
+  }
+]
+```
+
+目标数据格式：
+
+```json
+[
+  {
+    "card_id": 12345,
+    "count": 25
+  }
+]
+```
+
+结果数据：
+
+```json
+[
+  {
+    "id": 12345,
+    "weight": 25, // 从 count 值更新
+    "zh": {
+      "title": "示例标题"
+    }
+    // 其他字段保持不变...
+  }
+]
+```
+
+
+
+---
+url: /index.md
+---
+
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Tools By AI Docs
+
+> Tools By AI 工具集的使用说明文档
+
+[阅读指南](/guide/) | [打开应用](https://tools.newzone.top/zh)
+
+## Features
+
+- 🤖 **AI 辅助编程**: 通过 AI 辅助编程，快速将创意转化为实用工具，提升开发效率和创新能力。
+- ⚙️ **可控流程定制**: 用户全程掌控每一步流程，确保工具开发精准符合预期需求。
+- 🧩 **工具化任务拆分**: 将复杂任务拆分为独立模块，便于逐步构建和优化各个功能组件。
+- 🛠️ **模块化组合**: 灵活组合各类功能模块，构建个性化工作流，实现多场景应用。
+- 🌐 **多语言无缝支持**: 支持多语言开发与互译，消除语言障碍，让全球用户都能轻松上手。
+- 🤝 **开源共享生态**: 倡导开源与共享，汇聚社区智慧，共同推动 AI 工具生态的持续发展。
+
+

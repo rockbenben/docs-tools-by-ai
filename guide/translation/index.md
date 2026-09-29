@@ -1,0 +1,38 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# 翻译工具
+
+一套面向开发者与内容创作者的免费翻译工具，按文件格式拆分成三个专用工具，每个都针对格式特性做了深度优化：
+
+- [**Subtitle Translator**](/guide/translation/subtitle-translator.md) — 字幕翻译（SRT / ASS / VTT / LRC），支持双语、按时间轴对齐
+- [**MD Translator**](/guide/translation/md-translator.md) — Markdown 翻译，保留代码块、LaTeX、FrontMatter 不被破坏
+- [**JSON Translate**](/guide/translation/json-translate.md) — JSON i18n 翻译，按 key 选择翻译范围，支持 key 映射
+
+## 共同能力
+
+三个工具共享同一套翻译引擎与设置面板，配置可互导：
+
+- **多 API 选择**：经典机器翻译 API + 大语言模型接口双轨，覆盖免费、商业、自托管三类需求（[详见接口对比](/guide/translation/api.md)）
+- **120+ 语言** + 多语言一次翻译：把英文字幕一次性翻成中、日、德、法
+- **本地缓存**：参数一致直接命中，刷新不丢、跨标签页共享
+- **上下文翻译**：字幕/文档带上下文一起送给 AI，保证连贯
+- **失败行重试**：LLM 输出格式异常时仅重译失败行，不重复扣费
+- **隐私优先**：所有 API Key 与设置仅存在本地浏览器，不上传服务器
+- **命令行入口**：`yarn cli` 与网页端共用同一条流水线，字幕 / Markdown / JSON 都能批量翻（[命令行翻译](/guide/translation/cli.md)）
+
+## 如何选择
+
+| 我要翻译……                      | 用这个工具                        |
+| --------------------------- | ---------------------------- |
+| YouTube / 影视字幕              | Subtitle Translator          |
+| GitHub README、技术博客          | MD Translator                |
+| `i18n.json` / `locale.json` | JSON Translate               |
+| 任意纯文本                       | MD Translator 的「格式模式 → 忽略格式」 |
+
+## 三步开始
+
+1. 选一个翻译 API 并填入 API Key（或直接用免费的 GTX）
+2. 设置源语言和目标语言
+3. 上传文件或粘贴文本，点击翻译
+
+详细功能与参数调优请见 [功能说明](/guide/translation/info.md)。

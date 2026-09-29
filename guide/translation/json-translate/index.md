@@ -1,0 +1,215 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 翻译工具｜i18n 多语言批量翻译与 JSONPath 精准定位
+
+:::tip 快速介绍
+JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、逐条翻译指定字段、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
+:::
+
+:::tip 30 秒上手
+
+1. 拖入或粘贴 JSON 文件
+2. 选 **翻译模式**：
+   - 全部 string 都翻 → **全局翻译**
+   - 只翻 `title` / `description` 等特定 key → **指定键名**
+   - 多语言 i18n 项目（每个对象添加目标语言字段）→ **i18n 模式**
+3. 选源/目标语言，点 **翻译** —— JSON 结构原样保留导出
+
+> JSON 翻译只支持单文件模式（不批量），适合精细处理。
+
+:::
+
+[JsonTranslate](https://tools.newzone.top/zh/json-translate)，一款专为开发者和内容创作者设计的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等大语言模型，助力项目国际化和本地化。无论你是在开发多语言网站、应用程序还是处理多语言数据集，JsonTranslate 都能提供简便的解决方案，轻松将 JSON 文件中的内容翻译为多种目标语言。
+
+![JSON Translate 工作流动画演示：拖入 JSON 文件、设置源/目标语言、一键批量翻译](/img/json-translate-zh.webp "JsonTranslate 使用示例")
+
+## 翻译模式说明
+
+### 全局翻译
+
+全局翻译会递归遍历整个 JSON 数据结构，对所有字符串类型的值进行翻译，同时保持原始 JSON 的层级与结构不变。
+
+**适用场景**：
+
+- 需要对整份 JSON 文件中的文本内容进行全面翻译
+- 无需复杂配置，一键翻译所有内容
+
+### 指定节点
+
+通过 JSONPath 表达式，精准定位一个或多个节点，仅翻译这些节点中的字符串内容。支持多个路径，用英文逗号分隔。
+
+**适用场景**：
+
+- JSON 数据具有清晰的层级结构，仅需翻译特定部分
+- 针对大型 JSON 文件，缩小翻译范围提高效率
+
+### 指定键名
+
+在此模式下，你可以指定特定的键名进行翻译。支持两种输入方式：
+
+- **简单模式**：直接在输入框中通过逗号（中英文均可）分隔需要翻译的键名，程序会将这些键的内容进行翻译。
+- **高级模式**：通过键名映射组件设置输入键与输出键的对应关系，翻译结果将写入新字段中，保留原字段不变。
+
+**适用场景**：
+
+- 仅需翻译特定字段，例如 `title`、`description` 等
+- 需要将翻译结果输出到不同字段，避免覆盖原数据
+
+**注意事项**：
+
+- 键名区分大小写。
+- 输入键与输出键数量须一致；映射会自动忽略不存在的键。至少需有一个有效映射才会执行翻译。
+- 纯数字键可能与数组索引冲突——该问题已修复，但建议尽量避免仅由数字组成的键名以减少歧义。
+- 含点（.）的键名会被误解析为嵌套路径，建议使用不含点的键名或改用替代命名。
+
+### 逐条翻译指定字段
+
+把 JSON 当成一张「条目列表」来处理：逐个条目取出同一个字段翻译，其余字段原样保留。
+
+**结构要求**：JSON 必须&#x662F;**「条目 → 对象」两层结构**，即顶层每个键对应一个对象，字段在对象里。例如：
+
+```json
+{
+  "fetchError": { "message": "Request failed", "code": 500 },
+  "authError": { "message": "Invalid token", "code": 401 }
+}
+```
+
+配置「待翻译字段」= `message`，就只翻两条的 `message`，`code` 不动。
+
+**配置项**：
+
+- **起始键**：(可选) 从这个条目开始翻译，留空则从第一条开始。适用于键顺序有意义、只想翻后半部分的场景
+- **待翻译字段**：取每个条目里的这个字段翻译，**多个字段用逗号分隔**。注意：列出的字段只要有一个在所有条目里都找不到（或不是字符串值），整次翻译会直接报错中止，而不是跳过该字段
+
+**适用场景**：
+
+- 日志 / 错误信息文件，只翻每条的 `message`，保留 `code`、`level` 等元数据
+- 条目结构统一、但只有一个字段需要本地化的配置文件
+
+### i18n 模式
+
+i18n 模式专为多语言场景设计，能在原有 JSON 结构中聚合多语言的字段内容。适合用于构建多语言网站或应用的翻译文件，或管理统一结构下的多语言配置。
+
+#### 工作原理
+
+- 使用选择的源语言作为源字段，比如源语言为 `zh`，源字段就是 `zh`。当源语言为 `auto` 时，源字段则为默认的 `en`。
+- 遍历 JSON 中所有包含源语言字段的对象，为每个对象新增目标语言字段（与源语言字段同级）。
+- 若目标语言字段已存在，则跳过翻译，避免覆盖已有内容。
+- 当同时启用 i18n 模式和多语言模式时，系统将创建一个包含源语言和所有目标语言的统一 JSON 结构，这对国际化项目特别有用。
+
+#### 示例
+
+```json
+{
+  "title": {
+    "en": "Settings"
+  }
+}
+```
+
+目标语言设定为 `zh`、`fr`，翻译结果：
+
+```json
+{
+  "title": {
+    "en": "Settings",
+    "zh": "设置",
+    "fr": "Paramètres"
+  }
+}
+```
+
+## 功能介绍
+
+### 映射翻译
+
+在使用指定键名模式时，你可以通过结果区的切换按钮，在单一键名模式和映射翻译模式之间切换。单一键名模式下，翻译的输入输出使用相同节点，而映射翻译模式则涉及不同节点的翻译。例如，节点 A 的值将翻译至节点 B，节点 C 的值翻译至节点 D。
+
+![JSON Translate 键映射模式截图：通过 source-target key 配对实现字段级精准翻译](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "映射翻译示例")
+
+### 如何使用 JSON 键名
+
+JSON 数据是以键值对的形式存储的，其中“键”（也称为“名称”）是一个字符串，用于唯一标识数据记录中的特定项目或元素，是数据检索和操作的基础。JsonTranslate 正是利用了 JSON 键名的标识作用来实现精准化识别翻译。
+
+以下是对示例中的几个键名的解释：
+
+- `downvote.message`：这是一个嵌套的键名。`downvote` 是外层对象的键名，而 `message` 是 `downvote` 对象内部的一个键名。
+- `提示词.message`：这里 `提示词` 是一个键名，它本身包含一个对象，该对象有一个键 `message`。
+- `share.owner`：这个键名包含了一个点（`.`），它是一个单独的键名而不是指示嵌套关系。在这种情况下，如果你想访问 `share.owner` 对象中的 `name`，你不能使用 `share.owner.name`，因为这会被错误解释为查找一个名为 `owner` 的对象内的 `name` 键，而实际上 `share.owner` 是一个完整的键名。
+
+```json
+{
+  "downvote": {
+    "message": "Downvote"
+  },
+  "提示词": {
+    "message": "prompt"
+  },
+  "share.owner": {
+    "name": "rabbit"
+  },
+  "data": {
+    "title": {
+      "id": "001",
+      "name": "cabbages"
+    }
+  },
+  "content": [
+    {
+      "id": "001",
+      "value": "Hello, cabbage."
+    },
+    {
+      "id": "002",
+      "value": "Hello, Radish."
+    }
+  ]
+}
+```
+
+目前，JsonTranslate 无法处理包含点（`.`）的 JSON 键名。这是因为点号在 JSONPath 中用于区分嵌套对象的键名，使得含点的键名可能被误解为多层嵌套对象。为避免这一问题，建议使用不含点的键名。
+
+## 常见问题
+
+### 这个 JSON 翻译工具支持哪些翻译引擎和文件大小？
+
+浏览器端运行的 JSON 国际化翻译工具，原文不经服务器、API Key 仅存本地 localStorage。支持全部翻译接口：Google 免费版（零配置）、DeepSeek、Claude、GPT、Gemini、DeepL、Azure、Qwen-MT，以及任何 OpenAI 兼容端点（Ollama / LM Studio / vLLM 自部署）。提供全局、指定节点（JSONPath）、指定键名、逐条翻译指定字段、i18n 多语言聚合 5 种模式；IndexedDB 缓存做增量翻译，只重译变动的 Key，长 JSON 不重复消耗 token。
+
+### 翻译 JSON 用机器翻译还是 AI 大模型？怎么选最合适？
+
+按 JSON 值长度选：短 UI 文案（按钮、菜单项、错误提示）用机器翻译够用——**Google 免费版** 零成本（限单条 5000 字符）；长文本（产品描述、教程）建议 AI 大模型——**DeepSeek** 性价比首选、**Claude Sonnet** 术语一致性最稳，可在「系统提示词」加术语保留表保护品牌名、SKU、API 术语。完整引擎对比见 [接口指南](/guide/translation/api.md)，配置在三个翻译工具间共享。
+
+### 支持 next-intl、i18next、vue-i18n、react-intl 这些 i18n 框架的 JSON 格式吗？
+
+全部支持。next-intl 和 vue-i18n 的嵌套对象结构、i18next 的扁平 key 命名空间、react-intl 的 ICU MessageFormat 占位符都能正确处理。`{name}`、`{count, plural, ...}`、`{0}` 等占位符在翻译时会被保留不会被改写。建议用「指定键名」模式只翻译值不动 Key，或用「i18n 模式」直接在原 JSON 上聚合多语言（如 `{en: "Settings", zh: "设置"}` 结构）。
+
+### 怎么把 JSON 一次翻译成多种语言？
+
+开启「多语言模式」后可同时选择多个目标语言，一次操作即可批量生成 en.json、ja.json、ko.json 等多语言文件，大幅节省国际化工作时间。
+
+### 用 JSONPath 怎么只翻译特定节点？比如只翻译商品名字段。
+
+「指定节点」模式接受标准 JSONPath 表达式：`$.products[*].name` 翻译所有商品的 name 字段，`$..title` 递归翻译所有 title 字段，多个路径用英文逗号分隔。配合「指定键名」的高级映射模式，还可以把翻译结果写入新字段（如 `name` → `name_zh`）而保留原文。注意：键名含点（.）会被误认为嵌套路径，建议避免。
+
+### JSON 翻译后键名和嵌套结构会乱吗？
+
+不会。工具只翻译值内容，键名、嵌套层级、数组结构全部原样保留，翻译后的 JSON 可直接用于 React、Vue 等前端 i18n 项目。
+
+### 翻译的不是 i18n JSON，是 Markdown 或字幕文件怎么办？
+
+Markdown 文档（.md、.mdx）请用 [Markdown 翻译](/guide/translation/md-translator/index.md)，会保留代码块、LaTeX 公式和 Front Matter 元数据；字幕文件（SRT/ASS/VTT/LRC）请用 [字幕翻译器](/guide/translation/subtitle-translator/index.md)，保留时间轴和 ASS 样式标签。三个翻译工具共享同一套引擎配置和翻译缓存，跨工具切换无需重新设置。
+
+### JSON 内容会上传到服务器吗？大文件会不会泄露隐私？
+
+完全前端处理：文件读取、解析、翻译请求都在浏览器内完成，原文不经过我们的服务器存储。LLM 引擎的请求直接从你的浏览器发往你配置的 API 端点（OpenAI、DeepSeek 等），API Key 仅保存在本地 localStorage。翻译缓存使用浏览器 IndexedDB，关闭页面也保留。
+
+JSON 工具的 IndexedDB 缓存还支持构建间增量更新——只有改动过的 Key 会重新调用 API，节省成本。源代码开源于 [rockbenben/json-translate](https://github.com/rockbenben/json-translate)，可自部署或审查实现。
+
+## 配置说明
+
+应用提供了丰富的翻译配置选项，详细信息请参考：
+
+- [功能说明](/guide/translation/info.md)：翻译缓存、多语言翻译等功能，配置分块大小、延迟时间等参数
+- [翻译接口指南](/guide/translation/api.md)：了解支持的翻译接口和 AI 大模型
+- [常见问题](/guide/translation/faq.md)：API Key 配置、本地模型连接、翻译速度等高频问答

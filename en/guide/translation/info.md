@@ -1,0 +1,218 @@
+> For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
+
+# Feature Guide
+
+## Core Features
+
+### Translate Once, Output Many
+
+Translate the same file into multiple languages in a single run — perfect for multilingual subtitles or i18n projects. For example, translate an English subtitle file into Chinese, Japanese, German, and French at once and download all versions packaged. 120+ languages supported, with more added regularly.
+
+### Translation Cache
+
+Translation results are saved locally in your browser. When parameters match, the tool returns the cached result and skips the API call:
+
+- **Persistent**: survives refreshes and browser restarts
+- **High capacity**: holds millions of records without bloating memory
+- **Toggle off**: disable temporarily when debugging prompts or model settings
+- **One-click clear**: clean up everything from the settings panel
+- **Hit conditions**: source text + source/target language + service-specific key params must all match (LLMs key off prompt/temperature/thinking effort; Qwen-MT off `domains`; traditional MT only off the source text). Changing temperature, editing prompts, toggling thinking, or editing glossary terms will miss the cache.
+
+### Glossary
+
+Pin fixed translations for names and domain terms so they stay consistent across a whole file — or a whole series. Character names in episode subtitles and product terms in technical docs stop drifting between runs.
+
+**Where to enable**: the "Glossary" card in the translation settings panel (shown only when the selected service supports it). A glossary status chip next to the API status badge on the main page shows the on/off state and term count — click it to jump to settings. Turning the switch on creates a default glossary automatically if you don't have one yet.
+
+**Managing terms**:
+
+- Each term = **source word → required translation**, bound to one **target language** — the same word can carry a different translation per target language, and only the current target language's terms apply
+- Click "Edit terms" to open the editor: inline add/edit/delete, search filtering, duplicate-source warnings, automatic pagination past 50 terms
+- **TSV bulk import/export**: one term per line as `source ⇥ translation` (tab-separated, pastes straight from Excel / any spreadsheet); an optional third column takes a target language code (`zh`, `ja`, …) so one file can import terms for several languages
+- Multiple glossary **presets** (e.g. one per show / project) with create, rename, delete — included in settings import/export
+
+**How terms are enforced** (multiple layers):
+
+1. **LLM services**: only the terms actually present in the current text are injected into the system prompt (no token waste from shipping hundreds of terms with every request)
+2. **Qwen-MT**: terms go through the official native `translation_options.terms` parameter — the most reliable channel
+3. **Violation retry**: if an LLM translation ignores a required term, the offending line is retried once with a stricter instruction, and the version with fewer violations wins
+4. **Post-hoc replacement net**: on every service, source words left untranslated in the output are replaced per the glossary (word boundaries for Latin terms, substring matching for CJK, longest term first) — so terms always land
+
+**Service support**: all LLM services + Qwen-MT. Plain MT APIs (GTX, Google, DeepL(X), Azure, TranslateGemma, MiLMMT) have no in-model term channel, so the glossary card is hidden for them.
+
+**Matching**: case-insensitive (`AI` and `ai` both match). Glossary data lives in your browser's local storage and is never uploaded.
+
+### Long Text & Concurrency
+
+Tuned for large documents and batch jobs:
+
+- **Concurrency control**: customize request rate — max out paid APIs or throttle free ones to avoid bans
+- **Streaming for large files**: chunk-based handling keeps the UI responsive
+- **Context-aware translation**: subtitles and documents get sent with surrounding context so the AI understands flow
+- **Per-line retry**: failed lines are tracked separately; the rest of the batch isn't blocked
+
+### Failed-Line Retry
+
+LLMs occasionally drop a line, return an empty response, or break formatting. When that happens:
+
+- Failed lines automatically **fall back to the original text** — never empty, so the output is always usable
+- A red alert at the top of the result panel says how many lines failed
+- Click **Retry failed lines** to reissue only those — completed content stays as-is and isn't re-billed
+- A copy button lets you grab the failed source rows for manual handling elsewhere
+
+**Multi-language batch mode**: when translating into multiple targets at once, if a whole target language fails (quota exhausted, model refusal, etc.), the failing language codes get aggregated into a dedicated panel. One-click copy them back into the "target languages" field to retry.
+
+> Network blips, 429 rate-limits, and 5xx errors retry automatically. Bad API key, timeouts, context-length-exceeded, and max_tokens truncation never retry. See [FAQ → Will failed translations retry?](/en/guide/translation/faq.md#will-failed-translations-retry-automatically-whats-not-retried) for the full list.
+
+### Cancel and the run-time settings lock
+
+While a translation runs, an **inline progress bar** sits above the result area (lines done / total, current language, current file) with a **Cancel** button on its right:
+
+- Cancelling **settles within a second** and the bar switches to "Stopped" — it doesn't just walk away
+- Every finished line is already in the cache, so clicking "Translate" again resumes from where you stopped and never bills twice — **the cache is the checkpoint**
+- **Settings and inputs are locked while running**: languages, provider, prompts, export format, advanced options, the upload area and the source textarea are all frozen. The whole run executes against the snapshot taken when you clicked "Translate": changing a setting mid-run structurally cannot affect the current run (yet the control would flip, so the UI would be lying), while swapping files or editing the source text mid-run genuinely **corrupts the result** (it clears the output being written, or leaves you exporting new source with old translations). Cancel first, change, translate again — the cost of doing so is now near zero
+- **Read-only actions stay available**: extract plain text, copy, and export work at any time
+
+### RTL Language Auto-Adaptation
+
+Right-to-left languages (Arabic, Hebrew, Persian, Urdu) automatically render right-to-left in the textarea and result view — no manual configuration. Direction is resolved **per line**: in a file mixing Chinese, English and Arabic, each line is laid out by its own first strong-direction character, so an RTL line never inherits the block's LTR direction and end up with its punctuation on the wrong side.
+
+For bilingual ASS export, Persian (fa), Urdu (ur), Pashto (ps), Dari (prs), Sorani Kurdish (ckb) and Uyghur (ug) are all registered as Arabic-script, so pairing them with Chinese no longer assigns a Chinese font that has no Arabic glyphs (which exports a screen full of tofu boxes); Hebrew is its own script bucket. The ASS style drawer's preview also shows a sample sentence in the target script.
+
+***
+
+## Usage Modes
+
+### Batch vs. Single-File
+
+The tool switches modes based on what you upload:
+
+- **Batch mode** (default): drop multiple files, they queue up automatically and download as a bundle when done.
+- **Single-file mode**: upload one file or paste text — review line-by-line, edit before exporting.
+
+Advanced settings let you lock to single-file mode if you prefer.
+
+:::tip
+JSON Translate is single-file mode only.
+:::
+
+### One-Click Source/Target Swap
+
+A **⇄** button sits between the source and target language dropdowns — click to swap them. The button greys out when the source is "Auto-detect" or when multi-language mode is on (you can't swap "auto" or against multiple targets).
+
+### Language Picker
+
+All target languages are grouped by geography + speaker count (Common / Europe / Middle East / Central Asia / South Asia / Southeast Asia / Africa / Americas & Oceania) so you can find what you need fast. Multi-language mode adds four quick-preset buttons that merge-select common bundles:
+
+- **Global Top 10**: the 10 most-spoken languages (English, Chinese, Spanish, French, Japanese, Portuguese, German, Russian, Hindi, Arabic)
+- **European mainstream**: French, German, Italian, Spanish, Portuguese, Dutch, Polish, and other commercial European languages
+- **East Asian**: Chinese (Simplified + Traditional), Japanese, Korean, Cantonese
+- **Indian subcontinent**: Hindi, Bengali, Tamil, Marathi, Gujarati, and other major South Asian languages
+
+In single-language mode the tool also remembers your last 5 picks and surfaces them in a "Recent" group at the top of the dropdown. The mobile layout collapses to a single column automatically.
+
+### API Connection Status
+
+The badge at the top of the main page tells you the current API's status at a glance:
+
+- **Not configured / Needs config**: URL or API key missing
+- **Configured**: filled in but not yet tested
+- **Testing** → **✓ Connected** or **Connection failed**: test results
+- **Free API**: free, no-config services (GTX / Edge / DeepLX)
+
+Click the badge to jump to the API settings panel.
+
+### Presets: API Config, Prompts, and Glossaries, Separately
+
+API configs, prompts, and glossaries are stored as three independent preset types so they combine freely:
+
+- **API presets**: snapshot the current service's URL, key, model, temperature, etc. Useful for switching between local Ollama, a remote gateway, and a paid cloud endpoint.
+- **Prompt presets**: snapshot the system + user prompts. Switch between a "strict terminology" prompt and a "creative paraphrase" prompt without touching the API config.
+- **Glossary presets**: maintain separate term bases per show / project — see [Glossary](#glossary) above.
+
+All three types support add / load / rename / update / delete, and travel with settings import/export.
+
+### Post-Translation Cleanup
+
+After translation, the tool can automatically apply simple string replacements:
+
+- **Character filtering**: strip stray symbols like `♪ ♫` from subtitles
+- **Format cleanup**: remove leftover HTML tags
+
+:::tip
+This feature does plain string replacement only — no escape sequences (`\n`, `\t` etc.). Use the Text Splitter for richer transformations.
+:::
+
+### Export to a chosen folder
+
+Exports go to your browser's download folder by default. Browsers with the File System Access API (Chrome / Edge) show an **Export folder** button in the results area: pick a folder once and every export lands there; **Back to the download folder** returns to the default.
+
+- The browser won't accept the Desktop, Documents, Downloads or user folder itself as the target — pick a subfolder or any other folder
+- Firefox and Safari don't expose the API, so the button never appears and exports keep using the default download folder
+
+***
+
+## Advanced Settings
+
+### Settings Import/Export
+
+One-click backup of every configuration: API credentials, model parameters, API presets, Prompt presets, glossaries. The exported JSON imports across devices, ideal for team sharing or moving to a new machine.
+
+### General Options
+
+- **Use translation cache**: enabled by default. Reads cached results when parameters match. Disable temporarily while debugging.
+- **Retry count**: maximum retries on failure. Bump it up on shaky networks or rate-limited free endpoints.
+- **Timeout**: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.
+- **Max tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
+- **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
+- **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `_{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}_{lang}.{ext}`, or combinations like `{name}_{lang}_{date}.{ext}`.
+
+### API Parameter Tuning
+
+#### Chunk size
+
+Non-LLM APIs (Google / Azure) split long text into chunks before sending. **Chunk size** is the per-chunk character cap. Common limits:
+
+| API                  | Max characters per request |
+| :------------------- | :------------------------- |
+| DeepL API            | 128,000                    |
+| DeepLX Free          | 1,000                      |
+| Azure Translate      | 10,000                     |
+| Google Translate Web | 5,000                      |
+| Google Cloud API     | 30,000                     |
+
+> ⚠️ Google Translate Web breaks line breaks, so chunking is disabled there.
+
+#### Delay (ms)
+
+The cooldown between chunked requests. Increase on poor networks or free APIs. For example, Azure Translate Free Tier works best at **5000 ms** or higher.
+
+#### Concurrent lines
+
+The max number of lines translated in parallel. **The default is already tuned per service** — free APIs run fast, paid APIs default to safe. Bump it up if you want speed, drop it on 429 rate-limits, otherwise leave it alone.
+
+
+Defaults per service (reference)
+
+- GTX (Free): translates in batched chunks (\~5000 chars/block), not line-by-line concurrency
+- Edge (Free): 100
+- Commercial MT (Google / Azure / DeepL): 20-100
+- Cloud LLMs (Claude / Gemini / OpenAI / Qwen, etc.): 20
+- Custom local LLM / TranslateGemma / MiLMMT / DeepLX: 10
+
+#### Context mode concurrency
+
+- **Default**: 3 (1 for some providers)
+- **What it does**: in context-aware mode, how many "target lines" go into a single request. Each request also carries the surrounding context.
+- **Trade-off**: larger values give higher throughput but force the model to emit more lines per response, raising the chance of formatting drift. Smaller values are steadier but use more requests. Stick with 3 for documents/subtitles, push to 5 for plain text.
+
+#### Context lines
+
+How many surrounding lines accompany each batch sent to the model — more = more coherent, but heavier requests. **The default is tuned**, normally no need to change. Drop it if you hit "context length exceeded"; raise it for better dialogue flow.
+
+
+Defaults per service (reference)
+
+- Cloud LLMs (Claude / Gemini / Nvidia / Azure OpenAI, …): 50
+- Custom local LLM: 30 (models under 14B tend to drop lines in long batches, hence the smaller default)
+Earlier versions defaulted cloud LLMs to 100. In practice an over-long context made models more likely to treat context lines as content to translate, shifting the output by a line, so the default was lowered to 50.

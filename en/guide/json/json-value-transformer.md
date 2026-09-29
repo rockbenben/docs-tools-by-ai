@@ -1,0 +1,95 @@
+> For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
+
+# JSON Key-Value Mapping Tool
+
+## Functionality Overview
+
+The [JSON Key-Value Mapping Tool](https://tools.newzone.top/en/json-value-transformer) is used for performing value mapping and transformation operations between JSON data structures. This tool allows users to define key mapping relationships, copy values from specific paths in the source JSON to target paths, while maintaining the integrity of the JSON structure.
+
+![JSON Value Mapper Interface](/img/json-value-transformer-en.webp "JSON Value Mapper Interface")
+
+### Main Application Scenarios
+
+- Multilingual content conversion: Copy source language content to multiple target language fields
+- Data structure reorganization: Migrate data between complex JSON structures
+- Large-scale JSON data processing: Support for processing large JSON files
+- JSON path mapping: Use JSONPath syntax for precise data location
+
+## User Guide
+
+### Basic Operation Process
+
+1. **Select Mapping Mode**
+   - Pick "Custom Mapping" or "Preset Mapping · AIShort" from the segmented control at the top of the Configuration card
+   - Preset mapping is optimized for AIShort multilingual processing; when selected, the 11 target keys render inline
+
+2. **Set Key Mapping Relationships**
+   - **Custom Mapping Mode**: Add input key and output key pairs
+   - **Preset Mapping Mode**: Automatically load default multilingual mapping configuration (`en.prompt` to multiple languages)
+
+3. **Provide Source JSON Data**
+   - Paste JSON content in the text area
+   - Or upload `.json` or `.txt` files through the drop zone
+
+4. **Execute Conversion**
+   - Click the "Start Processing" button to initiate the conversion process
+   - The system will verify whether input and output keys exist in the JSON
+
+5. **Process Results**
+   - Converted JSON will be displayed in the results area
+   - You can copy the complete result, copy specific nodes, or download the result file
+
+### Advanced Features
+
+- **Large-file friendly**: upload extremely large JSON instead of pasting it
+- **File Upload**: Support for drag-and-drop or file selection upload
+- **Result Management**:
+  - Copy complete JSON result
+  - Copy specific JSON nodes
+  - Download processed JSON file
+
+## Key Mapping Explained
+
+### Mapping Syntax
+
+The tool uses JSONPath syntax to locate elements in JSON:
+
+- Use dot notation to represent paths, such as `en.prompt`
+- The system will find the value at the specified path and copy it to the target path
+
+### Preset Mapping Configuration
+
+Preset mode automatically configures the following mapping relationships:
+
+- `en.prompt` → `ar.prompt` (Arabic)
+- `en.prompt` → `bn.prompt` (Bengali)
+- `en.prompt` → `de.prompt` (German)
+- `en.prompt` → `es.prompt` (Spanish)
+- `en.prompt` → `fr.prompt` (French)
+- `en.prompt` → `hi.prompt` (Hindi)
+- `en.prompt` → `it.prompt` (Italian)
+- `en.prompt` → `ja.prompt` (Japanese)
+- `en.prompt` → `ko.prompt` (Korean)
+- `en.prompt` → `pt.prompt` (Portuguese)
+- `en.prompt` → `ru.prompt` (Russian)
+
+## Important Notes
+
+1. **JSON Format Validation**
+   - Input must be valid JSON format
+   - Preprocessing and validation occur before conversion
+
+2. **Key Path Validation**
+   - Ensure both input and output keys exist in the JSON
+   - The system will check and prompt for invalid key paths
+
+3. **Error Handling Mechanisms**
+   - Error prompts will display when input is empty
+   - Error notifications for invalid JSON format
+   - Specific error messages when keys don't exist
+
+4. **Performance Considerations**
+   - Upload the file instead of pasting when processing large JSON files
+   - Complex nested structures may require longer processing time
+
+Using this tool can significantly improve the efficiency of value conversion between JSON data structures, particularly suited for multilingual content processing and complex JSON restructuring scenarios.

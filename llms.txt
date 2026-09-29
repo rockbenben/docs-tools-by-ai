@@ -3,15 +3,15 @@
 ## 指南
 
 - [Tools By AI](/guide/index.md): Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆盖字幕翻译、Markdown 翻译、i18n JSON 处理、文本清洗等开发与办公场景，浏览器本地运行，原文不上传服务器。
-- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持 26 种大模型接口与 9 种翻译 API，120+ 语言批量翻译。
-- [字幕翻译器使用指南](/guide/translation/subtitle-translator/index.md): 免费在线字幕翻译工具：批量处理 SRT、ASS/SSA、VTT、LRC、SBV 六种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 35 种翻译引擎，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
+- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持大语言模型接口与经典机器翻译 API，120+ 语言批量翻译。
+- [字幕翻译器使用指南](/guide/translation/subtitle-translator/index.md): 免费在线字幕翻译工具：批量处理 SRT、ASS/SSA、VTT、LRC、SBV 六种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等全部翻译接口，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
 - [Subtitle Translator 部署](/guide/translation/subtitle-translator/deploy.md): 字幕翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [Markdown 翻译工具使用指南](/guide/translation/md-translator/index.md): 免费 Markdown 文档翻译工具：智能保留代码块、LaTeX 公式、链接、表格与 Front Matter 元数据。支持 DeepSeek、Claude、GPT、Gemini 等 AI 引擎批量翻译，一键发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus 等博客和文档站。
 - [MD Translator 部署](/guide/translation/md-translator/deploy.md): Markdown 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
-- [JSON 翻译工具使用指南](/guide/translation/json-translate/index.md): 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等 35 种引擎，覆盖 120+ 语言。提供全局翻译、JSONPath 节点定位、指定键名、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
+- [JSON 翻译工具使用指南](/guide/translation/json-translate/index.md): 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等全部翻译接口，覆盖 120+ 语言。提供全局翻译、JSONPath 节点定位、指定键名、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
 - [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [功能说明](/guide/translation/info.md): 工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。
-- [翻译接口指南](/guide/translation/api.md): 工具集成了 9 种机器翻译 API 与 26 种大模型接口，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
+- [翻译接口指南](/guide/translation/api.md): 工具集成经典机器翻译 API 与大语言模型接口两类服务，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
 - [常见问题](/guide/translation/faq.md): 翻译结果为空或速度慢？API Key 安全吗？本页解答了翻译工具的常见问题，包括 API 密钥、翻译无响应、字幕错位及数据安全等，帮您快速解决使用中的疑问。
 - [命令行翻译（CLI）](/guide/translation/cli.md): 翻译引擎自带命令行入口，与网页端共用同一条流水线：批处理、并发、重试、429 冷却、术语表、上下文翻译、逐行缓存行为完全一致，支持字幕 / Markdown / JSON 三种格式。
 - [更新日志](/guide/translation/changelog.md): 查看翻译工具的完整更新历史。本页记录了从最初版本至今的所有功能新增、性能优化和问题修复，包括 AI 上下文翻译、多语言支持扩展等重要里程碑。
@@ -21,7 +21,7 @@
 - [文本分割器](/guide/text/text-splitter.md): 需要处理长文本？文本分割器支持按符号、按字符数、按中英文整句智能切分，可设置每 N 个分隔符断一次行，结果可复制合并全文或分段导出 ZIP，适用于 AI 投喂、分段发布、逐句翻译等场景。
 - [文本拼接](/guide/text/text-joiner.md): 多列文本逐行按模板拼接：A、B 等多列内容用占位符定义每行格式，可配行间连接符与整体前后缀，一键生成 CSV、SQL、JSON、Markdown。浏览器本地运行，数据不外发。
 - [文本对照](/guide/text/text-diff.md): 在线双栏对比两段文本或文件，高亮所有差异并一句话告诉你「第几行、第几个字段起不同」。支持纯文本、CSV/TSV、INI，自动识别 UTF-8 / GBK / Big5 / UTF-16LE 编码，可导出标准 .patch。
-- [多功能文本处理](/guide/text/text-toolbox.md): 一站式文本处理工具箱。一个页面集成正则匹配、过滤、去重排序、批量加前后缀、大小写转换、JSON 美化、智能分段。浏览器本地运行，敏感数据不外发。
+- [多功能文本处理](/guide/text/text-toolbox.md): 一站式文本处理工具箱。正则匹配、删行、去重、排序、合并、批量加前后缀、大小写转换、JSON 美化、智能分段都能串成一条步骤链反复执行，还能把常用的链存成预设。浏览器本地运行，敏感数据不外发。
 - [JSON 工具集](/guide/json/index.md): 七款互补的 JSON 处理工具，覆盖提取、批量编辑、节点插入、排序分组、键值互换、字段映射、跨数据集同步。全部基于 JSONPath，浏览器本地运行，原文不上传服务器。
 - [JSON 值提取器使用指南](/guide/json/json-value-extractor.md): 需要从复杂的 JSON 中提取特定数据？使用本工具，通过 JSONPath 表达式轻松提取一个或多个节点的值，并支持为提取结果添加自定义前缀和后缀。
 - [JSON 节点批量编辑使用指南](/guide/json/json-node-edit.md): 需要批量修改 JSON 节点？这款工具支持通过 JSONPath 查找节点，并进行添加前缀、添加后缀、文本替换或替换节点的值等多种批量编辑操作，简化数据处理。

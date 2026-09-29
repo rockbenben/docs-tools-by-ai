@@ -1,0 +1,172 @@
+> For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
+
+# Subtitle Translator | Batch AI Translation for SRT, ASS/SSA, VTT, LRC, SBV
+
+:::tip Quick summary
+Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, SSA, VTT, LRC, and SBV formats across 120+ languages. Block-compression plus parallel translation finishes a full TV episode in \~1 second. It also offers context-aware translation, a live line-by-line result stream, local cache reuse, and both free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / koboldcpp and the translation-specialized TranslateGemma / MiLMMT).
+:::
+
+:::tip 30-second quickstart
+
+1. **Drag** or **paste** your subtitle file (`.srt` / `.ass` / `.ssa` / `.vtt` / `.lrc` / `.sbv`)
+2. Pick the **target language** (source defaults to Auto-detect)
+3. Click **Translate** — exported in seconds; for multi-language output the filename auto-appends the language code (e.g. `movie.zh.srt`, `movie.fr.srt`)
+
+No API key required — runs on free **GTX** by default. For higher quality, switch to **DeepSeek** (best value) / DeepL / Claude in the top-right API settings; see the [API guide](/en/guide/translation/api.md).
+:::
+
+In recent years, with the rise of online video, translations of popular foreign films and series are mostly handled by video platforms, while the once-active fansub groups have gradually faded from public view. However, the demand for subtitles for niche and self-made videos has not been effectively met, leading to a continuous increase in the number of videos without subtitles. To solve this problem, the Whisper tool can be used to automatically generate subtitles for these "raw" videos, which can then be translated into other languages using a translation API. For specific steps, you can refer to the article: [Can't find subtitles? Whisper lets you understand Japanese dramas even if you don't know the language](https://newzone.top/posts/2022-11-18-whisper_ai_subtitles.html).
+
+To address issues in the market such as slow translation speeds, lack of batch processing, and the need for manual intervention, I developed a free and comprehensive subtitle translation tool—[Subtitle Translator](https://tools.newzone.top/en/subtitle-translator). The tool supports multiple subtitle formats, including `.srt`, `.ass`, `.ssa`, `.vtt`, `.lrc`, and `.sbv`, and features second-level translation speeds to significantly improve efficiency. I have successfully transcribed over 500 videos, and the translated subtitle files can be viewed at [whisper-subtitles](https://github.com/rockbenben/whisper-subtitles).
+
+## Special Features
+
+!["Batch Translation"](/img/subtitle-translator-en.webp "Batch Translation")
+
+- **Second-level Translation**: Utilizes chunk compression and parallel processing of subtitle text to translate an entire TV episode in one second (the GTX interface is slightly slower).
+- **Batch Translation**: Process hundreds of subtitle files at once. When the run finishes you get an aggregated success/failure summary (e.g. "Exported (3/5)") — no need to check each file individually.
+- **Translation Cache**: Automatically caches translation results locally to avoid redundant calls, saving time and API costs.
+- **Context-Aware Translation** (AI models only): The AI translates based on context, improving the coherence and accuracy of dialogue.
+- **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .ssa / .vtt / .lrc / .sbv). Exports preserve the original filename; when translating into multiple languages, the language code is automatically appended as a suffix (e.g. `movie.zh.srt`, `movie.fr.srt`).
+- **Live line-by-line results**: every line appears in a live panel directly under the progress bar the moment it is translated (original on top, translation below, tagged with the real source line number) — no waiting for the whole batch to see how it reads. Lines that failed are flagged amber as "not translated", with details in the failure panel below; the panel collapses itself when the run finishes, and scrolling up to read mid-run won't yank you back to the bottom.
+- **Subtitle Extraction**: One click extracts the original dialogue with timecodes and cue numbers stripped (auto-copied to clipboard) — for AI summarization, derivative works, or pairing with the translation to have an AI proofread/revise it.
+- **Side-by-side Review**: In single-file, translated-only export mode, after translation you can compare source and translation line by line, manually edit the translation, and Apply & Download — ideal for a hands-on line-by-line polishing pass.
+- **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
+- **Multiple API Options**: 9 built-in free / commercial translation APIs plus 26 AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
+- **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
+
+## Subtitle Format Support
+
+Subtitle Translator supports multiple subtitle formats — `.srt`, `.ass`, `.ssa`, `.vtt`, `.lrc`, `.sbv` — and provides an automatic format matching feature:
+
+- **Bilingual Subtitles**: When checked, the translated text is inserted below the original, with the display order (top/bottom) configurable. For SRT / VTT sources you can additionally choose **ASS output**: original and translation get separate Default / Secondary styles, configurable right inside the tool (see [ASS style settings](#ass-style-settings)) — no external subtitle editor needed.
+- **Timeline Compatibility**: Supports time formats that omit the default hour, exceed 100 hours, and display 1-3 millisecond digits to ensure compatibility.
+- **Automatic Encoding Detection**: No need to manually select the encoding format; the tool automatically detects the subtitle file's encoding to prevent garbled text issues.
+
+## ASS Style Settings
+
+When exporting bilingual ASS, click the **ASS Style** button to open the settings drawer and adjust fonts, sizes, colors, and positioning visually. The generated ASS header is written against a 1920×1080 baseline (`PlayResX/PlayResY`), so players scale it proportionally to any resolution.
+
+### Four presets
+
+| Preset        | Translation / original size | Character                                                                               |
+| ------------- | --------------------------- | --------------------------------------------------------------------------------------- |
+| **Default**   | 64 / 48 pt                  | White text, outline 3, shadow 1 — general purpose                                       |
+| **Large**     | 80 / 60 pt                  | White text, outline 4 — for TVs and casting at a distance                               |
+| **Cinematic** | 64 / 48 pt                  | Gold translation (`#FFD700`) over white original, film-like                             |
+| **Boxed**     | 64 / 48 pt                  | White text on a semi-transparent black box (\~62% opaque), readable over bright footage |
+
+Changing any parameter switches the preset to **Custom**, which persists — reopen the drawer and your last configuration is still there.
+
+### Adjustable parameters
+
+- **Global**: font (leave blank to auto-pick per target language, or click "Read system fonts" to choose from installed ones), alignment (bottom center / top center), vertical margin (0–500)
+- **Translation style / Original style** (independent sets): font size (10–200), text color, outline color, outline (0–10), shadow (0–10)
+- **Box color**: shown for boxed styles only — both color and opacity adjustable (written as ASS `BorderStyle=3`, with the outline value acting as box padding)
+
+### Two layouts for native ASS bilingual
+
+When the source is already ASS / SSA, one more choice appears:
+
+- **Keep source styles** (default): preserve the source's `[V4+ Styles]` and inline tags, only inserting the translated lines. Right for releases that already carry fansub styling and effects
+- **Restyle**: discard the source styles, rebuild the header from your ASS Style config, and strip every inline override tag (`{\an8}`, `{\i1}`, `{\pos(...)}`, …). Suitable for dialogue-only subtitles — effects and karaoke get flattened
+
+Whether the source is `.ass` or `.ssa`, restyled output is always written as `.ass`.
+
+## Live results while translating
+
+After you hit Translate, an **inline progress bar** appears above the result area (lines done / total, current language, current file) with a **Cancel** button on its right — and directly beneath it, a **live result panel**: every line shows up the moment it is translated, so you don't have to wait for the batch to finish.
+
+- Each entry is two lines: the original on top, the translation below, prefixed with the **real line number in the source file** (the same coordinate the failure panel reports, so jumping between them lands on the same cue)
+- Lines that didn't come back are flagged amber as "not translated" and show only the original — no duplicate line — with the details left to the failure panel below
+- The panel keeps only a recent window, so long files don't blow up the page; it collapses itself when the run ends instead of squatting above the results
+- Scrolling up to read mid-run **won't yank you back to the bottom**; scroll back down to resume following the newest lines
+
+**Settings and inputs are locked while running** (languages, provider, prompts, export format, upload area, source textarea): the whole run executes against the snapshot taken when you clicked Translate, so a mid-run change either does nothing or corrupts the output. Cancel first — it settles within a second, everything already translated is in the cache, and clicking Translate again resumes from that checkpoint without billing twice. Read-only actions (extract plain text, copy, export) are unaffected. See [Feature Guide → Cancel and the run-time settings lock](/en/guide/translation/info.md#cancel-and-the-run-time-settings-lock).
+
+## Context-Aware Translation
+
+_Context-Aware Translation_ (exclusive to AI models) sends subtitles to the Large Language Model in batches, accompanied by a small amount of preceding and succeeding context, ensuring more coherent character dialogue and a more natural tone.
+
+The API settings provide two parameters for fine-tuning this process:
+
+- **Concurrent lines**: Determines the number of main content lines to be translated in each batch.
+- **Context lines**: Controls the number of preceding and succeeding lines included as context.
+
+### Tuning Strategy
+
+- **Increase Values**: Faster throughput and richer context, but heavier requests. More likely to hit API rate limits, token limits, or context caps. Requires high-performance API/LLMs.
+- **Decrease Values**: Lighter individual requests and higher fault tolerance, but the immediate context available for the model to reference will be reduced.
+- **Error Handling**: If you encounter errors such as 429, empty responses, or "context length exceeded," try lowering these parameters or increasing the request interval.
+
+⚠️ **Small local model tip**: Local models under 14B are prone to misaligned output or dropped lines in context mode (dropped lines fall back to the original text). Two solutions:
+
+- **Simple fix**: Turn off the "Context-Aware Translation" toggle to switch to line-by-line concurrent mode (default 10 concurrent). Fast and reliable, at the cost of slightly reduced consistency between adjacent lines.
+- **Keep context**: Lower "Context lines" to 20-30, and use a 14B+ instruction-tuned model (Qwen3-14B/32B, Gemma 3 27B-it, etc.).
+
+For pure translation needs, also consider the standalone **TranslateGemma** or **MiLMMT** services in the service list (not by entering a model name under "Custom OpenAI-compatible") — they are seq2seq line-by-line services with no marker structure, the most reliable option for local deployment. Which one depends on the languages you need — see [FAQ: which model for local translation](/en/guide/translation/faq.md#which-model-should-i-pick-for-local-translation).
+
+## Frequently Asked Questions
+
+### Which subtitle formats are supported? Can it translate SRT, ASS, VTT, and LRC?
+
+Six formats supported: SRT, ASS, SSA, VTT, LRC, and SBV. SRT/VTT fit YouTube, HTML5 players, and creator dashboards (export YouTube captions with yt-dlp); ASS/SSA fit Aegisub and anime fansubs, with line-leading position tags (e.g. `\an8`) auto-restored after translation; LRC fits music lyrics; SBV is what YouTube's caption editor exports. File encoding (UTF-8 / UTF-16 / GBK / Shift-JIS) is auto-detected via jschardet. Complex inline ASS effect tags (colors, animation, karaoke) are simplified during translation.
+
+### Should I use machine translation or an AI/LLM for subtitles? Which is best quality, which is cheapest?
+
+For subtitle dialogue, AI/LLM clearly wins on naturalness. **DeepSeek** is the value pick for whole-season batches; **Claude Sonnet 5** or **GPT-5.6** give the most natural dialogue; **Gemini 3.1 Pro**'s long context handles book-length subtitles. For zero-cost quick previews use **Google**, for European languages **DeepL**. Full engine comparison and signup links in the [API guide](/en/guide/translation/api.md); configs are shared across all three translation tools.
+
+### How do I preserve names, brands, and proper nouns so they aren't mistranslated?
+
+Add a glossary in the System prompt; AI/LLM engines will respect it. Example: "Keep verbatim: iPhone, OpenAI, Premiere, person name John Smith." Especially recommended for TV series — all episodes share the same term dictionary, so the protagonist doesn't get called one name in episode 1 and a different one in episode 8. Machine translation (Google, DeepL, Qwen-MT) doesn't accept prompt customization and requires manual post-processing.
+
+### Do I need to add "preserve line count / numbering / timecodes" instructions to my system prompt?
+
+No. The tool extracts structural metadata (timecodes, cue numbers, ASS headers, VTT cue IDs) locally and sends only the dialogue text to the translation engine, then re-inserts the result at the original indices — the model never sees the timecodes, so it cannot disrupt them. Keep your system prompt focused on translation style, glossary (see previous question), and character tone; adding format-preservation directives wastes tokens and can prompt the model to inject stray line numbers or timestamps into the output. Unlike tools that dump the entire SRT/VTT into the LLM, this tool uses a structural separation architecture — timecodes are 100% controlled by local code.
+
+### How do I create bilingual subtitles for YouTube or language learning?
+
+Select 'Bilingual' mode with your target language. Position translation above (for learning — focus on translation) or below (for consumption — primary is original). Export as ASS for colored dual-language subtitles, embed in Premiere/DaVinci Resolve, or upload to YouTube community subs, Vimeo, or any player supporting ASS format.
+
+### How do I proofread and revise the translation after translating? Can I edit it line by line?
+
+The tool offers two features — one to edit it yourself, one to let an AI do it:
+
+1. **Side-by-side Review (edit it yourself)**: In single-file, translated-only export mode, after translation a panel appears below with the original on the left and the translation on the right, line by line. Edit any line you don't like in the translation column, then click **Apply & Download** to get the revised subtitle with timecodes preserved. Ideal for hand-checking and fixing machine-translation mistakes without having to touch the timeline.
+2. **Extract text + your own AI (let an AI do it)**: **Extract text** exports the **original** dialogue with timecodes and cue numbers stripped (auto-copied to clipboard); the translation is copied separately from the result card's Copy button. Paste both the original and the translation into any AI and use your own prompt to proofread/revise the translation against the source — ask for a change summary too if you want — then organize or re-insert the result yourself.
+
+In short: use **Review** to edit it yourself line by line, use **Extract text** plus an external AI to have it revised to your spec.
+
+### How many subtitle files can I batch translate at once? What about a whole season of episodes?
+
+Batch upload an entire season's subtitles for simultaneous translation with no hard file limit (actual limit depends on your translation engine's concurrency and API quota). Each file translates and caches independently (IndexedDB), so refreshing the page doesn't lose translated files. For shared terminology across episodes, see the "names/brands" Q above.
+
+### How do I convert SRT to VTT or ASS? Do I need a separate subtitle format converter?
+
+No separate tool needed. Pick your target language and export format during translation for one-click conversion: SRT ↔ VTT, SRT/VTT → ASS, plus bilingual ASS/SRT output. VTT-to-SRT auto-handles inline `<c.classname>` tags and `<00:00:06.040>` karaoke timestamps; ASS conversion preserves `\an8` position tags with default styling. Note: identical source and target language are blocked by validation, so format conversion currently requires an actual translation pass.
+
+### Can I convert subtitles to plain-text scripts? Or export only specific lines?
+
+The 'Extract text' button extracts the dialogue text without timecodes or cue numbers (auto-copied to clipboard) — useful for language learning materials, podcast scripts, AI training data, or voice-actor handoffs. For more granular line-level editing (filter by keyword, batch-replace terms, add prefix/suffix, sort/dedupe), pair with the [Multi-Function Text Processor](https://tools.newzone.top/en/text-toolbox) — its regex matching and line operations cover most subtitle cleanup tasks. For splitting very long subtitles by time or character count, use [Text Splitter](https://tools.newzone.top/en/text-splitter).
+
+### How do I fix subtitle timing mismatch or encoding (□□□) issues after translation?
+
+The tool only translates text and never modifies timecodes. Timing mismatches after translation usually stem from framerate inconsistencies (23.976 vs 25 fps) in the source — fix with Aegisub or Subtitle Edit. For encoding, jschardet auto-detects UTF-8/UTF-16/GBK/Shift-JIS; if detection fails it defaults to UTF-8, so re-save source as UTF-8 via Notepad++ or VS Code before uploading.
+
+### What is CPS in the post-translation QC, and when is a subtitle too fast?
+
+CPS (Characters Per Second) measures subtitle reading speed — the higher the value, the less time viewers have to read it. Translated subtitles are often longer than the original and easily exceed the limit, so the QC panel computes CPS, characters per line, line count, and duration for every cue and highlights anything over the threshold in red. Switch between "General / CJK" presets — CJK subtitles use lower per-second and per-line limits. QC is read-only and never modifies your subtitle file; fix flagged cues in a subtitle editor or with the main site's text tools after export.
+
+### Are subtitle files uploaded to your server? Is it private and secure?
+
+Fully client-side: file reading, parsing, and translation requests all happen in your browser — original content never touches our servers. LLM engine requests go directly from your browser to your configured API endpoint (OpenAI, DeepSeek, etc.), and API keys are stored only in local browser storage. Translation cache uses browser IndexedDB and persists across sessions.
+
+Source code is open on GitHub at [rockbenben/subtitle-translator](https://github.com/rockbenben/subtitle-translator) for self-hosting or auditing.
+
+## Configuration
+
+The translation tools share a rich set of options. For details, see:
+
+- [Feature Guide](/en/guide/translation/info.md) — caching, multilingual translation, chunk size, delay, and other tunables
+- [Translation API Guide](/en/guide/translation/api.md) — supported translation APIs and large language models
+- [FAQ](/en/guide/translation/faq.md) — API key setup, local model connection, translation speed, and common issues

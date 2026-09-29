@@ -1,0 +1,132 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Markdown 翻译工具｜保留代码块、公式、Front Matter 的 AI 批量翻译指南
+
+:::tip 快速介绍
+md-translator 是一款专为技术文档翻译设计的免费在线工具，能在翻译过程中精准保留 Markdown 的代码块、LaTeX 公式和结构化元数据不被破坏。支持 120+ 种语言、多语言同时输出，以及用于任意文本的"纯文本翻译模式"，是翻译开源文档与博客内容的首选。
+:::
+
+:::tip 30 秒上手
+
+1. 拖入或粘贴 Markdown 文件
+2. 选源/目标语言（支持一次翻成多种）
+3. 点 **翻译** —— 代码块、LaTeX 公式、FrontMatter、链接全部原样保留
+
+> 想翻任意纯文本？把「格式模式」切到「忽略格式」，即可绕过 Markdown 解析。
+
+:::
+
+在技术文档、开源项目、博客创作等领域，Markdown 已成为主流的文本标记语言。然而，大多数翻译工具在处理 Markdown 内容时，容易破坏其原有结构，尤其在涉及代码块、LaTeX 公式或结构化元数据时，常常导致格式错乱或语义丢失。
+
+[md-translator](https://tools.newzone.top/zh/md-translator) 致力于解决这一问题：在精准保留 Markdown 格式的同时，实现高质量翻译。其“纯文本翻译模式”更可用于处理任意类型的文本文档，实现格式保留与语言转换的灵活兼容。目前已支持 120+ 种语言，并可同时输出多语言结果，助力内容全球化。
+
+![MD Translator 界面](/img/md-translator-zh.webp "MD Translator 使用界面")
+
+## 特色功能
+
+### 原生支持 Markdown 元素结构
+
+md-translator 针对 Markdown 文档进行了深度适配，能够识别并还原以下常见语法：
+
+- FrontMatter 元数据（`---`）
+- 标题（`#`）
+- 引用块（`> 引用`）
+- 链接（`[text](URL)`）
+- 无序列表（`-` / `*` / `+`）
+- 有序列表（`1. 2. 3.`）
+- 强调文本（`**加粗**`，`_斜体_`）
+- 代码块（` ``` `）
+- 内联代码（`` `code` ``）
+- 行内 LaTeX 公式（`$公式$`）
+- 块级 LaTeX 公式（`$$公式$$`）
+
+其中，FrontMatter、代码块以及 LaTeX 公式均支持可选翻译，用户可根据实际需求灵活配置是否处理。
+
+### 上下文关联翻译 (Context-Aware)
+
+Markdown 文档同样支持**上下文关联翻译**模式（仅限 AI 模型）。该模式会将文档切分为若干片段，并附带前后文发送给大模型，从而显著提升段落间的连贯性和专业术语的一致性。
+
+:::warning 注意
+由于 Markdown 结构的复杂性，开启上下文模式可能会增加模型输出格式错误的风险（如代码块闭合异常、列表缩进错乱）。建议在开启该模式时，密切关注翻译结果的格式完整性。
+:::
+
+### 「忽略格式」：支持任意纯文本
+
+除了结构化 Markdown 支持，md-translator 还提供 **「格式模式 → 忽略格式」**，跳过格式解析，直接对原始内容进行语言转换。无论是 Markdown、TXT、HTML、日志文件，甚至是未经整理的技术笔记，都可通过该模式获得准确、高效的翻译结果。
+
+你还可以通过自定义 AI 提示词，进一步提升术语一致性、上下文连贯性以及整体翻译风格的统一性，使翻译输出更贴合你的实际写作需求。
+
+### 自动适配 RTL 语言
+
+自动识别并调整阿拉伯语、希伯来语、乌尔都语、波斯语等 RTL 语言的显示方向。
+
+### 扩展功能：提取纯净文本
+
+md-translator 还具备将 Markdown 内容转换为纯文本的能力，方便你进行二次处理或语义分析：
+
+- 自动去除所有 Markdown 标记符号
+- 隐藏代码块、链接等技术内容
+- 输出适合摘要提取、搜索索引或 NLP 处理的纯文本数据
+
+该功能非常适用于技术内容的摘要提取、语义分析、知识图谱构建等自动化应用场景。它导出的是去掉 Markdown 标记的**原文正文**；翻译完若想进一步润色/校对译文，可把它和译文（从翻译结果区复制）一起发给任意 AI，用你自己的提示词让它对照原文修订、按需附改动摘要。
+
+## 适用场景
+
+- 多语言技术文档的批量翻译
+- 开源项目说明文档的国际化
+- Markdown 博客内容的中英双语同步
+- 代码注释、公式说明等混合文档的格式保留翻译
+- 任何结构化/非结构化文本的语义翻译与提取
+
+## 与同类工具对比
+
+在开发 md-translator 之前，我测试过以下方案，但都因各自的局限未能满足需求：
+
+- **[GT4T](https://www.gt4t.cn/)**：支持把整个文件夹拖入批量翻译 Markdown，但仅商业付费授权——即使填入自己的 API Key 仍要付费，对个人用户不友好。
+- **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**：开源免费，基于网页版接口翻译。问题是速度慢，长文本处理容易中断。
+
+md-translator 在两点上做差异化：完全免费 + 浏览器本地运行（数据不出本机），并对 Markdown 结构与代码块/公式/FrontMatter 做了深度保留。
+
+## 常见问题
+
+### 免费的 Markdown 翻译工具哪个好用？
+
+MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 120+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
+
+### 翻译 Markdown 文档时如何保留代码块和公式？
+
+用占位符保护策略：代码块（`围栏代码`）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。Frontmatter 默认整块跳过，可在「翻译内容」勾选「翻译 frontmatter」一并处理；同样的开关可单独控制代码块、LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
+
+### 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
+
+技术文档强烈推荐 AI 大模型——能识别上下文里的库名、函数名、变量名不乱译。首选 **Claude Sonnet**（API 文档术语精度最高）、**DeepSeek** 性价比极高（中文技术博客标配）、**Gemini 3.1 Pro** 适合整本书级长文档（1M token 上下文）。机器翻译只适合快速预览，长 Markdown 文档会被截断。完整引擎对比见 [接口指南](/guide/translation/api.md)，配置在三个翻译工具间共享。
+
+### 怎么翻译 GitHub README 或整个 VitePress、Docusaurus 文档站？
+
+整个 `docs/` 目录批量上传，Front Matter 里的 `title`、`description` 字段勾选「翻译 Front Matter」一并处理，`slug` 和 `permalink` 字段不会被翻译。代码块、命令行示例、API 端点会自动跳过——只翻译注释和说明文本。翻译完直接放回原目录即可让框架按 `i18n.locales` 多语言路由识别。VitePress 用 `zh/`、`en/` 子目录，Docusaurus 用 `i18n/{locale}/` 结构。
+
+### 支持 GFM、MDX、Astro 这些 Markdown 方言吗？
+
+标准 CommonMark 和 GFM（GitHub Flavored Markdown）全支持，包括表格、任务列表、删除线、围栏代码块。MDX（带 JSX 组件的 Markdown）和 Astro Components：组件标签（如 `<Alert>`、`</Alert>`、带属性的 `<Alert title={var}>`）会作为整块占位符保护起来不参与翻译，而标签之间的纯文本会照常翻译（如 `<Alert>这段会被翻译</Alert>`）。复杂 MDX 想完全跳过格式可在「格式模式」里打开「忽略格式」开关，按纯文本翻译。
+
+### 有什么工具可以批量翻译技术博客文章？
+
+MDTranslator 支持批量上传多个 Markdown 文件，一键翻译为目标语言。保留 Front Matter 元数据，翻译后的文章可直接部署到 Hugo、Jekyll、Hexo 等博客框架。
+
+### 要翻译的不是 Markdown，是字幕或 JSON 配置文件怎么办？
+
+字幕文件（SRT/ASS/VTT/LRC）请用 [字幕翻译器](/guide/translation/subtitle-translator/index.md)，保留时间轴和 ASS 样式标签；JSON 国际化文件（i18next、next-intl、vue-i18n 那种 key-value 结构）请用 [JSON 翻译](/guide/translation/json-translate/index.md)，按 Key 路径选择性翻译，可保护占位符 `{name}`、`{count}` 不被破坏。三个翻译工具共享同一套引擎配置和 API Key，跨工具切换无需重复设置。
+
+### 翻译后的 Markdown 会上传到服务器吗？开源吗？
+
+完全前端处理：文件读取、解析、翻译请求都在浏览器内完成，原文不经过我们的服务器存储。LLM 引擎的请求直接从你的浏览器发往你配置的 API 端点（OpenAI、DeepSeek 等），API Key 仅保存在本地 localStorage。翻译缓存使用浏览器 IndexedDB，关闭页面也保留。
+
+源代码开源于 [rockbenben/md-translator](https://github.com/rockbenben/md-translator)，可自部署或审查实现。
+
+## 配置说明
+
+应用提供了丰富的翻译配置选项，详细信息请参考：
+
+- [功能说明](/guide/translation/info.md)：翻译缓存、多语言翻译等功能，配置分块大小、延迟时间等参数
+- [翻译接口指南](/guide/translation/api.md)：了解支持的翻译接口和 AI 大模型
+- [常见问题](/guide/translation/faq.md)：API Key 配置、本地模型连接、翻译速度等高频问答

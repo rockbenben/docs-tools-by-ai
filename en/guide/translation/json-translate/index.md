@@ -1,0 +1,215 @@
+> For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
+
+# JSON Translator | i18n Batch Translation with JSONPath
+
+:::tip Quick summary
+JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, one field across all entries, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
+:::
+
+:::tip 30-second quickstart
+
+1. Drag or paste your JSON file
+2. Pick a **mode**:
+   - Translate every string → **Global Translation**
+   - Only translate keys like `title` / `description` → **Specific Keys**
+   - i18n project (auto-adds target-language fields to each object) → **i18n Mode**
+3. Set source/target languages, click **Translate** — original JSON structure preserved
+
+> JSON Translate is single-file only (no batch) — built for careful, targeted edits.
+
+:::
+
+[JsonTranslate](https://tools.newzone.top/en/json-translate) is a multilingual JSON translation tool designed specifically for developers and content creators. It supports translation APIs from Google, Azure, DeepL(X), Qwen-MT, and major LLMs (DeepSeek, Claude, GPT, Gemini, and more), helping streamline internationalization and localization processes. Whether you're building multilingual websites, applications, or working with multilingual datasets, JsonTranslate provides a simple and efficient solution to translate content in JSON files into multiple target languages.
+
+![JSON Translate workflow animation: drag in a JSON file, pick source/target languages, batch translate in one click](/img/json-translate-en.webp "JsonTranslate usage demo")
+
+## Translation Modes Overview
+
+### Global Translation
+
+This mode recursively traverses the entire JSON structure and translates all string-type values while preserving the original JSON hierarchy and structure.
+
+**Best for:**
+
+- Translating all textual content in a full JSON file
+- One-click translation without complex configurations
+
+### Targeted Nodes
+
+Use JSONPath expressions to precisely locate one or more nodes and translate only the string values within them. Multiple paths can be separated by commas.
+
+**Best for:**
+
+- Translating only specific sections in a well-structured JSON dataset
+- Improving efficiency by narrowing the translation scope in large files
+
+### Specific Keys
+
+In this mode, you can specify particular key names for translation. Two input options are supported:
+
+- **Simple Mode**: Enter key names separated by commas (English or Chinese), and the corresponding values will be translated.
+- **Advanced Mode**: Use a key mapping component to define input-output key pairs. Translations are written to new keys, preserving the original fields.
+
+**Best for:**
+
+- Translating specific fields like `title` or `description`
+- Keeping original data intact by outputting translations to separate keys
+
+**Notes:**
+
+- Keys are case-sensitive.
+- The number of input and output keys must match; mappings will ignore nonexistent keys. At least one valid mapping is required to proceed.
+- Pure numeric keys can conflict with array indices — this issue has been fixed, but avoid numeric-only keys to reduce ambiguity.
+- Keys containing dots (.) are interpreted as nested paths; avoid dots in key names or rename them to prevent misinterpretation.
+
+### One Field Across All Entries
+
+Treats the JSON as a list of entries: it pulls the same field out of every entry, translates it, and leaves the rest untouched.
+
+**Structural requirement:** the JSON must be **two levels — entry → object**, i.e. each top-level key maps to an object holding the fields. For example:
+
+```json
+{
+  "fetchError": { "message": "Request failed", "code": 500 },
+  "authError": { "message": "Invalid token", "code": 401 }
+}
+```
+
+Set **Field to Translate** to `message` and only the two `message` values are translated; `code` is left alone.
+
+**Configuration Options:**
+
+- **Start Key** (optional): start from this entry; leave blank to start from the first. Useful when key order is meaningful and you only want the later part
+- **Field to Translate**: the field taken from inside each entry — **separate multiple fields with commas**. Note: if any listed field is missing from every entry (or isn't a string value), the whole run aborts with an error rather than skipping that field
+
+**Best for:**
+
+- Log or error-message files where only each entry's `message` should be translated, keeping `code`, `level`, and other metadata intact
+- Config files with uniform entries where exactly one field needs localization
+
+### i18n Mode
+
+Designed specifically for multilingual scenarios, this mode aggregates translations under the same field structure, making it ideal for managing multilingual content for websites or apps.
+
+#### How It Works
+
+- The selected source language becomes the source field (e.g., `zh` as the source language means the source field is `zh`). If set to `auto`, the default source is `en`.
+- It scans all objects containing the source field and adds new fields for each target language at the same level.
+- If a target language field already exists, it is skipped to avoid overwriting.
+- When both i18n and multi-language modes are enabled, the system creates a unified JSON structure with the source and all target languages—perfect for internationalized projects.
+
+#### Example
+
+```json
+{
+  "title": {
+    "en": "Settings"
+  }
+}
+```
+
+If the target languages are `zh` and `fr`, the translated result would be:
+
+```json
+{
+  "title": {
+    "en": "Settings",
+    "zh": "设置",
+    "fr": "Paramètres"
+  }
+}
+```
+
+## Features Overview
+
+### Mapped Translation
+
+When using the Specific Keys mode, you can toggle between single-key and mapped translation modes in the results panel. In single-key mode, input and output use the same node. In mapped translation mode, translations are written to different nodes (e.g., values from Node A are translated into Node B, Node C to Node D).
+
+![JSON Translate key-mapping screenshot: configure source-target key pairs for precise field-level translation](https://img.newzone.top/2023-12-19-11-42-37.png?imageMogr2/format/webp "Mapped translation example")
+
+### How JSON Key Names Work
+
+JSON stores data in key-value pairs. The “key” (or “name”) is a string that uniquely identifies each data item or element, making it fundamental for data access and manipulation. JsonTranslate leverages these key names for accurate translation targeting.
+
+Here’s an explanation of several sample key names:
+
+- `downvote.message`: A nested key name. `downvote` is a top-level key, and `message` is a key within that object.
+- `提示词.message`: `提示词` is a key that contains an object, within which `message` is another key.
+- `share.owner`: This key includes a dot (`.`), but it's treated as a single key name, not a nested path. So `share.owner.name` would incorrectly imply `owner` is a nested object, when in fact `share.owner` is one complete key.
+
+```json
+{
+  "downvote": {
+    "message": "Downvote"
+  },
+  "提示词": {
+    "message": "prompt"
+  },
+  "share.owner": {
+    "name": "rabbit"
+  },
+  "data": {
+    "title": {
+      "id": "001",
+      "name": "cabbages"
+    }
+  },
+  "content": [
+    {
+      "id": "001",
+      "value": "Hello, cabbage."
+    },
+    {
+      "id": "002",
+      "value": "Hello, Radish."
+    }
+  ]
+}
+```
+
+Currently, JsonTranslate does not support JSON keys that contain dots (`.`). This is because dots are interpreted as delimiters in JSONPath, which may lead to misinterpretation of such keys as nested paths. To avoid this issue, it's recommended to use keys without dots.
+
+## Frequently Asked Questions
+
+### Which translation engines and file sizes does this JSON translator support?
+
+Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports every translation endpoint: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
+
+### Should I use machine translation or AI/LLM for translating JSON? How do I choose?
+
+Pick by JSON value length: short UI strings (button labels, menu items, error messages) — machine translation works (**Google free tier** costs nothing, 5000 chars/call limit); longer text (product descriptions, tutorials) — use AI/LLM (**DeepSeek** value pick, **Claude Sonnet** for terminology consistency, add a glossary in the System prompt to lock brand names, SKUs, and API terms). Full engine comparison in the [API guide](/en/guide/translation/api.md); configs are shared across all three translation tools.
+
+### Does it support next-intl, i18next, vue-i18n, and react-intl JSON formats?
+
+Yes to all. next-intl and vue-i18n nested object structures, i18next flat-key namespaces, and react-intl ICU MessageFormat placeholders are all handled correctly. Placeholders like `{name}`, `{count, plural, ...}`, `{0}` are preserved verbatim during translation. Use 'Specified Keys' mode to translate only values without touching keys, or 'i18n Mode' to aggregate multiple languages directly into the source JSON (e.g. `{en: "Settings", zh: "设置"}` structure).
+
+### How do I translate JSON into multiple languages at once?
+
+Enable Multi-Language Mode to select multiple target languages and batch-generate files like en.json, ja.json, ko.json in one operation, saving significant internationalization time.
+
+### How do I use JSONPath to translate only specific nodes? For example, only product name fields.
+
+'Specified Nodes' mode accepts standard JSONPath expressions: `$.products[*].name` translates every product's name field, `$..title` recursively translates all title fields; multiple paths are comma-separated. Combined with the advanced mapping mode of 'Specified Keys', you can also write translation results to new fields (e.g. `name` → `name_zh`) while preserving the original. Caveat: key names containing dots (.) are misread as nested paths — best avoided.
+
+### Will JSON keys and nesting structure break after translation?
+
+No. The tool only translates values — keys, nesting hierarchy, and array structures are fully preserved. Translated files work directly in React, Vue, and other frontend i18n frameworks.
+
+### What if I need to translate Markdown or subtitle files instead of i18n JSON?
+
+For Markdown documents (.md, .mdx), use [Markdown Translator](/en/guide/translation/md-translator/index.md) — preserves code blocks, LaTeX formulas, and Front Matter metadata. For subtitle files (SRT/ASS/VTT/LRC), use [Subtitle Translator](/en/guide/translation/subtitle-translator/index.md) — preserves timecodes and ASS style tags. All three translation tools share the same engine configurations and translation cache, so switching between them requires no re-setup.
+
+### Are JSON contents uploaded to your server? Is privacy safe for large files?
+
+Fully client-side: file reading, parsing, and translation requests all happen in your browser — original content never touches our servers. LLM engine requests go directly from your browser to your configured API endpoint (OpenAI, DeepSeek, etc.), and API keys are stored only in local browser storage. Translation cache uses browser IndexedDB and persists across sessions.
+
+The IndexedDB cache also supports incremental updates across builds — only changed keys trigger new API calls, saving cost. Source code is open on GitHub at [rockbenben/json-translate](https://github.com/rockbenben/json-translate) for self-hosting or auditing.
+
+## Configuration
+
+The translation tools share a rich set of options. For details, see:
+
+- [Feature Guide](/en/guide/translation/info.md) — caching, multilingual translation, chunk size, delay, and other tunables
+- [Translation API Guide](/en/guide/translation/api.md) — supported translation APIs and large language models
+- [FAQ](/en/guide/translation/faq.md) — API key setup, local model connection, translation speed, and common issues

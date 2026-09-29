@@ -1,0 +1,132 @@
+> For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
+
+# Markdown Translator | Preserve Code, LaTeX & Front Matter for Batch AI Translation
+
+:::tip Quick summary
+md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 120+ languages, simultaneous multi-language output, and an "Ignore Formatting" mode for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
+:::
+
+:::tip 30-second quickstart
+
+1. Drag or paste your Markdown file
+2. Pick source/target language(s) — multiple targets at once is fine
+3. Click **Translate** — code blocks, LaTeX formulas, FrontMatter, and links all stay intact
+
+> Need to translate plain text? Switch "Format Mode" to "Ignore Formatting" to skip Markdown parsing.
+
+:::
+
+Markdown has become the mainstream markup language across technical documentation, open-source projects, blogging, and more. However, most translation tools struggle to preserve Markdown’s original structure—especially when handling code blocks, LaTeX formulas, or structured metadata—often leading to broken formatting or lost semantics.
+
+[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Ignore Formatting" mode further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 120+ languages, it can output multilingual results simultaneously—empowering content globalization.
+
+![MD Translator Interface](/img/md-translator-en.webp "MD Translator Interface")
+
+## Key Features
+
+### Native Support for Markdown Structures
+
+md-translator is deeply adapted for Markdown and can recognize and restore the following common syntax elements:
+
+- FrontMatter metadata (`---`)
+- Headings (`#`)
+- Blockquotes (`> quote`)
+- Links (`[text](URL)`)
+- Unordered lists (`-` / `*` / `+`)
+- Ordered lists (`1. 2. 3.`)
+- Emphasis (`**bold**`, `_italic_`)
+- Code blocks (` ``` `)
+- Inline code (`` `code` ``)
+- Inline LaTeX formulas (`$formula$`)
+- Block-level LaTeX formulas (`$$formula$$`)
+
+Translation of FrontMatter, code blocks, and LaTeX formulas is optional and can be flexibly configured based on user needs.
+
+### Context-Aware Translation
+
+Markdown documents also support **Context-Aware Translation** mode (AI models only). This mode slices the document into segments and sends them to the large model with preceding and succeeding context, significantly improving coherence between paragraphs and consistency of terminology.
+
+:::warning Note
+Due to the complexity of Markdown structures, enabling context mode may increase the risk of model output formatting errors (e.g., unclosed code blocks, disordered list indentation). It is recommended to closely monitor the format integrity of the translation results when using this mode.
+:::
+
+### "Ignore Formatting" for any plain text
+
+Beyond structured Markdown support, md-translator offers **Format Mode → "Ignore Formatting"**, which bypasses format parsing and directly translates raw content. Whether it's Markdown, TXT, HTML, log files, or even messy technical notes, this mode ensures accurate and efficient translation.
+
+You can also enhance consistency in terminology, context coherence, and translation style by customizing AI prompts—tailoring the output to your actual writing needs.
+
+### RTL Language Support
+
+Automatically detects and adjusts text direction for RTL languages like Arabic, Hebrew, Urdu, and Persian.
+
+### Additional Feature: Extract Clean Plain Text
+
+md-translator includes the ability to convert Markdown content into clean plain text, making it easier for post-processing or semantic analysis:
+
+- Automatically removes all Markdown syntax
+- Hides technical content like code blocks and links
+- Outputs plain text ideal for summarization, search indexing, or NLP tasks
+
+This feature is especially useful for automated applications like content summarization, semantic analysis, or knowledge graph construction. What it exports is the source text with Markdown stripped; after translating, if you want to polish or proofread the translation, pair it with the translation (copied from the result area) and send both to any AI, using your own prompt to have it revise against the source — ask for a change summary too if you like.
+
+## Use Cases
+
+- Bulk translation of multilingual technical documents
+- Internationalization of open-source project documentation
+- Bilingual synchronization of Markdown blog content
+- Format-preserving translation of mixed content (code, formulas, etc.)
+- Semantic translation and extraction for any structured/unstructured text
+
+## Compared to Similar Tools
+
+Before building md-translator, I tested these alternatives — both fell short:
+
+- **[GT4T](https://www.gt4t.cn/)**: Lets you drag a folder for batch Markdown translation, but only commercial licenses are available — even with your own API key, payment is required. Not a fit for individual users.
+- **[Markdown Docs Translator](https://github.com/ilyachch/md_docs-trans-app)**: Open-source and free, using web-based translation interfaces. Translation is slow and tends to break on long texts.
+
+md-translator differentiates on two fronts: fully free + everything runs in your browser (data never leaves your machine), with deep preservation of Markdown structure (code blocks, LaTeX, FrontMatter).
+
+## Frequently Asked Questions
+
+### Which free Markdown translation tool works best?
+
+MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — Every translation endpoint is available, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
+
+### How do I preserve code blocks and formulas when translating Markdown?
+
+The tool uses a placeholder-protection strategy: code fences (`fenced code`), inline code (`code`), LaTeX formulas ($...$, $$...$$), link URLs, image paths, and HTML/JSX tags are replaced with `<<<MULTILINE_CODE_x>>>`, `<<<HTML_x>>>` etc. before being sent to the translator, then restored verbatim. Front Matter is skipped by default; flip the 'Translate Frontmatter' toggle to include it. Separate toggles control code blocks, LaTeX, and link text. Technical docs come out format-perfect with no manual repair.
+
+### Should I use machine translation or AI/LLM for technical documentation? Which is best?
+
+AI/LLM strongly recommended — models recognize library names, function names, and variables in context without mistranslating them. **Claude Sonnet** leads on API doc terminology accuracy, **DeepSeek** delivers excellent value (de facto standard for Chinese technical blogs), **Gemini 3.1 Pro** fits book-length documentation (1M-token context). Machine translation only suits quick previews — long Markdown docs get truncated. Full engine comparison in the [API guide](/en/guide/translation/api.md); configs are shared across all three translation tools.
+
+### How do I translate a GitHub README or an entire VitePress / Docusaurus doc site?
+
+Batch upload your `docs/` directory. Front Matter fields like `title` and `description` can be translated by enabling 'Translate Front Matter'; `slug` and `permalink` fields are preserved. Code blocks, CLI examples, and API endpoints are skipped automatically — only comments and prose are translated. Drop translated files back into the original directory and your framework will pick them up via its `i18n.locales` config. VitePress uses `zh/`, `en/` subfolders; Docusaurus uses the `i18n/{locale}/` structure.
+
+### Does it support GFM, MDX, or Astro Markdown dialects?
+
+Full support for standard CommonMark and GFM (GitHub Flavored Markdown) including tables, task lists, strikethrough, and fenced code blocks. For MDX (Markdown with JSX components) and Astro Components, component tags are treated as opaque blocks; plain-text attributes like `<Alert>this gets translated</Alert>` are translated, while expression attributes (`title={var}`) are preserved verbatim to avoid breaking code. For complex MDX where you want to skip Markdown parsing entirely, flip the 'Ignore Formatting' toggle to translate everything as plain text.
+
+### What tool can batch-translate technical blog posts?
+
+MDTranslator supports batch uploading multiple Markdown files for one-click translation. It preserves Front Matter metadata so translated posts deploy directly to Hugo, Jekyll, Hexo, and other blog frameworks.
+
+### What if I need to translate subtitles or JSON config files instead of Markdown?
+
+For subtitle files (SRT/ASS/VTT/LRC), use [Subtitle Translator](/en/guide/translation/subtitle-translator/index.md) — it preserves timecodes and ASS style tags. For JSON i18n files (i18next, next-intl, vue-i18n key-value structure), use [JSON Translator](/en/guide/translation/json-translate/index.md) — selective translation by Key path, with placeholder protection for `{name}`, `{count}`, etc. All three translation tools share the same engine configurations and API keys, so switching between them needs no re-setup.
+
+### Is the translated Markdown uploaded to your server? Is it open source?
+
+Fully client-side: file reading, parsing, and translation requests all happen in your browser — original content never touches our servers. LLM engine requests go directly from your browser to your configured API endpoint (OpenAI, DeepSeek, etc.), and API keys are stored only in local browser storage. Translation cache uses browser IndexedDB and persists across sessions.
+
+Source code is open on GitHub at [rockbenben/md-translator](https://github.com/rockbenben/md-translator) for self-hosting or auditing.
+
+## Configuration
+
+The translation tools share a rich set of options. For details, see:
+
+- [Feature Guide](/en/guide/translation/info.md) — caching, multilingual translation, chunk size, delay, and other tunables
+- [Translation API Guide](/en/guide/translation/api.md) — supported translation APIs and large language models
+- [FAQ](/en/guide/translation/faq.md) — API key setup, local model connection, translation speed, and common issues

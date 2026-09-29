@@ -1,0 +1,145 @@
+> For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
+
+# Changelog
+
+Upcoming features: add AI polishing for translated subtitles.
+
+- 2026.09.28: A Design QA pass — accessibility and visual consistency.
+  - **Keyboard focus rings are back**: antd's reset had flattened the browser's own focus-visible outline, so keyboard focus was effectively invisible
+  - **Accent text on surfaces in dark mode** now uses a brighter seed blue to clear WCAG AA; inline code in the Waline comments follows the body text colour (it was near-illegible in light mode)
+  - **Provider chips in the settings drawer** drop the role overrides that fought antd's own (axe flagged them critical); the rules table's empty header gets a visually hidden name; "back to top" changes from round to square to match the site's square-corner language
+  - The Text Splitter's preset button row now wraps at 390px instead of overflowing sideways; the feedback page title is an h1
+- 2026.09.27: A lighter first screen for Subtitle Translator.
+  - **The "translation timing", "review" and "multi-language settings" panels now load on demand** — their code isn't downloaded until you open them
+  - Links to the 365 series under "More tools" now carry the current interface language
+- 2026.09.26: Azure OpenAI moves to the v1 GA API.
+  - **The `apiVersion` (deployment version) field is gone from settings**: the request URL is now the resource root you supply plus the fixed `/openai/v1` suffix, and the model field still takes the deployment name
+  - Azure is folded into the openai-compat factory, deleting its hand-written service and reasoning-body builder; `reasoning_effort` is now delivered like any other endpoint
+  - Navigation gains a "365 Open Source Plan" entry; "More tools" drops Thousand Lives
+- 2026.09.24: Hungarian (Magyar) added — 19 interface languages now.
+- 2026.09.22: Custom (OpenAI-compatible) gains two endpoint quick-picks: **9Router** (port 20127 by default) and **OmniRoute** (20128, a TypeScript fork of 9Router) — both self-hosted OpenAI-compatible gateways, click to fill.
+- 2026.09.18: First-load weight trimmed further.
+  - Drawers and modals are **mounted on demand and destroyed on close** instead of sitting in the DOM
+  - Third-party scripts and route prefetching are deferred; `console` calls are stripped from production builds
+- 2026.09.17: **OpenCode Go** added (the subscription tier of OpenCode Zen).
+  - Same host, same account, same API key as Zen — only three things differ: the request path (`/zen/go/v1` vs `/zen/v1`), the SKUs on offer and the billing model. **Go is a $10/month subscription allowance** (the vendor converts it per model: 5 hours ≈ 20%, a week ≈ 50%, a month ≈ 100%), while Zen is a prepaid balance; officially one workspace can have exactly one Go subscriber
+  - The upstream sends no CORS headers, so **API relay is ON by default**
+- 2026.09.15: Two subscription-tier endpoints (Volcengine Coding Plan, Alibaba Bailian Token Plan) join the catalog but **stay out of the default dropdown** — they are separate product lines from the pay-as-you-go ones, and users who know why they want them can switch them on in settings.
+- 2026.08.31: Freer export and cache settings.
+  - **Choose a download folder**: browsers exposing the File System Access API (Chrome / Edge) can pick an export folder once and every export lands there; the browser refuses Desktop / Documents / Downloads themselves, so pick a subfolder
+  - **Single-file mode and cache settings are configured independently** — changing one no longer drags the other
+- 2026.08.24: RTL direction resolved per line; Arabic-script languages get proper ASS fonts.
+  - **Text direction is now decided per line**: in a file mixing Chinese, English and Arabic, each line is laid out by its own first strong-direction character, so an RTL line no longer inherits the block's LTR direction and ends up with punctuation on the wrong side (applies to the source textarea, result area, live panel, failure panel and glossary drawer)
+  - **Persian (fa), Urdu (ur), Pashto (ps), Dari (prs), Sorani Kurdish (ckb) and Uyghur (ug) are registered as Arabic-script**: they previously fell back to Latin, so pairing them with Chinese for a bilingual ASS export assigned a Chinese font with no Arabic glyphs — a screen full of tofu boxes in the player. Hebrew now has its own script bucket too
+  - The ASS style drawer's preview shows a sample sentence in the target script (Hebrew users used to be shown an Arabic sentence)
+- 2026.08.22: New local translation model MiLMMT; multi-line values no longer truncated.
+  - **Added MiLMMT-46** (Xiaomi's open-source translation model, 1B / 4B / 12B): a self-hosted local service in the same class as TranslateGemma, covering 46 languages. **Cantonese is included** (TranslateGemma has none), but Ukrainian and Serbian are not. Pick **"MiLMMT" directly from the service list**: Xiaomi state that post-training stripped the model's instruction-following, so going through Custom (OpenAI-compatible) feeds your system prompt to it as body text. No glossary, no context translation, explicit source language required
+  - **Fix: local translation models truncated multi-line content to its first line** (present in TranslateGemma all along). Subtitles and Markdown were unaffected (they are split per line upstream); **JSON translation was affected** — a multi-line value silently lost everything after line 1. Candidate collapsing now applies only when the source text itself is a single line
+  - **koboldcpp added to the local-runtime quick picks** (port 5001), and the four picks are now identical across Custom / TranslateGemma / MiLMMT; selecting any of them surfaces that runtime's official docs link
+- 2026.08.21: Service catalogue overhaul — 5 providers added, 3 retired, model lists refreshed.
+  - **Added**: StepFun, OpenCode Zen (its `(free)`-suffixed SKUs cost nothing), TokenHub (Tencent's new platform after the Hunyuan migration, also reselling DeepSeek / GLM / Kimi / MiniMax / MiMo), Cerebras (\~3000 tokens/s on gpt-oss-120b plus 1M free tokens per day), and Atlas Cloud
+  - **Retired**: GitHub Models (shut down by GitHub on 2026-07-30), Perplexity Sonar (chat/completions ended early), and the old Tencent Hunyuan endpoint (migrated to TokenHub)
+  - **LiteLLM folded into Custom**: it no longer occupies its own service entry — it's a URL quick-pick under Custom (OpenAI-compatible), alongside the new Together AI / Fireworks AI picks. Everything about using it is unchanged (URL is the credential, API key optional, model name may stay empty)
+  - **Model lists refreshed across the board**: dead ids removed, catalogues rebuilt from official listings. The model field is now a dropdown you can also type into, with the friendly name above the real SKU and a `default` tag on the provider's default model
+  - **Thinking levels are now decided per SKU**: when a vendor ships no "off" value at all, the bottom level is labelled **Min** instead of Off — it still reasons and still bills, so Off would be a lie. Affects Gemini 3.x, Grok 4.5 / 4.6, GPT-OSS on Groq and Cerebras, Kimi K3 / K2.6, and the single SKU Claude Fable 5 (officially Always on); its siblings Opus 5 / Sonnet 5 / Haiku 4.5 can still be turned off
+  - **API relay now covers 22 providers**: OpenCode Zen and TokenHub default to ON (their CORS preflights return 404 / 405, so direct browser calls always fail); the rest default to OFF and prompt you to enable it when a CORS wall is hit
+- 2026.08.12: Live line-by-line subtitle results; ASS / LRC detection fix.
+  - **Live result panel**: every line appears directly under the progress bar the moment it's translated (original on top, translation below, tagged with the real source line number) — no waiting for the batch to finish. Untranslated lines are flagged amber as "not translated", with details left to the failure panel; the panel keeps only a recent window, collapses itself when the run ends, and scrolling up to read mid-run won't yank you back to the bottom
+  - Fixed: some `.ass` / `.lrc` files were misdetected as another format, which "ate" the whole subtitle during translation
+- 2026.08.09: Per-line rescue for chunked translation; whole-run fast stop on credential failure.
+  - **A chunk with the wrong line count is now rescued line by line**: whole-block machine translation (GTX / DeepL / DeepLX / Azure) sends a block and splits the reply back by line, so if the service merges or splits a line, everything after the divergence point gets its neighbour's translation. Line counts are now validated **per block**; on a mismatch the block's cache entry is dropped and every line is resent **individually** (one line in, one line out — misalignment is physically impossible), and only lines that still fail keep the original and land in the failure panel. A single service hiccup no longer turns into a large untranslated stretch
+  - **Credential fast-stop only trusts 401 / 403**: one bad key makes every later language and file fail the same way, so the whole run stops. The test is now the numeric status code — a proxy or challenge page containing the word "Forbidden" can no longer kill an entire batch
+  - **Stricter encoding detection**: BOM-less UTF-16 / UTF-32 is no longer read as UTF-8 (which used to translate, bill for and write out a NUL-riddled mess, then report success)
+- 2026.08.02: Command-line translation (CLI); inline progress bar, Cancel button, and settings locked while running.
+  - **Command-line entry point**: the translation engine is now a platform-agnostic module, and `yarn cli` shares **the same pipeline and the same format parsing/assembly code** as the web app — batching, concurrency, retries, 429 cooldown, glossary, context translation and per-line caching behave identically. All three formats (subtitles, Markdown, JSON) are built in, and it reads the settings JSON exported from the web UI. See [Command-line translation](/en/guide/translation/cli.md)
+  - **The progress bar moved from a modal to inline**: lines done / total, current language and current file, with the Cancel button right beside it. Cancelling **settles within a second** and switches to "Stopped"; everything already translated is in the cache, so clicking Translate again resumes from that checkpoint without billing twice
+  - **Settings and inputs lock while running**: languages, provider, prompts, export format, upload area and source textarea are all frozen — the run executes against the snapshot taken when you clicked Translate, so a mid-run change either does nothing (while the control flips, i.e. the UI lies) or genuinely corrupts the output (clearing the translation being written, or leaving you exporting new source with old translations). Read-only actions (extract plain text, copy, export) are unaffected
+- 2026.07.11: Model lineup refresh; several providers no longer expose temperature.
+  - **Model updates**: OpenAI moves to the GPT-5.6 family (sol / terra / luna, with a new `max` reasoning effort tier; luna is the default low-cost high-volume pick), Claude switches to Opus 4.8 / Sonnet 5 / Fable 5 (adaptive thinking) plus Haiku 4.5 (extended thinking), Qwen defaults to 3.7 Plus, with Kimi and Gemini updated in step
+  - **Temperature control hidden per provider**: OpenAI (GPT-5.x is reasoning-only and returns 400 on non-default values), Claude (the adaptive generation rejects temperature), Gemini (3.x officially recommends keeping the default 1.0), Moonshot Kimi (k2.x locks it), and Azure OpenAI. These no longer send the parameter and the input is hidden — steer tone via the system prompt or thinking effort instead
+- 2026.06.30: Locatable failures and targeted retries.
+  - **Real source line numbers**: the failure panel now reports the actual line number in your source file (previously the in-batch index), so subtitle / Markdown / JSON failures can be checked in place
+  - **Retry only failed languages**: when whole languages fail in a multi-language run, retry just those — the successful ones aren't billed again
+  - Fixes: GTX now throws when the `translations` array comes back short or holey instead of silently blanking those lines; context-mode extraction is guarded against cross-line source echoes
+- 2026.06.29: Visual ASS style configuration for subtitles; much faster cache-hit reruns.
+  - **ASS style drawer**: 4 presets (Default / Large / Cinematic / Boxed) plus a persisted Custom slot; configurable font (can read installed system fonts), size, text color, outline color, outline, shadow, alignment, and vertical margin, with independent box color and opacity for boxed styles
+  - **"Restyle" for native ASS bilingual**: optionally discard the source styles, rebuild the header from your own ASS style, and strip every inline override tag (dialogue-only subtitles). `.ssa` sources are written out as `.ass` after restyling
+  - **Smart export filenames**: the default is now the clean `{name}.{ext}`; `_{lang}` is auto-injected only when one run targets multiple languages and the pattern lacks `{lang}`, so single-language exports stay tidy
+  - **Faster cache-hit reruns**: batched IndexedDB reads, adaptive auto-retry, and throttling skipped on cache hits
+  - **Context lines default 100 → 50**: an over-long context made models more likely to treat context as content and shift the output by a line
+  - Fixes: TranslateGemma bounds its output by input length so local models can't loop into a timeout; local-model (llm / translategemma) timeouts now show a method-specific hint
+- 2026.06.11: New LiteLLM self-hosted gateway; API relay fully user-controlled with self-hosted relay support.
+  - **New LiteLLM provider**: one self-hosted OpenAI-compatible proxy fronting 100+ upstream models, with its own config slot (no need to occupy Custom). The URL is the credential (default `127.0.0.1:4000`), API Key optional (master key); the model field can stay empty when the proxy is started with `litellm --model` — it follows the server default
+  - **Tencent Hunyuan works in browsers again**: the official endpoint currently rejects CORS preflights (direct calls always fail), so it now routes through **API relay by default** and works out of the box; the switch stays available to flip back to direct once Tencent fixes it
+  - **API relay fully user-controlled**: YandexGPT moved from forced relay to "on by default, can be turned off"; all 12 relay-capable providers now accept a **self-hosted relay address** — the precedence is fixed at custom URL > relay switch > official direct, and the switch grays out with a note while a URL is filled in
+  - The relay now passes through the server's `Retry-After` header — rate-limit auto-slowdown through the relay is exactly as precise as direct calls
+  - Fix: CORS failures on Firefox / Safari now show the actionable "enable API relay" hint too (previously only Chrome's error wording was recognized, burning 3 useless retries); all relay-related hints are localized into the 18 UI languages
+- 2026.06.10: Free machine translation overhaul — GTX gateway migration + new Edge (Free) + concurrency fix.
+  - **GTX migrated to a new gateway**: the old `translate.googleapis.com/translate_a` endpoint was tightened by Google's anti-abuse (many IPs redirected to a captcha page, reported as CORS in the browser). It now uses the gateway behind Google's web-translate widget, `translate-pa.googleapis.com` — CORS-correct with better availability. The old endpoint stays as a **Legacy gtx** fallback; you can also paste a self-hosted mirror URL (protocol auto-detected from the address shape)
+  - **New Edge API (Free)**: Microsoft Edge's built-in translator backend (Azure engine) — zero-config and free, on a completely different route from GTX, so if one can't connect you switch to the other. Free machine translation now has three options: GTX / Edge / DeepLX
+  - **GTX concurrency fix**: now translates in batched chunks (\~5000 chars/block, one request per block), cutting request volume sharply versus line-by-line so everyday use rarely hits rate limits; the projection-style progress preview stays live in chunked mode
+  - Fix: removed TranslateGemma's redundant `/models` health check — some LM Studio builds don't route that endpoint, causing "Test connection works but actual translation is blocked"; it now takes the exact same request path as the Test button
+- 2026.06.10: Adaptive rate limiting + fully localized error hints.
+  - **Adaptive 429 slowdown**: when any service gets rate-limited, all of its requests pause and resume automatically (honoring the server's `Retry-After`, otherwise 1s→60s exponential backoff, with jittered resume to avoid a second burst), with a "Rate limited — pausing briefly" notice. GTX Free keeps its fast default concurrency — full speed normally, automatic duty-cycling under throttling
+  - **Fully localized error hints**: HTTP status codes (invalid key, insufficient balance, model not found, unsupported parameter, rate limit, quota exhausted, server errors — 11 classes) now map to actionable hints in all 18 UI languages; the failure panel, tool error toasts, and Test buttons uniformly show "raw reason + hint"; network errors and timeouts get localized copy instead of raw "Failed to fetch"
+  - **Test Connection timeout now follows the "Request timeout" setting** (was a fixed 30s): slow local thinking models no longer fail the test while translating fine; test timeouts are classified separately
+  - Fix: TranslateGemma's preflight check now normalizes URLs the same way the translation service does — bare LAN addresses (e.g. `http://192.168.x.x:1234`) no longer "pass the test but get blocked when translating"
+- 2026.06.10: New **Glossary** feature.
+  - Pin fixed translations for names and domain terms, applied per target language; multiple presets (one per show / project), TSV bulk import/export (optional third column for a target language code — one file imports terms for several languages), editor with search / duplicate warnings / pagination
+  - Multi-layer enforcement: LLMs get only the terms hit by the current text injected per request (no token waste); Qwen-MT uses the official native `translation_options.terms` parameter; lines that ignore a required term are retried once with a stricter instruction; a post-hoc replacement net guarantees terms land on every service
+  - Coverage: all LLM services + Qwen-MT; plain MT APIs (GTX / Google / DeepL / Azure / TranslateGemma) have no in-model term channel, so the glossary card is hidden there
+  - New glossary status chip next to the API status badge showing on/off state and term count — click to jump to settings
+- 2026.06.09: Stability and accessibility hardening.
+  - An adversarial-review hardening pass across the translation engine and the subtitle / Markdown / JSON / text tool groups: placeholder and code-fence protection, format edge cases, and explicit errors for invalid paths / regexes instead of silent no-ops
+  - Subtitle alignment fix: when batch markers go missing, lines are no longer guessed by position — no more shifted translations
+  - Accessibility: skip-to-content link and navigation landmarks added; all tool controls are now keyboard-operable
+- 2026.06.06: Added YandexGPT (AI Studio).
+  - New LLM provider **YandexGPT (AI Studio)**: authenticates with API key + Folder ID; ships YandexGPT 5.1 / Alice AI / Qwen3 / DeepSeek / GPT-OSS SKUs, or paste a full `gpt://` model URI; the official API sends no CORS headers, so requests route through the built-in proxy
+  - TranslateGemma gains an **optional API key** for gated deployments (LM Studio's "require API key", vLLM's `--api-key`, or a reverse-proxy auth layer)
+- 2026.06.01: Added GitHub Models; thinking-control overhaul.
+  - New LLM provider **GitHub Models**: authenticates with a GitHub PAT (`models:read` scope), with a free tier tiered per model (GPT-4.1 / 4.1 Mini / 4o Mini, Mistral Medium 3, Phi-4, Llama 3.3 70B) — a good no-cost entry point for users without a paid key. The gateway doesn't support reasoning params, so no thinking toggle is shown.
+  - Thinking-control overhaul: Mistral (Medium 3.5 / Small 4) and Cohere Command A Reasoning move from always-on to an **off / on** toggle; Perplexity Sonar Deep Research gains **off / low / medium / high**.
+  - Custom (unlisted) models on a thinking-capable provider get a new **three-state off / on / auto** control: off explicitly disables, on enables, auto omits the param to follow the model's default (a fallback for strict providers that error on non-thinking models); defaults to off.
+  - Fix: provider selection guard is now purely derived, so a stale bundle no longer silently overrides the user's choice.
+- 2026.05.26: Translation engine deep-tuning.
+  - New opt-in `maxTokens` cap for Custom (OpenAI-compatible) to prevent local small-model repetition loops; `finish_reason=length` truncation detection added to Claude / Gemini / OpenAI-compat
+  - Default `contextWindow` for Custom local LLM lowered from 100 to 30 to match the behavior of models under 14B
+  - Failure handling: failed lines now auto-fill with original text (output always usable); whole-language failures in multi-language mode aggregate into a dedicated panel with one-click copy-target-language for retry
+  - SRT / VTT bilingual mode adds an **ASS output** option with separate Default / Secondary styles for original and translation — independent font/color/size tweaks in any subtitle editor
+  - Friendly error messages for NetworkError / timeout / cascaded abort — no more raw "Failed to fetch"
+  - Thinking mode toggle now stored per model; UI auto-distinguishes three-level (off/low/med/high) / binary (off/on) / low-high-only effort variants; intrinsic-thinking SKUs no longer show a useless toggle
+  - Language picker overhaul: 122 languages grouped by geography + speaker count; multi-language mode adds Top 10 / Europe / East Asia / Indian Subcontinent presets; single-language mode remembers the last 5 picks; mobile collapses to a single column
+  - DeepLX moved below DeepL in the service dropdown (brand-grouped, stable version first)
+- 2026.05.06: Service catalog v2 — major release.
+  - New MT service: **TranslateGemma** (Google's translation-specialized Gemma derivative, self-hosted)
+  - New LLM providers: MiniMax, Tencent Hunyuan, Baidu ERNIE (Qianfan), Cohere
+  - Quick-pick regional endpoints across providers (Mainland CN / International / US, etc.)
+  - Thinking mode + reasoning effort (low / medium / high) for DeepSeek, NVIDIA NIM, Claude, etc.
+  - New "skip system message" toggle for Custom (OpenAI-compatible), compatible with Gemma chat templates
+  - URL field auto-completes `/v1/chat/completions` on blur — guards against misusing Responses / legacy completions
+  - Standalone Prompt preset management (decoupled from LLM API presets, freely combinable)
+  - Main page now shows an API Status badge plus a one-click source/target language swap
+  - Fixed: cache writes were happening even when caching was disabled; LLM-backed MT (Qwen-MT, TranslateGemma) retry behavior now aligns with LLM
+- 2025.07.29: Added context-aware translation for AI mode.
+- 2025.03.20: Completed i18n (internationalization); fixed known bugs including cache key issues; project open-sourced.
+- 2025.02.28: Added support for custom system and user prompts for LLM model translations.
+- 2025.02.27: Enhanced timeline compatibility for bilingual subtitles, supporting formats that omit the default hour, exceed 100 hours, and display 1 to 3 millisecond digits.
+- 2025.02.21: Added support for batch translating into multiple languages at once.
+- 2025.02.08: Fixed encoding detection issue in multi-file mode; added interfaces for OpenAI and Groq (feedback for other interfaces is welcome).
+- 2025.02.06: Added Siliconflow API; added `temperature` setting for LLM models to control AI translation randomness.
+- 2025.02.05: Fixed an issue where blank lines and DeepLX line breaks were ignored during chunked translation; added separate chunk translation parameters for different APIs.
+- 2025.01.18: Added support for automatic encoding detection for uploaded files; added an option to display translated content above or below the original subtitle line.
+- 2025.01.13: Added a self-hosted DeepLX interface; refactored translation API settings into a separate component to simplify frontend logic.
+- 2025.01.10: Added DeepSeek translation interface. Fixed DeepLX subtitle line break issue; improved translation language search and detection (added support for searching in Chinese/English).
+- 2024.12.19: Added automatic detection for single-file vs. multi-file mode; added automatic source language detection; improved file export naming convention for single-file translations.
+- 2024.12.12: Used p-limit to restrict concurrency, significantly reducing errors with free APIs.
+- 2024.10.12: Added a custom delay setting for the GTX API. (Based on feedback, the previous setting could easily hit the limit after 150 requests, while lower numbers didn't require adjustment).
+- 2024.09.08: Added batch translation limits for the GTX API to ensure stability. Added support for Traditional Chinese.
+- 2024.09.07: Improved recognition of WebVTT format; set `.ass` as the default format for bilingual subtitles and added compatibility for multi-line bilingual processing.
+- 2024.09.06: Added local caching for translation results to speed up the translation of repeated content.
+- 2024.09.05: Added functionality to skip purely numeric or character-based content to avoid unnecessary translations.
+- 2024.08.13: Added bilingual subtitle output feature.
+- 2024.07.11: Added automatic subtitle format matching in single-file mode.
+- 2024.07.06: Added support for `.vtt` and `.ass` subtitle formats.
+- 2024.07.05: Expanded supported languages for subtitle translation to 35.
+- 2024.06.26: Added a feature to extract only the subtitle content.

@@ -1,0 +1,16 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# Tools By AI Docs
+
+> Tools By AI 工具集的使用说明文档
+
+[阅读指南](/guide/) | [打开应用](https://tools.newzone.top/zh)
+
+## Features
+
+- 🤖 **AI 辅助编程**: 通过 AI 辅助编程，快速将创意转化为实用工具，提升开发效率和创新能力。
+- ⚙️ **可控流程定制**: 用户全程掌控每一步流程，确保工具开发精准符合预期需求。
+- 🧩 **工具化任务拆分**: 将复杂任务拆分为独立模块，便于逐步构建和优化各个功能组件。
+- 🛠️ **模块化组合**: 灵活组合各类功能模块，构建个性化工作流，实现多场景应用。
+- 🌐 **多语言无缝支持**: 支持多语言开发与互译，消除语言障碍，让全球用户都能轻松上手。
+- 🤝 **开源共享生态**: 倡导开源与共享，汇聚社区智慧，共同推动 AI 工具生态的持续发展。

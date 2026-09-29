@@ -1,0 +1,95 @@
+> For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
+
+# JSON 键值映射工具
+
+## 功能概述
+
+[JSON 键值映射工具](https://tools.newzone.top/zh/json-value-transformer) 用于在 JSON 数据结构间执行值映射和转换操作。该工具允许用户定义键映射关系，将源 JSON 中特定路径的值复制到目标路径，同时保持 JSON 结构的完整性。
+
+![JSON 键值映射工具界面](/img/json-value-transformer-zh.webp "JSON 键值映射工具使用界面")
+
+### 主要应用场景
+
+- 多语言内容转换：将源语言内容复制到多个目标语言字段
+- 数据结构重组：在复杂 JSON 结构间迁移数据
+- 大规模 JSON 数据处理：支持处理大型 JSON 文件
+- JSON 路径映射：使用 JSONPath 语法进行精确数据定位
+
+## 使用指南
+
+### 基本操作流程
+
+1. **选择映射模式**
+   - 在配置卡片顶部的分段控件上选择"自定义映射"或"预设映射 · AIShort"
+   - 预设映射针对 AIShort 多语言处理进行了优化，选中后会直接列出所有 11 个目标键名
+
+2. **设置键映射关系**
+   - **自定义映射模式**：添加输入键和输出键对
+   - **预设映射模式**：自动加载默认的多语言映射配置（`en.prompt` 到多种语言）
+
+3. **提供源 JSON 数据**
+   - 在文本区域粘贴 JSON 内容
+   - 或通过拖放区域上传 `.json` 或 `.txt` 文件
+
+4. **执行转换**
+   - 点击"开始处理"按钮启动转换过程
+   - 系统会验证输入和输出键是否存在于 JSON 中
+
+5. **处理结果**
+   - 转换后的 JSON 将显示在结果区域
+   - 可以复制完整结果、复制特定节点或下载结果文件
+
+### 高级功能
+
+- **大文件友好**：超大 JSON 走文件上传处理
+- **文件上传**：支持拖放或选择文件上传
+- **结果管理**：
+  - 复制完整 JSON 结果
+  - 复制特定 JSON 节点
+  - 下载处理后的 JSON 文件
+
+## 键映射详解
+
+### 映射语法
+
+工具使用 JSONPath 语法定位 JSON 中的元素：
+
+- 使用点符号表示路径，如 `en.prompt`
+- 系统将查找指定路径的值，并将其复制到目标路径
+
+### 预设映射配置
+
+预设模式自动配置以下映射关系：
+
+- `en.prompt` → `ar.prompt` (阿拉伯语)
+- `en.prompt` → `bn.prompt` (孟加拉语)
+- `en.prompt` → `de.prompt` (德语)
+- `en.prompt` → `es.prompt` (西班牙语)
+- `en.prompt` → `fr.prompt` (法语)
+- `en.prompt` → `hi.prompt` (印地语)
+- `en.prompt` → `it.prompt` (意大利语)
+- `en.prompt` → `ja.prompt` (日语)
+- `en.prompt` → `ko.prompt` (韩语)
+- `en.prompt` → `pt.prompt` (葡萄牙语)
+- `en.prompt` → `ru.prompt` (俄语)
+
+## 注意事项
+
+1. **JSON 格式验证**
+   - 输入必须是有效的 JSON 格式
+   - 转换前会进行预处理和验证
+
+2. **键路径验证**
+   - 确保输入和输出键都存在于 JSON 中
+   - 系统会检查并提示无效键路径
+
+3. **错误处理机制**
+   - 输入为空时会显示错误提示
+   - JSON 格式无效时会提示错误
+   - 键不存在时会显示具体错误信息
+
+4. **性能考虑**
+   - 处理大型 JSON 时建议用文件上传代替粘贴
+   - 复杂的嵌套结构可能需要更长处理时间
+
+使用此工具可显著提高 JSON 数据结构间值转换的效率，特别适合多语言内容处理和复杂 JSON 重构场景。
