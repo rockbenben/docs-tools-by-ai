@@ -1,0 +1,1061 @@
+{
+  "groups": [
+    {
+      "key": "common",
+      "label": {
+        "zh": "常用",
+        "en": "Common"
+      },
+      "codes": [
+        "en",
+        "zh",
+        "zh-hant",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "ko",
+        "hi",
+        "ar",
+        "ru",
+        "pt-br",
+        "id",
+        "vi",
+        "it",
+        "yue"
+      ]
+    },
+    {
+      "key": "europe",
+      "label": {
+        "zh": "欧洲",
+        "en": "Europe"
+      },
+      "codes": [
+        "pl",
+        "uk",
+        "nl",
+        "ro",
+        "el",
+        "hu",
+        "sv",
+        "cs",
+        "pt-pt",
+        "ca",
+        "sr",
+        "bg",
+        "hy",
+        "da",
+        "sq",
+        "fi",
+        "nb",
+        "sk",
+        "hr",
+        "be",
+        "scn",
+        "ka",
+        "lmo",
+        "lt",
+        "gl",
+        "bs",
+        "sl",
+        "mk",
+        "lv",
+        "et",
+        "is",
+        "mt",
+        "cy",
+        "ga",
+        "br",
+        "eu",
+        "yi",
+        "lb",
+        "oc",
+        "an",
+        "la",
+        "eo"
+      ]
+    },
+    {
+      "key": "middleEast",
+      "label": {
+        "zh": "中东",
+        "en": "Middle East"
+      },
+      "codes": [
+        "tr",
+        "he",
+        "fa",
+        "ur",
+        "ps",
+        "prs",
+        "ckb",
+        "kmr"
+      ]
+    },
+    {
+      "key": "centralAsia",
+      "label": {
+        "zh": "中亚",
+        "en": "Central Asia"
+      },
+      "codes": [
+        "uz",
+        "kk",
+        "ky",
+        "tk",
+        "az",
+        "tg",
+        "mn",
+        "ba",
+        "tt",
+        "ug"
+      ]
+    },
+    {
+      "key": "southAsia",
+      "label": {
+        "zh": "南亚",
+        "en": "South Asia"
+      },
+      "codes": [
+        "bn",
+        "mr",
+        "te",
+        "ta",
+        "gu",
+        "kn",
+        "pa",
+        "ml",
+        "bho",
+        "mai",
+        "ne",
+        "si",
+        "as",
+        "gom",
+        "sa"
+      ]
+    },
+    {
+      "key": "seAsia",
+      "label": {
+        "zh": "东南亚",
+        "en": "Southeast Asia"
+      },
+      "codes": [
+        "th",
+        "lo",
+        "my",
+        "km",
+        "ms",
+        "fil",
+        "jv",
+        "su",
+        "ace",
+        "pag",
+        "pam",
+        "ceb"
+      ]
+    },
+    {
+      "key": "africa",
+      "label": {
+        "zh": "非洲",
+        "en": "Africa"
+      },
+      "codes": [
+        "sw",
+        "ha",
+        "am",
+        "ig",
+        "wo",
+        "xh",
+        "zu",
+        "af",
+        "om",
+        "st",
+        "tn",
+        "ts",
+        "mg",
+        "ln"
+      ]
+    },
+    {
+      "key": "americasOceania",
+      "label": {
+        "zh": "美洲及大洋洲",
+        "en": "Americas & Oceania"
+      },
+      "codes": [
+        "ht",
+        "qu",
+        "ay",
+        "gn",
+        "mi"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "value": "auto",
+      "name": "Auto",
+      "nativelabel": "Auto",
+      "zh": "自动检测",
+      "group": null
+    },
+    {
+      "value": "en",
+      "name": "English",
+      "nativelabel": "English",
+      "zh": "英语",
+      "group": "common"
+    },
+    {
+      "value": "zh",
+      "name": "Simplified Chinese",
+      "nativelabel": "简体",
+      "zh": "中文",
+      "group": "common"
+    },
+    {
+      "value": "zh-hant",
+      "name": "Traditional Chinese",
+      "nativelabel": "繁體",
+      "zh": "繁体中文",
+      "group": "common"
+    },
+    {
+      "value": "es",
+      "name": "Spanish",
+      "nativelabel": "Español",
+      "zh": "西班牙语",
+      "group": "common"
+    },
+    {
+      "value": "fr",
+      "name": "French",
+      "nativelabel": "Français",
+      "zh": "法语",
+      "group": "common"
+    },
+    {
+      "value": "de",
+      "name": "German",
+      "nativelabel": "Deutsch",
+      "zh": "德语",
+      "group": "common"
+    },
+    {
+      "value": "ja",
+      "name": "Japanese",
+      "nativelabel": "日本語",
+      "zh": "日语",
+      "group": "common"
+    },
+    {
+      "value": "ko",
+      "name": "Korean",
+      "nativelabel": "한국어",
+      "zh": "韩语",
+      "group": "common"
+    },
+    {
+      "value": "hi",
+      "name": "Hindi",
+      "nativelabel": "हिन्दी",
+      "zh": "印地语",
+      "group": "common"
+    },
+    {
+      "value": "ar",
+      "name": "Arabic",
+      "nativelabel": "العربية",
+      "zh": "阿拉伯语",
+      "group": "common"
+    },
+    {
+      "value": "ru",
+      "name": "Russian",
+      "nativelabel": "Русский",
+      "zh": "俄语",
+      "group": "common"
+    },
+    {
+      "value": "pt-br",
+      "name": "Portuguese (Brazil)",
+      "nativelabel": "Português (Brasil)",
+      "zh": "葡萄牙语（巴西）",
+      "group": "common"
+    },
+    {
+      "value": "id",
+      "name": "Indonesian",
+      "nativelabel": "Bahasa Indonesia",
+      "zh": "印尼语",
+      "group": "common"
+    },
+    {
+      "value": "vi",
+      "name": "Vietnamese",
+      "nativelabel": "Tiếng Việt",
+      "zh": "越南语",
+      "group": "common"
+    },
+    {
+      "value": "it",
+      "name": "Italian",
+      "nativelabel": "Italiano",
+      "zh": "意大利语",
+      "group": "common"
+    },
+    {
+      "value": "yue",
+      "name": "Cantonese",
+      "nativelabel": "粵語",
+      "zh": "粤语",
+      "group": "common"
+    },
+    {
+      "value": "pl",
+      "name": "Polish",
+      "nativelabel": "Polski",
+      "zh": "波兰语",
+      "group": "europe"
+    },
+    {
+      "value": "uk",
+      "name": "Ukrainian",
+      "nativelabel": "Українська",
+      "zh": "乌克兰语",
+      "group": "europe"
+    },
+    {
+      "value": "nl",
+      "name": "Dutch",
+      "nativelabel": "Nederlands",
+      "zh": "荷兰语",
+      "group": "europe"
+    },
+    {
+      "value": "ro",
+      "name": "Romanian",
+      "nativelabel": "Română",
+      "zh": "罗马尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "el",
+      "name": "Greek",
+      "nativelabel": "Ελληνικά",
+      "zh": "希腊语",
+      "group": "europe"
+    },
+    {
+      "value": "hu",
+      "name": "Hungarian",
+      "nativelabel": "Magyar",
+      "zh": "匈牙利语",
+      "group": "europe"
+    },
+    {
+      "value": "sv",
+      "name": "Swedish",
+      "nativelabel": "Svenska",
+      "zh": "瑞典语",
+      "group": "europe"
+    },
+    {
+      "value": "cs",
+      "name": "Czech",
+      "nativelabel": "Čeština",
+      "zh": "捷克语",
+      "group": "europe"
+    },
+    {
+      "value": "pt-pt",
+      "name": "Portuguese (Portugal)",
+      "nativelabel": "Português (Portugal)",
+      "zh": "葡萄牙语（葡萄牙）",
+      "group": "europe"
+    },
+    {
+      "value": "ca",
+      "name": "Catalan",
+      "nativelabel": "Català",
+      "zh": "加泰罗尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "sr",
+      "name": "Serbian",
+      "nativelabel": "Српски",
+      "zh": "塞尔维亚语",
+      "group": "europe"
+    },
+    {
+      "value": "bg",
+      "name": "Bulgarian",
+      "nativelabel": "Български",
+      "zh": "保加利亚语",
+      "group": "europe"
+    },
+    {
+      "value": "hy",
+      "name": "Armenian",
+      "nativelabel": "Հայերեն",
+      "zh": "亚美尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "da",
+      "name": "Danish",
+      "nativelabel": "Dansk",
+      "zh": "丹麦语",
+      "group": "europe"
+    },
+    {
+      "value": "sq",
+      "name": "Albanian",
+      "nativelabel": "Shqip",
+      "zh": "阿尔巴尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "fi",
+      "name": "Finnish",
+      "nativelabel": "Suomi",
+      "zh": "芬兰语",
+      "group": "europe"
+    },
+    {
+      "value": "nb",
+      "name": "Norwegian Bokmål",
+      "nativelabel": "Norsk bokmål",
+      "zh": "挪威语",
+      "group": "europe"
+    },
+    {
+      "value": "sk",
+      "name": "Slovak",
+      "nativelabel": "Slovenčina",
+      "zh": "斯洛伐克语",
+      "group": "europe"
+    },
+    {
+      "value": "hr",
+      "name": "Croatian",
+      "nativelabel": "Hrvatski",
+      "zh": "克罗地亚语",
+      "group": "europe"
+    },
+    {
+      "value": "be",
+      "name": "Belarusian",
+      "nativelabel": "Беларуская",
+      "zh": "白俄罗斯语",
+      "group": "europe"
+    },
+    {
+      "value": "scn",
+      "name": "Sicilian",
+      "nativelabel": "Sicilianu",
+      "zh": "西西里语",
+      "group": "europe"
+    },
+    {
+      "value": "ka",
+      "name": "Georgian",
+      "nativelabel": "ქართული",
+      "zh": "格鲁吉亚语",
+      "group": "europe"
+    },
+    {
+      "value": "lmo",
+      "name": "Lombard",
+      "nativelabel": "Lombard",
+      "zh": "伦巴第语",
+      "group": "europe"
+    },
+    {
+      "value": "lt",
+      "name": "Lithuanian",
+      "nativelabel": "Lietuvių",
+      "zh": "立陶宛语",
+      "group": "europe"
+    },
+    {
+      "value": "gl",
+      "name": "Galician",
+      "nativelabel": "Galego",
+      "zh": "加利西亚语",
+      "group": "europe"
+    },
+    {
+      "value": "bs",
+      "name": "Bosnian",
+      "nativelabel": "Bosanski",
+      "zh": "波斯尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "sl",
+      "name": "Slovenian",
+      "nativelabel": "Slovenščina",
+      "zh": "斯洛文尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "mk",
+      "name": "Macedonian",
+      "nativelabel": "Македонски",
+      "zh": "马其顿语",
+      "group": "europe"
+    },
+    {
+      "value": "lv",
+      "name": "Latvian",
+      "nativelabel": "Latviešu",
+      "zh": "拉脱维亚语",
+      "group": "europe"
+    },
+    {
+      "value": "et",
+      "name": "Estonian",
+      "nativelabel": "Eesti",
+      "zh": "爱沙尼亚语",
+      "group": "europe"
+    },
+    {
+      "value": "is",
+      "name": "Icelandic",
+      "nativelabel": "Íslenska",
+      "zh": "冰岛语",
+      "group": "europe"
+    },
+    {
+      "value": "mt",
+      "name": "Maltese",
+      "nativelabel": "Malti",
+      "zh": "马耳他语",
+      "group": "europe"
+    },
+    {
+      "value": "cy",
+      "name": "Welsh",
+      "nativelabel": "Cymraeg",
+      "zh": "威尔士语",
+      "group": "europe"
+    },
+    {
+      "value": "ga",
+      "name": "Irish",
+      "nativelabel": "Gaeilge",
+      "zh": "爱尔兰语",
+      "group": "europe"
+    },
+    {
+      "value": "br",
+      "name": "Breton",
+      "nativelabel": "Brezhoneg",
+      "zh": "布列塔尼语",
+      "group": "europe"
+    },
+    {
+      "value": "eu",
+      "name": "Basque",
+      "nativelabel": "Euskara",
+      "zh": "巴斯克语",
+      "group": "europe"
+    },
+    {
+      "value": "yi",
+      "name": "Yiddish",
+      "nativelabel": "ייִדיש",
+      "zh": "意第绪语",
+      "group": "europe"
+    },
+    {
+      "value": "lb",
+      "name": "Luxembourgish",
+      "nativelabel": "Lëtzebuergesch",
+      "zh": "卢森堡语",
+      "group": "europe"
+    },
+    {
+      "value": "oc",
+      "name": "Occitan",
+      "nativelabel": "Occitan",
+      "zh": "奥克语",
+      "group": "europe"
+    },
+    {
+      "value": "an",
+      "name": "Aragonese",
+      "nativelabel": "Aragonés",
+      "zh": "阿拉贡语",
+      "group": "europe"
+    },
+    {
+      "value": "la",
+      "name": "Latin",
+      "nativelabel": "Latina",
+      "zh": "拉丁语",
+      "group": "europe"
+    },
+    {
+      "value": "eo",
+      "name": "Esperanto",
+      "nativelabel": "Esperanto",
+      "zh": "世界语",
+      "group": "europe"
+    },
+    {
+      "value": "tr",
+      "name": "Turkish",
+      "nativelabel": "Türkçe",
+      "zh": "土耳其语",
+      "group": "middleEast"
+    },
+    {
+      "value": "he",
+      "name": "Hebrew",
+      "nativelabel": "עברית",
+      "zh": "希伯来语",
+      "group": "middleEast"
+    },
+    {
+      "value": "fa",
+      "name": "Persian",
+      "nativelabel": "فارسی",
+      "zh": "波斯语",
+      "group": "middleEast"
+    },
+    {
+      "value": "ur",
+      "name": "Urdu",
+      "nativelabel": "اردو",
+      "zh": "乌尔都语",
+      "group": "middleEast"
+    },
+    {
+      "value": "ps",
+      "name": "Pashto",
+      "nativelabel": "پښتو",
+      "zh": "普什图语",
+      "group": "middleEast"
+    },
+    {
+      "value": "prs",
+      "name": "Dari",
+      "nativelabel": "دری",
+      "zh": "达里语",
+      "group": "middleEast"
+    },
+    {
+      "value": "ckb",
+      "name": "Central Kurdish",
+      "nativelabel": "کوردی",
+      "zh": "中库尔德语",
+      "group": "middleEast"
+    },
+    {
+      "value": "kmr",
+      "name": "Northern Kurdish",
+      "nativelabel": "Kurdî",
+      "zh": "北库尔德语",
+      "group": "middleEast"
+    },
+    {
+      "value": "uz",
+      "name": "Uzbek",
+      "nativelabel": "Oʻzbekcha",
+      "zh": "乌兹别克语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "kk",
+      "name": "Kazakh",
+      "nativelabel": "Қазақ тілі",
+      "zh": "哈萨克语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "ky",
+      "name": "Kyrgyz",
+      "nativelabel": "Кыргызча",
+      "zh": "吉尔吉斯语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "tk",
+      "name": "Turkmen",
+      "nativelabel": "Türkmençe",
+      "zh": "土库曼语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "az",
+      "name": "Azerbaijani",
+      "nativelabel": "Azərbaycan",
+      "zh": "阿塞拜疆语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "tg",
+      "name": "Tajik",
+      "nativelabel": "Тоҷикӣ",
+      "zh": "塔吉克语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "mn",
+      "name": "Mongolian",
+      "nativelabel": "Монгол",
+      "zh": "蒙古语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "ba",
+      "name": "Bashkir",
+      "nativelabel": "Башҡортса",
+      "zh": "巴什基尔语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "tt",
+      "name": "Tatar",
+      "nativelabel": "Татар теле",
+      "zh": "鞑靼语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "ug",
+      "name": "Uyghur",
+      "nativelabel": "ئۇيغۇرچە",
+      "zh": "维吾尔语",
+      "group": "centralAsia"
+    },
+    {
+      "value": "bn",
+      "name": "Bengali",
+      "nativelabel": "বাংলা",
+      "zh": "孟加拉语",
+      "group": "southAsia"
+    },
+    {
+      "value": "mr",
+      "name": "Marathi",
+      "nativelabel": "मराठी",
+      "zh": "马拉地语",
+      "group": "southAsia"
+    },
+    {
+      "value": "te",
+      "name": "Telugu",
+      "nativelabel": "తెలుగు",
+      "zh": "泰卢固语",
+      "group": "southAsia"
+    },
+    {
+      "value": "ta",
+      "name": "Tamil",
+      "nativelabel": "தமிழ்",
+      "zh": "泰米尔语",
+      "group": "southAsia"
+    },
+    {
+      "value": "gu",
+      "name": "Gujarati",
+      "nativelabel": "ગુજરાતી",
+      "zh": "古吉拉特语",
+      "group": "southAsia"
+    },
+    {
+      "value": "kn",
+      "name": "Kannada",
+      "nativelabel": "ಕನ್ನಡ",
+      "zh": "卡纳达语",
+      "group": "southAsia"
+    },
+    {
+      "value": "pa",
+      "name": "Punjabi",
+      "nativelabel": "ਪੰਜਾਬੀ",
+      "zh": "旁遮普语",
+      "group": "southAsia"
+    },
+    {
+      "value": "ml",
+      "name": "Malayalam",
+      "nativelabel": "മലയാളം",
+      "zh": "马拉雅拉姆语",
+      "group": "southAsia"
+    },
+    {
+      "value": "bho",
+      "name": "Bhojpuri",
+      "nativelabel": "भोजपुरी",
+      "zh": "博杰普尔语",
+      "group": "southAsia"
+    },
+    {
+      "value": "mai",
+      "name": "Maithili",
+      "nativelabel": "मैथिली",
+      "zh": "迈蒂利语",
+      "group": "southAsia"
+    },
+    {
+      "value": "ne",
+      "name": "Nepali",
+      "nativelabel": "नेपाली",
+      "zh": "尼泊尔语",
+      "group": "southAsia"
+    },
+    {
+      "value": "si",
+      "name": "Sinhala",
+      "nativelabel": "සිංහල",
+      "zh": "僧伽罗语",
+      "group": "southAsia"
+    },
+    {
+      "value": "as",
+      "name": "Assamese",
+      "nativelabel": "অসমীয়া",
+      "zh": "阿萨姆语",
+      "group": "southAsia"
+    },
+    {
+      "value": "gom",
+      "name": "Konkani",
+      "nativelabel": "कोंकणी",
+      "zh": "孔卡尼语",
+      "group": "southAsia"
+    },
+    {
+      "value": "sa",
+      "name": "Sanskrit",
+      "nativelabel": "संस्कृतम्",
+      "zh": "梵语",
+      "group": "southAsia"
+    },
+    {
+      "value": "th",
+      "name": "Thai",
+      "nativelabel": "ไทย",
+      "zh": "泰语",
+      "group": "seAsia"
+    },
+    {
+      "value": "lo",
+      "name": "Lao",
+      "nativelabel": "ລາວ",
+      "zh": "老挝语",
+      "group": "seAsia"
+    },
+    {
+      "value": "my",
+      "name": "Burmese",
+      "nativelabel": "မြန်မာ",
+      "zh": "缅甸语",
+      "group": "seAsia"
+    },
+    {
+      "value": "km",
+      "name": "Khmer",
+      "nativelabel": "ខ្មែរ",
+      "zh": "高棉语",
+      "group": "seAsia"
+    },
+    {
+      "value": "ms",
+      "name": "Malay",
+      "nativelabel": "Bahasa Melayu",
+      "zh": "马来语",
+      "group": "seAsia"
+    },
+    {
+      "value": "fil",
+      "name": "Filipino(Tagalog)",
+      "nativelabel": "Tagalog",
+      "zh": "菲律宾语（塔加拉语）",
+      "group": "seAsia"
+    },
+    {
+      "value": "jv",
+      "name": "Javanese",
+      "nativelabel": "Basa Jawa",
+      "zh": "爪哇语",
+      "group": "seAsia"
+    },
+    {
+      "value": "su",
+      "name": "Sundanese",
+      "nativelabel": "Basa Sunda",
+      "zh": "巽他语",
+      "group": "seAsia"
+    },
+    {
+      "value": "ace",
+      "name": "Acehnese",
+      "nativelabel": "Acèh",
+      "zh": "亚齐语",
+      "group": "seAsia"
+    },
+    {
+      "value": "pag",
+      "name": "Pangasinan",
+      "nativelabel": "Salitan Pangasinan",
+      "zh": "邦阿西楠语",
+      "group": "seAsia"
+    },
+    {
+      "value": "pam",
+      "name": "Pampangan",
+      "nativelabel": "Kapampangan",
+      "zh": "邦板牙语",
+      "group": "seAsia"
+    },
+    {
+      "value": "ceb",
+      "name": "Cebuano",
+      "nativelabel": "Cebuano",
+      "zh": "宿务语",
+      "group": "seAsia"
+    },
+    {
+      "value": "sw",
+      "name": "Swahili",
+      "nativelabel": "Kiswahili",
+      "zh": "斯瓦希里语",
+      "group": "africa"
+    },
+    {
+      "value": "ha",
+      "name": "Hausa",
+      "nativelabel": "هَرْشٜىٰن هَوْسَا",
+      "zh": "豪萨语",
+      "group": "africa"
+    },
+    {
+      "value": "am",
+      "name": "Amharic",
+      "nativelabel": "አማርኛ",
+      "zh": "阿姆哈拉语",
+      "group": "africa"
+    },
+    {
+      "value": "ig",
+      "name": "Igbo",
+      "nativelabel": "Igbo",
+      "zh": "伊博语",
+      "group": "africa"
+    },
+    {
+      "value": "wo",
+      "name": "Wolof",
+      "nativelabel": "Wolof",
+      "zh": "沃洛夫语",
+      "group": "africa"
+    },
+    {
+      "value": "xh",
+      "name": "Xhosa",
+      "nativelabel": "isiXhosa",
+      "zh": "科萨语",
+      "group": "africa"
+    },
+    {
+      "value": "zu",
+      "name": "Zulu",
+      "nativelabel": "isiZulu",
+      "zh": "祖鲁语",
+      "group": "africa"
+    },
+    {
+      "value": "af",
+      "name": "Afrikaans",
+      "nativelabel": "Afrikaans",
+      "zh": "南非荷兰语",
+      "group": "africa"
+    },
+    {
+      "value": "om",
+      "name": "Oromo",
+      "nativelabel": "Afaan Oromoo",
+      "zh": "奥罗莫语",
+      "group": "africa"
+    },
+    {
+      "value": "st",
+      "name": "Southern Sotho",
+      "nativelabel": "Sesotho",
+      "zh": "南索托语",
+      "group": "africa"
+    },
+    {
+      "value": "tn",
+      "name": "Tswana",
+      "nativelabel": "Setswana",
+      "zh": "茨瓦纳语",
+      "group": "africa"
+    },
+    {
+      "value": "ts",
+      "name": "Tsonga",
+      "nativelabel": "Xitsonga",
+      "zh": "聪加语",
+      "group": "africa"
+    },
+    {
+      "value": "mg",
+      "name": "Malagasy",
+      "nativelabel": "Malagasy",
+      "zh": "马拉加西语",
+      "group": "africa"
+    },
+    {
+      "value": "ln",
+      "name": "Lingala",
+      "nativelabel": "Lingála",
+      "zh": "林加拉语",
+      "group": "africa"
+    },
+    {
+      "value": "ht",
+      "name": "Haitian Creole",
+      "nativelabel": "Kreyòl ayisyen",
+      "zh": "海地克里奥尔语",
+      "group": "americasOceania"
+    },
+    {
+      "value": "qu",
+      "name": "Quechua",
+      "nativelabel": "Runa Simi",
+      "zh": "克丘亚语",
+      "group": "americasOceania"
+    },
+    {
+      "value": "ay",
+      "name": "Aymara",
+      "nativelabel": "Aymar aru",
+      "zh": "艾马拉语",
+      "group": "americasOceania"
+    },
+    {
+      "value": "gn",
+      "name": "Guarani",
+      "nativelabel": "Avañe'ẽ",
+      "zh": "瓜拉尼语",
+      "group": "americasOceania"
+    },
+    {
+      "value": "mi",
+      "name": "Maori",
+      "nativelabel": "Māori",
+      "zh": "毛利语",
+      "group": "americasOceania"
+    }
+  ]
+}

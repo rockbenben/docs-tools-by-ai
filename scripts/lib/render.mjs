@@ -31,14 +31,10 @@ export function counts(data) {
   };
 }
 
-// 中文标注是编辑加的稳定别名（不是数据）；新增家不标注也只是少个括号，不会报错。
-const ANNOTATE = {
-  zh: { doubao: "（火山方舟）", qianfan: "（千帆）", stepfun: "（阶跃星辰）", tokenhub: "（腾讯）" },
-  en: {},
-};
-
-const named = (p, locale) => p.label + (ANNOTATE[locale]?.[p.key] ?? "");
-const roster = (items, locale, sep) => items.map((p) => named(p, locale)).join(sep);
+// registry 的 label 自带别名（如 "StepFun (阶跃星辰)"、"Doubao (Volcengine)"），
+// 所以这里不再叠一层中文标注 —— 叠了会渲染出「（阶跃星辰）（阶跃星辰）」。
+const named = (p) => p.label;
+const roster = (items, sep) => items.map(named).join(sep);
 
 function providerList(data, locale) {
   const visible = data.providers.filter(isVisible);
@@ -51,20 +47,20 @@ function providerList(data, locale) {
   const n = counts(data);
 
   if (locale === "zh") {
-    const tail = custom ? `，以及 **${named(custom, "zh")}**` : "";
+    const tail = custom ? `，以及 **${named(custom)}**` : "";
     return [
       `支持的 LLM 接口共 ${n.llmVisible} 个，分两组：`,
       "",
-      `- **厂商直连（${direct.length} 家）**：${roster(direct, "zh", "、")}`,
-      `- **聚合网关与自托管（${aggregator.length} 家）**：${roster(aggregatorNames, "zh", "、")}${tail}`,
+      `- **厂商直连（${direct.length} 家）**：${roster(direct, "、")}`,
+      `- **聚合网关与自托管（${aggregator.length} 家）**：${roster(aggregatorNames, "、")}${tail}`,
     ].join("\n");
   }
-  const tail = custom ? `, plus **${named(custom, "en")}**` : "";
+  const tail = custom ? `, plus **${named(custom)}**` : "";
   return [
     `${n.llmVisible} LLM endpoints are supported, in two groups:`,
     "",
-    `- **Direct vendors (${direct.length})**: ${roster(direct, "en", ", ")}`,
-    `- **Aggregators & self-hosted (${aggregator.length})**: ${roster(aggregatorNames, "en", ", ")}${tail}`,
+    `- **Direct vendors (${direct.length})**: ${roster(direct, ", ")}`,
+    `- **Aggregators & self-hosted (${aggregator.length})**: ${roster(aggregatorNames, ", ")}${tail}`,
   ].join("\n");
 }
 
@@ -76,18 +72,18 @@ function relayList(data, locale) {
 
   if (locale === "zh") {
     const lines = [
-      `除 ${roster(exceptions, "zh", "、")} 之外的每个 LLM 接口（共 ${withRelay.length} 个：${roster(withRelay, "zh", "、")}）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：`,
+      `除 ${roster(exceptions, "、")} 之外的每个 LLM 接口（共 ${withRelay.length} 个：${roster(withRelay, "、")}）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：`,
     ];
     if (onByDefault.length) {
-      lines.push("", `${roster(onByDefault, "zh", "、")} 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。`);
+      lines.push("", `${roster(onByDefault, "、")} 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。`);
     }
     return lines.join("\n");
   }
   const lines = [
-    `Every LLM provider except ${roster(exceptions, "en", ", ")} — ${withRelay.length} in total: ${roster(withRelay, "en", ", ")} — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):`,
+    `Every LLM provider except ${roster(exceptions, ", ")} — ${withRelay.length} in total: ${roster(withRelay, ", ")} — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):`,
   ];
   if (onByDefault.length) {
-    lines.push("", `${roster(onByDefault, "en", ", ")} **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.`);
+    lines.push("", `${roster(onByDefault, ", ")} **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.`);
   }
   return lines.join("\n");
 }

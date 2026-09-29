@@ -1,0 +1,173 @@
+[
+  {
+    "key": "subtitleTranslator",
+    "path": "subtitle-translator",
+    "group": "translate",
+    "nameZh": "字幕翻译器",
+    "nameEn": "Subtitle Translator",
+    "appUrlZh": "https://tools.newzone.top/zh/subtitle-translator",
+    "appUrlEn": "https://tools.newzone.top/en/subtitle-translator"
+  },
+  {
+    "key": "mdTranslator",
+    "path": "md-translator",
+    "group": "translate",
+    "nameZh": "Markdown 翻译",
+    "nameEn": "Markdown Translator",
+    "appUrlZh": "https://tools.newzone.top/zh/md-translator",
+    "appUrlEn": "https://tools.newzone.top/en/md-translator"
+  },
+  {
+    "key": "jsonTranslate",
+    "path": "json-translate",
+    "group": "translate",
+    "nameZh": "JSON 多语言翻译",
+    "nameEn": "JSON Multi-Language Translator",
+    "appUrlZh": "https://tools.newzone.top/zh/json-translate",
+    "appUrlEn": "https://tools.newzone.top/en/json-translate"
+  },
+  {
+    "key": "textSplitter",
+    "path": "text-splitter",
+    "group": "textParser",
+    "nameZh": "文本分割",
+    "nameEn": "Text Splitter",
+    "appUrlZh": "https://tools.newzone.top/zh/text-splitter",
+    "appUrlEn": "https://tools.newzone.top/en/text-splitter"
+  },
+  {
+    "key": "textJoiner",
+    "path": "text-joiner",
+    "group": "textParser",
+    "nameZh": "文本拼接",
+    "nameEn": "Text Joiner",
+    "appUrlZh": "https://tools.newzone.top/zh/text-joiner",
+    "appUrlEn": "https://tools.newzone.top/en/text-joiner"
+  },
+  {
+    "key": "textDiff",
+    "path": "text-diff",
+    "group": "textParser",
+    "nameZh": "文本对照",
+    "nameEn": "Text Diff",
+    "appUrlZh": "https://tools.newzone.top/zh/text-diff",
+    "appUrlEn": "https://tools.newzone.top/en/text-diff"
+  },
+  {
+    "key": "chineseConversion",
+    "path": "chinese-conversion",
+    "group": "textParser",
+    "nameZh": "简繁转换",
+    "nameEn": "Chinese Conversion",
+    "appUrlZh": "https://tools.newzone.top/zh/chinese-conversion",
+    "appUrlEn": "https://tools.newzone.top/en/chinese-conversion"
+  },
+  {
+    "key": "novelProcessor",
+    "path": "novel-processor",
+    "group": "textParser",
+    "nameZh": "小说排版整理",
+    "nameEn": "Chinese Novel Formatter",
+    "appUrlZh": "https://tools.newzone.top/zh/novel-processor",
+    "appUrlEn": "https://tools.newzone.top/en/novel-processor"
+  },
+  {
+    "key": "textToolbox",
+    "path": "text-toolbox",
+    "group": "textParser",
+    "nameZh": "多功能文本处理",
+    "nameEn": "Multi-Function Text Processor",
+    "appUrlZh": "https://tools.newzone.top/zh/text-toolbox",
+    "appUrlEn": "https://tools.newzone.top/en/text-toolbox"
+  },
+  {
+    "key": "dataBatch",
+    "path": "data-batch",
+    "group": "textParser",
+    "nameZh": "数据批处理",
+    "nameEn": "Batch Data Processor",
+    "appUrlZh": "https://tools.newzone.top/zh/data-batch",
+    "appUrlEn": "https://tools.newzone.top/en/data-batch"
+  },
+  {
+    "key": "jsonValueExtractor",
+    "path": "json-value-extractor",
+    "group": "jsonParser",
+    "nameZh": "JSON 字段值提取",
+    "nameEn": "JSON Field Value Extractor",
+    "appUrlZh": "https://tools.newzone.top/zh/json-value-extractor",
+    "appUrlEn": "https://tools.newzone.top/en/json-value-extractor"
+  },
+  {
+    "key": "jsonNodeEdit",
+    "path": "json-node-edit",
+    "group": "jsonParser",
+    "nameZh": "JSON 节点批量编辑",
+    "nameEn": "JSON Node Bulk Edit",
+    "appUrlZh": "https://tools.newzone.top/zh/json-node-edit",
+    "appUrlEn": "https://tools.newzone.top/en/json-node-edit"
+  },
+  {
+    "key": "jsonValueTransformer",
+    "path": "json-value-transformer",
+    "group": "jsonParser",
+    "nameZh": "JSON 字段值映射",
+    "nameEn": "JSON Field Value Mapper",
+    "appUrlZh": "https://tools.newzone.top/zh/json-value-transformer",
+    "appUrlEn": "https://tools.newzone.top/en/json-value-transformer"
+  },
+  {
+    "key": "jsonValueSwapper",
+    "path": "json-value-swapper",
+    "group": "jsonParser",
+    "nameZh": "JSON 键值互换",
+    "nameEn": "JSON Value Swapper",
+    "appUrlZh": "https://tools.newzone.top/zh/json-value-swapper",
+    "appUrlEn": "https://tools.newzone.top/en/json-value-swapper"
+  },
+  {
+    "key": "jsonNodeInserter",
+    "path": "json-node-inserter",
+    "group": "jsonParser",
+    "nameZh": "JSON 节点批量插入",
+    "nameEn": "JSON Node Bulk Insert",
+    "appUrlZh": "https://tools.newzone.top/zh/json-node-inserter",
+    "appUrlEn": "https://tools.newzone.top/en/json-node-inserter"
+  },
+  {
+    "key": "jsonSortClassify",
+    "path": "json-sort-classify",
+    "group": "jsonParser",
+    "nameZh": "JSON 排序分组",
+    "nameEn": "JSON Sort & Group",
+    "appUrlZh": "https://tools.newzone.top/zh/json-sort-classify",
+    "appUrlEn": "https://tools.newzone.top/en/json-sort-classify"
+  },
+  {
+    "key": "jsonMatchUpdate",
+    "path": "json-match-update",
+    "group": "jsonParser",
+    "nameZh": "JSON 匹配更新",
+    "nameEn": "JSON Match Update",
+    "appUrlZh": "https://tools.newzone.top/zh/json-match-update",
+    "appUrlEn": "https://tools.newzone.top/en/json-match-update"
+  },
+  {
+    "key": "dataParserFlare",
+    "path": "data-parser/flare",
+    "group": "dataParser",
+    "nameZh": "Flare 书签转换",
+    "nameEn": "Flare Bookmark Converter",
+    "appUrlZh": "https://tools.newzone.top/zh/data-parser/flare",
+    "appUrlEn": "https://tools.newzone.top/en/data-parser/flare"
+  },
+  {
+    "key": "dataParserImgPrompt",
+    "path": "data-parser/img-prompt",
+    "group": "dataParser",
+    "nameZh": "IMGPrompt 数据生成",
+    "nameEn": "IMGPrompt Data Gen",
+    "appUrlZh": "https://tools.newzone.top/zh/data-parser/img-prompt",
+    "appUrlEn": "https://tools.newzone.top/en/data-parser/img-prompt"
+  }
+]

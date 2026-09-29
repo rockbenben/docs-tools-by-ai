@@ -84,6 +84,16 @@ test("language-table 双语同结构：四列 + 分组标题本地化 + auto 不
   }
 });
 
+test("label 自带别名时不再叠标注，避免渲染出「（阶跃星辰）（阶跃星辰）」", () => {
+  const data = {
+    ...FIXTURE,
+    providers: [{ key: "stepfun", label: "StepFun (阶跃星辰)", category: "llm", defaultUseRelay: false }, ...FIXTURE.providers],
+  };
+  const out = renderFragment("provider-list", data, "zh");
+  assert.match(out, /StepFun \(阶跃星辰\)/);
+  assert.doesNotMatch(out, /）（/, "括号不得连续重复");
+});
+
 test("未知片段名直接抛错，不静默产出空文件", () => {
   assert.throws(() => renderFragment("nope", FIXTURE, "zh"), /未知片段/);
   assert.deepEqual([...FRAGMENT_NAMES], ["provider-list", "relay-list", "language-table"]);

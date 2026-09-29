@@ -1,0 +1,1482 @@
+[
+  {
+    "key": "gtxFreeAPI",
+    "label": "GTX API (Free)",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": null,
+    "defaultModel": null,
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": [
+      {
+        "label": "Google translate-pa",
+        "url": "https://translate-pa.googleapis.com/v1/translateHtml",
+        "docs": null
+      },
+      {
+        "label": "Google gtx (legacy)",
+        "url": "https://translate.googleapis.com/translate_a/single",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "edgeFreeAPI",
+    "label": "Edge API (Free)",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": null,
+    "defaultModel": null,
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": null
+  },
+  {
+    "key": "google",
+    "label": "Google Translate",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://docs.cloud.google.com/translate/docs/setup",
+    "defaultModel": null,
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": null
+  },
+  {
+    "key": "deepl",
+    "label": "DeepL",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://developers.deepl.com/api-reference/translate/request-translation",
+    "defaultModel": null,
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": null
+  },
+  {
+    "key": "deeplx",
+    "label": "DeepLX (Free)",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://deeplx.owo.network/endpoints/free.html",
+    "defaultModel": null,
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": null
+  },
+  {
+    "key": "azure",
+    "label": "Azure Translate",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://learn.microsoft.com/azure/ai-services/translator/text-translation/reference/v3/translate",
+    "defaultModel": null,
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": null
+  },
+  {
+    "key": "qwenMt",
+    "label": "Qwen-MT",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://help.aliyun.com/model-studio/machine-translation",
+    "defaultModel": "qwen-mt-flash",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "Qwen-MT Flash",
+        "value": "qwen-mt-flash",
+        "thinking": null
+      },
+      {
+        "label": "Qwen-MT Plus",
+        "value": "qwen-mt-plus",
+        "thinking": null
+      },
+      {
+        "label": "Qwen-MT Lite",
+        "value": "qwen-mt-lite",
+        "thinking": null
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Mainland (CN)",
+        "url": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "International",
+        "url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "US",
+        "url": "https://dashscope-us.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "translategemma",
+    "label": "TranslateGemma",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://huggingface.co/collections/google/translategemma",
+    "defaultModel": "translategemma-4b-it",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "TranslateGemma 4B",
+        "value": "translategemma-4b-it",
+        "thinking": null
+      },
+      {
+        "label": "TranslateGemma 12B",
+        "value": "translategemma-12b-it",
+        "thinking": null
+      },
+      {
+        "label": "TranslateGemma 27B",
+        "value": "translategemma-27b-it",
+        "thinking": null
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "LM Studio",
+        "url": "http://127.0.0.1:1234/v1/chat/completions",
+        "docs": "https://lmstudio.ai/docs/developer/openai-compat"
+      },
+      {
+        "label": "llama.cpp",
+        "url": "http://127.0.0.1:8080/v1/chat/completions",
+        "docs": "https://github.com/ggml-org/llama.cpp/tree/master/tools/server"
+      },
+      {
+        "label": "koboldcpp",
+        "url": "http://127.0.0.1:5001/v1/chat/completions",
+        "docs": "https://github.com/LostRuins/koboldcpp/wiki"
+      }
+    ]
+  },
+  {
+    "key": "milmmt",
+    "label": "MiLMMT",
+    "category": "machine-translation",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://huggingface.co/xiaomi-research/MiLMMT-46-12B-v1.0",
+    "defaultModel": "MiLMMT-46-4B-v1.0",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "MiLMMT-46 4B",
+        "value": "MiLMMT-46-4B-v1.0",
+        "thinking": null
+      },
+      {
+        "label": "MiLMMT-46 1B",
+        "value": "MiLMMT-46-1B-v1.0",
+        "thinking": null
+      },
+      {
+        "label": "MiLMMT-46 12B",
+        "value": "MiLMMT-46-12B-v1.0",
+        "thinking": null
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "LM Studio",
+        "url": "http://127.0.0.1:1234/v1/chat/completions",
+        "docs": "https://lmstudio.ai/docs/developer/openai-compat"
+      },
+      {
+        "label": "llama.cpp",
+        "url": "http://127.0.0.1:8080/v1/chat/completions",
+        "docs": "https://github.com/ggml-org/llama.cpp/tree/master/tools/server"
+      },
+      {
+        "label": "koboldcpp",
+        "url": "http://127.0.0.1:5001/v1/chat/completions",
+        "docs": "https://github.com/LostRuins/koboldcpp/wiki"
+      }
+    ]
+  },
+  {
+    "key": "deepseek",
+    "label": "DeepSeek",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://api-docs.deepseek.com/",
+    "defaultModel": "deepseek-flash",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "DeepSeek Flash",
+        "value": "deepseek-flash",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-v4-pro",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "openai",
+    "label": "OpenAI",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://developers.openai.com/api/docs/guides/text",
+    "defaultModel": "gpt-6-luna",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "GPT-6 Astra",
+        "value": "gpt-6-astra",
+        "thinking": true
+      },
+      {
+        "label": "GPT-6 Sol",
+        "value": "gpt-6-sol",
+        "thinking": true
+      },
+      {
+        "label": "GPT-6 Luna",
+        "value": "gpt-6-luna",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "claude",
+    "label": "Claude",
+    "category": "llm",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://platform.claude.com/docs/en/intro",
+    "defaultModel": "claude-sonnet-5",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "Claude Opus 5.5",
+        "value": "claude-opus-5-5",
+        "thinking": true
+      },
+      {
+        "label": "Claude Sonnet 5",
+        "value": "claude-sonnet-5",
+        "thinking": true
+      },
+      {
+        "label": "Claude Haiku 4.5",
+        "value": "claude-haiku-4-5",
+        "thinking": true
+      },
+      {
+        "label": "Claude Fable 5.1",
+        "value": "claude-fable-5-1",
+        "thinking": true
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Anthropic",
+        "url": "https://api.anthropic.com/v1/messages",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "gemini",
+    "label": "Gemini",
+    "category": "llm",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://ai.google.dev/gemini-api/docs/text-generation",
+    "defaultModel": "gemini-3.8-flash",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "Gemini 3.1 Pro (Preview)",
+        "value": "gemini-3.1-pro-preview",
+        "thinking": true
+      },
+      {
+        "label": "Gemini 3.8 Flash",
+        "value": "gemini-3.8-flash",
+        "thinking": true
+      },
+      {
+        "label": "Gemini 3.5 Flash Lite",
+        "value": "gemini-3.5-flash-lite",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "qwen",
+    "label": "Qwen",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://help.aliyun.com/model-studio/qwen-api-via-openai-chat-completions",
+    "defaultModel": "qwen3.8-flash",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Qwen3.8 Max",
+        "value": "qwen3.8-max",
+        "thinking": true
+      },
+      {
+        "label": "Qwen3.8 Flash",
+        "value": "qwen3.8-flash",
+        "thinking": true
+      },
+      {
+        "label": "Qwen3.7 Plus",
+        "value": "qwen3.7-plus",
+        "thinking": true
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Mainland (CN)",
+        "url": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "International",
+        "url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "US",
+        "url": "https://dashscope-us.aliyuncs.com/compatible-mode/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "moonshot",
+    "label": "Kimi (Moonshot)",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://platform.kimi.com/docs/models",
+    "defaultModel": "kimi-k2.6",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Kimi K3",
+        "value": "kimi-k3",
+        "thinking": true
+      },
+      {
+        "label": "Kimi K2.6",
+        "value": "kimi-k2.6",
+        "thinking": true
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Mainland (CN)",
+        "url": "https://api.moonshot.cn/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "International",
+        "url": "https://api.moonshot.ai/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "doubao",
+    "label": "Doubao (Volcengine)",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://docs.volcengine.com/docs/ark/model-list",
+    "defaultModel": "doubao-seed-2-1-turbo-260628",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Doubao Seed Evolving",
+        "value": "doubao-seed-evolving",
+        "thinking": true
+      },
+      {
+        "label": "Doubao Seed 2.1 Pro",
+        "value": "doubao-seed-2-1-pro-260915",
+        "thinking": true
+      },
+      {
+        "label": "Doubao Seed 2.1 Lite",
+        "value": "doubao-seed-2-1-lite-260915",
+        "thinking": true
+      },
+      {
+        "label": "Doubao Seed 2.1 Turbo",
+        "value": "doubao-seed-2-1-turbo-260628",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "mimo",
+    "label": "Xiaomi MiMo",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://mimo.mi.com/docs/api/chat/openai-api",
+    "defaultModel": "mimo-v2.6-flash",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "MiMo V2.6 Flash",
+        "value": "mimo-v2.6-flash",
+        "thinking": true
+      },
+      {
+        "label": "MiMo V2.6 Pro",
+        "value": "mimo-v2.6-pro",
+        "thinking": true
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Pay-as-you-go",
+        "url": "https://api.xiaomimimo.com/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "Token Plan (CN)",
+        "url": "https://token-plan-cn.xiaomimimo.com/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "Token Plan (Singapore)",
+        "url": "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "Token Plan (Europe)",
+        "url": "https://token-plan-ams.xiaomimimo.com/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "zhipu",
+    "label": "Zhipu GLM",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://docs.bigmodel.cn/cn/guide/start/introduction",
+    "defaultModel": "glm-5.3",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "GLM-5.3",
+        "value": "glm-5.3",
+        "thinking": null
+      },
+      {
+        "label": "GLM-5.3 Flash",
+        "value": "glm-5.3-flash",
+        "thinking": null
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Mainland (CN)",
+        "url": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "International (Z.ai)",
+        "url": "https://api.z.ai/api/paas/v4/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "minimax",
+    "label": "MiniMax",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://platform.minimax.io/docs/api-reference/text-chat-openai",
+    "defaultModel": "MiniMax-M3",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "MiniMax M3",
+        "value": "MiniMax-M3",
+        "thinking": true
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Mainland (CN)",
+        "url": "https://api.minimaxi.com/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "International",
+        "url": "https://api.minimax.io/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "stepfun",
+    "label": "StepFun (阶跃星辰)",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://platform.stepfun.com/docs/zh/guides/models",
+    "defaultModel": "step-3.5-flash",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Step 3.5 Flash",
+        "value": "step-3.5-flash",
+        "thinking": null
+      },
+      {
+        "label": "Step 3.7 Flash",
+        "value": "step-3.7-flash",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "qianfan",
+    "label": "Baidu ERNIE (Qianfan)",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+    "defaultModel": "ernie-5.1",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "ERNIE 5.1",
+        "value": "ernie-5.1",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "mistral",
+    "label": "Mistral",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://docs.mistral.ai/api/",
+    "defaultModel": "mistral-small-latest",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Mistral Medium 3.5",
+        "value": "mistral-medium-3-5",
+        "thinking": true
+      },
+      {
+        "label": "Mistral Small 4",
+        "value": "mistral-small-latest",
+        "thinking": true
+      },
+      {
+        "label": "Mistral Large 3",
+        "value": "mistral-large-latest",
+        "thinking": null
+      },
+      {
+        "label": "Ministral 3 14B",
+        "value": "ministral-14b-latest",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "grok",
+    "label": "xAI (Grok)",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://docs.x.ai/developers/models",
+    "defaultModel": "grok-4.7",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Grok 4.7",
+        "value": "grok-4.7",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "cohere",
+    "label": "Cohere",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://docs.cohere.com/docs/compatibility-api",
+    "defaultModel": "command-a-plus-05-2026",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Command A Plus",
+        "value": "command-a-plus-05-2026",
+        "thinking": null
+      },
+      {
+        "label": "Command A Reasoning",
+        "value": "command-a-reasoning-08-2025",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "yandex",
+    "label": "YandexGPT (AI Studio)",
+    "category": "llm",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://aistudio.yandex.ru/docs/en/ai-studio/concepts/api.html",
+    "defaultModel": "yandexgpt-5.1",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "YandexGPT Pro 5.1",
+        "value": "yandexgpt-5.1",
+        "thinking": null
+      },
+      {
+        "label": "YandexGPT Pro 5",
+        "value": "yandexgpt-5-pro",
+        "thinking": null
+      },
+      {
+        "label": "YandexGPT Lite 5",
+        "value": "yandexgpt-5-lite",
+        "thinking": null
+      },
+      {
+        "label": "Alice AI LLM",
+        "value": "aliceai-llm",
+        "thinking": null
+      },
+      {
+        "label": "Alice AI LLM Flash",
+        "value": "aliceai-llm-flash",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4 Flash",
+        "value": "deepseek-v4-flash",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.6 35B",
+        "value": "qwen3.6-35b-a3b",
+        "thinking": null
+      },
+      {
+        "label": "GPT-OSS 120B",
+        "value": "gpt-oss-120b",
+        "thinking": null
+      },
+      {
+        "label": "GPT-OSS 20B",
+        "value": "gpt-oss-20b",
+        "thinking": null
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Yandex Cloud",
+        "url": "https://llm.api.cloud.yandex.net/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "openrouter",
+    "label": "OpenRouter",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://openrouter.ai/models?q=free",
+    "defaultModel": "nvidia/nemotron-3-super-120b-a12b:free",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "Nemotron 3 Super 120B (free)",
+        "value": "nvidia/nemotron-3-super-120b-a12b:free",
+        "thinking": null
+      },
+      {
+        "label": "Laguna S 2.1 (free)",
+        "value": "poolside/laguna-s-2.1:free",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek/deepseek-v4.1-flash",
+        "thinking": true
+      },
+      {
+        "label": "Hy3",
+        "value": "tencent/hy3",
+        "thinking": true
+      },
+      {
+        "label": "Claude Sonnet 5",
+        "value": "anthropic/claude-sonnet-5",
+        "thinking": true
+      },
+      {
+        "label": "Claude Opus 5.5",
+        "value": "anthropic/claude-opus-5.5",
+        "thinking": true
+      },
+      {
+        "label": "Gemini 3.8 Flash",
+        "value": "google/gemini-3.8-flash",
+        "thinking": true
+      },
+      {
+        "label": "GPT-6 Astra",
+        "value": "openai/gpt-6-astra",
+        "thinking": true
+      },
+      {
+        "label": "GPT-6 Luna",
+        "value": "openai/gpt-6-luna",
+        "thinking": true
+      },
+      {
+        "label": "GLM-5.3",
+        "value": "z-ai/glm-5.3",
+        "thinking": null
+      },
+      {
+        "label": "Grok 4.7",
+        "value": "x-ai/grok-4.7",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K2.6",
+        "value": "moonshotai/kimi-k2.6",
+        "thinking": true
+      },
+      {
+        "label": "Qwen3.8 27B (free)",
+        "value": "qwen/qwen3.8-27b:free",
+        "thinking": null
+      },
+      {
+        "label": "MiniMax M3",
+        "value": "minimax/minimax-m3",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "opencodeZen",
+    "label": "OpenCode Zen",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://opencode.ai/docs/zen/",
+    "defaultModel": "deepseek-v4-flash-free",
+    "defaultUseRelay": true,
+    "models": [
+      {
+        "label": "DeepSeek V4 Flash (free)",
+        "value": "deepseek-v4-flash-free",
+        "thinking": null
+      },
+      {
+        "label": "Big Pickle (free)",
+        "value": "big-pickle",
+        "thinking": null
+      },
+      {
+        "label": "MiMo V2.6 Flash (free)",
+        "value": "mimo-v2.6-flash-free",
+        "thinking": null
+      },
+      {
+        "label": "Space Bunny (free)",
+        "value": "space-bunny-free",
+        "thinking": null
+      },
+      {
+        "label": "Ling 3.0 Flash Fin (free)",
+        "value": "ling-3.0-flash-fin-free",
+        "thinking": null
+      },
+      {
+        "label": "Nemotron 3 Ultra (free)",
+        "value": "nemotron-3-ultra-free",
+        "thinking": null
+      },
+      {
+        "label": "Nemotron 3.5 Lightning (free)",
+        "value": "nemotron-3.5-lightning-free",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4 Flash",
+        "value": "deepseek-v4-flash",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.8 Flash",
+        "value": "qwen3.8-flash",
+        "thinking": null
+      },
+      {
+        "label": "GLM 5.3 Flash",
+        "value": "glm-5.3-flash",
+        "thinking": null
+      },
+      {
+        "label": "MiniMax M3",
+        "value": "minimax-m3",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.6 Plus",
+        "value": "qwen3.6-plus",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K2.6",
+        "value": "kimi-k2.6",
+        "thinking": null
+      },
+      {
+        "label": "Claude Haiku 4.5",
+        "value": "claude-haiku-4-5",
+        "thinking": null
+      },
+      {
+        "label": "GLM 5.3",
+        "value": "glm-5.3",
+        "thinking": null
+      },
+      {
+        "label": "Gemini 3.8 Flash",
+        "value": "gemini-3.8-flash",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-v4-pro",
+        "thinking": null
+      },
+      {
+        "label": "Claude Sonnet 5",
+        "value": "claude-sonnet-5",
+        "thinking": null
+      },
+      {
+        "label": "Grok 4.7",
+        "value": "grok-4.7",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K3",
+        "value": "kimi-k3",
+        "thinking": null
+      },
+      {
+        "label": "Claude Opus 5.5",
+        "value": "claude-opus-5-5",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "opencodeGo",
+    "label": "OpenCode Go",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://opencode.ai/docs/go/",
+    "defaultModel": "mimo-v2.6-flash",
+    "defaultUseRelay": true,
+    "models": [
+      {
+        "label": "Space Bunny (free)",
+        "value": "space-bunny-free",
+        "thinking": null
+      },
+      {
+        "label": "Muse Spark 1.3 Contributor",
+        "value": "muse-spark-1.3-contributor",
+        "thinking": null
+      },
+      {
+        "label": "MiMo V2.6 Flash",
+        "value": "mimo-v2.6-flash",
+        "thinking": null
+      },
+      {
+        "label": "Hy3",
+        "value": "hy3",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.8 Flash",
+        "value": "qwen3.8-flash",
+        "thinking": null
+      },
+      {
+        "label": "GLM 5.3 Flash",
+        "value": "glm-5.3-flash",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-v4.1-flash",
+        "thinking": null
+      },
+      {
+        "label": "LongCat 2.0",
+        "value": "longcat-2.0",
+        "thinking": null
+      },
+      {
+        "label": "MiniMax M3",
+        "value": "minimax-m3",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.7 Plus",
+        "value": "qwen3.7-plus",
+        "thinking": null
+      },
+      {
+        "label": "MiMo V2.6 Pro",
+        "value": "mimo-v2.6-pro",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.6 Plus",
+        "value": "qwen3.6-plus",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-v4-pro",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K2.6",
+        "value": "kimi-k2.6",
+        "thinking": null
+      },
+      {
+        "label": "GLM 5.3",
+        "value": "glm-5.3",
+        "thinking": null
+      },
+      {
+        "label": "Grok 4.5",
+        "value": "grok-4.5",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.8 Max",
+        "value": "qwen3.8-max",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K3",
+        "value": "kimi-k3",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "tokenhub",
+    "label": "TokenHub (Tencent)",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://cloud.tencent.com/document/product/1823/130079",
+    "defaultModel": "hy3",
+    "defaultUseRelay": true,
+    "models": [
+      {
+        "label": "Hunyuan hy3",
+        "value": "hy3",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-v4.1-flash",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-v4-pro",
+        "thinking": null
+      },
+      {
+        "label": "GLM-5.3",
+        "value": "glm-5.3",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K3",
+        "value": "kimi-k3",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K2.6",
+        "value": "kimi-k2.6",
+        "thinking": null
+      },
+      {
+        "label": "MiniMax M3",
+        "value": "minimax-m3",
+        "thinking": null
+      },
+      {
+        "label": "MiMo V2.6 Pro",
+        "value": "mimo-v2.6-pro",
+        "thinking": null
+      }
+    ],
+    "endpoints": [
+      {
+        "label": "Mainland (CN)",
+        "url": "https://tokenhub.tencentmaas.com/v1/chat/completions",
+        "docs": null
+      },
+      {
+        "label": "International",
+        "url": "https://tokenhub-intl.tencentmaas.com/v1/chat/completions",
+        "docs": null
+      }
+    ]
+  },
+  {
+    "key": "groq",
+    "label": "Groq",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://console.groq.com/docs/text-chat",
+    "defaultModel": "openai/gpt-oss-20b",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "GPT-OSS 20B",
+        "value": "openai/gpt-oss-20b",
+        "thinking": true
+      },
+      {
+        "label": "GPT-OSS 120B",
+        "value": "openai/gpt-oss-120b",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "cerebras",
+    "label": "Cerebras",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://inference-docs.cerebras.ai/models/overview",
+    "defaultModel": "gpt-oss-120b",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "GPT-OSS 120B",
+        "value": "gpt-oss-120b",
+        "thinking": true
+      },
+      {
+        "label": "Qwen 3.8 27B",
+        "value": "qwen-3.8-27b",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "siliconflow",
+    "label": "SiliconFlow",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://docs.siliconflow.cn/docs/api/chat-completions-post",
+    "defaultModel": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-ai/DeepSeek-V4.1-Flash",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-ai/DeepSeek-V4-Pro",
+        "thinking": true
+      },
+      {
+        "label": "Kimi K2.6 (Pro)",
+        "value": "Pro/moonshotai/Kimi-K2.6",
+        "thinking": true
+      },
+      {
+        "label": "GLM-5.3",
+        "value": "zai-org/GLM-5.3",
+        "thinking": null
+      },
+      {
+        "label": "GLM-5.1 (Pro)",
+        "value": "Pro/zai-org/GLM-5.1",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "atlascloud",
+    "label": "Atlas Cloud",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://www.atlascloud.ai/docs",
+    "defaultModel": "deepseek-ai/deepseek-v4-flash",
+    "defaultUseRelay": false,
+    "models": [
+      {
+        "label": "DeepSeek V4 Flash",
+        "value": "deepseek-ai/deepseek-v4-flash",
+        "thinking": null
+      },
+      {
+        "label": "Qwen3.8 Max",
+        "value": "qwen/qwen3.8-max",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "nvidia",
+    "label": "Nvidia NIM",
+    "category": "aggregator",
+    "kind": "custom",
+    "hidden": false,
+    "docs": "https://build.nvidia.com/explore/discover",
+    "defaultModel": "deepseek-ai/deepseek-v4.1-flash",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "Nemotron 3 Ultra 550B",
+        "value": "nvidia/nemotron-3-ultra-550b-a55b",
+        "thinking": null
+      },
+      {
+        "label": "GPT-OSS 20B",
+        "value": "openai/gpt-oss-20b",
+        "thinking": null
+      },
+      {
+        "label": "Gemma 4 31B IT",
+        "value": "google/gemma-4-31b-it",
+        "thinking": null
+      },
+      {
+        "label": "Nemotron Super 120B",
+        "value": "nvidia/nemotron-3-super-120b-a12b",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-ai/deepseek-v4.1-flash",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "azureopenai",
+    "label": "Azure OpenAI",
+    "category": "aggregator",
+    "kind": "openai-compat",
+    "hidden": false,
+    "docs": "https://learn.microsoft.com/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+    "defaultModel": "gpt-5.4-mini",
+    "defaultUseRelay": null,
+    "models": [
+      {
+        "label": "GPT-5.6 Sol",
+        "value": "gpt-5.6-sol",
+        "thinking": true
+      },
+      {
+        "label": "GPT-5.6 Terra",
+        "value": "gpt-5.6-terra",
+        "thinking": true
+      },
+      {
+        "label": "GPT-5.6 Luna",
+        "value": "gpt-5.6-luna",
+        "thinking": true
+      },
+      {
+        "label": "GPT-chat-latest",
+        "value": "gpt-chat-latest",
+        "thinking": null
+      },
+      {
+        "label": "GPT-5.4 Mini",
+        "value": "gpt-5.4-mini",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "llm",
+    "label": "Custom (OpenAI-compatible)",
+    "category": "aggregator",
+    "kind": "custom",
+    "hidden": false,
+    "docs": null,
+    "defaultModel": "",
+    "defaultUseRelay": null,
+    "models": null,
+    "endpoints": [
+      {
+        "label": "LM Studio",
+        "url": "http://127.0.0.1:1234/v1/chat/completions",
+        "docs": "https://lmstudio.ai/docs/developer/openai-compat"
+      },
+      {
+        "label": "Ollama",
+        "url": "http://127.0.0.1:11434/v1/chat/completions",
+        "docs": "https://docs.ollama.com/api/openai-compatibility"
+      },
+      {
+        "label": "llama.cpp",
+        "url": "http://127.0.0.1:8080/v1/chat/completions",
+        "docs": "https://github.com/ggml-org/llama.cpp/tree/master/tools/server"
+      },
+      {
+        "label": "koboldcpp",
+        "url": "http://127.0.0.1:5001/v1/chat/completions",
+        "docs": "https://github.com/LostRuins/koboldcpp/wiki"
+      },
+      {
+        "label": "LiteLLM",
+        "url": "http://127.0.0.1:4000/v1/chat/completions",
+        "docs": "https://docs.litellm.ai/docs/"
+      },
+      {
+        "label": "9Router",
+        "url": "http://127.0.0.1:20127/v1/chat/completions",
+        "docs": "https://github.com/decolua/9router"
+      },
+      {
+        "label": "OmniRoute",
+        "url": "http://127.0.0.1:20128/v1/chat/completions",
+        "docs": "https://github.com/diegosouzapw/OmniRoute"
+      },
+      {
+        "label": "Together AI",
+        "url": "https://api.together.xyz/v1/chat/completions",
+        "docs": "https://docs.together.ai/docs/inference/openai-compatibility"
+      },
+      {
+        "label": "Fireworks AI",
+        "url": "https://api.fireworks.ai/inference/v1/chat/completions",
+        "docs": "https://docs.fireworks.ai/tools-sdks/openai-compatibility"
+      }
+    ]
+  },
+  {
+    "key": "volcengine",
+    "label": "Volcengine Coding Plan",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": true,
+    "docs": "https://docs.volcengine.com/docs/ark/coding-plan-personal-get-started",
+    "defaultModel": "doubao-seed-evolving",
+    "defaultUseRelay": true,
+    "models": [
+      {
+        "label": "Doubao Seed Evolving",
+        "value": "doubao-seed-evolving",
+        "thinking": true
+      },
+      {
+        "label": "Doubao Seed 2.1 Pro",
+        "value": "doubao-seed-2.1-pro",
+        "thinking": true
+      },
+      {
+        "label": "Doubao Seed 2.1 Lite",
+        "value": "doubao-seed-2.1-lite",
+        "thinking": true
+      },
+      {
+        "label": "Doubao Seed 2.0 Mini",
+        "value": "doubao-seed-2.0-mini",
+        "thinking": true
+      },
+      {
+        "label": "MiniMax M3",
+        "value": "minimax-m3",
+        "thinking": true
+      },
+      {
+        "label": "GLM-5.3 (glm-latest)",
+        "value": "glm-5.3",
+        "thinking": true
+      },
+      {
+        "label": "GLM-5.3 Flash",
+        "value": "glm-5.3-flash",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-v4.1-flash",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4 Flash",
+        "value": "deepseek-v4-flash",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-v4-pro",
+        "thinking": true
+      },
+      {
+        "label": "Kimi K2.7 Code",
+        "value": "kimi-k2.7-code",
+        "thinking": true
+      },
+      {
+        "label": "Kimi K2.8 Preview",
+        "value": "kimi-k2.8-preview",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K3",
+        "value": "kimi-k3",
+        "thinking": true
+      }
+    ],
+    "endpoints": null
+  },
+  {
+    "key": "alibaba",
+    "label": "Alibaba Bailian Token Plan",
+    "category": "llm",
+    "kind": "openai-compat",
+    "hidden": true,
+    "docs": "https://help.aliyun.com/model-studio/token-plan-personal-overview",
+    "defaultModel": "qwen3.8-flash",
+    "defaultUseRelay": true,
+    "models": [
+      {
+        "label": "Qwen 3.8 Max",
+        "value": "qwen3.8-max",
+        "thinking": null
+      },
+      {
+        "label": "Qwen 3.8 Flash",
+        "value": "qwen3.8-flash",
+        "thinking": null
+      },
+      {
+        "label": "Qwen 3.7 Max",
+        "value": "qwen3.7-max",
+        "thinking": true
+      },
+      {
+        "label": "Qwen 3.7 Plus",
+        "value": "qwen3.7-plus",
+        "thinking": true
+      },
+      {
+        "label": "Qwen 3.6 Flash",
+        "value": "qwen3.6-flash",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-v4.1-flash",
+        "thinking": null
+      },
+      {
+        "label": "DeepSeek V4 Pro",
+        "value": "deepseek-v4-pro",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4 Pro 0813",
+        "value": "deepseek-v4-pro-0813",
+        "thinking": true
+      },
+      {
+        "label": "DeepSeek V4 Flash 0731",
+        "value": "deepseek-v4-flash-0731",
+        "thinking": true
+      },
+      {
+        "label": "GLM-5.3",
+        "value": "glm-5.3",
+        "thinking": null
+      }
+    ],
+    "endpoints": null
+  }
+]
