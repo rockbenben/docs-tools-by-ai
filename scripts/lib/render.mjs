@@ -8,8 +8,9 @@
  * 闸门自己就成了新的漂移源。
  */
 
+// MDX 里 `<!-- -->` 是非法语法（会炸 build），注释只能用 {/* */}。
 export const MARKER =
-  "<!-- ⚠ 由 yarn sync 生成，请勿手改 —— 手改会在下次同步时被整份覆盖 -->\n";
+  "{/* ⚠ 由 yarn sync 生成，请勿手改 —— 手改会在下次同步时被整份覆盖 */}\n";
 
 export const FRAGMENT_NAMES = ["provider-list", "relay-list", "language-table"];
 

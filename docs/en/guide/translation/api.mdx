@@ -3,14 +3,16 @@ head:
   - - meta
     - property: og:title
       content: Translation API Guide - Classic APIs and LLMs Compared | Tools By AI
-description: Tools By AI integrates 9 machine-translation APIs and 26 LLM endpoints. This page helps you pick the right one and walks through local model setup and CORS configuration.
+description: Tools By AI integrates classic machine-translation APIs and LLM endpoints. This page helps you pick the right one and walks through local model setup and CORS configuration.
 ---
 
-import SupportedLanguages from './_supported-languages.mdx';
+import ProviderList from '../_gen/provider-list.mdx';
+import RelayList from '../_gen/relay-list.mdx';
+import SupportedLanguages from '../_gen/language-table.mdx';
 
 # Translation API Guide
 
-The tool integrates **9 classic translation APIs** and **26 LLM endpoints**, so you can pick whichever fits your text type, budget, and privacy needs.
+The tool integrates both classic translation APIs and LLM endpoints, so you can pick whichever fits your text type, budget, and privacy needs. The exact rosters and counts are in the two sections below (generated from the app's own provider catalog, so they stay in sync).
 
 ## Which API should I pick?
 
@@ -32,12 +34,13 @@ For detailed comparisons and how to get API keys, keep reading ↓
 
 | API              | Quality | Stability | Best for                          | Free tier                                |
 | :--------------- | :------ | :-------- | :-------------------------------- | :--------------------------------------- |
-| DeepL(X)         | ★★★★★   | ★★★★☆     | Long text, business / literature  | 500K characters/month                    |
+| DeepL            | ★★★★★   | ★★★★☆     | Long text, business / literature  | 500K characters/month                    |
+| DeepLX (Free)    | ★★★★☆   | ★★★☆☆     | Free DeepL fallback, zero config  | Public instances, stability varies       |
 | Google Translate | ★★★★☆   | ★★★★★     | UI strings, short sentences       | 500K characters/month                    |
 | Azure Translate  | ★★★★☆   | ★★★★★     | Widest language coverage (90+)    | 2M characters/month for the first year   |
 | Qwen-MT          | ★★★★★   | ★★★★★     | CN/EN translation, domain-tuned   | Pay-per-token, free tier for new users   |
 | TranslateGemma   | ★★★★☆   | ★★★★☆     | Local translation, privacy-first  | Free (self-hosted)                       |
-| MiLMMT-46        | ★★★★☆   | ★★★★☆     | Local translation, 47 languages incl. Cantonese | Free (self-hosted)     |
+| MiLMMT           | ★★★★☆   | ★★★★☆     | Local translation, 47 languages incl. Cantonese | Free (self-hosted)     |
 | GTX API (Free)   | ★★★☆☆   | ★★★★☆     | General text, zero-config default | Shared service, auto-slows when throttled |
 | Edge API (Free)  | ★★★★☆   | ★★★★☆     | Free GTX backup, different route  | Shared service, auto-slows when throttled |
 
@@ -46,17 +49,16 @@ Notes:
 - **DeepL** can't be called directly from the browser — the tool routes through a built-in proxy by default. If you have your own proxy, fill it in the API URL field.
 - **Qwen-MT** is Alibaba Cloud's translation-specialized model. See [Qwen-MT essentials](#qwen-mt-essentials) below.
 - **TranslateGemma** is Google's open-source translation-specialized Gemma model. You'll need to run it locally with LM Studio / llama.cpp / koboldcpp (**not Ollama** — see below) — see [Local Model Setup](#local-model-setup).
-- **MiLMMT-46** is Xiaomi's open-source translation model (also Gemma3-derived) — fewer languages, but it covers Cantonese. Also runs locally; see [MiLMMT](#milmmt).
-- **GTX API / Edge API** are both zero-config free machine translation that back each other up — if one can't connect, switch to the other. See [Free machine translation essentials](#free-machine-translation-essentials) below.
+- **MiLMMT** (shipped as the MiLMMT-46 weights) is Xiaomi's open-source translation model (also Gemma3-derived) — fewer languages, but it covers Cantonese. Also runs locally; see [MiLMMT](#milmmt).
+- **GTX API (Free) / Edge API (Free)** are both zero-config free machine translation that back each other up — if one can't connect, switch to the other. See [Free machine translation essentials](#free-machine-translation-essentials) below.
 
 For more reliable service, apply for a commercial API key — see the [API application guide](https://ttime.timerecord.cn/service/translate/google.html).
 
 ## Large Language Models (LLMs)
 
-26 LLM endpoints are supported, in two groups:
+<ProviderList />
 
-- **Direct vendor APIs (16)**: DeepSeek, OpenAI, Claude, Gemini, Qwen, Kimi (Moonshot), Doubao (Volcano Ark), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun, Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio)
-- **Aggregators & self-hosted (10)**: OpenRouter, OpenCode Zen, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Nvidia NIM, Azure OpenAI, and **Custom (OpenAI-compatible)** — any OpenAI-protocol address goes here, with seven quick-pick URLs listed right above the field: LM Studio, Ollama, llama.cpp, koboldcpp, LiteLLM, Together AI, Fireworks AI
+The **Custom (OpenAI-compatible)** entry at the end is the catch-all: any OpenAI-protocol address goes there, with quick-pick URLs for local runtimes and third-party gateways listed right above the field (see [Local Model Setup](#local-model-setup)).
 
 LLMs work best for:
 
@@ -172,11 +174,9 @@ Some providers' official endpoints block direct browser calls (CORS). The tool o
 
 ### API relay (user-controlled)
 
-Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI, and Custom — 22 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao, Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun, Baidu ERNIE, Mistral, xAI (Grok), Cohere, YandexGPT, OpenRouter, OpenCode Zen, TokenHub, Groq, Cerebras, SiliconFlow, Atlas Cloud — exposes an **"API relay"** switch in API Settings. When on, requests route through our Cloudflare relay (only the request body and auth headers are forwarded):
+<RelayList />
 
-- Most providers default to **OFF** — when a direct call hits a CORS / 403 wall, the UI shows an actionable hint to enable it
-- **OpenCode Zen, TokenHub and YandexGPT default to ON**: none of the three can be reached from a browser today (the first two answer preflights with 404 / 405, Yandex sends no CORS headers at all), so the relay is what makes them work out of the box. The switch stays available — flip back to direct if an upstream ever fixes CORS
-- **Providers whose endpoint you own have no switch**: Custom, Azure OpenAI and Nvidia NIM point at an address you supply, so there is no fixed upstream for a relay to target; Gemini puts the model name in the URL path, which a pass-through relay can't forward
+- **The exceptions named above have no such switch**: Custom, Azure OpenAI and Nvidia NIM point at an address you supply, so there is no fixed upstream for a relay to target; the rest (Claude, Gemini, YandexGPT) don't speak "fixed-address chat/completions" — Gemini puts the model name in the URL path, which a pass-through relay can't forward
 - **Self-hosted relay**: prefer your own relay? Put its address in the URL field. The precedence is fixed: **custom URL > relay switch > official direct** — with a URL filled in, the relay switch is grayed out with a note ("clear the URL to re-enable")
 - The relay passes through the server's `Retry-After` header, so rate-limit auto-slowdown is exactly as precise as direct calls
 

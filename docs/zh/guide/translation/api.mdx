@@ -3,14 +3,16 @@ head:
   - - meta
     - property: og:title
       content: 翻译接口对比 - 经典 API 与大语言模型 | Tools By AI
-description: 工具集成了 9 种机器翻译 API 与 26 种大模型接口，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
+description: 工具集成经典机器翻译 API 与大语言模型接口两类服务，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
 ---
 
-import SupportedLanguages from './_supported-languages.mdx';
+import ProviderList from '../_gen/provider-list.mdx';
+import RelayList from '../_gen/relay-list.mdx';
+import SupportedLanguages from '../_gen/language-table.mdx';
 
 # 翻译接口指南
 
-工具集成了 **9 种经典翻译 API** 和 **26 种大模型接口**，可按文本类型、预算与隐私需求自由选择。
+工具集成了经典机器翻译 API 与大语言模型接口两类服务，可按文本类型、预算与隐私需求自由选择。具体名单与数量见下面两节（与应用的接口目录同源，随版本自动更新）。
 
 ## 我应该挑哪个接口？
 
@@ -32,31 +34,31 @@ import SupportedLanguages from './_supported-languages.mdx';
 
 | 接口             | 质量  | 稳定性 | 适合场景                       | 免费额度                   |
 | ---------------- | ----- | ------ | ------------------------------ | -------------------------- |
-| DeepL(X)         | ★★★★★ | ★★★★☆  | 长文本、商务/文学翻译          | 每月 50 万字符             |
+| DeepL            | ★★★★★ | ★★★★☆  | 长文本、商务/文学翻译          | 每月 50 万字符             |
+| DeepLX (Free)    | ★★★★☆ | ★★★☆☆  | DeepL 的免费替补，零配置换链路 | 公共实例免费，稳定性看实例 |
 | Google Translate | ★★★★☆ | ★★★★★  | UI 文案、短句                  | 每月 50 万字符             |
 | Azure Translate  | ★★★★☆ | ★★★★★  | 语种最广（90+）                | 前 12 个月每月 200 万字符  |
 | Qwen-MT          | ★★★★★ | ★★★★★  | 中英互译、可指定行业领域       | 按 Token 计费，新用户有额度 |
 | TranslateGemma   | ★★★★☆ | ★★★★☆  | 本地翻译，隐私敏感场景         | 自托管免费                 |
-| MiLMMT-46        | ★★★★☆ | ★★★★☆  | 本地翻译，47 语言（含粤语）    | 自托管免费                 |
-| GTX API（免费）  | ★★★☆☆ | ★★★★☆  | 一般文本翻译，零配置默认       | 共享服务，限流自动降速     |
-| Edge API（免费） | ★★★★☆ | ★★★★☆  | GTX 的免费替补，链路不同       | 共享服务，限流自动降速     |
+| MiLMMT           | ★★★★☆ | ★★★★☆  | 本地翻译，47 语言（含粤语）    | 自托管免费                 |
+| GTX API (Free)   | ★★★☆☆ | ★★★★☆  | 一般文本翻译，零配置默认       | 共享服务，限流自动降速     |
+| Edge API (Free)  | ★★★★☆ | ★★★★☆  | GTX 的免费替补，链路不同       | 共享服务，限流自动降速     |
 
 要点说明：
 
-- **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。
+- **DeepL** 不允许浏览器直连，工具默认走内置代理；如有自建代理可在设置中填入自定义 URL。**DeepLX (Free)** 是自建/公共实例那条免费链路，零配置即可换一条出口。
 - **Qwen-MT** 是阿里云专为翻译训练的模型，详见下文 [Qwen-MT 使用要点](#qwen-mt-使用要点)。
 - **TranslateGemma** 是 Google 开源的翻译专用 Gemma，需要本地用 LM Studio / llama.cpp / koboldcpp 跑起来（**不要用 Ollama**，原因见下文），详见下文 [本地模型接入](#本地模型接入)。
-- **MiLMMT-46** 是小米开源的翻译专用模型（同样 Gemma3 派生），语种更少但覆盖粤语，同样要本地跑，详见下文 [MiLMMT](#milmmt)。
-- **GTX API / Edge API** 都是零配置的免费机器翻译，互为备胎——一个连不上就换另一个；细节见下文 [免费机器翻译使用要点](#免费机器翻译使用要点)。
+- **MiLMMT**（在售权重 MiLMMT-46）是小米开源的翻译专用模型（同样 Gemma3 派生），语种更少但覆盖粤语，同样要本地跑，详见下文 [MiLMMT](#milmmt)。
+- **GTX API (Free) / Edge API (Free)** 都是零配置的免费机器翻译，互为备胎——一个连不上就换另一个；细节见下文 [免费机器翻译使用要点](#免费机器翻译使用要点)。
 
 需要更稳定的服务，可自行申请商业 API Key，详见 [接口申请教程](https://ttime.timerecord.cn/service/translate/google.html)。
 
 ## 大语言模型（LLM）
 
-支持的 LLM 接口共 26 个，分两组：
+<ProviderList />
 
-- **厂商直连（16 家）**：DeepSeek、OpenAI、Claude、Gemini、Qwen、Kimi (Moonshot)、Doubao（火山方舟）、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun（阶跃星辰）、Baidu ERNIE（千帆）、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)
-- **聚合网关与自托管（10 个）**：OpenRouter、OpenCode Zen、TokenHub（腾讯）、Groq、Cerebras、SiliconFlow、Atlas Cloud、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)** —— 任何兼容 OpenAI 协议的地址都填这一项，URL 输入框上方直接列出 LM Studio / Ollama / llama.cpp / koboldcpp / LiteLLM / Together AI / Fireworks AI 七个快捷地址
+末尾的 **Custom (OpenAI-compatible)** 是兜底项：任何兼容 OpenAI 协议的地址都填这一项，URL 输入框上方会列出可选的本地运行时与第三方网关快捷地址（见下文 [本地模型接入](#本地模型接入)）。
 
 适合处理：
 
@@ -172,11 +174,9 @@ Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自�
 
 ### 中转 API（可控开关）
 
-除 Gemini、Nvidia NIM、Azure OpenAI、Custom 之外的每个 LLM 接口（共 22 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun、Baidu ERNIE、Mistral、xAI (Grok)、Cohere、YandexGPT、OpenRouter、OpenCode Zen、TokenHub、Groq、Cerebras、SiliconFlow、Atlas Cloud）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
+<RelayList />
 
-- 大多数接口**默认关闭**——直连遇到 CORS / 403 报错时，界面会用可行动提示引导你开启
-- **OpenCode Zen、TokenHub、YandexGPT 默认开启**：这三家的官方端点目前都无法从浏览器直连（前两家的预检分别返回 404 / 405，Yandex 干脆不发 CORS 头），默认开才能开箱即用；开关保留，官方修复后可自行切回直连
-- **端点由用户掌控的接口没有这个开关**：Custom、Azure OpenAI、Nvidia NIM 的地址本就是你自己填的，中转没有固定上游可写；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
+- **上面点名的例外接口没有这个开关**：它们的地址本就是你自己填的（Custom、Azure OpenAI、Nvidia NIM），或走的协议不是「固定地址的 chat/completions」（Gemini 把模型名拼在 URL 路径里，pass-through 转发不了）
 - **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
 - 中转会透传服务器的 `Retry-After` 响应头，限流时的自动降速与直连一样精确
 
