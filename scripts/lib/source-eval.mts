@@ -40,8 +40,16 @@ const providers = Object.entries(PROVIDERS).map(([key, p]: [string, any]) => ({
   hidden: p.hidden === true,
   docs: p.docs ?? null,
   defaultModel: p.defaultModel ?? p.defaults?.model ?? null,
-  // 三态：true / false / null（null = 结构性没有中转路由）
-  defaultUseRelay: typeof p.defaultUseRelay === "boolean" ? p.defaultUseRelay : null,
+  // 中转开关有两个真源，缺一个就会误判（实测踩过）：
+  //  · openai-compat 工厂成员：顶层 defaultUseRelay
+  //  · 手写 service 的 custom-kind（claude / yandex）：defaults.useRelay
+  // 两者都是【缺席 = 没有这个开关】；null 表示该接口在 UI 里不渲染中转开关。
+  defaultUseRelay:
+    typeof p.defaultUseRelay === "boolean"
+      ? p.defaultUseRelay
+      : typeof p.defaults?.useRelay === "boolean"
+        ? p.defaults.useRelay
+        : null,
   models: Array.isArray(p.models)
     ? p.models.map((m: any) => ({
         label: m.label ?? m.value,

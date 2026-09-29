@@ -14,7 +14,7 @@
 | --- | --- | --- | --- |
 | 经典翻译 API | 9（`category: "machine-translation"`） | 9 | **7** |
 | 可见大模型接口 | **27**（llm 18 + aggregator 11 − hidden 2） | 26（缺 OpenCode Go） | **23** |
-| 中转开关接口数 | 实测 **21** 家（可见 LLM/聚合中带 `defaultUseRelay` 者） | **22**（`api.mdx` zh/en :175 逐个列名，且名单**两头都错**：多了 `claude`、`yandex`（这两家结构性无该字段），少了 `opencodeGo`） | — |
+| 中转开关接口数 | 实测 **23** 家 = 顶层 `defaultUseRelay` 的 21 家（openai-compat 工厂成员）**＋** `defaults.useRelay` 的 2 家（手写 service 的 claude / yandex）——两个真源，只看其一必漏 | **22**（`api.mdx` zh/en :175 逐个列名，只缺新加的 OpenCode Go，其余名单是对的） | — |
 | Custom 端点快捷项 | 实测 **9** 个：LM Studio / Ollama / llama.cpp / koboldcpp / LiteLLM / 9Router / OmniRoute / Together AI / Fireworks AI；TranslateGemma 与 MiLMMT 各 **3** 个（LM Studio / llama.cpp / koboldcpp） | 「七个快捷地址」；且 changelog 2026-08 记的「三处的四个快捷项完全一致」对 Custom 已不成立 | — |
 | 目标语言 | 122 + `auto`（`languages` 共 123 条） | 120+ / 122 并存 | 120+ |
 | 引擎合计口径 | — | 「35 种引擎」散见 5 个文件 | — |
@@ -73,7 +73,7 @@ import 片段约定，且实测下划线前缀文件不会生成路由（`doc_bu
 三份派生数据，字段只保留文档需要投影的部分：
 
 - **`providers.json`** — 38 条，字段（全部实测确认，非推测）：`key` / `label` / `category` / `kind` / `hidden` / `docs` / `defaultModel` / `models[]`（`label` + `value` + 可选 `thinking`）/ `endpoints[]`（`label` + `url` + 可选 `docs`）/ `defaultUseRelay`。
-  实测要点：① `models` **一律在顶层**，31/38 家有；没有的 7 家是 `gtxFreeAPI` `edgeFreeAPI` `google` `deepl` `deeplx` `azure`（经典/免费 MT）+ `llm`（Custom，模型由用户填）——不是位置不一，是本来就没有，取不到记 `null`；② `defaults` 是配置默认值对象（`url` / `apiKey` / `model` / `temperature` / `chunkSize` / `batchSize` / `delayTime` 等），**不含 models**；③ 中转字段真名是 **`defaultUseRelay`**（`useRelay` 是用户配置项的名字，provider 上没有），23/38 家带此字段，其中 `true` 五家：opencodeZen / opencodeGo / tokenhub / volcengine / alibaba；**MT 一家都没有**，可见 LLM/聚合有 21 家，`claude` `gemini` `yandex` `nvidia` `azureopenai` `llm` 六家结构性缺席（端点由用户掌控或无固定转发路由）——缺席 ≠ `false`，记 `null`。
+  实测要点：① `models` **一律在顶层**，31/38 家有；没有的 7 家是 `gtxFreeAPI` `edgeFreeAPI` `google` `deepl` `deeplx` `azure`（经典/免费 MT）+ `llm`（Custom，模型由用户填）——不是位置不一，是本来就没有，取不到记 `null`；② `defaults` 是配置默认值对象（`url` / `apiKey` / `model` / `temperature` / `chunkSize` / `batchSize` / `delayTime` 等），**不含 models**；③ 中转开关有**两个真源**，只看一个必漏（实施时踩过）：openai-compat 工厂成员写顶层 `defaultUseRelay`，手写 service 的 custom-kind（`claude` / `yandex`）写 `defaults.useRelay`；投影时两处都取，都缺席才记 `null`（= UI 不渲染该开关）。可见 23 家有开关，其中默认开启的是 YandexGPT / OpenCode Zen / OpenCode Go / TokenHub。④ 温度参数**不做投影**：判据同样是两处（顶层 `defaultTemperature` 缺席 = 永不发送，但 `yandex` / `nvidia` 在手写 service 里显式传值），单字段推不出可靠结论，正文那句「五个接口没有这个控件」按源码逐家核过即可。
 - **`languages.json`** — 123 条：`value` / `name`（英文名）/ `nativelabel` / `zh`（取自 `messages/zh.json` 的 `languages` 命名空间）/ `group`（8 组之一）。`auto` 单独标 `isAutoDetect: true`，聚合计数一律排除它。
 - **`tools.json`** — 19 条：`key` / `path` / `group` / `nameZh` / `nameEn`（取自 `messages/{zh,en}.json` 的 `tools.<key>.title`）/ `appUrlZh` / `appUrlEn` / `docPage`（本仓相对路径，无页记 `null`）。
 
@@ -87,7 +87,7 @@ import 片段约定，且实测下划线前缀文件不会生成路由（`doc_bu
 | --- | --- | --- |
 | `provider-list.mdx` | LLM 两组清单（厂商直连 / 聚合网关与自托管）+ 计数句 | `api.mdx` 的「大语言模型（LLM）」一节手抄名单 |
 | `language-table.mdx` | 8 组 × 四列语言表（Code / Native / English / 中文；en 版同样保留中文列，与现状一致） | 手抄的 `_supported-languages.mdx`（删除该文件，`api.mdx:9` 的 import 改指新片段） |
-| `relay-list.mdx` | 「中转 API」开关覆盖的接口清单 + 计数句 + 结构性例外（Claude / Gemini / YandexGPT / Nvidia NIM / Azure OpenAI / Custom 端点由用户掌控者） | `api.mdx` zh :175 / en :175 那段手抄名单（文档 22 家，实测 21 家且名单两头错） |
+| `relay-list.mdx` | 「中转 API」开关覆盖的接口清单 + 计数句 + 结构性例外（Gemini 把模型名拼在 URL 路径、Nvidia NIM 走内置代理、Azure OpenAI 与 Custom 地址由用户填） | `api.mdx` zh :175 / en :175 那段手抄名单（文档 22 家，实测 23 家，缺 OpenCode Go） |
 
 **不做 `model-list.mdx`**（规划时按实测砍掉）：正文里 24 处具体模型名绝大多数是**编辑推荐**
 （「DeepSeek 性价比首选」「Claude Sonnet 长文最好」），不是目录事实；生成一张 SKU 速查表属于新增内容，
@@ -171,7 +171,7 @@ frontmatter 里的计数**无法由片段渲染**（frontmatter 是静态文本�
 
 - **OpenCode Go**：补进 LLM 清单（生成片段自动带上）；正文补一段说明——与 Zen **同 host、同账号、同一把 key**，差在路径（`/zen/go/v1` vs `/zen/v1`）、在售 SKU 集合、计费形态（Go 是 $10/月订阅额度，Zen 是充值余额），**不能写成「充值即用」**；官方限定一个 workspace 只能有一人订阅 Go。
 - **Azure OpenAI**：改写为 v1 GA 语义——请求地址 = 用户填的资源根 + 固定 `/openai/v1` 后缀，设置表单**没有 apiVersion 字段**，模型框填部署名，`reasoning_effort` 随工厂正常下发。
-- **9Router / OmniRoute**：Custom 的端点快捷项补这两个自托管 OpenAI 兼容网关（默认端口同为 20128，OmniRoute 是 9Router 的 TS fork），与 LM Studio / Ollama / llama.cpp / koboldcpp / LiteLLM / Together AI / Fireworks AI 并列。
+- **9Router / OmniRoute**：Custom 的端点快捷项补这两个自托管 OpenAI 兼容网关——**9Router 默认端口 20127，OmniRoute 是 20128**（OmniRoute 是 9Router 的 TypeScript fork，端口不同，别写成一个）。与 LM Studio / Ollama / llama.cpp / koboldcpp / LiteLLM / Together AI / Fireworks AI 并列，共 **9** 个快捷地址（TranslateGemma 与 MiLMMT 各 3 个：LM Studio / llama.cpp / koboldcpp）。
 - **hidden 两家**（Volcengine Coding Plan / Alibaba Bailian Token Plan）：默认下拉不显示，属 UI 策略，文档不主动宣传，但在「聚合网关与自托管」清单的计数口径里说明可见数为 27 而非 29。
 - **模型代际**：目录类陈述由 `provider-list.mdx` 承担；编辑推荐语（「DeepSeek 性价比首选」等）保留人工，不生成也不加闸门。
 - **「不发送温度参数的接口」清单要按源码重核**（自查时新发现的陈旧点）：`docs/zh/guide/translation/api.mdx:71` 写「五个接口没有这个控件：OpenAI（**GPT-5.x** 全系为推理模型…）」——源码在售已是 GPT-6 Astra/Sol/Luna，措辞随代际更新；且这份「哪几家不发 temperature」的名单本身要以 `registry.ts` 逐家核对，不能沿用文档现有的五家。该句里的「五个」是中文数字、属 B 类局部事实，白名单不会误伤，改的是内容不是句式。

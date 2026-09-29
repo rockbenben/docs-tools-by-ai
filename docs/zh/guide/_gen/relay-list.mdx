@@ -1,5 +1,5 @@
 {/* ⚠ 由 yarn sync 生成，请勿手改 —— 手改会在下次同步时被整份覆盖 */}
 
-除 Claude、Gemini、YandexGPT (AI Studio)、Nvidia NIM、Azure OpenAI、Custom (OpenAI-compatible) 之外的每个 LLM 接口（共 21 个：DeepSeek、OpenAI、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
+除 Gemini、Nvidia NIM、Azure OpenAI、Custom (OpenAI-compatible) 之外的每个 LLM 接口（共 23 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)、OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
 
-OpenCode Zen、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
+YandexGPT (AI Studio)、OpenCode Zen、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。

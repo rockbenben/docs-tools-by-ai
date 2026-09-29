@@ -68,12 +68,12 @@ import SupportedLanguages from '../_gen/language-table.mdx';
 
 主要参数：
 
-- **模型**：可以下拉选，也可以直接输入。下拉里每条显示“友好名 + 真实 SKU”两行，该接口的默认模型带 `default` 标签；厂商刚发布、清单里还没有的 SKU 手填即可。Azure OpenAI 填部署名。
+- **模型**：可以下拉选，也可以直接输入。下拉里每条显示“友好名 + 真实 SKU”两行，该接口的默认模型带 `default` 标签；厂商刚发布、清单里还没有的 SKU 手填即可。Azure OpenAI 填部署名——工具走的是 **v1 GA** 接口：URL 里填你的资源根，工具自动接上固定的 `/openai/v1` 后缀，所以设置里**已经没有 `apiVersion`（部署版本）这一项**了。
 - **温度（Temperature）**：默认 0.7。技术文档建议 0.2 左右，营销/意译可以放到 0.9。
-  - **五个接口没有这个控件**：OpenAI（GPT-5.x 全系为推理模型，非默认温度直接报 400）、Claude（在册 SKU 的 adaptive / extended thinking 拒绝 temperature）、Gemini（3.x 官方建议保持默认 1.0，调低易导致循环输出）、Kimi (Moonshot)（k2.x / k3 锁定温度）、Azure OpenAI。这几家不发送该参数、UI 也不显示输入框，直接用服务端默认值——想控制文风请改用系统提示词或思考强度。
+  - **五个接口没有这个控件**：OpenAI（GPT-5.x / 6.x 全系为推理模型，非默认温度直接报 400）、Claude（在册 SKU 的 adaptive / extended thinking 拒绝 temperature）、Gemini（3.x 官方建议保持默认 1.0，调低易导致循环输出）、Kimi (Moonshot)（k2.x / k3 锁定温度）、Azure OpenAI。这几家不发送该参数、UI 也不显示输入框，直接用服务端默认值——想控制文风请改用系统提示词或思考强度。
 - **思考模式**：让 AI 多想一步再翻译，质量更高但更慢/更贵。支持的模型会在「模型」下方多出一个下拉，选项**按模型独立保存**，切模型不影响别的设置。形态有四种：
   - **两档（Off / On）**：DeepSeek（开启即最高档，底层 API 的中间档位对翻译无意义）、Doubao、Zhipu GLM、Xiaomi MiMo、MiniMax M3、Baidu ERNIE 5.0 Thinking、Mistral（Medium 3.5 / Small）、Cohere Command A Reasoning、SiliconFlow —— 这几家的底层 API 只接受 on/off，不接受 effort
-  - **四档（Off / Low / Medium / High）**：其余支持思考的接口，包括 Claude、OpenAI GPT-5.x、Gemini、Qwen3、Kimi (Moonshot)、xAI Grok、Groq 与 Cerebras 的 GPT-OSS、Azure OpenAI，以及 OpenRouter 上带思考标记的模型
+  - **四档（Off / Low / Medium / High）**：其余支持思考的接口，包括 Claude、OpenAI GPT-5.x / 6.x、Gemini、Qwen3、Kimi (Moonshot)、xAI Grok、Groq 与 Cerebras 的 GPT-OSS、Azure OpenAI，以及 OpenRouter 上带思考标记的模型
   - **最低档标 Min 而不是 Off**：厂商压根没给关闭值的模型，最低一档改标 **Min** —— 它照常推理、照常计费，标成 Off 是撒谎。当前是 Gemini 3.x、xAI Grok 4.5 / 4.6、Groq 与 Cerebras 上的 GPT-OSS、Kimi K3 / K2.6，外加单个 SKU **Claude Fable 5**（官方标 Always on，发显式关闭直接 400；同门的 Opus 5 / Sonnet 5 / Haiku 4.5 都关得掉）
   - **三态（Off / On / Auto）**：在支持思考的接口上填**未列出的自定义模型**时。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off
   - **不显示思考控件**：StepFun、YandexGPT、OpenCode Zen、TokenHub、Atlas Cloud、Nvidia NIM、Custom (OpenAI-compatible)。聚合网关背后是多家上游，「能不能关思考」逐个型号不同，统一发关闭参数会打到不支持关闭的型号上，因此一律跟随上游模型的服务端默认
@@ -82,6 +82,7 @@ import SupportedLanguages from '../_gen/language-table.mdx';
 
 - **TokenHub（腾讯）**：腾讯混元已迁到 TokenHub，除自研 hy3 外还转售 DeepSeek / GLM / Kimi / MiniMax / MiMo。⚠ **光有 API Key 调不通** —— 每个模型都要先在控制台的「在线推理」页开通（开启免费体验或启用后付费），否则任何调用都返回 400 `401006`「输入的服务 ID 不存在」。官方端点只在成功响应上发 CORS 头、预检一律 405，浏览器直连必败，因此「中转 API」**默认开启**。
 - **OpenCode Zen**：聚合网关，模型清单里带 `(free)` 后缀的 SKU 用起来免费——需要注册并绑定账单信息，但不预付费。上游完全不发 CORS 头、预检返回 404 页面，因此「中转 API」同样**默认开启**。
+- **OpenCode Go**：与 OpenCode Zen **同一个 host、同一个账号、同一把 API Key**，只有三处不同——请求路径（`/zen/go/v1` 与 `/zen/v1`）、在售 SKU 集合、计费形态。Go 是 **$10/月的订阅额度**（官方按每个模型的月限额换算：跑满 5 小时 = 20%、一周 = 50%、一个月 = 100%），Zen 是充值余额——**别把 Go 写成「充值即用」**。官方限定一个 workspace 只能有一人订阅 Go。上游同样不发 CORS 头，「中转 API」**默认开启**。
 - **Cerebras**：收录它是为了**速度**而不是模型（两个公共模型在 Groq / Nvidia / SiliconFlow 上都调得到）。官方标称 gpt-oss-120b 约 3000 tokens/s，逐行翻译这类高频短请求体感明显；另有每日 100 万免费 token。
 - **YandexGPT (AI Studio)**：除 API Key 外还需填写 **Folder ID**（在 Yandex AI Studio 控制台的目录页获取）。模型字段填 SKU 名（如 `yandexgpt-5.1`，也提供 Qwen3、DeepSeek、GPT-OSS 等开源 SKU），或直接粘贴完整的 `gpt://<folder_id>/<model>/latest` URI。Yandex 官方接口无 CORS 头，浏览器无法直连，「中转 API」**默认开启**（开关可关闭，也可改填自建中转地址）。
 - **已从服务列表移除的接口**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）。**LiteLLM** 不再是独立条目，改为 Custom (OpenAI-compatible) 的一个 URL 快捷项，见下文 [自建网关与第三方推理平台](#自建网关与第三方推理平台)。
@@ -176,7 +177,7 @@ Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自�
 
 <RelayList />
 
-- **上面点名的例外接口没有这个开关**：它们的地址本就是你自己填的（Custom、Azure OpenAI、Nvidia NIM），或走的协议不是「固定地址的 chat/completions」（Gemini 把模型名拼在 URL 路径里，pass-through 转发不了）
+- **上面点名的例外接口没有这个开关**：Custom 与 Azure OpenAI 的地址本就是你自己填的，中转没有固定上游可写；Nvidia NIM 走的是下一节的内置代理；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
 - **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
 - 中转会透传服务器的 `Retry-After` 响应头，限流时的自动降速与直连一样精确
 
@@ -223,11 +224,13 @@ URL 输入框旁会列出这些地址作为快捷选项；点中哪个，下方�
 
 ### 自建网关与第三方推理平台
 
-除了四个本地运行时，**Custom (OpenAI-compatible)** 的 URL 快捷项里还有三个非本地地址，选中即填、不必手打：
+除了四个本地运行时，**Custom (OpenAI-compatible)** 的 URL 快捷项里还有五个非本地地址，选中即填、不必手打：
 
 | 快捷项 | 默认地址 | 说明 |
 | --- | --- | --- |
 | LiteLLM | `http://127.0.0.1:4000/v1/chat/completions` | 把 100+ 上游模型统一成 OpenAI 协议的自建代理；默认放行浏览器跨域，无需额外 CORS 配置 |
+| 9Router | `http://127.0.0.1:20127/v1/chat/completions` | 自托管 OpenAI 兼容网关 |
+| OmniRoute | `http://127.0.0.1:20128/v1/chat/completions` | 9Router 的 TypeScript 分支，同为自托管网关，默认端口不同 |
 | Together AI | `https://api.together.xyz/v1/chat/completions` | 第三方推理平台，托管大量开源权重 |
 | Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | 同上 |
 

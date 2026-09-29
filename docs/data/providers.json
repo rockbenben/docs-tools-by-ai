@@ -273,7 +273,7 @@
     "hidden": false,
     "docs": "https://platform.claude.com/docs/en/intro",
     "defaultModel": "claude-sonnet-5",
-    "defaultUseRelay": null,
+    "defaultUseRelay": false,
     "models": [
       {
         "label": "Claude Opus 5.5",
@@ -673,7 +673,7 @@
     "hidden": false,
     "docs": "https://aistudio.yandex.ru/docs/en/ai-studio/concepts/api.html",
     "defaultModel": "yandexgpt-5.1",
-    "defaultUseRelay": null,
+    "defaultUseRelay": true,
     "models": [
       {
         "label": "YandexGPT Pro 5.1",

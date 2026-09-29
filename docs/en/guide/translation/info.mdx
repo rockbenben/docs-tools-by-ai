@@ -149,6 +149,13 @@ After translation, the tool can automatically apply simple string replacements:
 This feature does plain string replacement only — no escape sequences (`\n`, `\t` etc.). Use the Text Splitter for richer transformations.
 :::
 
+### Export to a chosen folder
+
+Exports go to your browser's download folder by default. Browsers with the File System Access API (Chrome / Edge) show an **Export folder** button in the results area: pick a folder once and every export lands there; **Back to the download folder** returns to the default.
+
+- The browser won't accept the Desktop, Documents, Downloads or user folder itself as the target — pick a subfolder or any other folder
+- Firefox and Safari don't expose the API, so the button never appears and exports keep using the default download folder
+
 ---
 
 ## Advanced Settings
