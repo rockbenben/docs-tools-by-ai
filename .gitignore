@@ -13,4 +13,5 @@ doc_build/
 !.vscode/extensions.json
 .idea
 .claude/
+.qoder*
 .gstack/
