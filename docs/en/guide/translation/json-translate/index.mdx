@@ -23,7 +23,7 @@ faq:
   - q: Which translation engines and file sizes does this JSON translator support?
     a: >-
       Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage.
-      Supports 35 engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure,
+      Supports every translation endpoint: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure,
       Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate
       modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge.
       IndexedDB cache gives incremental builds — only changed keys re-call the API.
@@ -251,7 +251,7 @@ Currently, JsonTranslate does not support JSON keys that contain dots (`.`). Thi
 
 ### Which translation engines and file sizes does this JSON translator support?
 
-Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports 35 engines: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
+Browser-side JSON i18n translator: source never leaves your machine, API key stays in localStorage. Supports every translation endpoint: Google free tier (zero config), DeepSeek, Claude, GPT, Gemini, DeepL, Azure, Qwen-MT, plus any OpenAI-compatible endpoint (Ollama / LM Studio / vLLM self-hosted). Five translate modes: all keys, specified-node (JSONPath), specified-key, one-field-across-entries, and i18n multi-language merge. IndexedDB cache gives incremental builds — only changed keys re-call the API.
 
 ### Should I use machine translation or AI/LLM for translating JSON? How do I choose?
 

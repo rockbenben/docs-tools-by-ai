@@ -16,7 +16,7 @@ description: Tools By AI is a suite of free, AI-assisted online tools covering s
 
 ### 🌍 Translation Tools
 
-Three format-specific translators (subtitle, Markdown, JSON i18n) sharing 9 translation APIs and 26 LLM endpoints across 120+ languages.
+Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 120+ languages.
 
 - [**Subtitle Translator**](./translation/subtitle-translator/) — SRT / ASS / VTT / LRC with timecode alignment and bilingual output
 - [**MD Translator**](./translation/md-translator/) — Markdown that preserves code blocks, LaTeX, and Front Matter
