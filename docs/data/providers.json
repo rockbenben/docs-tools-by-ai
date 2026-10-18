@@ -253,6 +253,11 @@
         "thinking": true
       },
       {
+        "label": "GPT-6.1 Sol",
+        "value": "gpt-6.1-sol",
+        "thinking": true
+      },
+      {
         "label": "GPT-6 Sol",
         "value": "gpt-6-sol",
         "thinking": true
@@ -272,7 +277,7 @@
     "kind": "custom",
     "hidden": false,
     "docs": "https://platform.claude.com/docs/en/intro",
-    "defaultModel": "claude-sonnet-5",
+    "defaultModel": "claude-sonnet-5-5",
     "defaultUseRelay": false,
     "models": [
       {
@@ -281,13 +286,13 @@
         "thinking": true
       },
       {
-        "label": "Claude Sonnet 5",
-        "value": "claude-sonnet-5",
+        "label": "Claude Sonnet 5.5",
+        "value": "claude-sonnet-5-5",
         "thinking": true
       },
       {
-        "label": "Claude Haiku 4.5",
-        "value": "claude-haiku-4-5",
+        "label": "Claude Haiku 5.5",
+        "value": "claude-haiku-5-5",
         "thinking": true
       },
       {
@@ -351,11 +356,6 @@
         "label": "Qwen3.8 Flash",
         "value": "qwen3.8-flash",
         "thinking": true
-      },
-      {
-        "label": "Qwen3.7 Plus",
-        "value": "qwen3.7-plus",
-        "thinking": true
       }
     ],
     "endpoints": [
@@ -390,6 +390,11 @@
         "label": "Kimi K3",
         "value": "kimi-k3",
         "thinking": true
+      },
+      {
+        "label": "Kimi K2.7 Code",
+        "value": "kimi-k2.7-code",
+        "thinking": null
       },
       {
         "label": "Kimi K2.6",
@@ -500,12 +505,17 @@
       {
         "label": "GLM-5.3",
         "value": "glm-5.3",
-        "thinking": null
+        "thinking": true
       },
       {
         "label": "GLM-5.3 Flash",
         "value": "glm-5.3-flash",
-        "thinking": null
+        "thinking": true
+      },
+      {
+        "label": "GLM-5.3 FlashX",
+        "value": "glm-5.3-flashx",
+        "thinking": true
       }
     ],
     "endpoints": [
@@ -535,6 +545,11 @@
         "label": "MiniMax M3",
         "value": "MiniMax-M3",
         "thinking": true
+      },
+      {
+        "label": "MiniMax M2.7",
+        "value": "MiniMax-M2.7",
+        "thinking": null
       }
     ],
     "endpoints": [
@@ -556,7 +571,7 @@
     "category": "llm",
     "kind": "openai-compat",
     "hidden": false,
-    "docs": "https://platform.stepfun.com/docs/zh/guides/models",
+    "docs": "https://platform.stepfun.com/docs/zh/guides/models/list",
     "defaultModel": "step-3.5-flash",
     "defaultUseRelay": false,
     "models": [
@@ -568,7 +583,7 @@
       {
         "label": "Step 3.7 Flash",
         "value": "step-3.7-flash",
-        "thinking": null
+        "thinking": true
       }
     ],
     "endpoints": null
@@ -597,7 +612,7 @@
     "category": "llm",
     "kind": "openai-compat",
     "hidden": false,
-    "docs": "https://docs.mistral.ai/api/",
+    "docs": "https://docs.mistral.ai/api",
     "defaultModel": "mistral-small-latest",
     "defaultUseRelay": false,
     "models": [
@@ -612,13 +627,18 @@
         "thinking": true
       },
       {
-        "label": "Mistral Large 3",
+        "label": "Mistral Large 4",
+        "value": "mistral-large-4-0",
+        "thinking": true
+      },
+      {
+        "label": "Mistral Large (latest alias)",
         "value": "mistral-large-latest",
         "thinking": null
       },
       {
         "label": "Ministral 3 14B",
-        "value": "ministral-14b-latest",
+        "value": "ministral-14b-2512",
         "thinking": null
       }
     ],
@@ -671,7 +691,7 @@
     "category": "llm",
     "kind": "custom",
     "hidden": false,
-    "docs": "https://aistudio.yandex.ru/docs/en/ai-studio/concepts/api.html",
+    "docs": "https://aistudio.yandex.ru/en/docs/ai-studio/concepts/api",
     "defaultModel": "yandexgpt-5.1",
     "defaultUseRelay": true,
     "models": [
@@ -765,6 +785,11 @@
         "thinking": true
       },
       {
+        "label": "Claude Sonnet 5.5",
+        "value": "anthropic/claude-sonnet-5.5",
+        "thinking": true
+      },
+      {
         "label": "Claude Opus 5.5",
         "value": "anthropic/claude-opus-5.5",
         "thinking": true
@@ -800,8 +825,18 @@
         "thinking": true
       },
       {
-        "label": "Qwen3.8 27B (free)",
-        "value": "qwen/qwen3.8-27b:free",
+        "label": "Kimi K3",
+        "value": "moonshotai/kimi-k3",
+        "thinking": null
+      },
+      {
+        "label": "Laguna XS 2.1 (free)",
+        "value": "poolside/laguna-xs-2.1:free",
+        "thinking": null
+      },
+      {
+        "label": "Nemotron 3.5 Lightning (free)",
+        "value": "nvidia/nemotron-3.5-lightning:free",
         "thinking": null
       },
       {
@@ -819,12 +854,12 @@
     "kind": "openai-compat",
     "hidden": false,
     "docs": "https://opencode.ai/docs/zen/",
-    "defaultModel": "deepseek-v4-flash-free",
+    "defaultModel": "space-bunny-free",
     "defaultUseRelay": true,
     "models": [
       {
-        "label": "DeepSeek V4 Flash (free)",
-        "value": "deepseek-v4-flash-free",
+        "label": "Space Bunny (free)",
+        "value": "space-bunny-free",
         "thinking": null
       },
       {
@@ -838,13 +873,8 @@
         "thinking": null
       },
       {
-        "label": "Space Bunny (free)",
-        "value": "space-bunny-free",
-        "thinking": null
-      },
-      {
-        "label": "Ling 3.0 Flash Fin (free)",
-        "value": "ling-3.0-flash-fin-free",
+        "label": "Ling 3.1 Flash (free)",
+        "value": "ling-3.1-flash-free",
         "thinking": null
       },
       {
@@ -888,18 +918,8 @@
         "thinking": null
       },
       {
-        "label": "Claude Haiku 4.5",
-        "value": "claude-haiku-4-5",
-        "thinking": null
-      },
-      {
         "label": "GLM 5.3",
         "value": "glm-5.3",
-        "thinking": null
-      },
-      {
-        "label": "Gemini 3.8 Flash",
-        "value": "gemini-3.8-flash",
         "thinking": null
       },
       {
@@ -908,23 +928,8 @@
         "thinking": null
       },
       {
-        "label": "Claude Sonnet 5",
-        "value": "claude-sonnet-5",
-        "thinking": null
-      },
-      {
-        "label": "Grok 4.7",
-        "value": "grok-4.7",
-        "thinking": null
-      },
-      {
         "label": "Kimi K3",
         "value": "kimi-k3",
-        "thinking": null
-      },
-      {
-        "label": "Claude Opus 5.5",
-        "value": "claude-opus-5-5",
         "thinking": null
       }
     ],
@@ -940,11 +945,6 @@
     "defaultModel": "mimo-v2.6-flash",
     "defaultUseRelay": true,
     "models": [
-      {
-        "label": "Space Bunny (free)",
-        "value": "space-bunny-free",
-        "thinking": null
-      },
       {
         "label": "Muse Spark 1.3 Contributor",
         "value": "muse-spark-1.3-contributor",
@@ -996,11 +996,6 @@
         "thinking": null
       },
       {
-        "label": "Qwen3.6 Plus",
-        "value": "qwen3.6-plus",
-        "thinking": null
-      },
-      {
         "label": "DeepSeek V4 Pro",
         "value": "deepseek-v4-pro",
         "thinking": null
@@ -1013,11 +1008,6 @@
       {
         "label": "GLM 5.3",
         "value": "glm-5.3",
-        "thinking": null
-      },
-      {
-        "label": "Grok 4.5",
-        "value": "grok-4.5",
         "thinking": null
       },
       {
@@ -1043,6 +1033,11 @@
     "defaultModel": "hy3",
     "defaultUseRelay": true,
     "models": [
+      {
+        "label": "Hunyuan hy4 Preview",
+        "value": "hy4-preview",
+        "thinking": null
+      },
       {
         "label": "Hunyuan hy3",
         "value": "hy3",
@@ -1150,12 +1145,12 @@
     "kind": "openai-compat",
     "hidden": false,
     "docs": "https://docs.siliconflow.cn/docs/api/chat-completions-post",
-    "defaultModel": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "defaultModel": "deepseek-ai/DeepSeek-V4-Flash",
     "defaultUseRelay": false,
     "models": [
       {
-        "label": "DeepSeek V4.1 Flash",
-        "value": "deepseek-ai/DeepSeek-V4.1-Flash",
+        "label": "DeepSeek V4 Flash",
+        "value": "deepseek-ai/DeepSeek-V4-Flash",
         "thinking": true
       },
       {
@@ -1164,18 +1159,13 @@
         "thinking": true
       },
       {
-        "label": "Kimi K2.6 (Pro)",
-        "value": "Pro/moonshotai/Kimi-K2.6",
-        "thinking": true
-      },
-      {
         "label": "GLM-5.3",
         "value": "zai-org/GLM-5.3",
         "thinking": null
       },
       {
-        "label": "GLM-5.1 (Pro)",
-        "value": "Pro/zai-org/GLM-5.1",
+        "label": "Qwen3.8 27B",
+        "value": "Qwen/Qwen3.8-27B",
         "thinking": null
       }
     ],
@@ -1188,7 +1178,7 @@
     "kind": "openai-compat",
     "hidden": false,
     "docs": "https://www.atlascloud.ai/docs",
-    "defaultModel": "deepseek-ai/deepseek-v4-flash",
+    "defaultModel": "deepseek-ai/deepseek-v4.1-flash",
     "defaultUseRelay": false,
     "models": [
       {
@@ -1197,8 +1187,38 @@
         "thinking": null
       },
       {
+        "label": "DeepSeek V4.1 Flash",
+        "value": "deepseek-ai/deepseek-v4.1-flash",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K3",
+        "value": "moonshotai/kimi-k3",
+        "thinking": null
+      },
+      {
+        "label": "Claude Sonnet 5",
+        "value": "anthropic/claude-sonnet-5",
+        "thinking": null
+      },
+      {
         "label": "Qwen3.8 Max",
         "value": "qwen/qwen3.8-max",
+        "thinking": null
+      },
+      {
+        "label": "Claude Opus 5.5",
+        "value": "anthropic/claude-opus-5.5",
+        "thinking": null
+      },
+      {
+        "label": "GPT 6.1 Sol",
+        "value": "openai/gpt-6.1-sol",
+        "thinking": null
+      },
+      {
+        "label": "Gemini 3.8 Flash",
+        "value": "google/gemini-3.8-flash",
         "thinking": null
       }
     ],
@@ -1235,6 +1255,21 @@
         "thinking": null
       },
       {
+        "label": "Nemotron 3.5 Lightning 30B",
+        "value": "nvidia/nemotron-3.5-lightning-30b-a3b",
+        "thinking": null
+      },
+      {
+        "label": "Kimi K3",
+        "value": "moonshotai/kimi-k3",
+        "thinking": null
+      },
+      {
+        "label": "GLM-5.3 Flash",
+        "value": "z-ai/glm-5.3-flash",
+        "thinking": null
+      },
+      {
         "label": "DeepSeek V4.1 Flash",
         "value": "deepseek-ai/deepseek-v4.1-flash",
         "thinking": true
@@ -1252,6 +1287,21 @@
     "defaultModel": "gpt-5.4-mini",
     "defaultUseRelay": null,
     "models": [
+      {
+        "label": "GPT-6 Astra",
+        "value": "gpt-6-astra",
+        "thinking": true
+      },
+      {
+        "label": "GPT-6.1 Sol",
+        "value": "gpt-6.1-sol",
+        "thinking": true
+      },
+      {
+        "label": "GPT-6 Luna",
+        "value": "gpt-6-luna",
+        "thinking": true
+      },
       {
         "label": "GPT-5.6 Sol",
         "value": "gpt-5.6-sol",
@@ -1288,7 +1338,7 @@
     "hidden": false,
     "docs": null,
     "defaultModel": "",
-    "defaultUseRelay": null,
+    "defaultUseRelay": false,
     "models": null,
     "endpoints": [
       {
@@ -1376,12 +1426,12 @@
       {
         "label": "GLM-5.3 (glm-latest)",
         "value": "glm-5.3",
-        "thinking": true
+        "thinking": null
       },
       {
         "label": "GLM-5.3 Flash",
         "value": "glm-5.3-flash",
-        "thinking": true
+        "thinking": null
       },
       {
         "label": "DeepSeek V4.1 Flash",
@@ -1401,7 +1451,7 @@
       {
         "label": "Kimi K2.7 Code",
         "value": "kimi-k2.7-code",
-        "thinking": true
+        "thinking": null
       },
       {
         "label": "Kimi K2.8 Preview",
@@ -1411,7 +1461,7 @@
       {
         "label": "Kimi K3",
         "value": "kimi-k3",
-        "thinking": true
+        "thinking": null
       }
     ],
     "endpoints": null
@@ -1429,32 +1479,17 @@
       {
         "label": "Qwen 3.8 Max",
         "value": "qwen3.8-max",
-        "thinking": null
+        "thinking": true
       },
       {
         "label": "Qwen 3.8 Flash",
         "value": "qwen3.8-flash",
-        "thinking": null
-      },
-      {
-        "label": "Qwen 3.7 Max",
-        "value": "qwen3.7-max",
-        "thinking": true
-      },
-      {
-        "label": "Qwen 3.7 Plus",
-        "value": "qwen3.7-plus",
-        "thinking": true
-      },
-      {
-        "label": "Qwen 3.6 Flash",
-        "value": "qwen3.6-flash",
         "thinking": true
       },
       {
         "label": "DeepSeek V4.1 Flash",
         "value": "deepseek-v4.1-flash",
-        "thinking": null
+        "thinking": true
       },
       {
         "label": "DeepSeek V4 Pro",
