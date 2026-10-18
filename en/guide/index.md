@@ -26,6 +26,7 @@ Seven complementary text utilities covering **format conversion → content clea
 - [**Novel Processor**](/en/guide/text/novel-processor.md) — web-novel TXT formatting, ad removal, chapter fixes
 - [**Text Splitter**](/en/guide/text/text-splitter.md) — split by symbol / chars / paragraphs
 - [**Text Joiner**](/en/guide/text/text-joiner.md) — merge columns by template into CSV / SQL / JSON
+- [**Brace Expander**](/en/guide/text/brace-expander.md) — expand one template into a full list, bash syntax
 - [**Text Diff**](/en/guide/text/text-diff.md) — two-pane diff, first-difference locator, .patch export
 - [**Multi-Function Text Processor**](/en/guide/text/text-toolbox.md) — regex match, dedupe, batch prefix/suffix, line ops
 - [**Data Batch**](https://tools.newzone.top/en/data-batch) — spreadsheet dedupe, column extraction, batch prefixes (no dedicated guide yet)

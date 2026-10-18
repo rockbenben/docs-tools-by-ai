@@ -170,7 +170,7 @@ Some providers' official endpoints block direct browser calls (CORS). The tool o
 ### API relay (user-controlled)
 
 
-Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI, Custom (OpenAI-compatible) — 23 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio), OpenRouter, OpenCode Zen, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):
+Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI — 24 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio), OpenRouter, OpenCode Zen, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Custom (OpenAI-compatible) — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):
 
 YandexGPT (AI Studio), OpenCode Zen, OpenCode Go, TokenHub (Tencent) **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.
 

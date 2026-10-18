@@ -26,6 +26,7 @@
 - [**小说处理**](/guide/text/novel-processor.md) — 网文 TXT 排版、去广告、章节修复
 - [**文本分割**](/guide/text/text-splitter.md) — 按符号 / 字数 / 段落切分
 - [**文本拼接**](/guide/text/text-joiner.md) — 多列按模板合并成 CSV / SQL / JSON
+- [**格式批量生成**](/guide/text/brace-expander.md) — 一行模板展开成完整清单，语法照抄 bash
 - [**文本对照**](/guide/text/text-diff.md) — 双栏 diff，定位首处差异，导出 .patch
 - [**多功能文本处理**](/guide/text/text-toolbox.md) — 正则匹配、去重、批量加前后缀、行操作
 - [**数据批处理**](https://tools.newzone.top/zh/data-batch) — Excel 表格去重、列提取、批量加前缀（暂无独立指南）
