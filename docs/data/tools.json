@@ -45,6 +45,15 @@
     "appUrlEn": "https://tools.newzone.top/en/text-joiner"
   },
   {
+    "key": "braceExpander",
+    "path": "brace-expander",
+    "group": "textParser",
+    "nameZh": "格式批量生成",
+    "nameEn": "Brace Expander",
+    "appUrlZh": "https://tools.newzone.top/zh/brace-expander",
+    "appUrlEn": "https://tools.newzone.top/en/brace-expander"
+  },
+  {
     "key": "textDiff",
     "path": "text-diff",
     "group": "textParser",

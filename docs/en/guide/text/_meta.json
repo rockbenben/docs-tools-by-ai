@@ -3,6 +3,7 @@
   "novel-processor",
   "text-splitter",
   "text-joiner",
+  "brace-expander",
   "text-diff",
   "text-toolbox"
 ]

@@ -32,6 +32,7 @@ description: Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆
 - [**小说处理**](./text/novel-processor.mdx) — 网文 TXT 排版、去广告、章节修复
 - [**文本分割**](./text/text-splitter.mdx) — 按符号 / 字数 / 段落切分
 - [**文本拼接**](./text/text-joiner.mdx) — 多列按模板合并成 CSV / SQL / JSON
+- [**格式批量生成**](./text/brace-expander.mdx) — 一行模板展开成完整清单，语法照抄 bash
 - [**文本对照**](./text/text-diff.mdx) — 双栏 diff，定位首处差异，导出 .patch
 - [**多功能文本处理**](./text/text-toolbox.mdx) — 正则匹配、去重、批量加前后缀、行操作
 - [**数据批处理**](https://tools.newzone.top/zh/data-batch) — Excel 表格去重、列提取、批量加前缀（暂无独立指南）
