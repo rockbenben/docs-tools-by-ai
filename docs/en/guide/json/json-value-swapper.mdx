@@ -3,8 +3,8 @@ title: JSON Value Swapper Guide
 head:
   - - meta
     - property: og:title
-      content: JSON Value Swapper Tool - Quickly Swap Values of Two Keys | Tools By AI
-description: Need to swap the values of two keys in a JSON array? This tool helps you do it in one click, automatically detecting all available keys to speed up data processing.
+      content: JSON Value Swapper Tool - Quickly Swap Values of Two Fields | Tools By AI
+description: Need to swap the values of two fields in a JSON array? This tool helps you do it in one click, automatically detecting all available fields to speed up data processing.
 appUrl: https://tools.newzone.top/en/json-value-swapper
 appName: JSON Value Swapper
 image: https://docs.newzone.top/img/json-value-swapper-en.webp
@@ -18,20 +18,20 @@ howto:
     - name: Swap and export
       text: Click Swap. Review missing-field alerts and export the corrected JSON.
 faq:
-  - q: How do I know which two key names to fill in?
+  - q: How do I know which two field names to fill in?
     a: >-
       You don't have to remember them. Once you paste or upload a JSON array, the tool auto-detects
-      every available key and renders them as clickable buttons — one tap fills "Swap Fields 1" or "Swap Fields 2",
-      preventing typos. Key names are case-sensitive.
-  - q: Can I swap keys inside nested objects?
+      every available field and renders them as clickable buttons — one tap fills "Swap Field 1" or "Swap Field 2",
+      preventing typos. Field names are case-sensitive.
+  - q: Can I swap fields inside nested objects?
     a: >-
-      No. This tool only swaps first-level keys within objects of a JSON array. For nested-structure
+      No. This tool only supports top-level fields within objects of a JSON array, not nested object fields. For nested-structure
       edits, switch to [JSON Node Edit](./json-node-edit.mdx), which uses JSONPath to find and modify
       nodes at any depth.
-  - q: What if some objects in the array are missing one of the keys?
+  - q: What if some objects in the array are missing one of the fields?
     a: >-
       The system keeps processing the other objects and prints a notice telling you which entries are
-      missing the key — no abort. Always back up important data first; exported filenames auto-append
+      missing the field — no abort. Always back up important data first; exported filenames auto-append
       a timestamp so you can keep multiple versions side by side.
   - q: Will it lag on large files?
     a: >-
@@ -40,21 +40,21 @@ faq:
       machine.
   - q: I don't want to swap — I want to copy one field's value to another. What should I use?
     a: >-
-      Use [JSON Value Transformer](./json-value-transformer.mdx). It defines arbitrary key mappings
+      Use [JSON Value Transformer](./json-value-transformer.mdx). It defines arbitrary field mappings
       (including nested JSONPath) and copies values from source to target paths — perfect for
       multilingual template initialization. This tool is for "two fields literally trading places".
 ---
 
-# JSON Key-Value Swap
+# JSON Value Swapper
 
-The [JSON Key-Value Swap Tool](https://tools.newzone.top/en/json-value-swapper) can automatically swap the values of two specified keys in a JSON array, making your data processing more convenient.
+The [JSON Value Swapper Tool](https://tools.newzone.top/en/json-value-swapper) can automatically swap the values of two specified fields in a JSON array, making your data processing more convenient.
 
 ![JSON Value Swapper Interface](/img/json-value-swapper-en.webp 'JSON Value Swapper Interface')
 
 ## Features
 
-- Automatically detects and displays all available keys in the JSON.
-- Swaps the values of two keys in each object of a JSON array.
+- Automatically detects and displays all available field names in the JSON.
+- Swaps the values of two top-level fields in each object of a JSON array.
 
 ## Usage Steps
 
@@ -62,14 +62,14 @@ The [JSON Key-Value Swap Tool](https://tools.newzone.top/en/json-value-swapper) 
    - **Upload File**: Drag and drop a file containing a JSON array into the upload area, or click to select a file (supports .json and .txt formats).
    - **Paste Data**: Directly paste your JSON array data into the text box.
 
-2. **Select the Keys to Swap**:
-   - The system will automatically analyze your data and display all available key names.
-   - Click on the displayed key name button to quickly select, or type into the "Swap Fields 1" and "Swap Fields 2" inputs.
-   - The values corresponding to these keys will be swapped during the processing.
+2. **Select the Fields to Swap**:
+   - The system will automatically analyze your data and display all available field names.
+   - Click on the displayed field name button to quickly select, or type into the "Swap Fields 1" and "Swap Fields 2" inputs.
+   - The values corresponding to these fields will be swapped during the processing.
 
 3. **Execute the Swap Operation**:
    - Click the "Start Swap" button to process the data.
-   - If some objects are missing the specified keys, the system will display a prompt.
+   - If some objects are missing the specified fields, the system will display a prompt.
 
 4. **Manage Results**:
    - After the swap is complete, the result will be displayed in the lower section.
@@ -85,10 +85,10 @@ The [JSON Key-Value Swap Tool](https://tools.newzone.top/en/json-value-swapper) 
 
 ## Notes
 
-- This tool only supports swapping the first-level key values of objects in a JSON array and does not support swapping keys in nested objects.
-- JSON key names are case-sensitive, so please ensure the correct key names are entered.
-- If some objects in the array are missing the specified keys, the system will continue processing and provide a prompt.
+- This tool only supports swapping top-level field values of objects in a JSON array and does not support swapping fields in nested objects.
+- JSON field names are case-sensitive, so please ensure the correct field names are entered.
+- If some objects in the array are missing the specified fields, the system will continue processing and provide a prompt.
 - It is recommended to back up your original data before processing important data.
 - Ensure your JSON format is correct, as the tool can only process valid JSON data.
 
-With this simple and easy-to-use tool, you can quickly swap key-value pairs in a JSON array, saving time on data processing and boosting your work efficiency.
+With this simple and easy-to-use tool, you can quickly swap field values in a JSON array, saving time on data processing and boosting your work efficiency.

@@ -14,31 +14,31 @@ howto:
     - name: Paste JSON data
       text: Paste the JSON data where new fields should be inserted.
     - name: Set reference position
-      text: Enter the reference node name (new fields will be inserted after it) and the names of new nodes to add (comma-separated for batch insertion).
+      text: Enter or click to pick the reference field (new fields will be inserted after it) and enter the names of new fields to add (comma-separated for batch insertion).
     - name: Insert and export
       text: Click Insert. The tool adds new fields to every object while preserving original order and structure.
 faq:
-  - q: Can I insert multiple new nodes after a single target node at once?
+  - q: Can I insert multiple new fields after a reference field at once?
     a: >-
-      Yes. Comma-separate multiple node names in the "New Node" field (both English and Chinese
-      commas work). New nodes are inserted in the order you typed them, immediately after the target
-      node. For example, target = `id`, new = `created_at, updated_at` adds both fields right after
+      Yes. Comma-separate multiple field names in the "Insert New Field" box (both English and Chinese
+      commas work). New fields are inserted in the order you typed them, immediately after the reference
+      field. For example, reference field = `id`, new fields = `created_at, updated_at` adds both fields right after
       `id`.
-  - q: What happens if my new node names are purely numeric?
+  - q: What happens if my new field names are purely numeric?
     a: >-
       The tool auto-sorts numeric keys by value and places them at the front (this matches JS object
       key ordering rules). If you want to preserve input order, prefix the numbers with a non-digit
       character, e.g. `k_001, k_002`.
-  - q: What if the target node doesn't exist?
+  - q: What if the reference field doesn't exist?
     a: >-
       An error is shown and processing stops — your original data is never touched. Double-check the
-      key name exists in the JSON (case-sensitive). If your JSON structure is irregular, use
+      field name exists in the JSON (case-sensitive), or simply click one of the auto-generated field chips below the input. If your JSON structure is irregular, use
       [JSON Node Edit](./json-node-edit.mdx) first to inspect or normalize it.
   - q: Will it lag on large files?
     a: >-
       For big JSON files, drop them into the upload area instead of pasting.
       All processing happens locally in your browser — files never leave your machine.
-  - q: How do I assign values to the newly inserted nodes?
+  - q: How do I assign values to the newly inserted fields?
     a: >-
       This tool only inserts empty field placeholders. To fill values in bulk, use
       [JSON Node Edit](./json-node-edit.mdx)'s "Replace Node Value" operation. To copy a value
@@ -46,17 +46,18 @@ faq:
       mappings. Chaining these two tools covers most structure-adjustment workflows.
 ---
 
-# JSON Node Insertion
+# JSON Node Inserter
 
-[JSON Node Insertion Tool](https://tools.newzone.top/en/json-node-inserter) is an efficient tool for optimizing data structures. It allows you to insert one or more new nodes after a specified node in a JSON document, making the data structure more logical and efficient.
+[JSON Node Inserter Tool](https://tools.newzone.top/en/json-node-inserter) is an efficient tool for optimizing data structures. It allows you to insert one or more new fields after a specified field in a JSON document, making the data structure more logical and efficient.
 
 ![JSON Node Inserter Interface](/img/json-node-inserter-en.webp 'JSON Node Inserter Interface')
 
 ## Features
 
-- Precisely insert multiple new nodes after a specified node.
-- Support for inserting multiple nodes, separated by commas (supports both English and Chinese commas).
-- Batch insertion of nodes to improve data processing efficiency.
+- Precisely insert multiple new fields after a specified field.
+- Candidate field quick-pick chips: automatically parses fields from input JSON for one-click selection.
+- Support for inserting multiple fields, separated by commas (supports both English and Chinese commas).
+- Batch insertion of fields to improve data processing efficiency.
 
 ## How to Use
 
@@ -66,8 +67,8 @@ faq:
    - For large JSON files, upload the file instead of pasting it.
 
 2. **Set Insertion Parameters**
-   - **Target Node**: Enter the node name where you want to insert new nodes (this determines the insertion position).
-   - **New Node**: Enter the names of the nodes to be inserted, separated by commas.
+   - **Reference Field**: Enter the reference field name (where you want to insert new fields after), or click a quick-pick chip below.
+   - **Insert New Field**: Enter the names of the fields to be inserted, separated by commas.
 
 3. **Processing and Export**
    - Click the "Start Processing" button to execute the insertion.
@@ -77,9 +78,9 @@ faq:
 ## Usage Tips
 
 - Ensure that the input JSON format is correct; otherwise, it cannot be processed.
-- The target node must exist in the JSON; otherwise, an error will be displayed.
-- New nodes will be inserted in the order they are entered, immediately after the target node.
-- If the node names are purely numeric, they will be automatically sorted by value and placed at the front.
+- The reference field must exist in the JSON; otherwise, an error will be displayed.
+- New fields will be inserted in the order they are entered, immediately after the reference field.
+- If the field names are purely numeric, they will be automatically sorted by value and placed at the front.
 - For large JSON files, upload the file instead of pasting it — the page stays responsive.
 
 ## Use Cases

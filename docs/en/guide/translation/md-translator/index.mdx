@@ -22,7 +22,7 @@ faq:
     a: >-
       MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine,
       API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL —
-      Every translation endpoint is available, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and
+      Every translation endpoint is available, covering 130+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and
       Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual
       format repair.
   - q: How do I preserve code blocks and formulas when translating Markdown?
@@ -30,7 +30,7 @@ faq:
       The tool uses a placeholder-protection strategy: code fences (```fenced code```), inline code (`code`),
       LaTeX formulas ($...$, $$...$$), link URLs, image paths, and HTML/JSX tags are replaced with
       `<<<MULTILINE_CODE_x>>>`, `<<<HTML_x>>>` etc. before being sent to the translator, then restored verbatim.
-      Front Matter is skipped by default; flip the 'Translate Frontmatter' toggle to include it. Separate toggles
+      Front Matter is skipped by default; flip the 'Translate Front Matter (Document Metadata)' toggle to include it. Separate toggles
       control code blocks, LaTeX, and link text. Technical docs come out format-perfect with no manual repair.
   - q: Should I use machine translation or AI/LLM for technical documentation? Which is best?
     a: >-
@@ -82,7 +82,7 @@ import Privacy from '../_privacy.mdx';
 # Markdown Translator | Preserve Code, LaTeX & Front Matter for Batch AI Translation
 
 :::tip Quick summary
-md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 120+ languages, simultaneous multi-language output, and an "Ignore Formatting" mode for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
+md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 130+ languages, simultaneous multi-language output, and an "Ignore Formatting" mode for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
 :::
 
 :::tip 30-second quickstart
@@ -97,7 +97,7 @@ md-translator is a free online tool purpose-built for translating technical docs
 
 Markdown has become the mainstream markup language across technical documentation, open-source projects, blogging, and more. However, most translation tools struggle to preserve Markdown’s original structure—especially when handling code blocks, LaTeX formulas, or structured metadata—often leading to broken formatting or lost semantics.
 
-[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Ignore Formatting" mode further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 120+ languages, it can output multilingual results simultaneously—empowering content globalization.
+[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Ignore Formatting" mode further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 130+ languages, it can output multilingual results simultaneously—empowering content globalization.
 
 ![MD Translator Interface](/img/md-translator-en.webp 'MD Translator Interface')
 
@@ -170,11 +170,11 @@ md-translator differentiates on two fronts: fully free + everything runs in your
 
 ### Which free Markdown translation tool works best?
 
-MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — Every translation endpoint is available, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
+MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — Every translation endpoint is available, covering 130+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
 
 ### How do I preserve code blocks and formulas when translating Markdown?
 
-The tool uses a placeholder-protection strategy: code fences (```fenced code```), inline code (`code`), LaTeX formulas ($...$, $$...$$), link URLs, image paths, and HTML/JSX tags are replaced with `<<<MULTILINE_CODE_x>>>`, `<<<HTML_x>>>` etc. before being sent to the translator, then restored verbatim. Front Matter is skipped by default; flip the 'Translate Frontmatter' toggle to include it. Separate toggles control code blocks, LaTeX, and link text. Technical docs come out format-perfect with no manual repair.
+The tool uses a placeholder-protection strategy: code fences (```fenced code```), inline code (`code`), LaTeX formulas ($...$, $$...$$), link URLs, image paths, and HTML/JSX tags are replaced with `<<<MULTILINE_CODE_x>>>`, `<<<HTML_x>>>` etc. before being sent to the translator, then restored verbatim. Front Matter is skipped by default; flip the 'Translate Front Matter (Document Metadata)' toggle to include it. Separate toggles control code blocks, LaTeX, and link text. Technical docs come out format-perfect with no manual repair.
 
 ### Should I use machine translation or AI/LLM for technical documentation? Which is best?
 

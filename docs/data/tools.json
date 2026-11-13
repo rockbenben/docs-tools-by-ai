@@ -129,7 +129,7 @@
     "key": "jsonValueSwapper",
     "path": "json-value-swapper",
     "group": "jsonParser",
-    "nameZh": "JSON 键值互换",
+    "nameZh": "JSON 字段值互换",
     "nameEn": "JSON Value Swapper",
     "appUrlZh": "https://tools.newzone.top/zh/json-value-swapper",
     "appUrlEn": "https://tools.newzone.top/en/json-value-swapper"

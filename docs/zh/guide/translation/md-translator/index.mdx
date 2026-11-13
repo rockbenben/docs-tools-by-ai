@@ -21,14 +21,14 @@ faq:
   - q: 免费的 Markdown 翻译工具哪个好用？
     a: >-
       MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。
-      支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 120+ 种目标语言。自动跳过
+      支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 130+ 种目标语言。自动跳过
       代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、
       VitePress、Docusaurus。
   - q: 翻译 Markdown 文档时如何保留代码块和公式？
     a: >-
       用占位符保护策略：代码块（```围栏代码```）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、
       图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。
-      Frontmatter 默认整块跳过，可在「翻译内容」勾选「翻译 frontmatter」一并处理；同样的开关可单独控制代码块、
+      Front Matter 默认整块跳过，可在「翻译内容」勾选「翻译 Front Matter（文档元数据）」一并处理；同样的开关可单独控制代码块、
       LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
   - q: 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
     a: >-
@@ -74,7 +74,7 @@ import Privacy from '../_privacy.mdx';
 # Markdown 翻译工具｜保留代码块、公式、Front Matter 的 AI 批量翻译指南
 
 :::tip 快速介绍
-md-translator 是一款专为技术文档翻译设计的免费在线工具，能在翻译过程中精准保留 Markdown 的代码块、LaTeX 公式和结构化元数据不被破坏。支持 120+ 种语言、多语言同时输出，以及用于任意文本的"纯文本翻译模式"，是翻译开源文档与博客内容的首选。
+md-translator 是一款专为技术文档翻译设计的免费在线工具，能在翻译过程中精准保留 Markdown 的代码块、LaTeX 公式和结构化元数据不被破坏。支持 130+ 种语言、多语言同时输出，以及用于任意文本的"纯文本翻译模式"，是翻译开源文档与博客内容的首选。
 :::
 
 :::tip 30 秒上手
@@ -89,7 +89,7 @@ md-translator 是一款专为技术文档翻译设计的免费在线工具，能
 
 在技术文档、开源项目、博客创作等领域，Markdown 已成为主流的文本标记语言。然而，大多数翻译工具在处理 Markdown 内容时，容易破坏其原有结构，尤其在涉及代码块、LaTeX 公式或结构化元数据时，常常导致格式错乱或语义丢失。
 
-[md-translator](https://tools.newzone.top/zh/md-translator) 致力于解决这一问题：在精准保留 Markdown 格式的同时，实现高质量翻译。其“纯文本翻译模式”更可用于处理任意类型的文本文档，实现格式保留与语言转换的灵活兼容。目前已支持 120+ 种语言，并可同时输出多语言结果，助力内容全球化。
+[md-translator](https://tools.newzone.top/zh/md-translator) 致力于解决这一问题：在精准保留 Markdown 格式的同时，实现高质量翻译。其“纯文本翻译模式”更可用于处理任意类型的文本文档，实现格式保留与语言转换的灵活兼容。目前已支持 130+ 种语言，并可同时输出多语言结果，助力内容全球化。
 
 ![MD Translator 界面](/img/md-translator-zh.webp 'MD Translator 使用界面')
 
@@ -162,11 +162,11 @@ md-translator 在两点上做差异化：完全免费 + 浏览器本地运行（
 
 ### 免费的 Markdown 翻译工具哪个好用？
 
-MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 120+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
+MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 130+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
 
 ### 翻译 Markdown 文档时如何保留代码块和公式？
 
-用占位符保护策略：代码块（```围栏代码```）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。Frontmatter 默认整块跳过，可在「翻译内容」勾选「翻译 frontmatter」一并处理；同样的开关可单独控制代码块、LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
+用占位符保护策略：代码块（```围栏代码```）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。Front Matter 默认整块跳过，可在「翻译内容」勾选「翻译 Front Matter（文档元数据）」一并处理；同样的开关可单独控制代码块、LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
 
 ### 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
 

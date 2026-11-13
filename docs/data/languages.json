@@ -133,7 +133,9 @@
         "si",
         "as",
         "gom",
-        "sa"
+        "sa",
+        "dv",
+        "or"
       ]
     },
     {
@@ -177,7 +179,16 @@
         "tn",
         "ts",
         "mg",
-        "ln"
+        "ln",
+        "aa",
+        "ff",
+        "rw",
+        "lg",
+        "rn",
+        "sn",
+        "so",
+        "tw",
+        "yo"
       ]
     },
     {
@@ -212,14 +223,14 @@
     },
     {
       "value": "zh",
-      "name": "Simplified Chinese",
+      "name": "Chinese (Simplified)",
       "nativelabel": "简体",
       "zh": "中文",
       "group": "common"
     },
     {
       "value": "zh-hant",
-      "name": "Traditional Chinese",
+      "name": "Chinese (Traditional)",
       "nativelabel": "繁體",
       "zh": "繁体中文",
       "group": "common"
@@ -429,7 +440,7 @@
     },
     {
       "value": "nb",
-      "name": "Norwegian Bokmål",
+      "name": "Norwegian",
       "nativelabel": "Norsk bokmål",
       "zh": "挪威语",
       "group": "europe"
@@ -653,14 +664,14 @@
     },
     {
       "value": "ckb",
-      "name": "Central Kurdish",
+      "name": "Kurdish (Sorani)",
       "nativelabel": "کوردی",
       "zh": "中库尔德语",
       "group": "middleEast"
     },
     {
       "value": "kmr",
-      "name": "Northern Kurdish",
+      "name": "Kurdish (Kurmanji)",
       "nativelabel": "Kurdî",
       "zh": "北库尔德语",
       "group": "middleEast"
@@ -841,6 +852,20 @@
       "group": "southAsia"
     },
     {
+      "value": "dv",
+      "name": "Dhivehi",
+      "nativelabel": "ދިވެހި",
+      "zh": "迪维希语",
+      "group": "southAsia"
+    },
+    {
+      "value": "or",
+      "name": "Odia (Oriya)",
+      "nativelabel": "ଓଡ଼ିଆ",
+      "zh": "奥里亚语",
+      "group": "southAsia"
+    },
+    {
       "value": "th",
       "name": "Thai",
       "nativelabel": "ไทย",
@@ -877,7 +902,7 @@
     },
     {
       "value": "fil",
-      "name": "Filipino(Tagalog)",
+      "name": "Filipino (Tagalog)",
       "nativelabel": "Tagalog",
       "zh": "菲律宾语（塔加拉语）",
       "group": "seAsia"
@@ -912,7 +937,7 @@
     },
     {
       "value": "pam",
-      "name": "Pampangan",
+      "name": "Kapampangan",
       "nativelabel": "Kapampangan",
       "zh": "邦板牙语",
       "group": "seAsia"
@@ -1020,6 +1045,69 @@
       "name": "Lingala",
       "nativelabel": "Lingála",
       "zh": "林加拉语",
+      "group": "africa"
+    },
+    {
+      "value": "aa",
+      "name": "Afar",
+      "nativelabel": "Qafar af",
+      "zh": "阿法尔语",
+      "group": "africa"
+    },
+    {
+      "value": "ff",
+      "name": "Fulani",
+      "nativelabel": "Fulfulde",
+      "zh": "富拉语",
+      "group": "africa"
+    },
+    {
+      "value": "rw",
+      "name": "Kinyarwanda",
+      "nativelabel": "Ikinyarwanda",
+      "zh": "卢旺达语",
+      "group": "africa"
+    },
+    {
+      "value": "lg",
+      "name": "Luganda",
+      "nativelabel": "Oluganda",
+      "zh": "卢干达语",
+      "group": "africa"
+    },
+    {
+      "value": "rn",
+      "name": "Rundi (Kirundi)",
+      "nativelabel": "Ikirundi",
+      "zh": "隆迪语",
+      "group": "africa"
+    },
+    {
+      "value": "sn",
+      "name": "Shona",
+      "nativelabel": "ChiShona",
+      "zh": "绍纳语",
+      "group": "africa"
+    },
+    {
+      "value": "so",
+      "name": "Somali",
+      "nativelabel": "Soomaali",
+      "zh": "索马里语",
+      "group": "africa"
+    },
+    {
+      "value": "tw",
+      "name": "Twi",
+      "nativelabel": "Twi",
+      "zh": "契维语",
+      "group": "africa"
+    },
+    {
+      "value": "yo",
+      "name": "Yoruba",
+      "nativelabel": "Yorùbá",
+      "zh": "约鲁巴语",
       "group": "africa"
     },
     {

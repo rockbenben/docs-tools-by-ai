@@ -7,7 +7,7 @@ head:
 description: An all-in-one text toolbox. Regex match, delete lines, dedupe, sort, merge, batch prefix/suffix, letter case, JSON beautify and smart splitting can be chained into a step pipeline and saved as presets. Runs entirely in your browser — nothing is uploaded.
 faq:
   - q: What operations does this tool offer?
-    a: 18 of them: regex match / remove / replace, delete lines by keyword, deduplicate whole lines, sort ascending or descending, reverse order, swap adjacent lines, merge into one line, add prefix/suffix, letter case (UPPERCASE / lowercase / Title case / Sentence case), format text, smart split, tidy CLI text, JSON beautify, pair extract, extract links with metrics, and the Weibo link converter. Operations chain: each click appends a step, and the previous step's output feeds the next one.
+    a: 19 of them: regex match / remove / replace, delete lines by keyword, deduplicate whole lines, collapse consecutive blank lines, sort ascending or descending, reverse order, swap adjacent lines, merge into one line, add prefix/suffix, letter case (UPPERCASE / lowercase / Title case / Sentence case), format text, smart split, tidy CLI text, JSON beautify, pair extract, extract links with metrics, and the Weibo link converter. Operations chain: each click appends a step, and the previous step's output feeds the next one.
   - q: What if I can't write regular expressions?
     a: The REGEX band has four preset chips — URL (no params), URL (loose match), Remove index (. 、), Extract JSON keys. One click fills the regex field. For anything harder, hand the requirement plus a sample and the expected output to an AI, then paste the result back to test it here.
   - q: What does the Smart trim switch actually do?
@@ -137,10 +137,13 @@ One condition field feeds one button: **Delete · [match mode] · [content] → 
 - **Content to delete**: separate several conditions with **commas or line breaks** (e.g. `ad,promo,group id`); stored locally
 - **Delete these lines**: removes the hits, keeps the rest, writes to the Result panel, leaves Source alone
 
-### Duplicates
+### Duplicates & Blank Lines
 
-- **Deduplicate** keeps the first of each identical line and preserves blank lines
-- It does **not** read the Delete row's keyword field — hence its own row with no input
+- **Deduplicate**: keeps the first of each identical line. In the step popover, you can toggle between two deduplication modes:
+  - **All** (default): blank lines participate in deduplication; only the first blank line across the document is kept
+  - **Keep blank lines**: blank lines do not enter the seen set and their spacing is preserved intact, deduplicating only non-empty lines
+- **Collapse consecutive blank lines**: an independent atomic operation that compresses adjacent runs of blank lines into a single blank line. It does not inspect text duplication, making it purely about blank line density; freely chainable with deduplication
+- Deduplicate does **not** read the Delete row's keyword field — it operates independently
 
 ### Merge
 

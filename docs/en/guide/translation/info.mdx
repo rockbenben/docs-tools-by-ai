@@ -12,7 +12,11 @@ description: Core features of the translation tool — multilingual batch transl
 
 ### Translate Once, Output Many
 
-Translate the same file into multiple languages in a single run — perfect for multilingual subtitles or i18n projects. For example, translate an English subtitle file into Chinese, Japanese, German, and French at once and download all versions packaged. 120+ languages supported, with more added regularly.
+Translate the same file into multiple languages in a single run — perfect for multilingual subtitles or i18n projects. For example, translate an English subtitle file into Chinese, Japanese, German, and French at once and download all versions packaged. 130+ languages supported, with more added regularly.
+
+- **Multi-language ZIP packaging**: export runs with multiple target languages can be downloaded in a single `.zip` bundle, avoiding dozens of individual browser download popups.
+- **Source language exclusion**: when targeting multiple languages, if the source file's language is among the selected targets, the tool automatically skips translating into itself to avoid redundant billing and noise.
+- **Export summary**: displays a breakdown of successfully downloaded languages once batch exports complete, reporting success only for languages actually written.
 
 ### Translation Cache
 
@@ -94,7 +98,9 @@ For bilingual ASS export, Persian (fa), Urdu (ur), Pashto (ps), Dari (prs), Sora
 The tool switches modes based on what you upload:
 
 - **Batch mode** (default): drop multiple files, they queue up automatically and download as a bundle when done.
-- **Single-file mode**: upload one file or paste text — review line-by-line, edit before exporting.
+- **Single-file mode**: upload one file or paste text — review line-by-line, edit before exporting. In Subtitle Translator, open the Bilingual Review Panel for side-by-side editing:
+  - **Side-by-side proofreading**: original and translated lines align vertically, editable directly in the translation cells. Automatically uses a fixed two-column layout on narrow screens to eliminate horizontal scrollbars.
+  - **Live sync & gate on pending edits**: the review panel tracks unapplied changes and writes them back to the main result. Copy and export are blocked while edits remain unapplied, ensuring downloaded files never lag what is visible on screen. Reverting an edit back to the original text clears the dirty flag.
 
 Advanced settings let you lock to single-file mode if you prefer.
 
@@ -171,7 +177,7 @@ One-click backup of every configuration: API credentials, model parameters, API 
 - **Timeout**: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.
 - **Max tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
 - **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
-- **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `_{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}_{lang}.{ext}`, or combinations like `{name}_{lang}_{date}.{ext}`.
+- **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `.{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}.{lang}.{ext}`, or combinations like `{name}.{lang}.{date}.{ext}`.
 
 ### API Parameter Tuning
 

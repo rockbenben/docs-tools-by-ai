@@ -46,13 +46,13 @@ export default defineConfig({
       label: "English",
       title: "Subtitle Translator · Markdown Translator · JSON i18n Tools — Tools By AI Docs",
       description:
-        "Free subtitle translator (SRT / ASS / VTT), Markdown translator preserving code blocks & LaTeX, and JSON i18n localization tools. classic translation APIs + LLM endpoints across 120+ languages. Full usage guide and API setup.",
+        "Free subtitle translator (SRT / ASS / VTT), Markdown translator preserving code blocks & LaTeX, and JSON i18n localization tools. classic translation APIs + LLM endpoints across 130+ languages. Full usage guide and API setup.",
     },
     {
       lang: "zh",
       label: "简体中文",
       title: "字幕翻译器 · Markdown 翻译 · JSON i18n 翻译工具 - Tools By AI 中文文档",
-      description: "免费的字幕翻译（SRT / ASS / VTT）、保留代码块与 LaTeX 的 Markdown 翻译、JSON i18n 本地化工具。经典翻译 API + AI 大模型，覆盖 120+ 种语言。完整使用文档与 API 配置指南。",
+      description: "免费的字幕翻译（SRT / ASS / VTT）、保留代码块与 LaTeX 的 Markdown 翻译、JSON i18n 本地化工具。经典翻译 API + AI 大模型，覆盖 130+ 种语言。完整使用文档与 API 配置指南。",
     },
   ],
   themeConfig: {
