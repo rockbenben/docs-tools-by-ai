@@ -14,7 +14,7 @@ url: /en/guide/index.md
 
 ### 🌍 Translation Tools
 
-Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 120+ languages.
+Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 130+ languages.
 
 - [**Subtitle Translator**](/en/guide/translation/subtitle-translator.md) — SRT / ASS / VTT / LRC with timecode alignment and bilingual output
 - [**MD Translator**](/en/guide/translation/md-translator.md) — Markdown that preserves code blocks, LaTeX, and Front Matter
@@ -89,7 +89,7 @@ A free translation suite for developers and content creators, split into three f
 The three tools share one translation engine and settings panel — your config moves between them:
 
 - **Wide API choice**: classic translation APIs plus LLM endpoints covering free, commercial, and self-hosted use cases ([compare them here](/en/guide/translation/api.md))
-- **120+ languages** with one-pass multi-language output: translate one English subtitle into Chinese, Japanese, German, and French at once
+- **130+ languages** with one-pass multi-language output: translate one English subtitle into Chinese, Japanese, German, and French at once, with multi-language ZIP packaging and source language exclusion
 - **Local cache**: cached results return instantly, persist across refreshes, and sync across tabs
 - **Context-aware translation**: surrounding lines accompany each request, keeping flow and terminology consistent
 - **Failed-line retry**: when an LLM glitches, only the failed lines are reissued — no double-billing
@@ -124,7 +124,7 @@ url: /en/guide/translation/subtitle-translator/index.md
 # Subtitle Translator | Batch AI Translation for SRT, ASS/SSA, VTT, LRC, SBV
 
 :::tip Quick summary
-Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, SSA, VTT, LRC, and SBV formats across 120+ languages. Block-compression plus parallel translation finishes a full TV episode in \~1 second. It also offers context-aware translation, a live line-by-line result stream, local cache reuse, and both free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / koboldcpp and the translation-specialized TranslateGemma / MiLMMT).
+Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, SSA, VTT, LRC, and SBV formats across 130+ languages. Block-compression plus parallel translation finishes a full TV episode in \~1 second. It also offers context-aware translation, a live line-by-line result stream, local cache reuse, and both free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / koboldcpp and the translation-specialized TranslateGemma / MiLMMT).
 :::
 
 :::tip 30-second quickstart
@@ -151,10 +151,10 @@ To address issues in the market such as slow translation speeds, lack of batch p
 - **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .ssa / .vtt / .lrc / .sbv). Exports preserve the original filename; when translating into multiple languages, the language code is automatically appended as a suffix (e.g. `movie.zh.srt`, `movie.fr.srt`).
 - **Live line-by-line results**: every line appears in a live panel directly under the progress bar the moment it is translated (original on top, translation below, tagged with the real source line number) — no waiting for the whole batch to see how it reads. Lines that failed are flagged amber as "not translated", with details in the failure panel below; the panel collapses itself when the run finishes, and scrolling up to read mid-run won't yank you back to the bottom.
 - **Subtitle Extraction**: One click extracts the original dialogue with timecodes and cue numbers stripped (auto-copied to clipboard) — for AI summarization, derivative works, or pairing with the translation to have an AI proofread/revise it.
-- **Side-by-side Review**: In single-file, translated-only export mode, after translation you can compare source and translation line by line, manually edit the translation, and Apply & Download — ideal for a hands-on line-by-line polishing pass.
+- **Side-by-side Review & Live Sync**: In single-file mode, open the Bilingual Review Panel after translation to compare and edit lines side by side. Edits sync back to the main result, copy/export are blocked while edits remain unapplied to prevent stale files, and narrow screens use a responsive fixed two-column layout.
 - **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
-- **Multiple API Options**: 9 built-in free / commercial translation APIs plus 26 AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
-- **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
+- **Multiple API Options**: Built-in free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
+- **Multi-language Support & Internationalization**: Supports 130+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
 
 ## Subtitle Format Support
 
@@ -397,7 +397,7 @@ url: /en/guide/translation/md-translator/index.md
 # Markdown Translator | Preserve Code, LaTeX & Front Matter for Batch AI Translation
 
 :::tip Quick summary
-md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 120+ languages, simultaneous multi-language output, and an "Ignore Formatting" mode for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
+md-translator is a free online tool purpose-built for translating technical docs while preserving Markdown structure — code blocks, LaTeX formulas, and structured metadata stay intact. It supports 130+ languages, simultaneous multi-language output, and an "Ignore Formatting" mode for arbitrary text, making it the go-to choice for translating open-source docs and blogs.
 :::
 
 :::tip 30-second quickstart
@@ -412,7 +412,7 @@ md-translator is a free online tool purpose-built for translating technical docs
 
 Markdown has become the mainstream markup language across technical documentation, open-source projects, blogging, and more. However, most translation tools struggle to preserve Markdown’s original structure—especially when handling code blocks, LaTeX formulas, or structured metadata—often leading to broken formatting or lost semantics.
 
-[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Ignore Formatting" mode further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 120+ languages, it can output multilingual results simultaneously—empowering content globalization.
+[md-translator](https://tools.newzone.top/en/md-translator) is designed to solve this problem by delivering high-quality translations **while accurately preserving Markdown formatting**. Its "Ignore Formatting" mode further allows it to handle virtually any type of text document, enabling flexible language conversion with structural retention. Currently supporting 130+ languages, it can output multilingual results simultaneously—empowering content globalization.
 
 ![MD Translator Interface](/img/md-translator-en.webp "MD Translator Interface")
 
@@ -485,11 +485,11 @@ md-translator differentiates on two fronts: fully free + everything runs in your
 
 ### Which free Markdown translation tool works best?
 
-MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — Every translation endpoint is available, covering 120+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
+MDTranslator is a free, open-source, browser-side Markdown translator: source never leaves your machine, API key stays in localStorage. Supports Google free translate plus DeepSeek, Claude, GPT, Gemini, DeepL — Every translation endpoint is available, covering 130+ target languages. Auto-skips code blocks, LaTeX formulas, link URLs, and Front Matter, so you can publish straight to Hugo, Jekyll, Hexo, VitePress, or Docusaurus with no manual format repair.
 
 ### How do I preserve code blocks and formulas when translating Markdown?
 
-The tool uses a placeholder-protection strategy: code fences (`fenced code`), inline code (`code`), LaTeX formulas ($...$, $$...$$), link URLs, image paths, and HTML/JSX tags are replaced with `<<<MULTILINE_CODE_x>>>`, `<<<HTML_x>>>` etc. before being sent to the translator, then restored verbatim. Front Matter is skipped by default; flip the 'Translate Frontmatter' toggle to include it. Separate toggles control code blocks, LaTeX, and link text. Technical docs come out format-perfect with no manual repair.
+The tool uses a placeholder-protection strategy: code fences (`fenced code`), inline code (`code`), LaTeX formulas ($...$, $$...$$), link URLs, image paths, and HTML/JSX tags are replaced with `<<<MULTILINE_CODE_x>>>`, `<<<HTML_x>>>` etc. before being sent to the translator, then restored verbatim. Front Matter is skipped by default; flip the 'Translate Front Matter (Document Metadata)' toggle to include it. Separate toggles control code blocks, LaTeX, and link text. Technical docs come out format-perfect with no manual repair.
 
 ### Should I use machine translation or AI/LLM for technical documentation? Which is best?
 
@@ -630,7 +630,7 @@ url: /en/guide/translation/json-translate/index.md
 # JSON Translator | i18n Batch Translation with JSONPath
 
 :::tip Quick summary
-JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, one field across all entries, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
+JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, translate only selected fields, translate per entry, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
 :::
 
 :::tip 30-second quickstart
@@ -638,7 +638,7 @@ JsonTranslate is a multilingual JSON translation tool built for i18n localizatio
 1. Drag or paste your JSON file
 2. Pick a **mode**:
    - Translate every string → **Global Translation**
-   - Only translate keys like `title` / `description` → **Specific Keys**
+   - Only translate fields like `title` / `description` → **Translate Only Selected Fields**
    - i18n project (auto-adds target-language fields to each object) → **i18n Mode**
 3. Set source/target languages, click **Translate** — original JSON structure preserved
 
@@ -670,12 +670,12 @@ Use JSONPath expressions to precisely locate one or more nodes and translate onl
 - Translating only specific sections in a well-structured JSON dataset
 - Improving efficiency by narrowing the translation scope in large files
 
-### Specific Keys
+### Translate Only Selected Fields
 
-In this mode, you can specify particular key names for translation. Two input options are supported:
+In this mode, you can specify particular field names for translation. The tool features **Field Quick-Pick Chips**: it automatically scans valid string fields from the input JSON and displays them as clickable chips under the input box. Click a chip to insert it, click again to unselect/remove it. Two modes are supported:
 
-- **Simple Mode**: Enter key names separated by commas (English or Chinese), and the corresponding values will be translated.
-- **Advanced Mode**: Use a key mapping component to define input-output key pairs. Translations are written to new keys, preserving the original fields.
+- **Source Fields**: Enter field names separated by commas (or click chips below). The tool translates these fields and overwrites their values.
+- **Mapping Mode**: Toggle the switch to mapping mode to define input-output field pairs (e.g. `name` → `name_zh`). Translations are written to the target fields, preserving the original fields.
 
 **Best for:**
 
@@ -684,14 +684,14 @@ In this mode, you can specify particular key names for translation. Two input op
 
 **Notes:**
 
-- Keys are case-sensitive.
-- The number of input and output keys must match; mappings will ignore nonexistent keys. At least one valid mapping is required to proceed.
-- Pure numeric keys can conflict with array indices — this issue has been fixed, but avoid numeric-only keys to reduce ambiguity.
+- Fields are case-sensitive.
+- The number of input and output fields must match; mappings will ignore nonexistent fields. At least one valid mapping is required to proceed.
+- Pure numeric keys can conflict with array indices — avoid numeric-only keys to reduce ambiguity.
 - Keys containing dots (.) are interpreted as nested paths; avoid dots in key names or rename them to prevent misinterpretation.
 
-### One Field Across All Entries
+### Translate per Entry (By Entry / Breakpoint)
 
-Treats the JSON as a list of entries: it pulls the same field out of every entry, translates it, and leaves the rest untouched.
+Treats the JSON as a list of entries: it pulls the same field out of every entry, translates it, and leaves the rest untouched. Supports field quick-pick chips below the input box.
 
 **Structural requirement:** the JSON must be **two levels — entry → object**, i.e. each top-level key maps to an object holding the fields. For example:
 
@@ -702,12 +702,21 @@ Treats the JSON as a list of entries: it pulls the same field out of every entry
 }
 ```
 
-Set **Field to Translate** to `message` and only the two `message` values are translated; `code` is left alone.
+Set **Fields to Translate** to `message` and only the two `message` values are translated; `code` is left alone.
 
 **Configuration Options:**
 
-- **Start Key** (optional): start from this entry; leave blank to start from the first. Useful when key order is meaningful and you only want the later part
-- **Field to Translate**: the field taken from inside each entry — **separate multiple fields with commas**. Note: if any listed field is missing from every entry (or isn't a string value), the whole run aborts with an error rather than skipping that field
+- **Start Entry** (optional): start from this entry; leave blank to start from the first. Useful when key order is meaningful and you only want the later part
+- **Fields to Translate**: the field taken from inside each entry — **separate multiple fields with commas** (or click the quick-pick chips below). Note: if any listed field is missing from every entry (or isn't a string value), the whole run aborts with an error rather than skipping that field
+
+**Best for:**
+
+- Log or error-message files, translating only `message` while preserving `code`, `level`, and metadata
+- Uniform configuration files where only specific fields need localization
+
+### i18n Mode
+
+i18n mode is purpose-built for internationalization, aggregating multi-language field content directly within the original JSON structure. If the source file is missing the expected source language field, the tool provides a clear structure hint instead of failing silently.
 
 **Best for:**
 
@@ -949,7 +958,11 @@ url: /en/guide/translation/info.md
 
 ### Translate Once, Output Many
 
-Translate the same file into multiple languages in a single run — perfect for multilingual subtitles or i18n projects. For example, translate an English subtitle file into Chinese, Japanese, German, and French at once and download all versions packaged. 120+ languages supported, with more added regularly.
+Translate the same file into multiple languages in a single run — perfect for multilingual subtitles or i18n projects. For example, translate an English subtitle file into Chinese, Japanese, German, and French at once and download all versions packaged. 130+ languages supported, with more added regularly.
+
+- **Multi-language ZIP packaging**: export runs with multiple target languages can be downloaded in a single `.zip` bundle, avoiding dozens of individual browser download popups.
+- **Source language exclusion**: when targeting multiple languages, if the source file's language is among the selected targets, the tool automatically skips translating into itself to avoid redundant billing and noise.
+- **Export summary**: displays a breakdown of successfully downloaded languages once batch exports complete, reporting success only for languages actually written.
 
 ### Translation Cache
 
@@ -1031,7 +1044,9 @@ For bilingual ASS export, Persian (fa), Urdu (ur), Pashto (ps), Dari (prs), Sora
 The tool switches modes based on what you upload:
 
 - **Batch mode** (default): drop multiple files, they queue up automatically and download as a bundle when done.
-- **Single-file mode**: upload one file or paste text — review line-by-line, edit before exporting.
+- **Single-file mode**: upload one file or paste text — review line-by-line, edit before exporting. In Subtitle Translator, open the Bilingual Review Panel for side-by-side editing:
+  - **Side-by-side proofreading**: original and translated lines align vertically, editable directly in the translation cells. Automatically uses a fixed two-column layout on narrow screens to eliminate horizontal scrollbars.
+  - **Live sync & gate on pending edits**: the review panel tracks unapplied changes and writes them back to the main result. Copy and export are blocked while edits remain unapplied, ensuring downloaded files never lag what is visible on screen. Reverting an edit back to the original text clears the dirty flag.
 
 Advanced settings let you lock to single-file mode if you prefer.
 
@@ -1108,7 +1123,7 @@ One-click backup of every configuration: API credentials, model parameters, API 
 - **Timeout**: per-request timeout in seconds. Increase for slow models or long text. The Test Connection buttons use the same threshold - the test is never stricter than the translation it guards.
 - **Max tokens (Custom OpenAI-compatible only)**: optional output cap to prevent local small models from getting stuck in repetition loops — 2048–4096 recommended for local models. Default 0 (unlimited). When a response truncates (`finish_reason=length`), the line is marked failed and won't retry — same params would truncate again. Cloud LLMs rely on the server-side default and don't expose this control.
 - **Remove characters after translation**: auto-strip specified characters or fragments from results (e.g., `♪` in subtitles, leftover `<i>` tags).
-- **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `_{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}_{lang}.{ext}`, or combinations like `{name}_{lang}_{date}.{ext}`.
+- **Custom export filename**: defaults to `{name}.{ext}` — single-language exports keep the original name, nothing appended. When one run targets multiple languages and the pattern doesn't already contain `{lang}`, `.{lang}` is auto-injected before the extension so the results don't collide. Placeholders: `{name}` (source filename), `{lang}` (target language), `{ext}` (extension), `{date}` (local calendar day, YYYY-MM-DD), `{time}` (HHMMss). Want the language suffix always on? Use `{name}.{lang}.{ext}`, or combinations like `{name}.{lang}.{date}.{ext}`.
 
 ### API Parameter Tuning
 
@@ -1215,10 +1230,10 @@ For more reliable service, apply for a commercial API key — see the [API appli
 ## Large Language Models (LLMs)
 
 
-27 LLM endpoints are supported, in two groups:
+26 LLM endpoints are supported, in two groups:
 
 - **Direct vendors (16)**: DeepSeek, OpenAI, Claude, Gemini, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio)
-- **Aggregators & self-hosted (11)**: OpenRouter, OpenCode Zen, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Nvidia NIM, Azure OpenAI, plus **Custom (OpenAI-compatible)**
+- **Aggregators & self-hosted (10)**: OpenRouter, OpenCode Console, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Nvidia NIM, Azure OpenAI, plus **Custom (OpenAI-compatible)**
 
 The **Custom (OpenAI-compatible)** entry at the end is the catch-all: any OpenAI-protocol address goes there, with quick-pick URLs for local runtimes and third-party gateways listed right above the field (see [Local Model Setup](#local-model-setup)).
 
@@ -1238,7 +1253,7 @@ Key parameters:
   - **Four levels (Off / Low / Medium / High)**: every other thinking-capable provider, including Claude, OpenAI GPT-5.x / 6.x, Gemini, Qwen3, Kimi (Moonshot), xAI Grok, GPT-OSS on Groq and Cerebras, Azure OpenAI, and the thinking-tagged models on OpenRouter
   - **The lowest level reads Min, not Off**: when the vendor ships no "off" value at all, the bottom entry is labelled **Min** — the model still reasons and still bills, so calling it Off would be a lie. That applies to Gemini 3.x, xAI Grok 4.5 / 4.6, GPT-OSS on Groq and Cerebras, Kimi K3 / K2.6, plus the single SKU **Claude Fable 5** (officially Always on — an explicit disable returns 400; its siblings Opus 5 / Sonnet 5 / Haiku 4.5 can be turned off)
   - **Three-state (Off / On / Auto)**: when you type an **unlisted custom model** on a thinking-capable provider. Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that error on a non-thinking SKU; defaults to Off
-  - **No thinking control at all**: StepFun, YandexGPT, OpenCode Zen, TokenHub, Atlas Cloud, Nvidia NIM, Custom (OpenAI-compatible). Aggregators front many upstreams whose "can thinking be disabled?" answer differs per model, so a blanket disable would hit models that don't accept one — they all follow the upstream model's server-side default instead
+  - **No thinking control at all**: StepFun, YandexGPT, OpenCode Zen, TokenHub, Nvidia NIM, Custom (OpenAI-compatible). Aggregators front many upstreams whose "can thinking be disabled?" answer differs per model, so a blanket disable would hit models that don't accept one — they all follow the upstream model's server-side default instead
 
 ### Provider-Specific Notes
 
@@ -1247,7 +1262,7 @@ Key parameters:
 - **OpenCode Go**: same host, same account, same API key as OpenCode Zen — only three things differ: the request path (`/zen/go/v1` vs `/zen/v1`), the SKUs on offer, and the billing model. Go is a **$10/month subscription allowance** (the vendor converts it per model per month: 5 hours ≈ 20%, a week ≈ 50%, a month ≈ 100%), while Zen is a prepaid balance — so never describe Go as "top up and go". One workspace can have exactly one Go subscriber. The upstream sends no CORS headers either, so **API relay is ON by default**.
 - **Cerebras**: included for **speed**, not for its catalogue (both public models are also available on Groq / Nvidia / SiliconFlow). Cerebras advertises \~3000 tokens/s on gpt-oss-120b, which is very noticeable for the short, frequent requests line-by-line translation produces; it also grants 1M free tokens per day.
 - **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so **API relay is ON by default** (the switch stays user-controllable, and you can point the URL at your own relay instead).
-- **Removed from the service list**: GitHub Models (retired by GitHub on 2026-07-30), Perplexity Sonar (chat/completions shut down ahead of schedule), and the old Tencent Hunyuan endpoint (migrated to TokenHub). **LiteLLM** is no longer a separate entry — it is now a URL quick-pick under Custom (OpenAI-compatible); see [Self-hosted gateways and third-party inference platforms](#self-hosted-gateways-and-third-party-inference-platforms).
+- **Removed from the service list**: GitHub Models (retired by GitHub on 2026-07-30), Perplexity Sonar (chat/completions shut down ahead of schedule), the old Tencent Hunyuan endpoint (migrated to TokenHub), and Atlas Cloud (removed November 2026). **LiteLLM** is no longer a separate entry — it is now a URL quick-pick under Custom (OpenAI-compatible); see [Self-hosted gateways and third-party inference platforms](#self-hosted-gateways-and-third-party-inference-platforms).
 
 ### Regional Endpoint Switcher
 
@@ -1338,9 +1353,9 @@ Some providers' official endpoints block direct browser calls (CORS). The tool o
 ### API relay (user-controlled)
 
 
-Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI — 24 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio), OpenRouter, OpenCode Zen, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Custom (OpenAI-compatible) — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):
+Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI — 23 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio), OpenRouter, OpenCode Console, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Custom (OpenAI-compatible) — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):
 
-YandexGPT (AI Studio), OpenCode Zen, OpenCode Go, TokenHub (Tencent) **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.
+YandexGPT (AI Studio), OpenCode Console, OpenCode Go, TokenHub (Tencent) **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.
 
 - **The exceptions named above have no such switch**: Custom and Azure OpenAI point at an address you supply, so there is no fixed upstream for a relay to target; Nvidia NIM goes through the built-in proxy described in the next section; and Gemini puts the model name in the URL path, which a pass-through relay can't forward
 - **Self-hosted relay**: prefer your own relay? Put its address in the URL field. The precedence is fixed: **custom URL > relay switch > official direct** — with a URL filled in, the relay switch is grayed out with a note ("clear the URL to re-enable")
@@ -1469,29 +1484,29 @@ That's it — local models should work now. If you're still stuck, check for por
 
 ## Language code reference
 
-The tool translates between 120+ languages, grouped by region. When configuring multiple languages at once, use the codes below (e.g. `en, zh, ja, ko`):
+The tool translates between 130+ languages, grouped by region. When configuring multiple languages at once, use the codes below (e.g. `en, zh, ja, ko`):
 
 
 ### Common
 
-| Code      | Native             | English             | 中文       |
-| --------- | ------------------ | ------------------- | -------- |
-| `en`      | English            | English             | 英语       |
-| `zh`      | 简体                 | Simplified Chinese  | 中文       |
-| `zh-hant` | 繁體                 | Traditional Chinese | 繁体中文     |
-| `es`      | Español            | Spanish             | 西班牙语     |
-| `fr`      | Français           | French              | 法语       |
-| `de`      | Deutsch            | German              | 德语       |
-| `ja`      | 日本語                | Japanese            | 日语       |
-| `ko`      | 한국어                | Korean              | 韩语       |
-| `hi`      | हिन्दी             | Hindi               | 印地语      |
-| `ar`      | العربية            | Arabic              | 阿拉伯语     |
-| `ru`      | Русский            | Russian             | 俄语       |
-| `pt-br`   | Português (Brasil) | Portuguese (Brazil) | 葡萄牙语（巴西） |
-| `id`      | Bahasa Indonesia   | Indonesian          | 印尼语      |
-| `vi`      | Tiếng Việt         | Vietnamese          | 越南语      |
-| `it`      | Italiano           | Italian             | 意大利语     |
-| `yue`     | 粵語                 | Cantonese           | 粤语       |
+| Code      | Native             | English               | 中文       |
+| --------- | ------------------ | --------------------- | -------- |
+| `en`      | English            | English               | 英语       |
+| `zh`      | 简体                 | Chinese (Simplified)  | 中文       |
+| `zh-hant` | 繁體                 | Chinese (Traditional) | 繁体中文     |
+| `es`      | Español            | Spanish               | 西班牙语     |
+| `fr`      | Français           | French                | 法语       |
+| `de`      | Deutsch            | German                | 德语       |
+| `ja`      | 日本語                | Japanese              | 日语       |
+| `ko`      | 한국어                | Korean                | 韩语       |
+| `hi`      | हिन्दी             | Hindi                 | 印地语      |
+| `ar`      | العربية            | Arabic                | 阿拉伯语     |
+| `ru`      | Русский            | Russian               | 俄语       |
+| `pt-br`   | Português (Brasil) | Portuguese (Brazil)   | 葡萄牙语（巴西） |
+| `id`      | Bahasa Indonesia   | Indonesian            | 印尼语      |
+| `vi`      | Tiếng Việt         | Vietnamese            | 越南语      |
+| `it`      | Italiano           | Italian               | 意大利语     |
+| `yue`     | 粵語                 | Cantonese             | 粤语       |
 
 ### Europe
 
@@ -1513,7 +1528,7 @@ The tool translates between 120+ languages, grouped by region. When configuring 
 | `da`    | Dansk                | Danish                | 丹麦语       |
 | `sq`    | Shqip                | Albanian              | 阿尔巴尼亚语    |
 | `fi`    | Suomi                | Finnish               | 芬兰语       |
-| `nb`    | Norsk bokmål         | Norwegian Bokmål      | 挪威语       |
+| `nb`    | Norsk bokmål         | Norwegian             | 挪威语       |
 | `sk`    | Slovenčina           | Slovak                | 斯洛伐克语     |
 | `hr`    | Hrvatski             | Croatian              | 克罗地亚语     |
 | `be`    | Беларуская           | Belarusian            | 白俄罗斯语     |
@@ -1542,16 +1557,16 @@ The tool translates between 120+ languages, grouped by region. When configuring 
 
 ### Middle East
 
-| Code  | Native | English          | 中文    |
-| ----- | ------ | ---------------- | ----- |
-| `tr`  | Türkçe | Turkish          | 土耳其语  |
-| `he`  | עברית  | Hebrew           | 希伯来语  |
-| `fa`  | فارسی  | Persian          | 波斯语   |
-| `ur`  | اردو   | Urdu             | 乌尔都语  |
-| `ps`  | پښتو   | Pashto           | 普什图语  |
-| `prs` | دری    | Dari             | 达里语   |
-| `ckb` | کوردی  | Central Kurdish  | 中库尔德语 |
-| `kmr` | Kurdî  | Northern Kurdish | 北库尔德语 |
+| Code  | Native | English            | 中文    |
+| ----- | ------ | ------------------ | ----- |
+| `tr`  | Türkçe | Turkish            | 土耳其语  |
+| `he`  | עברית  | Hebrew             | 希伯来语  |
+| `fa`  | فارسی  | Persian            | 波斯语   |
+| `ur`  | اردو   | Urdu               | 乌尔都语  |
+| `ps`  | پښتو   | Pashto             | 普什图语  |
+| `prs` | دری    | Dari               | 达里语   |
+| `ckb` | کوردی  | Kurdish (Sorani)   | 中库尔德语 |
+| `kmr` | Kurdî  | Kurdish (Kurmanji) | 北库尔德语 |
 
 ### Central Asia
 
@@ -1570,59 +1585,70 @@ The tool translates between 120+ languages, grouped by region. When configuring 
 
 ### South Asia
 
-| Code  | Native    | English   | 中文     |
-| ----- | --------- | --------- | ------ |
-| `bn`  | বাংলা     | Bengali   | 孟加拉语   |
-| `mr`  | मराठी     | Marathi   | 马拉地语   |
-| `te`  | తెలుగు    | Telugu    | 泰卢固语   |
-| `ta`  | தமிழ்     | Tamil     | 泰米尔语   |
-| `gu`  | ગુજરાતી   | Gujarati  | 古吉拉特语  |
-| `kn`  | ಕನ್ನಡ     | Kannada   | 卡纳达语   |
-| `pa`  | ਪੰਜਾਬੀ    | Punjabi   | 旁遮普语   |
-| `ml`  | മലയാളം    | Malayalam | 马拉雅拉姆语 |
-| `bho` | भोजपुरी   | Bhojpuri  | 博杰普尔语  |
-| `mai` | मैथिली    | Maithili  | 迈蒂利语   |
-| `ne`  | नेपाली    | Nepali    | 尼泊尔语   |
-| `si`  | සිංහල     | Sinhala   | 僧伽罗语   |
-| `as`  | অসমীয়া   | Assamese  | 阿萨姆语   |
-| `gom` | कोंकणी    | Konkani   | 孔卡尼语   |
-| `sa`  | संस्कृतम् | Sanskrit  | 梵语     |
+| Code  | Native    | English      | 中文     |
+| ----- | --------- | ------------ | ------ |
+| `bn`  | বাংলা     | Bengali      | 孟加拉语   |
+| `mr`  | मराठी     | Marathi      | 马拉地语   |
+| `te`  | తెలుగు    | Telugu       | 泰卢固语   |
+| `ta`  | தமிழ்     | Tamil        | 泰米尔语   |
+| `gu`  | ગુજરાતી   | Gujarati     | 古吉拉特语  |
+| `kn`  | ಕನ್ನಡ     | Kannada      | 卡纳达语   |
+| `pa`  | ਪੰਜਾਬੀ    | Punjabi      | 旁遮普语   |
+| `ml`  | മലയാളം    | Malayalam    | 马拉雅拉姆语 |
+| `bho` | भोजपुरी   | Bhojpuri     | 博杰普尔语  |
+| `mai` | मैथिली    | Maithili     | 迈蒂利语   |
+| `ne`  | नेपाली    | Nepali       | 尼泊尔语   |
+| `si`  | සිංහල     | Sinhala      | 僧伽罗语   |
+| `as`  | অসমীয়া   | Assamese     | 阿萨姆语   |
+| `gom` | कोंकणी    | Konkani      | 孔卡尼语   |
+| `sa`  | संस्कृतम् | Sanskrit     | 梵语     |
+| `dv`  | ދިވެހި    | Dhivehi      | 迪维希语   |
+| `or`  | ଓଡ଼ିଆ     | Odia (Oriya) | 奥里亚语   |
 
 ### Southeast Asia
 
-| Code  | Native             | English           | 中文         |
-| ----- | ------------------ | ----------------- | ---------- |
-| `th`  | ไทย                | Thai              | 泰语         |
-| `lo`  | ລາວ                | Lao               | 老挝语        |
-| `my`  | မြန်မာ             | Burmese           | 缅甸语        |
-| `km`  | ខ្មែរ              | Khmer             | 高棉语        |
-| `ms`  | Bahasa Melayu      | Malay             | 马来语        |
-| `fil` | Tagalog            | Filipino(Tagalog) | 菲律宾语（塔加拉语） |
-| `jv`  | Basa Jawa          | Javanese          | 爪哇语        |
-| `su`  | Basa Sunda         | Sundanese         | 巽他语        |
-| `ace` | Acèh               | Acehnese          | 亚齐语        |
-| `pag` | Salitan Pangasinan | Pangasinan        | 邦阿西楠语      |
-| `pam` | Kapampangan        | Pampangan         | 邦板牙语       |
-| `ceb` | Cebuano            | Cebuano           | 宿务语        |
+| Code  | Native             | English            | 中文         |
+| ----- | ------------------ | ------------------ | ---------- |
+| `th`  | ไทย                | Thai               | 泰语         |
+| `lo`  | ລາວ                | Lao                | 老挝语        |
+| `my`  | မြန်မာ             | Burmese            | 缅甸语        |
+| `km`  | ខ្មែរ              | Khmer              | 高棉语        |
+| `ms`  | Bahasa Melayu      | Malay              | 马来语        |
+| `fil` | Tagalog            | Filipino (Tagalog) | 菲律宾语（塔加拉语） |
+| `jv`  | Basa Jawa          | Javanese           | 爪哇语        |
+| `su`  | Basa Sunda         | Sundanese          | 巽他语        |
+| `ace` | Acèh               | Acehnese           | 亚齐语        |
+| `pag` | Salitan Pangasinan | Pangasinan         | 邦阿西楠语      |
+| `pam` | Kapampangan        | Kapampangan        | 邦板牙语       |
+| `ceb` | Cebuano            | Cebuano            | 宿务语        |
 
 ### Africa
 
-| Code | Native            | English        | 中文    |
-| ---- | ----------------- | -------------- | ----- |
-| `sw` | Kiswahili         | Swahili        | 斯瓦希里语 |
-| `ha` | هَرْشٜىٰن هَوْسَا | Hausa          | 豪萨语   |
-| `am` | አማርኛ              | Amharic        | 阿姆哈拉语 |
-| `ig` | Igbo              | Igbo           | 伊博语   |
-| `wo` | Wolof             | Wolof          | 沃洛夫语  |
-| `xh` | isiXhosa          | Xhosa          | 科萨语   |
-| `zu` | isiZulu           | Zulu           | 祖鲁语   |
-| `af` | Afrikaans         | Afrikaans      | 南非荷兰语 |
-| `om` | Afaan Oromoo      | Oromo          | 奥罗莫语  |
-| `st` | Sesotho           | Southern Sotho | 南索托语  |
-| `tn` | Setswana          | Tswana         | 茨瓦纳语  |
-| `ts` | Xitsonga          | Tsonga         | 聪加语   |
-| `mg` | Malagasy          | Malagasy       | 马拉加西语 |
-| `ln` | Lingála           | Lingala        | 林加拉语  |
+| Code | Native            | English         | 中文    |
+| ---- | ----------------- | --------------- | ----- |
+| `sw` | Kiswahili         | Swahili         | 斯瓦希里语 |
+| `ha` | هَرْشٜىٰن هَوْسَا | Hausa           | 豪萨语   |
+| `am` | አማርኛ              | Amharic         | 阿姆哈拉语 |
+| `ig` | Igbo              | Igbo            | 伊博语   |
+| `wo` | Wolof             | Wolof           | 沃洛夫语  |
+| `xh` | isiXhosa          | Xhosa           | 科萨语   |
+| `zu` | isiZulu           | Zulu            | 祖鲁语   |
+| `af` | Afrikaans         | Afrikaans       | 南非荷兰语 |
+| `om` | Afaan Oromoo      | Oromo           | 奥罗莫语  |
+| `st` | Sesotho           | Southern Sotho  | 南索托语  |
+| `tn` | Setswana          | Tswana          | 茨瓦纳语  |
+| `ts` | Xitsonga          | Tsonga          | 聪加语   |
+| `mg` | Malagasy          | Malagasy        | 马拉加西语 |
+| `ln` | Lingála           | Lingala         | 林加拉语  |
+| `aa` | Qafar af          | Afar            | 阿法尔语  |
+| `ff` | Fulfulde          | Fulani          | 富拉语   |
+| `rw` | Ikinyarwanda      | Kinyarwanda     | 卢旺达语  |
+| `lg` | Oluganda          | Luganda         | 卢干达语  |
+| `rn` | Ikirundi          | Rundi (Kirundi) | 隆迪语   |
+| `sn` | ChiShona          | Shona           | 绍纳语   |
+| `so` | Soomaali          | Somali          | 索马里语  |
+| `tw` | Twi               | Twi             | 契维语   |
+| `yo` | Yorùbá            | Yoruba          | 约鲁巴语  |
 
 ### Americas & Oceania
 
@@ -1860,7 +1886,7 @@ yarn cli -i movie.srt -t ja -t ko -o out/
 # Mixed formats in one run
 yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
 
-# Bilingual subtitles (converted to ASS by default) → movie.zh_bilingual.ass
+# Bilingual subtitles (converted to ASS by default) → movie.zh.bilingual.ass
 yarn cli -i movie.srt -t zh --bilingual
 yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
 yarn cli -i movie.srt -t zh --bilingual --original-first   # original on top
@@ -1888,7 +1914,7 @@ The settings file (`-s`) is exactly the JSON that the web UI's "Export settings"
 | ------------------------ | -------------------------------------------------------------------------------------------------------- |
 | Directory                | **Next to the input file** by default; `-o <dir>` overrides (created if missing)                         |
 | Filename                 | `<name>.<target>.<ext>`, e.g. `movie.srt` → `movie.zh.srt`                                               |
-| The extension may change | Decided by the format adapter — bilingual subtitles convert to ASS by default → `movie.zh_bilingual.ass` |
+| The extension may change | Decided by the format adapter — bilingual subtitles convert to ASS by default → `movie.zh.bilingual.ass` |
 | Cache                    | `~/.translate-cli-cache.json` by default; `--cache-file` relocates it, `--no-cache` disables it          |
 
 ## Parameters
@@ -1946,6 +1972,38 @@ url: /en/guide/translation/changelog.md
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.11.13: Provider admission criteria and single-line retry resilience.
+  - **Provider catalog cleanup**: Established admission criteria, removed AtlasCloud, and aligned OpenCode console branding and endpoints
+  - **Single-line retries and cache hygiene**: Tagged markers prevent line misalignments during retries; unparseable responses are automatically evicted from local cache
+- 2026.11.09: Language coverage expanded to 133 languages.
+  - **11 new languages**: Dhivehi (dv), Odia (or), Afar (aa), Fulani (ff), Kinyarwanda (rw), Luganda (lg), Rundi (rn), Shona (sn), Somali (so), Twi (tw), and Yoruba (yo)
+  - Engine denylists updated to strictly align with providers' official capabilities
+- 2026.11.08: Translatable-field quick-pick chips across all JSON tools; terminology standardization.
+  - **Field quick-pick chips (JSONFieldInput)**: Automatically parses valid string fields from input JSON and displays them as clickable chips under the input box. Click to select, click again to unselect; seamlessly integrates with the field mapping switch. Shipped across JSON Translate and 6 JSON data batch tools
+  - **Terminology standardization**: In JSON Translate, "Specify Keys" is clarified to "Translate Only Selected Fields", "Translate per entry" replaces ambiguous phrasing, and forms consistently use "Fields to Translate" and "Source/Target Fields". Renamed "JSON Key-Value Swapper" to "JSON Value Swapper" to clarify top-level value exchange; renamed "Reference/New Node" to "Reference/Insert Field"; refined Markdown translation labels to "Translate Front Matter (Document Metadata)"; normalized Brace Expander phrasing to "Syntax compatible with Bash brace expansion"
+- 2026.11.05: Text processing: refined deduplication and blank line collapsing.
+  - **Dedupe modes**: Multi-Function Text Processor (text-toolbox) now offers "All" (keeps only the first blank line across the document, default) and "Keep Blank Lines" (preserves paragraph structure, deduping only non-empty lines)
+  - **Collapse blank lines**: New independent atomic operation that compresses consecutive blank lines into a single blank line, orthogonal to deduplication
+- 2026.11.03: Multi-language ZIP export and source language exclusion.
+  - **ZIP packaging**: Exporting to multiple target languages can now be downloaded as a single ZIP archive, preventing multiple browser download prompts
+  - **Source language exclusion**: When selecting multiple target languages, if the source language matches one of the targets, it is automatically excluded to avoid translating into itself
+- 2026.10.28: Subtitle review panel sync; data parser hardening.
+  - **Subtitle review sync**: The Bilingual Review Panel tracks unapplied edits and writes changes back to the main result. Blocks copy and export while edits remain unapplied to prevent stale downloads; responsive two-column layout on narrow screens
+  - **Multi-language export summary**: Subtitle translation displays a summary of successfully downloaded languages upon completion
+  - **JSON i18n mode**: Provides clear structure examples when source fields are missing, invalidating merged results only when language configuration actually changes
+  - **Data parsers**: Flare YAML output adds HTML entity decoding, YAML double-quote escaping, and subfolder flattening warnings; IMGPrompt improves name-pair deduplication and persistence
+- 2026.10.26: Standardized default export filenames.
+  - **Bilingual subtitles** default to `movie.{lang}.bilingual.ass`
+  - **Multi-language exports** automatically inject `.{lang}` before the file extension when the template does not contain a language token
+- 2026.10.22: Model-declared reasoning effort levels; SSA subtitle format support.
+  - **Reasoning effort alignment**: Recognizes officially declared reasoning levels per model SKU (Min / Low / Medium / High / Max)
+  - **SSA support**: Native support for SSA subtitle format parsing and bilingual export
+- 2026.10.19: GitHub source buttons point to standalone repos; first-screen brace expansion.
+  - **Direct repository links**: Open-source tools with standalone public repositories (text-diff, brace-expander, etc.) now link directly to their specific repos from the top navigation
+  - **Brace Expander preview**: Shows example output on an empty first screen, making initial behavior immediately clear
+- 2026.10.08: Novel text processor cleanup enhancements.
+  - **Novel cleanup**: Chapter title detection adds unit affiliation recognition; ad filtering adds exemptions for author interactions and commentary
+  - **Edge (Free) gateway**: Migrated to the modern `/translate/translatetext` endpoint
 - 2026.09.28: A Design QA pass — accessibility and visual consistency.
   - **Keyboard focus rings are back**: antd's reset had flattened the browser's own focus-visible outline, so keyboard focus was effectively invisible
   - **Accent text on surfaces in dark mode** now uses a brighter seed blue to clear WCAG AA; inline code in the Waline comments follows the body text colour (it was near-illegible in light mode)
@@ -2313,14 +2371,14 @@ When done, the result is auto-copied to clipboard and shown in the result card.
 
 ### 2. Content Cleaning (collapsed by default)
 
-- **Chapter Title Formatting** (on): recognize "Chapter X" / "第X章" patterns and normalize them
+- **Chapter Title Formatting** (on): recognize "Chapter X" / "第X章" patterns and normalize them, with support for complex chapter titles carrying unit affiliations
 - **Merge Duplicate Chapter Titles**: when the same chapter title appears more than once (including back-to-back repeats and near-duplicates differing only in full/half-width punctuation), collapse them into one, keeping the more complete title
 - **Strip Line-End Digits** (off): remove trailing digits only on lines ≥ 10 chars (avoids stripping years from short titles)
 - **Trim Spaces** (on): strip leading/trailing whitespace per line
 - **Remove Adjacent Duplicates** (off): drop only **consecutive** duplicate lines (not full-text dedup — preserves common short dialogue like "嗯" / "好")
 - **Special Start Text**: enter the novel title or a recurring header word — matching lines are forced into their own paragraph (prevents incorrect merging)
 - **Content Filter** + **Protect long lines**:
-  - Content Filter: comma-separated keywords (`channel,downloader`) — every matching line gets dropped
+  - Content Filter: comma-separated keywords (`channel,downloader`) — every matching line gets dropped, with built-in exemptions for author notes and banter to avoid false deletions
   - Protect long lines: lines longer than N characters are kept even if they match — protects body paragraphs. 0 disables the exemption.
 
 ### 3. Advanced Settings (collapsed by default)
@@ -2690,7 +2748,7 @@ The syntax is bash brace expansion, so the output matches bash line for line —
 :::tip 30-second quickstart
 
 1. Write one line in the **template** box, e.g. `f{1..4}pd_ever_od30_{tag,bal}`
-2. All eight names appear live below — **click the example in the empty state to fill it in**
+2. All eight names appear live below — **an empty first screen shows example output by default; click it to fill the template**
 3. Copy or export. To wrap into SQL or JSON, open **Advanced settings**
 
 :::
@@ -2857,7 +2915,7 @@ head:
     description: An all-in-one text toolbox. Regex match, delete lines, dedupe, sort, merge, batch prefix/suffix, letter case, JSON beautify and smart splitting can be chained into a step pipeline and saved as presets. Runs entirely in your browser — nothing is uploaded.
     faq:
 - q: What operations does this tool offer?
-  a: 18 of them: regex match / remove / replace, delete lines by keyword, deduplicate whole lines, sort ascending or descending, reverse order, swap adjacent lines, merge into one line, add prefix/suffix, letter case (UPPERCASE / lowercase / Title case / Sentence case), format text, smart split, tidy CLI text, JSON beautify, pair extract, extract links with metrics, and the Weibo link converter. Operations chain: each click appends a step, and the previous step's output feeds the next one.
+  a: 19 of them: regex match / remove / replace, delete lines by keyword, deduplicate whole lines, collapse consecutive blank lines, sort ascending or descending, reverse order, swap adjacent lines, merge into one line, add prefix/suffix, letter case (UPPERCASE / lowercase / Title case / Sentence case), format text, smart split, tidy CLI text, JSON beautify, pair extract, extract links with metrics, and the Weibo link converter. Operations chain: each click appends a step, and the previous step's output feeds the next one.
 - q: What if I can't write regular expressions?
   a: The REGEX band has four preset chips — URL (no params), URL (loose match), Remove index (. 、), Extract JSON keys. One click fills the regex field. For anything harder, hand the requirement plus a sample and the expected output to an AI, then paste the result back to test it here.
 - q: What does the Smart trim switch actually do?
@@ -2988,10 +3046,13 @@ One condition field feeds one button: **Delete · \[match mode] · \[content] �
 - **Content to delete**: separate several conditions with **commas or line breaks** (e.g. `ad,promo,group id`); stored locally
 - **Delete these lines**: removes the hits, keeps the rest, writes to the Result panel, leaves Source alone
 
-### Duplicates
+### Duplicates & Blank Lines
 
-- **Deduplicate** keeps the first of each identical line and preserves blank lines
-- It does **not** read the Delete row's keyword field — hence its own row with no input
+- **Deduplicate**: keeps the first of each identical line. In the step popover, you can toggle between two deduplication modes:
+  - **All** (default): blank lines participate in deduplication; only the first blank line across the document is kept
+  - **Keep blank lines**: blank lines do not enter the seen set and their spacing is preserved intact, deduplicating only non-empty lines
+- **Collapse consecutive blank lines**: an independent atomic operation that compresses adjacent runs of blank lines into a single blank line. It does not inspect text duplication, making it purely about blank line density; freely chainable with deduplication
+- Deduplicate does **not** read the Delete row's keyword field — it operates independently
 
 ### Merge
 
@@ -3210,17 +3271,18 @@ url: /en/guide/json/json-node-inserter.md
 
 > For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
 
-# JSON Node Insertion
+# JSON Node Inserter
 
-[JSON Node Insertion Tool](https://tools.newzone.top/en/json-node-inserter) is an efficient tool for optimizing data structures. It allows you to insert one or more new nodes after a specified node in a JSON document, making the data structure more logical and efficient.
+[JSON Node Inserter Tool](https://tools.newzone.top/en/json-node-inserter) is an efficient tool for optimizing data structures. It allows you to insert one or more new fields after a specified field in a JSON document, making the data structure more logical and efficient.
 
 ![JSON Node Inserter Interface](/img/json-node-inserter-en.webp "JSON Node Inserter Interface")
 
 ## Features
 
-- Precisely insert multiple new nodes after a specified node.
-- Support for inserting multiple nodes, separated by commas (supports both English and Chinese commas).
-- Batch insertion of nodes to improve data processing efficiency.
+- Precisely insert multiple new fields after a specified field.
+- Candidate field quick-pick chips: automatically parses fields from input JSON for one-click selection.
+- Support for inserting multiple fields, separated by commas (supports both English and Chinese commas).
+- Batch insertion of fields to improve data processing efficiency.
 
 ## How to Use
 
@@ -3230,8 +3292,8 @@ url: /en/guide/json/json-node-inserter.md
    - For large JSON files, upload the file instead of pasting it.
 
 2. **Set Insertion Parameters**
-   - **Target Node**: Enter the node name where you want to insert new nodes (this determines the insertion position).
-   - **New Node**: Enter the names of the nodes to be inserted, separated by commas.
+   - **Reference Field**: Enter the reference field name (where you want to insert new fields after), or click a quick-pick chip below.
+   - **Insert New Field**: Enter the names of the fields to be inserted, separated by commas.
 
 3. **Processing and Export**
    - Click the "Start Processing" button to execute the insertion.
@@ -3241,9 +3303,9 @@ url: /en/guide/json/json-node-inserter.md
 ## Usage Tips
 
 - Ensure that the input JSON format is correct; otherwise, it cannot be processed.
-- The target node must exist in the JSON; otherwise, an error will be displayed.
-- New nodes will be inserted in the order they are entered, immediately after the target node.
-- If the node names are purely numeric, they will be automatically sorted by value and placed at the front.
+- The reference field must exist in the JSON; otherwise, an error will be displayed.
+- New fields will be inserted in the order they are entered, immediately after the reference field.
+- If the field names are purely numeric, they will be automatically sorted by value and placed at the front.
 - For large JSON files, upload the file instead of pasting it — the page stays responsive.
 
 ## Use Cases
@@ -3350,16 +3412,16 @@ url: /en/guide/json/json-value-swapper.md
 
 > For AI agents: the complete documentation index is available at /en/llms.txt, the full documentation bundle is available at /en/llms-full.txt.
 
-# JSON Key-Value Swap
+# JSON Value Swapper
 
-The [JSON Key-Value Swap Tool](https://tools.newzone.top/en/json-value-swapper) can automatically swap the values of two specified keys in a JSON array, making your data processing more convenient.
+The [JSON Value Swapper Tool](https://tools.newzone.top/en/json-value-swapper) can automatically swap the values of two specified fields in a JSON array, making your data processing more convenient.
 
 ![JSON Value Swapper Interface](/img/json-value-swapper-en.webp "JSON Value Swapper Interface")
 
 ## Features
 
-- Automatically detects and displays all available keys in the JSON.
-- Swaps the values of two keys in each object of a JSON array.
+- Automatically detects and displays all available field names in the JSON.
+- Swaps the values of two top-level fields in each object of a JSON array.
 
 ## Usage Steps
 
@@ -3367,14 +3429,14 @@ The [JSON Key-Value Swap Tool](https://tools.newzone.top/en/json-value-swapper) 
    - **Upload File**: Drag and drop a file containing a JSON array into the upload area, or click to select a file (supports .json and .txt formats).
    - **Paste Data**: Directly paste your JSON array data into the text box.
 
-2. **Select the Keys to Swap**:
-   - The system will automatically analyze your data and display all available key names.
-   - Click on the displayed key name button to quickly select, or type into the "Swap Fields 1" and "Swap Fields 2" inputs.
-   - The values corresponding to these keys will be swapped during the processing.
+2. **Select the Fields to Swap**:
+   - The system will automatically analyze your data and display all available field names.
+   - Click on the displayed field name button to quickly select, or type into the "Swap Fields 1" and "Swap Fields 2" inputs.
+   - The values corresponding to these fields will be swapped during the processing.
 
 3. **Execute the Swap Operation**:
    - Click the "Start Swap" button to process the data.
-   - If some objects are missing the specified keys, the system will display a prompt.
+   - If some objects are missing the specified fields, the system will display a prompt.
 
 4. **Manage Results**:
    - After the swap is complete, the result will be displayed in the lower section.
@@ -3390,13 +3452,13 @@ The [JSON Key-Value Swap Tool](https://tools.newzone.top/en/json-value-swapper) 
 
 ## Notes
 
-- This tool only supports swapping the first-level key values of objects in a JSON array and does not support swapping keys in nested objects.
-- JSON key names are case-sensitive, so please ensure the correct key names are entered.
-- If some objects in the array are missing the specified keys, the system will continue processing and provide a prompt.
+- This tool only supports swapping top-level field values of objects in a JSON array and does not support swapping fields in nested objects.
+- JSON field names are case-sensitive, so please ensure the correct field names are entered.
+- If some objects in the array are missing the specified fields, the system will continue processing and provide a prompt.
 - It is recommended to back up your original data before processing important data.
 - Ensure your JSON format is correct, as the tool can only process valid JSON data.
 
-With this simple and easy-to-use tool, you can quickly swap key-value pairs in a JSON array, saving time on data processing and boosting your work efficiency.
+With this simple and easy-to-use tool, you can quickly swap field values in a JSON array, saving time on data processing and boosting your work efficiency.
 
 
 

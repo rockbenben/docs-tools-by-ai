@@ -10,7 +10,7 @@
 
 ### 🌍 Translation Tools
 
-Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 120+ languages.
+Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 130+ languages.
 
 - [**Subtitle Translator**](/en/guide/translation/subtitle-translator.md) — SRT / ASS / VTT / LRC with timecode alignment and bilingual output
 - [**MD Translator**](/en/guide/translation/md-translator.md) — Markdown that preserves code blocks, LaTeX, and Front Matter

@@ -4,6 +4,38 @@
 
 Upcoming features: add AI polishing for translated subtitles.
 
+- 2026.11.13: Provider admission criteria and single-line retry resilience.
+  - **Provider catalog cleanup**: Established admission criteria, removed AtlasCloud, and aligned OpenCode console branding and endpoints
+  - **Single-line retries and cache hygiene**: Tagged markers prevent line misalignments during retries; unparseable responses are automatically evicted from local cache
+- 2026.11.09: Language coverage expanded to 133 languages.
+  - **11 new languages**: Dhivehi (dv), Odia (or), Afar (aa), Fulani (ff), Kinyarwanda (rw), Luganda (lg), Rundi (rn), Shona (sn), Somali (so), Twi (tw), and Yoruba (yo)
+  - Engine denylists updated to strictly align with providers' official capabilities
+- 2026.11.08: Translatable-field quick-pick chips across all JSON tools; terminology standardization.
+  - **Field quick-pick chips (JSONFieldInput)**: Automatically parses valid string fields from input JSON and displays them as clickable chips under the input box. Click to select, click again to unselect; seamlessly integrates with the field mapping switch. Shipped across JSON Translate and 6 JSON data batch tools
+  - **Terminology standardization**: In JSON Translate, "Specify Keys" is clarified to "Translate Only Selected Fields", "Translate per entry" replaces ambiguous phrasing, and forms consistently use "Fields to Translate" and "Source/Target Fields". Renamed "JSON Key-Value Swapper" to "JSON Value Swapper" to clarify top-level value exchange; renamed "Reference/New Node" to "Reference/Insert Field"; refined Markdown translation labels to "Translate Front Matter (Document Metadata)"; normalized Brace Expander phrasing to "Syntax compatible with Bash brace expansion"
+- 2026.11.05: Text processing: refined deduplication and blank line collapsing.
+  - **Dedupe modes**: Multi-Function Text Processor (text-toolbox) now offers "All" (keeps only the first blank line across the document, default) and "Keep Blank Lines" (preserves paragraph structure, deduping only non-empty lines)
+  - **Collapse blank lines**: New independent atomic operation that compresses consecutive blank lines into a single blank line, orthogonal to deduplication
+- 2026.11.03: Multi-language ZIP export and source language exclusion.
+  - **ZIP packaging**: Exporting to multiple target languages can now be downloaded as a single ZIP archive, preventing multiple browser download prompts
+  - **Source language exclusion**: When selecting multiple target languages, if the source language matches one of the targets, it is automatically excluded to avoid translating into itself
+- 2026.10.28: Subtitle review panel sync; data parser hardening.
+  - **Subtitle review sync**: The Bilingual Review Panel tracks unapplied edits and writes changes back to the main result. Blocks copy and export while edits remain unapplied to prevent stale downloads; responsive two-column layout on narrow screens
+  - **Multi-language export summary**: Subtitle translation displays a summary of successfully downloaded languages upon completion
+  - **JSON i18n mode**: Provides clear structure examples when source fields are missing, invalidating merged results only when language configuration actually changes
+  - **Data parsers**: Flare YAML output adds HTML entity decoding, YAML double-quote escaping, and subfolder flattening warnings; IMGPrompt improves name-pair deduplication and persistence
+- 2026.10.26: Standardized default export filenames.
+  - **Bilingual subtitles** default to `movie.{lang}.bilingual.ass`
+  - **Multi-language exports** automatically inject `.{lang}` before the file extension when the template does not contain a language token
+- 2026.10.22: Model-declared reasoning effort levels; SSA subtitle format support.
+  - **Reasoning effort alignment**: Recognizes officially declared reasoning levels per model SKU (Min / Low / Medium / High / Max)
+  - **SSA support**: Native support for SSA subtitle format parsing and bilingual export
+- 2026.10.19: GitHub source buttons point to standalone repos; first-screen brace expansion.
+  - **Direct repository links**: Open-source tools with standalone public repositories (text-diff, brace-expander, etc.) now link directly to their specific repos from the top navigation
+  - **Brace Expander preview**: Shows example output on an empty first screen, making initial behavior immediately clear
+- 2026.10.08: Novel text processor cleanup enhancements.
+  - **Novel cleanup**: Chapter title detection adds unit affiliation recognition; ad filtering adds exemptions for author interactions and commentary
+  - **Edge (Free) gateway**: Migrated to the modern `/translate/translatetext` endpoint
 - 2026.09.28: A Design QA pass — accessibility and visual consistency.
   - **Keyboard focus rings are back**: antd's reset had flattened the browser's own focus-visible outline, so keyboard focus was effectively invisible
   - **Accent text on surfaces in dark mode** now uses a brighter seed blue to clear WCAG AA; inline code in the Waline comments follows the body text colour (it was near-illegible in light mode)

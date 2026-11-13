@@ -14,7 +14,7 @@ url: /guide/index.md
 
 ### 🌍 翻译工具
 
-字幕、Markdown、JSON i18n 三种格式专用翻译，共享同一套翻译接口池（经典机器翻译 API 加大语言模型），覆盖 120+ 语言。
+字幕、Markdown、JSON i18n 三种格式专用翻译，共享同一套翻译接口池（经典机器翻译 API 加大语言模型），覆盖 130+ 语言。
 
 - [**Subtitle Translator**](/guide/translation/subtitle-translator.md) — SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出
 - [**MD Translator**](/guide/translation/md-translator.md) — Markdown 翻译，保留代码块、LaTeX、Front Matter
@@ -89,7 +89,7 @@ url: /guide/translation/index.md
 三个工具共享同一套翻译引擎与设置面板，配置可互导：
 
 - **多 API 选择**：经典机器翻译 API + 大语言模型接口双轨，覆盖免费、商业、自托管三类需求（[详见接口对比](/guide/translation/api.md)）
-- **120+ 语言** + 多语言一次翻译：把英文字幕一次性翻成中、日、德、法
+- **130+ 语言** + 多语言一次翻译：把英文字幕一次性翻成中、日、德、法，支持多语言 ZIP 打包与源语言智能排除
 - **本地缓存**：参数一致直接命中，刷新不丢、跨标签页共享
 - **上下文翻译**：字幕/文档带上下文一起送给 AI，保证连贯
 - **失败行重试**：LLM 输出格式异常时仅重译失败行，不重复扣费
@@ -124,7 +124,7 @@ url: /guide/translation/subtitle-translator/index.md
 # 字幕翻译工具｜SRT/ASS/VTT/LRC 批量 AI 翻译指南
 
 :::tip 快速介绍
-Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式和 120+ 种语言。通过分块压缩和并行翻译，1 秒即可处理一集电视剧字幕，并支持上下文关联翻译、逐行实时上屏、本地缓存复用，以及免费与商用翻译 API 加 AI 大模型接口（含本地 Ollama / LM Studio / koboldcpp 与翻译专用的 TranslateGemma / MiLMMT）。
+Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SRT、ASS、SSA、VTT、LRC、SBV 六种格式和 130+ 种语言。通过分块压缩和并行翻译，1 秒即可处理一集电视剧字幕，并支持上下文关联翻译、逐行实时上屏、本地缓存复用，以及免费与商用翻译 API 加 AI 大模型接口（含本地 Ollama / LM Studio / koboldcpp 与翻译专用的 TranslateGemma / MiLMMT）。
 :::
 
 :::tip 30 秒上手
@@ -151,10 +151,10 @@ Subtitle Translator 是一款免费的在线字幕批量翻译工具，支持 SR
 - **格式兼容**：自动匹配主流字幕格式（.srt / .ass / .ssa / .vtt / .lrc / .sbv），导出文件与原文件名一致；翻译成多种语言时自动加语言代码后缀（如 `movie.zh.srt`、`movie.fr.srt`）。
 - **逐行实时上屏**：翻译过程中，每译完一行立刻显示在进度条正下方的实时面板里（原文在上、译文在下，标物理源行号），不必等整批跑完才知道效果。未译出的行标琥珀色「未译出」，细节归下方的失败面板；面板跑完自动收起，中途上滚阅读也不会被拽回底部。
 - **字幕提取**：一键提取去掉时间码和序号的原文对白（自动复制到剪贴板），方便用于 AI 总结、二次创作，或配合译文交给 AI 校对/修订等场景。
-- **对照校对**：单文件、仅译文导出模式下，翻译完成后可逐行并排对照原文与译文，手动修改译文后一键「应用并下载」，适合人工逐句精修。
+- **对照校对与回写联动**：单文件模式下，翻译完成后可展开双语对照校对面板（Bilingual Review Panel），实时并排对照与编辑译文。未应用修改时阻断复制与导出以防内容滞后，改完后自动回写主结果；窄屏下自动切换为固定双列布局。
 - **译后质检**：翻译完成后自动检查每条字幕的语速（CPS，每秒字符数）、每行字数、行数与时长，超标处高亮，帮助发现"一闪而过"或"读不完"的字幕，可切换通用 / 中日韩两套阈值。
 - **多接口选择**：内置免费与商用翻译 API 以及 AI 大模型接口（含本地 Ollama / LM Studio / llama.cpp / koboldcpp，与翻译专用的 TranslateGemma / MiLMMT），按预算与隐私需求自由选择。
-- **多语言支持与国际化**：支持 120+ 种主流语言（英语、中文、日语、韩语、法语、德语、西班牙语等），还可将同一字幕文件同时翻译成多种语言，满足国际化需求。
+- **多语言支持与国际化**：支持 130+ 种主流语言（英语、中文、日语、韩语、法语、德语、西班牙语等），还可将同一字幕文件同时翻译成多种语言，满足国际化需求。
 
 ## 字幕格式支持
 
@@ -397,7 +397,7 @@ url: /guide/translation/md-translator/index.md
 # Markdown 翻译工具｜保留代码块、公式、Front Matter 的 AI 批量翻译指南
 
 :::tip 快速介绍
-md-translator 是一款专为技术文档翻译设计的免费在线工具，能在翻译过程中精准保留 Markdown 的代码块、LaTeX 公式和结构化元数据不被破坏。支持 120+ 种语言、多语言同时输出，以及用于任意文本的"纯文本翻译模式"，是翻译开源文档与博客内容的首选。
+md-translator 是一款专为技术文档翻译设计的免费在线工具，能在翻译过程中精准保留 Markdown 的代码块、LaTeX 公式和结构化元数据不被破坏。支持 130+ 种语言、多语言同时输出，以及用于任意文本的"纯文本翻译模式"，是翻译开源文档与博客内容的首选。
 :::
 
 :::tip 30 秒上手
@@ -412,7 +412,7 @@ md-translator 是一款专为技术文档翻译设计的免费在线工具，能
 
 在技术文档、开源项目、博客创作等领域，Markdown 已成为主流的文本标记语言。然而，大多数翻译工具在处理 Markdown 内容时，容易破坏其原有结构，尤其在涉及代码块、LaTeX 公式或结构化元数据时，常常导致格式错乱或语义丢失。
 
-[md-translator](https://tools.newzone.top/zh/md-translator) 致力于解决这一问题：在精准保留 Markdown 格式的同时，实现高质量翻译。其“纯文本翻译模式”更可用于处理任意类型的文本文档，实现格式保留与语言转换的灵活兼容。目前已支持 120+ 种语言，并可同时输出多语言结果，助力内容全球化。
+[md-translator](https://tools.newzone.top/zh/md-translator) 致力于解决这一问题：在精准保留 Markdown 格式的同时，实现高质量翻译。其“纯文本翻译模式”更可用于处理任意类型的文本文档，实现格式保留与语言转换的灵活兼容。目前已支持 130+ 种语言，并可同时输出多语言结果，助力内容全球化。
 
 ![MD Translator 界面](/img/md-translator-zh.webp "MD Translator 使用界面")
 
@@ -485,11 +485,11 @@ md-translator 在两点上做差异化：完全免费 + 浏览器本地运行（
 
 ### 免费的 Markdown 翻译工具哪个好用？
 
-MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 120+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
+MDTranslator 是免费开源的浏览器端 Markdown 翻译工具：原文不经服务器、API Key 仅存本地 localStorage。支持 Google 免费翻译和 DeepSeek、Claude、GPT、Gemini、DeepL 在内的全部翻译接口，覆盖 130+ 种目标语言。自动跳过代码块、LaTeX 公式、链接 URL 和 Front Matter，翻译后无需手动修复格式，可直接发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus。
 
 ### 翻译 Markdown 文档时如何保留代码块和公式？
 
-用占位符保护策略：代码块（`围栏代码`）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。Frontmatter 默认整块跳过，可在「翻译内容」勾选「翻译 frontmatter」一并处理；同样的开关可单独控制代码块、LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
+用占位符保护策略：代码块（`围栏代码`）、内联代码（`code`）、LaTeX 公式（$...$、$$...$$）、链接 URL、图片路径、HTML/JSX 标签先替换成 `<<<MULTILINE_CODE_x>>>`、`<<<HTML_x>>>` 等占位符送翻译引擎，翻译完原样还原。Front Matter 默认整块跳过，可在「翻译内容」勾选「翻译 Front Matter（文档元数据）」一并处理；同样的开关可单独控制代码块、LaTeX、链接文本。技术文档翻译后格式完整，无需手动修复。
 
 ### 翻译技术文档用机器翻译还是 AI 大模型？哪个最合适？
 
@@ -630,7 +630,7 @@ url: /guide/translation/json-translate/index.md
 # JSON 翻译工具｜i18n 多语言批量翻译与 JSONPath 精准定位
 
 :::tip 快速介绍
-JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、指定键名、逐条翻译指定字段、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
+JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具，支持 Google、Azure、DeepL(X)、Qwen-MT 等翻译 API，以及 DeepSeek、Claude、GPT、Gemini 等主流大语言模型。提供全局翻译、指定节点、只翻译选中的字段、逐条目翻译（按条目/断点）、i18n 模式 5 种模式，可一次性将 JSON 文件翻译成多种目标语言，并保持原始 JSON 结构。
 :::
 
 :::tip 30 秒上手
@@ -638,7 +638,7 @@ JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具
 1. 拖入或粘贴 JSON 文件
 2. 选 **翻译模式**：
    - 全部 string 都翻 → **全局翻译**
-   - 只翻 `title` / `description` 等特定 key → **指定键名**
+   - 只翻 `title` / `description` 等特定字段 → **只翻译选中的字段**
    - 多语言 i18n 项目（每个对象添加目标语言字段）→ **i18n 模式**
 3. 选源/目标语言，点 **翻译** —— JSON 结构原样保留导出
 
@@ -670,12 +670,12 @@ JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具
 - JSON 数据具有清晰的层级结构，仅需翻译特定部分
 - 针对大型 JSON 文件，缩小翻译范围提高效率
 
-### 指定键名
+### 只翻译选中的字段
 
-在此模式下，你可以指定特定的键名进行翻译。支持两种输入方式：
+在此模式下，你可以指定特定的字段名进行翻译。系统提供**候选字段快选（Chips）**&#x529F;能：自动扫描源 JSON 中的有效文本字段名并在输入框下方渲染为快捷标签，点击快速填入，再次点击反选移除；兼顾键盘直接手填与快速挑选。支持两种模式：
 
-- **简单模式**：直接在输入框中通过逗号（中英文均可）分隔需要翻译的键名，程序会将这些键的内容进行翻译。
-- **高级模式**：通过键名映射组件设置输入键与输出键的对应关系，翻译结果将写入新字段中，保留原字段不变。
+- **原字段**：在「待翻译字段」输入框中填入字段名（多个字段用逗号分隔，也可点击下方字段标签快速添加），程序会将这些字段的内容翻译后覆盖原值。
+- **映射模式**：通过 Switch 切换到映射模式，为每个原字段指定目标字段名称（如 `name` → `name_zh`），翻译结果将写入目标字段中，保留原字段不变。
 
 **适用场景**：
 
@@ -684,14 +684,14 @@ JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具
 
 **注意事项**：
 
-- 键名区分大小写。
-- 输入键与输出键数量须一致；映射会自动忽略不存在的键。至少需有一个有效映射才会执行翻译。
-- 纯数字键可能与数组索引冲突——该问题已修复，但建议尽量避免仅由数字组成的键名以减少歧义。
+- 字段名区分大小写。
+- 输入字段与输出字段数量须一致；映射会自动忽略不存在的字段。至少需有一个有效映射才会执行翻译。
+- 纯数字键可能与数组索引冲突——建议尽量避免仅由数字组成的键名以减少歧义。
 - 含点（.）的键名会被误解析为嵌套路径，建议使用不含点的键名或改用替代命名。
 
-### 逐条翻译指定字段
+### 逐条目翻译（按条目/断点）
 
-把 JSON 当成一张「条目列表」来处理：逐个条目取出同一个字段翻译，其余字段原样保留。
+把 JSON 当成一张「条目列表」来处理：逐个条目取出同一个字段翻译，其余字段原样保留。输入框下方同样支持候选字段快选芯片。
 
 **结构要求**：JSON 必须&#x662F;**「条目 → 对象」两层结构**，即顶层每个键对应一个对象，字段在对象里。例如：
 
@@ -706,8 +706,8 @@ JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具
 
 **配置项**：
 
-- **起始键**：(可选) 从这个条目开始翻译，留空则从第一条开始。适用于键顺序有意义、只想翻后半部分的场景
-- **待翻译字段**：取每个条目里的这个字段翻译，**多个字段用逗号分隔**。注意：列出的字段只要有一个在所有条目里都找不到（或不是字符串值），整次翻译会直接报错中止，而不是跳过该字段
+- **起始条目**：(可选) 从这个条目开始翻译，留空则从第一条开始。适用于键顺序有意义、只想翻后半部分的场景
+- **待翻译字段**：取每个条目里的这个字段翻译，**多个字段用逗号分隔**（或点击下方快捷芯片添加）。注意：列出的字段只要有一个在所有条目里都找不到（或不是字符串值），整次翻译会直接报错中止，而不是跳过该字段
 
 **适用场景**：
 
@@ -716,7 +716,7 @@ JsonTranslate 是一款面向 i18n 本地化场景的多语言 JSON 翻译工具
 
 ### i18n 模式
 
-i18n 模式专为多语言场景设计，能在原有 JSON 结构中聚合多语言的字段内容。适合用于构建多语言网站或应用的翻译文件，或管理统一结构下的多语言配置。
+i18n 模式专为多语言场景设计，能在原有 JSON 结构中聚合多语言的字段内容。适合用于构建多语言网站或应用的翻译文件，或管理统一结构下的多语言配置。源 JSON 中缺少源语言字段时，系统会给出清晰的报错并展示期望结构示例。
 
 #### 工作原理
 
@@ -949,7 +949,11 @@ url: /guide/translation/info.md
 
 ### 一次翻译，输出多语种
 
-可以把同一份文件同时翻译成多种语言，适合多语种字幕或国际化项目。例如把英文字幕一次性翻译成中文、日语、德语、法语，导出时按语言分别打包。当前支持 120+ 种语言，持续扩充中。
+可以把同一份文件同时翻译成多种语言，适合多语种字幕或国际化项目。例如把英文字幕一次性翻译成中文、日语、德语、法语，导出时按语言分别打包。当前支持 130+ 种语言，持续扩充中。
+
+- **多语言 ZIP 打包**：多语言批量导出时支持一键打包为 ZIP 压缩包下载，避免浏览器弹出几十个下载窗口。
+- **源语言智能排除**：当同时选择多种目标语言时，若其中包含了当前文件的源语言，系统会自动排除源语言，避免将内容无谓地“翻译”成源语言自身造成扣费与混乱。
+- **已导出语种汇总**：多语言翻译完成后提供已导出语种汇总，只列真正下载成功的语言，行级软失败时不虚报完成。
 
 ### 翻译缓存
 
@@ -1031,7 +1035,9 @@ LLM 偶尔会因格式输出错误、漏行、空响应导致部分内容翻译�
 工具会根据上传内容自动切换：
 
 - **批量模式**（默认）：拖入多个文件，自动排队处理，完成后打包下载。
-- **单文件模式**：上传单文件或直接粘贴文本，可逐行预览校对、编辑修改。
+- **单文件模式**：上传单文件或直接粘贴文本，可逐行预览校对、编辑修改。在字幕翻译中可展开「对照校对」面板（Bilingual Review Panel）：
+  - **逐行并排校对**：原文与译文逐行对应展示，可直接在译文框内微调。窄屏下自动切换为固定双列布局，消除横向滚动条
+  - **实时回写与防滞后门控**：面板实时跟踪未保存的修改，改动后即刻同步回写主结果；在未应用修改时阻断复制与导出，彻底避免导出的字幕滞后于屏幕上已修改的内容。若将某行改回原样，自动撤销未保存标记
 
 也可以在高级设置中手动锁定到单文件模式，方便校对。
 
@@ -1108,7 +1114,7 @@ JSON Translate 仅支持单文件模式。
 - **超时时间**：单次请求超时阈值（秒）。AI 模型慢或长文本多时可以调大。「测试连接」按钮也使用同一阈值——测试不会比正式翻译更严格。
 - **最大输出 tokens（仅 Custom OpenAI-compatible）**：可选的输出封顶，主要用于防止本地小模型陷入重复输出循环，建议本地模型设 2048–4096。默认 0（不限制）。响应若被截断（`finish_reason=length`）会标为失败但不会重试。其他云端 LLM 用各自服务端的默认上限，不暴露此控件。
 - **翻译后移除字符**：在结果中自动移除指定字符或片段（如字幕里的 `♪`、多余的 `<i>` 标签）。
-- **自定义导出文件名**：默认 `{name}.{ext}` —— 单语言导出保持原文件名，干净不啰嗦；一次翻译成多种语言时，若模板里没有 `{lang}`，工具会自动在扩展名前补 `_{lang}`，避免多语言结果互相覆盖。支持占位符 `{name}`（原文件名）、`{lang}`（目标语言）、`{ext}`（扩展名）、`{date}`（本地日历日 YYYY-MM-DD）、`{time}`（HHMMss）。想固定带语言后缀，写成 `{name}_{lang}.{ext}` 即可；也可用 `{name}_{lang}_{date}.{ext}` 这类组合。
+- **自定义导出文件名**：默认 `{name}.{ext}` —— 单语言导出保持原文件名，干净不啰嗦；一次翻译成多种语言时，若模板里没有 `{lang}`，工具会自动在扩展名前补 `.{lang}`，避免多语言结果互相覆盖。支持占位符 `{name}`（原文件名）、`{lang}`（目标语言）、`{ext}`（扩展名）、`{date}`（本地日历日 YYYY-MM-DD）、`{time}`（HHMMss）。想固定带语言后缀，写成 `{name}.{lang}.{ext}` 即可；也可用 `{name}.{lang}.{date}.{ext}` 这类组合。
 
 ### API 参数调优
 
@@ -1215,10 +1221,10 @@ url: /guide/translation/api.md
 ## 大语言模型（LLM）
 
 
-支持的 LLM 接口共 27 个，分两组：
+支持的 LLM 接口共 26 个，分两组：
 
 - **厂商直连（16 家）**：DeepSeek、OpenAI、Claude、Gemini、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)
-- **聚合网关与自托管（11 家）**：OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)**
+- **聚合网关与自托管（10 家）**：OpenRouter、OpenCode Console、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)**
 
 末尾的 **Custom (OpenAI-compatible)** 是兜底项：任何兼容 OpenAI 协议的地址都填这一项，URL 输入框上方会列出可选的本地运行时与第三方网关快捷地址（见下文 [本地模型接入](#本地模型接入)）。
 
@@ -1238,7 +1244,7 @@ url: /guide/translation/api.md
   - **四档（Off / Low / Medium / High）**：其余支持思考的接口，包括 Claude、OpenAI GPT-5.x / 6.x、Gemini、Qwen3、Kimi (Moonshot)、xAI Grok、Groq 与 Cerebras 的 GPT-OSS、Azure OpenAI，以及 OpenRouter 上带思考标记的模型
   - **最低档标 Min 而不是 Off**：厂商压根没给关闭值的模型，最低一档改标 **Min** —— 它照常推理、照常计费，标成 Off 是撒谎。当前是 Gemini 3.x、xAI Grok 4.5 / 4.6、Groq 与 Cerebras 上的 GPT-OSS、Kimi K3 / K2.6，外加单个 SKU **Claude Fable 5**（官方标 Always on，发显式关闭直接 400；同门的 Opus 5 / Sonnet 5 / Haiku 4.5 都关得掉）
   - **三态（Off / On / Auto）**：在支持思考的接口上填**未列出的自定义模型**时。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off
-  - **不显示思考控件**：StepFun、YandexGPT、OpenCode Zen、TokenHub、Atlas Cloud、Nvidia NIM、Custom (OpenAI-compatible)。聚合网关背后是多家上游，「能不能关思考」逐个型号不同，统一发关闭参数会打到不支持关闭的型号上，因此一律跟随上游模型的服务端默认
+  - **不显示思考控件**：StepFun、YandexGPT、OpenCode Zen、TokenHub、Nvidia NIM、Custom (OpenAI-compatible)。聚合网关背后是多家上游，「能不能关思考」逐个型号不同，统一发关闭参数会打到不支持关闭的型号上，因此一律跟随上游模型的服务端默认
 
 ### 部分接口的特别说明
 
@@ -1247,7 +1253,7 @@ url: /guide/translation/api.md
 - **OpenCode Go**：与 OpenCode Zen **同一个 host、同一个账号、同一把 API Key**，只有三处不同——请求路径（`/zen/go/v1` 与 `/zen/v1`）、在售 SKU 集合、计费形态。Go 是 **$10/月的订阅额度**（官方按每个模型的月限额换算：跑满 5 小时 = 20%、一周 = 50%、一个月 = 100%），Zen 是充值余额——**别把 Go 写成「充值即用」**。官方限定一个 workspace 只能有一人订阅 Go。上游同样不发 CORS 头，「中转 API」**默认开启**。
 - **Cerebras**：收录它是为了**速度**而不是模型（两个公共模型在 Groq / Nvidia / SiliconFlow 上都调得到）。官方标称 gpt-oss-120b 约 3000 tokens/s，逐行翻译这类高频短请求体感明显；另有每日 100 万免费 token。
 - **YandexGPT (AI Studio)**：除 API Key 外还需填写 **Folder ID**（在 Yandex AI Studio 控制台的目录页获取）。模型字段填 SKU 名（如 `yandexgpt-5.1`，也提供 Qwen3、DeepSeek、GPT-OSS 等开源 SKU），或直接粘贴完整的 `gpt://<folder_id>/<model>/latest` URI。Yandex 官方接口无 CORS 头，浏览器无法直连，「中转 API」**默认开启**（开关可关闭，也可改填自建中转地址）。
-- **已从服务列表移除的接口**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）。**LiteLLM** 不再是独立条目，改为 Custom (OpenAI-compatible) 的一个 URL 快捷项，见下文 [自建网关与第三方推理平台](#自建网关与第三方推理平台)。
+- **已从服务列表移除的接口**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）、Atlas Cloud（2026-11 移除）。**LiteLLM** 不再是独立条目，改为 Custom (OpenAI-compatible) 的一个 URL 快捷项，见下文 [自建网关与第三方推理平台](#自建网关与第三方推理平台)。
 
 ### 区域端点切换
 
@@ -1338,9 +1344,9 @@ Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自�
 ### 中转 API（可控开关）
 
 
-除 Gemini、Nvidia NIM、Azure OpenAI 之外的每个 LLM 接口（共 24 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)、OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud、Custom (OpenAI-compatible)）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
+除 Gemini、Nvidia NIM、Azure OpenAI 之外的每个 LLM 接口（共 23 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)、OpenRouter、OpenCode Console、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Custom (OpenAI-compatible)）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
 
-YandexGPT (AI Studio)、OpenCode Zen、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
+YandexGPT (AI Studio)、OpenCode Console、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
 
 - **上面点名的例外接口没有这个开关**：Custom 与 Azure OpenAI 的地址本就是你自己填的，中转没有固定上游可写；Nvidia NIM 走的是下一节的内置代理；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
 - **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
@@ -1469,29 +1475,29 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ## 语言代码对照表
 
-本工具支持 120+ 种主流语言互译，按地区分组展示。批量配置多语言时，使用下方语言代码（如 `en, zh, ja, ko`）：
+本工具支持 130+ 种主流语言互译，按地区分组展示。批量配置多语言时，使用下方语言代码（如 `en, zh, ja, ko`）：
 
 
 ### 常用
 
-| Code      | Native             | English             | 中文       |
-| --------- | ------------------ | ------------------- | -------- |
-| `en`      | English            | English             | 英语       |
-| `zh`      | 简体                 | Simplified Chinese  | 中文       |
-| `zh-hant` | 繁體                 | Traditional Chinese | 繁体中文     |
-| `es`      | Español            | Spanish             | 西班牙语     |
-| `fr`      | Français           | French              | 法语       |
-| `de`      | Deutsch            | German              | 德语       |
-| `ja`      | 日本語                | Japanese            | 日语       |
-| `ko`      | 한국어                | Korean              | 韩语       |
-| `hi`      | हिन्दी             | Hindi               | 印地语      |
-| `ar`      | العربية            | Arabic              | 阿拉伯语     |
-| `ru`      | Русский            | Russian             | 俄语       |
-| `pt-br`   | Português (Brasil) | Portuguese (Brazil) | 葡萄牙语（巴西） |
-| `id`      | Bahasa Indonesia   | Indonesian          | 印尼语      |
-| `vi`      | Tiếng Việt         | Vietnamese          | 越南语      |
-| `it`      | Italiano           | Italian             | 意大利语     |
-| `yue`     | 粵語                 | Cantonese           | 粤语       |
+| Code      | Native             | English               | 中文       |
+| --------- | ------------------ | --------------------- | -------- |
+| `en`      | English            | English               | 英语       |
+| `zh`      | 简体                 | Chinese (Simplified)  | 中文       |
+| `zh-hant` | 繁體                 | Chinese (Traditional) | 繁体中文     |
+| `es`      | Español            | Spanish               | 西班牙语     |
+| `fr`      | Français           | French                | 法语       |
+| `de`      | Deutsch            | German                | 德语       |
+| `ja`      | 日本語                | Japanese              | 日语       |
+| `ko`      | 한국어                | Korean                | 韩语       |
+| `hi`      | हिन्दी             | Hindi                 | 印地语      |
+| `ar`      | العربية            | Arabic                | 阿拉伯语     |
+| `ru`      | Русский            | Russian               | 俄语       |
+| `pt-br`   | Português (Brasil) | Portuguese (Brazil)   | 葡萄牙语（巴西） |
+| `id`      | Bahasa Indonesia   | Indonesian            | 印尼语      |
+| `vi`      | Tiếng Việt         | Vietnamese            | 越南语      |
+| `it`      | Italiano           | Italian               | 意大利语     |
+| `yue`     | 粵語                 | Cantonese             | 粤语       |
 
 ### 欧洲
 
@@ -1513,7 +1519,7 @@ OLLAMA_ORIGINS="*" ollama serve
 | `da`    | Dansk                | Danish                | 丹麦语       |
 | `sq`    | Shqip                | Albanian              | 阿尔巴尼亚语    |
 | `fi`    | Suomi                | Finnish               | 芬兰语       |
-| `nb`    | Norsk bokmål         | Norwegian Bokmål      | 挪威语       |
+| `nb`    | Norsk bokmål         | Norwegian             | 挪威语       |
 | `sk`    | Slovenčina           | Slovak                | 斯洛伐克语     |
 | `hr`    | Hrvatski             | Croatian              | 克罗地亚语     |
 | `be`    | Беларуская           | Belarusian            | 白俄罗斯语     |
@@ -1542,16 +1548,16 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ### 中东
 
-| Code  | Native | English          | 中文    |
-| ----- | ------ | ---------------- | ----- |
-| `tr`  | Türkçe | Turkish          | 土耳其语  |
-| `he`  | עברית  | Hebrew           | 希伯来语  |
-| `fa`  | فارسی  | Persian          | 波斯语   |
-| `ur`  | اردو   | Urdu             | 乌尔都语  |
-| `ps`  | پښتو   | Pashto           | 普什图语  |
-| `prs` | دری    | Dari             | 达里语   |
-| `ckb` | کوردی  | Central Kurdish  | 中库尔德语 |
-| `kmr` | Kurdî  | Northern Kurdish | 北库尔德语 |
+| Code  | Native | English            | 中文    |
+| ----- | ------ | ------------------ | ----- |
+| `tr`  | Türkçe | Turkish            | 土耳其语  |
+| `he`  | עברית  | Hebrew             | 希伯来语  |
+| `fa`  | فارسی  | Persian            | 波斯语   |
+| `ur`  | اردو   | Urdu               | 乌尔都语  |
+| `ps`  | پښتو   | Pashto             | 普什图语  |
+| `prs` | دری    | Dari               | 达里语   |
+| `ckb` | کوردی  | Kurdish (Sorani)   | 中库尔德语 |
+| `kmr` | Kurdî  | Kurdish (Kurmanji) | 北库尔德语 |
 
 ### 中亚
 
@@ -1570,59 +1576,70 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ### 南亚
 
-| Code  | Native    | English   | 中文     |
-| ----- | --------- | --------- | ------ |
-| `bn`  | বাংলা     | Bengali   | 孟加拉语   |
-| `mr`  | मराठी     | Marathi   | 马拉地语   |
-| `te`  | తెలుగు    | Telugu    | 泰卢固语   |
-| `ta`  | தமிழ்     | Tamil     | 泰米尔语   |
-| `gu`  | ગુજરાતી   | Gujarati  | 古吉拉特语  |
-| `kn`  | ಕನ್ನಡ     | Kannada   | 卡纳达语   |
-| `pa`  | ਪੰਜਾਬੀ    | Punjabi   | 旁遮普语   |
-| `ml`  | മലയാളം    | Malayalam | 马拉雅拉姆语 |
-| `bho` | भोजपुरी   | Bhojpuri  | 博杰普尔语  |
-| `mai` | मैथिली    | Maithili  | 迈蒂利语   |
-| `ne`  | नेपाली    | Nepali    | 尼泊尔语   |
-| `si`  | සිංහල     | Sinhala   | 僧伽罗语   |
-| `as`  | অসমীয়া   | Assamese  | 阿萨姆语   |
-| `gom` | कोंकणी    | Konkani   | 孔卡尼语   |
-| `sa`  | संस्कृतम् | Sanskrit  | 梵语     |
+| Code  | Native    | English      | 中文     |
+| ----- | --------- | ------------ | ------ |
+| `bn`  | বাংলা     | Bengali      | 孟加拉语   |
+| `mr`  | मराठी     | Marathi      | 马拉地语   |
+| `te`  | తెలుగు    | Telugu       | 泰卢固语   |
+| `ta`  | தமிழ்     | Tamil        | 泰米尔语   |
+| `gu`  | ગુજરાતી   | Gujarati     | 古吉拉特语  |
+| `kn`  | ಕನ್ನಡ     | Kannada      | 卡纳达语   |
+| `pa`  | ਪੰਜਾਬੀ    | Punjabi      | 旁遮普语   |
+| `ml`  | മലയാളം    | Malayalam    | 马拉雅拉姆语 |
+| `bho` | भोजपुरी   | Bhojpuri     | 博杰普尔语  |
+| `mai` | मैथिली    | Maithili     | 迈蒂利语   |
+| `ne`  | नेपाली    | Nepali       | 尼泊尔语   |
+| `si`  | සිංහල     | Sinhala      | 僧伽罗语   |
+| `as`  | অসমীয়া   | Assamese     | 阿萨姆语   |
+| `gom` | कोंकणी    | Konkani      | 孔卡尼语   |
+| `sa`  | संस्कृतम् | Sanskrit     | 梵语     |
+| `dv`  | ދިވެހި    | Dhivehi      | 迪维希语   |
+| `or`  | ଓଡ଼ିଆ     | Odia (Oriya) | 奥里亚语   |
 
 ### 东南亚
 
-| Code  | Native             | English           | 中文         |
-| ----- | ------------------ | ----------------- | ---------- |
-| `th`  | ไทย                | Thai              | 泰语         |
-| `lo`  | ລາວ                | Lao               | 老挝语        |
-| `my`  | မြန်မာ             | Burmese           | 缅甸语        |
-| `km`  | ខ្មែរ              | Khmer             | 高棉语        |
-| `ms`  | Bahasa Melayu      | Malay             | 马来语        |
-| `fil` | Tagalog            | Filipino(Tagalog) | 菲律宾语（塔加拉语） |
-| `jv`  | Basa Jawa          | Javanese          | 爪哇语        |
-| `su`  | Basa Sunda         | Sundanese         | 巽他语        |
-| `ace` | Acèh               | Acehnese          | 亚齐语        |
-| `pag` | Salitan Pangasinan | Pangasinan        | 邦阿西楠语      |
-| `pam` | Kapampangan        | Pampangan         | 邦板牙语       |
-| `ceb` | Cebuano            | Cebuano           | 宿务语        |
+| Code  | Native             | English            | 中文         |
+| ----- | ------------------ | ------------------ | ---------- |
+| `th`  | ไทย                | Thai               | 泰语         |
+| `lo`  | ລາວ                | Lao                | 老挝语        |
+| `my`  | မြန်မာ             | Burmese            | 缅甸语        |
+| `km`  | ខ្មែរ              | Khmer              | 高棉语        |
+| `ms`  | Bahasa Melayu      | Malay              | 马来语        |
+| `fil` | Tagalog            | Filipino (Tagalog) | 菲律宾语（塔加拉语） |
+| `jv`  | Basa Jawa          | Javanese           | 爪哇语        |
+| `su`  | Basa Sunda         | Sundanese          | 巽他语        |
+| `ace` | Acèh               | Acehnese           | 亚齐语        |
+| `pag` | Salitan Pangasinan | Pangasinan         | 邦阿西楠语      |
+| `pam` | Kapampangan        | Kapampangan        | 邦板牙语       |
+| `ceb` | Cebuano            | Cebuano            | 宿务语        |
 
 ### 非洲
 
-| Code | Native            | English        | 中文    |
-| ---- | ----------------- | -------------- | ----- |
-| `sw` | Kiswahili         | Swahili        | 斯瓦希里语 |
-| `ha` | هَرْشٜىٰن هَوْسَا | Hausa          | 豪萨语   |
-| `am` | አማርኛ              | Amharic        | 阿姆哈拉语 |
-| `ig` | Igbo              | Igbo           | 伊博语   |
-| `wo` | Wolof             | Wolof          | 沃洛夫语  |
-| `xh` | isiXhosa          | Xhosa          | 科萨语   |
-| `zu` | isiZulu           | Zulu           | 祖鲁语   |
-| `af` | Afrikaans         | Afrikaans      | 南非荷兰语 |
-| `om` | Afaan Oromoo      | Oromo          | 奥罗莫语  |
-| `st` | Sesotho           | Southern Sotho | 南索托语  |
-| `tn` | Setswana          | Tswana         | 茨瓦纳语  |
-| `ts` | Xitsonga          | Tsonga         | 聪加语   |
-| `mg` | Malagasy          | Malagasy       | 马拉加西语 |
-| `ln` | Lingála           | Lingala        | 林加拉语  |
+| Code | Native            | English         | 中文    |
+| ---- | ----------------- | --------------- | ----- |
+| `sw` | Kiswahili         | Swahili         | 斯瓦希里语 |
+| `ha` | هَرْشٜىٰن هَوْسَا | Hausa           | 豪萨语   |
+| `am` | አማርኛ              | Amharic         | 阿姆哈拉语 |
+| `ig` | Igbo              | Igbo            | 伊博语   |
+| `wo` | Wolof             | Wolof           | 沃洛夫语  |
+| `xh` | isiXhosa          | Xhosa           | 科萨语   |
+| `zu` | isiZulu           | Zulu            | 祖鲁语   |
+| `af` | Afrikaans         | Afrikaans       | 南非荷兰语 |
+| `om` | Afaan Oromoo      | Oromo           | 奥罗莫语  |
+| `st` | Sesotho           | Southern Sotho  | 南索托语  |
+| `tn` | Setswana          | Tswana          | 茨瓦纳语  |
+| `ts` | Xitsonga          | Tsonga          | 聪加语   |
+| `mg` | Malagasy          | Malagasy        | 马拉加西语 |
+| `ln` | Lingála           | Lingala         | 林加拉语  |
+| `aa` | Qafar af          | Afar            | 阿法尔语  |
+| `ff` | Fulfulde          | Fulani          | 富拉语   |
+| `rw` | Ikinyarwanda      | Kinyarwanda     | 卢旺达语  |
+| `lg` | Oluganda          | Luganda         | 卢干达语  |
+| `rn` | Ikirundi          | Rundi (Kirundi) | 隆迪语   |
+| `sn` | ChiShona          | Shona           | 绍纳语   |
+| `so` | Soomaali          | Somali          | 索马里语  |
+| `tw` | Twi               | Twi             | 契维语   |
+| `yo` | Yorùbá            | Yoruba          | 约鲁巴语  |
 
 ### 美洲及大洋洲
 
@@ -1860,7 +1877,7 @@ yarn cli -i movie.srt -t ja -t ko -o out/
 # 多文件混格式，一次跑完
 yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
 
-# 双语字幕（默认转 ASS）→ movie.zh_bilingual.ass
+# 双语字幕（默认转 ASS）→ movie.zh.bilingual.ass
 yarn cli -i movie.srt -t zh --bilingual
 yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
 yarn cli -i movie.srt -t zh --bilingual --original-first   # 原文在上
@@ -1888,7 +1905,7 @@ yarn cli -i notes.txt -t zh --format markdown --md-raw
 | ------ | ------------------------------------------------------------------- |
 | 目录     | 默认**输入文件旁边**；`-o <dir>` 覆盖（目录不存在会自动创建）                              |
 | 文件名    | `<原名>.<目标语言>.<扩展名>`，如 `movie.srt` → `movie.zh.srt`                  |
-| 扩展名可能变 | 由格式适配器决定，如双语字幕默认转 ASS → `movie.zh_bilingual.ass`                    |
+| 扩展名可能变 | 由格式适配器决定，如双语字幕默认转 ASS → `movie.zh.bilingual.ass`                    |
 | 缓存     | 默认 `~/.translate-cli-cache.json`，`--cache-file` 换位置，`--no-cache` 关闭 |
 
 ## 参数
@@ -1946,6 +1963,38 @@ url: /guide/translation/changelog.md
 
 待更新功能：对翻译后的字幕内容进行 AI 润色。
 
+- 2026.11.13: 接口准入规范与单行重试稳定性加固。
+  - **服务商目录规范**：确立接口准入标准，下线不符合标准的 AtlasCloud；OpenCode 控制台品牌名称与端点展示完成统一对齐
+  - **单行重试与缓存防护**：翻译行级重试引入标记防护，解析失败的回复自动从本地缓存剔除，避免污染后续重试
+- 2026.11.09: 语言库大幅扩充，支持 133 种语言。
+  - **新增 11 门语言**：新增迪维希语（dv）、奥里亚语（or）、阿法尔语（aa）、富拉语（ff）、卢旺达语（rw）、卢干达语（lg）、基隆迪语（rn）、修纳语（sn）、索马里语（so）、特维语（tw）、约鲁巴语（yo）
+  - 各机器翻译接口能力矩阵（denylist）严格对齐厂商一手规范，确保可用性
+- 2026.11.08: JSON 工具全线支持字段快选；全站术语标准化。
+  - **JSON 字段快选（JSONFieldInput）**：自动提取源 JSON 中所有有效文本字段并在输入框下方渲染为快捷标签（chips），点击快速填入，再次点击反选移除；输入框手动输入与快速挑选兼顾，且与「原字段 / 映射模式」状态联动，已接入 JSON 翻译及 6 款 JSON 数据批处理工具
+  - **降低全站工具术语门槛**：JSON 翻译「指定键名」直观化为「只翻译选中的字段」，「逐条翻译指定字段」优化为「逐条目翻译（按条目/断点）」，表单统称为「待翻译字段」「原字段/目标字段」；「JSON 键值互换」纠正为「JSON 字段值互换」；「参考节点 / 新节点」优化为「参考字段 / 插入新字段」；Markdown 翻译英文标签规范为「翻译 Front Matter（文档元数据）」；格式批量生成规范为「语法兼容 Bash 花括号展开」
+- 2026.11.05: 文本处理细化去重与空行处理。
+  - **去重模式**：多功能文本处理（text-toolbox）去重操作支持「全部去重」（全文保留首个空行，默认）与「仅去重文字（保留空行排版）」两档模式
+  - **折叠连续空行**：新增独立的「折叠连续空行」原子操作，相邻多个空行压缩为一行，不影响去重判定
+- 2026.11.03: 多语言翻译支持 ZIP 打包与源语言智能排除。
+  - **多语言 ZIP 打包**：多目标语言导出支持一键打包为 ZIP 压缩包下载，避免单次下载触发大量浏览器弹窗
+  - **源语言智能排除**：当同时选择多种目标语言时，若其中包含了当前文件的源语言，系统自动排除源语言，避免向自身翻译产生冗余计费与错乱
+- 2026.10.28: 字幕翻译双语复核面板联动；数据解析器稳定性加固。
+  - **字幕复核实时联动**：双语校对复核面板实时跟踪未保存修改，修改后回写主结果；在未应用修改时阻断复制与导出，防止导出内容滞后于屏幕显示；窄屏自适应双列布局
+  - **导出语种汇总**：字幕多语言翻译完成后提供已导出语种汇总，只列真正下载成功的语言
+  - **JSON i18n 模式体验优化**：源文件找不到源字段时给出清晰结构示例，仅在语言配置实际变动时失效合并结果
+  - **数据解析器**：Flare 书签导出支持 HTML 实体解码与 YAML 双引号转义，检测到子文件夹时智能提示扁平化；IMGPrompt 优化名称对去重与持久化
+- 2026.10.26: 导出文件名默认规则规范化。
+  - **双语字幕**导出默认规范化为 `movie.{lang}.bilingual.ass`
+  - **多语言导出**在未显式包含 `{lang}` 占位符时，自动在扩展名前追加 `.{lang}`
+- 2026.10.22: 思考档位深度对齐；字幕支持 SSA 格式。
+  - **思考档位按模型 SKU 对齐**：精确识别各模型官方声明的思考级别，提供 Min / Low / Medium / High / Max 分级
+  - **字幕支持 SSA**：原生支持 SSA 格式字幕的解析与双语对照导出
+- 2026.10.19: 开源工具顶栏源码按钮对齐独立 GitHub 仓库；花括号展开首屏优化。
+  - **源码按钮精准对齐**：纯文本比较（text-diff）、格式批量生成（brace-expander）等有独立公开仓的工具，顶栏 GitHub 图标精准跳转具体仓库
+  - **首屏优化**：格式批量生成（brace-expander）空输入时默认展示示例展开产物，降低上手门槛
+- 2026.10.08: 小说文本整理器去广告与排版增强。
+  - **去广告增强**：章节标题判定增加「单位归属」，广告行判定增加「作者话术」免删保护
+  - **Edge (Free) 迁移**：Edge 免费翻译接口迁移到最新的 `/translate/translatetext` 网关
 - 2026.09.28: Design QA 一轮——无障碍与视觉一致性。
   - **键盘焦点环找回**：antd 的 reset 把浏览器自带的 focus-visible 环压成浅蓝，现在焦点重新看得见
   - **暗色主题下的强调色文字**：卡片底上的小号强调色文字改用量子蓝，够到 WCAG AA；Waline 评论区行内代码字色接回正文色（此前亮色主题下几乎看不清）
@@ -2313,14 +2362,14 @@ url: /guide/text/novel-processor.md
 
 ### 2. 内容清理（默认折叠）
 
-- **章节标题格式化**（默认开）：识别"第X章"、"Chapter N"等格式并规范化
+- **章节标题格式化**（默认开）：识别"第X章"、"Chapter N"等格式并规范化，支持带有单位归属等复杂结构的章节标题
 - **合并重复章节标题**：同一章标题重复出现时（包括紧邻重复、仅全/半角标点差异的"近似重复"）合并为一条，自动保留信息更完整的那条
 - **清除行尾数字**（默认关）：仅对长度 ≥ 10 的行移除末尾数字（避免误删短标题里的年份）
 - **修整空格**（默认开）：移除每行首尾空格
 - **去除相邻重复行**（默认关）：仅删除**相邻**重复行（不是全文去重，避免误删频繁出现的短对白如"嗯"、"好"）
 - **特殊起始文本**输入：填小说名或常见标题词。匹配的行会强制独立成段（避免被误合并）
 - **内容筛选** + **保护长行**：
-  - 内容筛选：逗号分隔的关键词（`群号,下载器`），所有含这些词的整行被删除
+  - 内容筛选：逗号分隔的关键词（`群号,下载器`），所有含这些词的整行被删除；具备作者话术免删保护，避免误伤正文讨论
   - 保护长行：字数超过 N 的行即使含关键词也保留（保护正文）；填 0 表示不启用
 
 ### 3. 高级设置（默认折叠）
@@ -2690,7 +2739,7 @@ url: /guide/text/brace-expander.md
 :::tip 30 秒上手
 
 1. 上面 **模板** 框写一行，如 `f{1..4}pd_ever_od30_{tag,bal}`
-2. 下面实时列出 8 个名字——**空状态下方的示例点一下就直接填进来**
+2. 下面实时列出 8 个名字——**首屏空输入时默认展示示例产物，点一下即可填入模板**
 3. 复制或导出；要拼成 SQL / JSON，到「高级设置」
 
 :::
@@ -2947,10 +2996,13 @@ url: /guide/text/text-toolbox.md
 - **要删掉的内容**：多个条件用**逗号或换行**分隔（如 `广告,推广,群号`），内容本地保存
 - **删掉这些行**：命中删掉、其余保留，结果输出到结果区，不改原文
 
-### 去重
+### 去重与空行处理
 
-- **去重**：整行相同的只保留第一条，保留空行
-- 它**不读上面「删行」的条件框**，所以单独占一行、不带输入框
+- **去重**：整行相同的只保留第一条。在步骤标签浮层中可切换去重模式：
+  - **全部去重**（默认）：空行也参与去重，全文只保留首个空行
+  - **仅去重文字**：空行不参与去重判定、原样保留空行排版，只去除非空重复行
+- **折叠连续空行**：独立的原子操作，将相邻的多个连续空行压缩为单条空行。它不判断重复文字，专门用于压缩空行密度，可与去重操作任意组合入链
+- 去重不读上面「删行」的条件框，单独占一行、独立生效
 
 ### 合并
 
@@ -3171,15 +3223,16 @@ url: /guide/json/json-node-inserter.md
 
 # JSON 节点插入工具
 
-[JSON 节点插入工具](https://tools.newzone.top/zh/json-node-inserter) 是一个高效的数据结构优化工具，可在 JSON 文档中的指定节点后插入一个或多个新节点，使数据结构更加合理与高效。
+[JSON 节点插入工具](https://tools.newzone.top/zh/json-node-inserter) 是一个高效的数据结构优化工具，可在 JSON 文档中的指定字段后插入一个或多个新字段，使数据结构更加合理与高效。
 
 ![JSON 节点插入工具界面](/img/json-node-inserter-zh.webp "JSON 节点插入工具使用界面")
 
 ## 功能特点
 
-- 可在指定节点后精确插入多个新节点
-- 多节点插入支持逗号分隔（支持中英文逗号）
-- 批量插入节点，提高数据处理效率
+- 可在指定字段后精确插入多个新字段
+- 支持候选字段快选（Chips）：自动提取源数据中的字段并一键点选为参考字段
+- 多字段插入支持逗号分隔（支持中英文逗号）
+- 批量插入字段，提高数据处理效率
 
 ## 使用方法
 
@@ -3189,8 +3242,8 @@ url: /guide/json/json-node-inserter.md
    - 对于大型 JSON 文件，改用文件上传而不是粘贴
 
 2. **设置插入参数**
-   - **目标节点**：输入要查找的节点名称（确定插入位置）
-   - **新节点**：输入要插入的节点名称，多个节点用逗号分隔
+   - **参考字段**：输入参考字段名称，或直接点击输入框下方自动生成的字段快选芯片快速挑选
+   - **插入新字段**：输入要插入的新字段名称，多个字段用逗号分隔
 
 3. **处理与导出**
    - 点击"开始处理"按钮执行插入操作
@@ -3200,7 +3253,7 @@ url: /guide/json/json-node-inserter.md
 ## 使用提示
 
 - 确保输入的 JSON 格式正确，否则将无法处理
-- 目标节点必须存在于 JSON 中，否则将提示错误
+- 参考字段必须存在于 JSON 中，否则将提示错误
 - 新节点将按照输入顺序插入到目标节点后
 - 节点名称如为纯数字，将按数值大小自动排序并置于前面
 - 对于大型 JSON 文件，建议用文件上传代替粘贴，页面更流畅
@@ -3309,16 +3362,16 @@ url: /guide/json/json-value-swapper.md
 
 > For AI agents: the complete documentation index is available at /llms.txt, the full documentation bundle is available at /llms-full.txt.
 
-# JSON 键值互换
+# JSON 字段值互换
 
-[JSON 键值互换工具](https://tools.newzone.top/zh/json-value-swapper) 可以自动交换 JSON 数组中两个指定键的值，让你的数据处理变得更加便捷。
+[JSON 字段值互换工具](https://tools.newzone.top/zh/json-value-swapper) 可以自动交换 JSON 数组中两个指定字段的值，让你的数据处理变得更加便捷。
 
-![JSON 键值互换工具界面](/img/json-value-swapper-zh.webp "JSON 键值互换工具使用界面")
+![JSON 字段值互换工具界面](/img/json-value-swapper-zh.webp "JSON 字段值互换工具使用界面")
 
 ## 功能特点
 
-- 自动检测并显示 JSON 中所有可用的键名
-- 交换 JSON 数组对象中两个键的值
+- 自动检测并显示 JSON 中所有可用的字段名
+- 交换 JSON 数组对象中两个字段的值
 
 ## 使用步骤
 
@@ -3326,14 +3379,14 @@ url: /guide/json/json-value-swapper.md
    - **上传文件**：将包含 JSON 数组的文件拖放到上传区域，或点击选择文件（支持 .json 和 .txt 格式）
    - **粘贴数据**：直接在文本框中粘贴你的 JSON 数组数据
 
-2. **选择要交换的键**：
-   - 系统会自动分析你的数据并显示所有可用的键名
-   - 点击显示的键名按钮快速选择，或在输入框中手动输入"键 1"和"键 2"
-   - 这两个键的值将在处理过程中被互相交换
+2. **选择要交换的字段**：
+   - 系统会自动分析你的数据并显示所有可用的字段名
+   - 点击显示的字段名按钮快速选择，或在输入框中手动输入"交换字段 1"和"交换字段 2"
+   - 这两个字段的值将在处理过程中被互相交换
 
 3. **执行交换操作**：
-   - 点击"交换值"按钮处理数据
-   - 如果某些对象缺少指定的键，系统会显示提示信息
+   - 点击"开始交换"按钮处理数据
+   - 如果某些对象缺少指定的字段，系统会显示提示信息
 
 4. **管理结果**：
    - 交换完成后，结果将显示在下方区域
@@ -3349,13 +3402,13 @@ url: /guide/json/json-value-swapper.md
 
 ## 注意事项
 
-- 本工具仅支持交换 JSON 数组中对象的第一层键值，不支持嵌套对象中子键的交换
-- JSON 键名区分大小写，请确保输入正确的键名
-- 如果数组中的部分对象缺少指定的键，系统会继续处理并给出提示
+- 本工具仅支持交换 JSON 数组中对象的顶层字段值，不支持嵌套对象中深层字段的交换
+- JSON 字段名区分大小写，请确保输入正确的字段名
+- 如果数组中的部分对象缺少指定的字段，系统会继续处理并给出提示
 - 在处理重要数据前，建议先备份原始数据
 - 确保你的 JSON 格式正确，工具只能处理有效的 JSON 数据
 
-通过这个简单易用的工具，你可以快速交换 JSON 数组中的键值对，节省数据处理时间，提高工作效率。
+通过这个简单易用的工具，你可以快速交换 JSON 数组中的字段值，节省数据处理时间，提高工作效率。
 
 
 

@@ -10,7 +10,7 @@
 
 ### 🌍 翻译工具
 
-字幕、Markdown、JSON i18n 三种格式专用翻译，共享同一套翻译接口池（经典机器翻译 API 加大语言模型），覆盖 120+ 语言。
+字幕、Markdown、JSON i18n 三种格式专用翻译，共享同一套翻译接口池（经典机器翻译 API 加大语言模型），覆盖 130+ 语言。
 
 - [**Subtitle Translator**](/guide/translation/subtitle-translator.md) — SRT / ASS / VTT / LRC 字幕，时间轴对齐、双语输出
 - [**MD Translator**](/guide/translation/md-translator.md) — Markdown 翻译，保留代码块、LaTeX、Front Matter

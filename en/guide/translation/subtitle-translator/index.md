@@ -3,7 +3,7 @@
 # Subtitle Translator | Batch AI Translation for SRT, ASS/SSA, VTT, LRC, SBV
 
 :::tip Quick summary
-Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, SSA, VTT, LRC, and SBV formats across 120+ languages. Block-compression plus parallel translation finishes a full TV episode in \~1 second. It also offers context-aware translation, a live line-by-line result stream, local cache reuse, and both free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / koboldcpp and the translation-specialized TranslateGemma / MiLMMT).
+Subtitle Translator is a free online batch subtitle translator supporting SRT, ASS, SSA, VTT, LRC, and SBV formats across 130+ languages. Block-compression plus parallel translation finishes a full TV episode in \~1 second. It also offers context-aware translation, a live line-by-line result stream, local cache reuse, and both free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / koboldcpp and the translation-specialized TranslateGemma / MiLMMT).
 :::
 
 :::tip 30-second quickstart
@@ -30,10 +30,10 @@ To address issues in the market such as slow translation speeds, lack of batch p
 - **Format Compatibility**: Automatically matches major subtitle formats (.srt / .ass / .ssa / .vtt / .lrc / .sbv). Exports preserve the original filename; when translating into multiple languages, the language code is automatically appended as a suffix (e.g. `movie.zh.srt`, `movie.fr.srt`).
 - **Live line-by-line results**: every line appears in a live panel directly under the progress bar the moment it is translated (original on top, translation below, tagged with the real source line number) — no waiting for the whole batch to see how it reads. Lines that failed are flagged amber as "not translated", with details in the failure panel below; the panel collapses itself when the run finishes, and scrolling up to read mid-run won't yank you back to the bottom.
 - **Subtitle Extraction**: One click extracts the original dialogue with timecodes and cue numbers stripped (auto-copied to clipboard) — for AI summarization, derivative works, or pairing with the translation to have an AI proofread/revise it.
-- **Side-by-side Review**: In single-file, translated-only export mode, after translation you can compare source and translation line by line, manually edit the translation, and Apply & Download — ideal for a hands-on line-by-line polishing pass.
+- **Side-by-side Review & Live Sync**: In single-file mode, open the Bilingual Review Panel after translation to compare and edit lines side by side. Edits sync back to the main result, copy/export are blocked while edits remain unapplied to prevent stale files, and narrow screens use a responsive fixed two-column layout.
 - **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
-- **Multiple API Options**: 9 built-in free / commercial translation APIs plus 26 AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
-- **Multi-language Support & Internationalization**: Supports 120+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
+- **Multiple API Options**: Built-in free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
+- **Multi-language Support & Internationalization**: Supports 130+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
 
 ## Subtitle Format Support
 

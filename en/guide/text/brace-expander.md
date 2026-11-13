@@ -11,7 +11,7 @@ The syntax is bash brace expansion, so the output matches bash line for line —
 :::tip 30-second quickstart
 
 1. Write one line in the **template** box, e.g. `f{1..4}pd_ever_od30_{tag,bal}`
-2. All eight names appear live below — **click the example in the empty state to fill it in**
+2. All eight names appear live below — **an empty first screen shows example output by default; click it to fill the template**
 3. Copy or export. To wrap into SQL or JSON, open **Advanced settings**
 
 :::

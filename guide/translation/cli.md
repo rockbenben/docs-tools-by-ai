@@ -30,7 +30,7 @@ yarn cli -i movie.srt -t ja -t ko -o out/
 # 多文件混格式，一次跑完
 yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
 
-# 双语字幕（默认转 ASS）→ movie.zh_bilingual.ass
+# 双语字幕（默认转 ASS）→ movie.zh.bilingual.ass
 yarn cli -i movie.srt -t zh --bilingual
 yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
 yarn cli -i movie.srt -t zh --bilingual --original-first   # 原文在上
@@ -58,7 +58,7 @@ yarn cli -i notes.txt -t zh --format markdown --md-raw
 | ------ | ------------------------------------------------------------------- |
 | 目录     | 默认**输入文件旁边**；`-o <dir>` 覆盖（目录不存在会自动创建）                              |
 | 文件名    | `<原名>.<目标语言>.<扩展名>`，如 `movie.srt` → `movie.zh.srt`                  |
-| 扩展名可能变 | 由格式适配器决定，如双语字幕默认转 ASS → `movie.zh_bilingual.ass`                    |
+| 扩展名可能变 | 由格式适配器决定，如双语字幕默认转 ASS → `movie.zh.bilingual.ass`                    |
 | 缓存     | 默认 `~/.translate-cli-cache.json`，`--cache-file` 换位置，`--no-cache` 关闭 |
 
 ## 参数

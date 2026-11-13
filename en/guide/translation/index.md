@@ -13,7 +13,7 @@ A free translation suite for developers and content creators, split into three f
 The three tools share one translation engine and settings panel — your config moves between them:
 
 - **Wide API choice**: classic translation APIs plus LLM endpoints covering free, commercial, and self-hosted use cases ([compare them here](/en/guide/translation/api.md))
-- **120+ languages** with one-pass multi-language output: translate one English subtitle into Chinese, Japanese, German, and French at once
+- **130+ languages** with one-pass multi-language output: translate one English subtitle into Chinese, Japanese, German, and French at once, with multi-language ZIP packaging and source language exclusion
 - **Local cache**: cached results return instantly, persist across refreshes, and sync across tabs
 - **Context-aware translation**: surrounding lines accompany each request, keeping flow and terminology consistent
 - **Failed-line retry**: when an LLM glitches, only the failed lines are reissued — no double-billing

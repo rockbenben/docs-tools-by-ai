@@ -3,12 +3,12 @@
 ## 指南
 
 - [Tools By AI](/guide/index.md): Tools By AI 是一套 AI 辅助开发的免费在线工具集，覆盖字幕翻译、Markdown 翻译、i18n JSON 处理、文本清洗等开发与办公场景，浏览器本地运行，原文不上传服务器。
-- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持大语言模型接口与经典机器翻译 API，120+ 语言批量翻译。
-- [字幕翻译器使用指南](/guide/translation/subtitle-translator/index.md): 免费在线字幕翻译工具：批量处理 SRT、ASS/SSA、VTT、LRC、SBV 六种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等全部翻译接口，覆盖 120+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
+- [翻译工具](/guide/translation/index.md): 一套面向开发者与内容创作者的免费翻译工具，覆盖字幕、Markdown、JSON i18n 三种格式，支持大语言模型接口与经典机器翻译 API，130+ 语言批量翻译。
+- [字幕翻译器使用指南](/guide/translation/subtitle-translator/index.md): 免费在线字幕翻译工具：批量处理 SRT、ASS/SSA、VTT、LRC、SBV 六种格式，接入 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等全部翻译接口，覆盖 130+ 语言。自动保留时间轴与 ASS 位置标签，一键生成中英双语字幕，YouTube、B 站、Premiere、DaVinci Resolve 全平台兼容。
 - [Subtitle Translator 部署](/guide/translation/subtitle-translator/deploy.md): 字幕翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [Markdown 翻译工具使用指南](/guide/translation/md-translator/index.md): 免费 Markdown 文档翻译工具：智能保留代码块、LaTeX 公式、链接、表格与 Front Matter 元数据。支持 DeepSeek、Claude、GPT、Gemini 等 AI 引擎批量翻译，一键发布到 Hugo、Jekyll、Hexo、VitePress、Docusaurus 等博客和文档站。
 - [MD Translator 部署](/guide/translation/md-translator/deploy.md): Markdown 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
-- [JSON 翻译工具使用指南](/guide/translation/json-translate/index.md): 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等全部翻译接口，覆盖 120+ 语言。提供全局翻译、JSONPath 节点定位、指定键名、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
+- [JSON 翻译工具使用指南](/guide/translation/json-translate/index.md): 免费在线 JSON 国际化翻译工具：支持 DeepSeek、Claude、GPT、Gemini、DeepL、Google 等全部翻译接口，覆盖 130+ 语言。提供全局翻译、JSONPath 节点定位、只翻译选中的字段、逐条目翻译、i18n 聚合 5 种模式，自动保留 JSON 结构和占位符，适配 next-intl、i18next、vue-i18n 等主流框架。
 - [JSON Translate 部署](/guide/translation/json-translate/deploy.md): JSON 翻译工具的完整部署指南，包含本地部署、Vercel 一键部署、Cloudflare Pages 和 Docker 镜像部署。
 - [功能说明](/guide/translation/info.md): 工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。
 - [翻译接口指南](/guide/translation/api.md): 工具集成经典机器翻译 API 与大语言模型接口两类服务，本页帮你快速选出最合适的接口，并提供本地模型接入与跨域配置指南。
@@ -20,7 +20,7 @@
 - [小说文本整理器使用指南](/guide/text/novel-processor.md): 网络小说排版乱、广告多？一键修复智能换行、章节标题、繁简转换、删除广告，附带章节重排与自定义替换规则。批量处理，浏览器本地运行。
 - [文本分割器](/guide/text/text-splitter.md): 需要处理长文本？文本分割器支持按符号、按字符数、按中英文整句智能切分，可设置每 N 个分隔符断一次行，结果可复制合并全文或分段导出 ZIP，适用于 AI 投喂、分段发布、逐句翻译等场景。
 - [文本拼接](/guide/text/text-joiner.md): 多列文本逐行按模板拼接：A、B 等多列内容用占位符定义每行格式，可配行间连接符与整体前后缀，一键生成 CSV、SQL、JSON、Markdown。浏览器本地运行，数据不外发。
-- [格式批量生成](/guide/text/brace-expander.md): 一行模板批量展开成完整清单：写 f{1..100}pd_ever_od30_{tag,bal} 一次得到全部字段名。语法与 bash 花括号展开逐行一致，支持区间、步长、零填充、字母区间与枚举，多组自动做笛卡尔积。浏览器本地运行，数据不外发。
+- [格式批量生成](/guide/text/brace-expander.md): 一行模板批量展开成完整清单：写 f{1..100}pd_ever_od30_{tag,bal} 一次得到全部字段名。语法兼容 Bash 花括号展开，支持区间、步长、零填充、字母区间与枚举，多组自动做笛卡尔积。浏览器本地运行，数据不外发。
 - [文本对照](/guide/text/text-diff.md): 在线双栏对比两段文本或文件，高亮所有差异并一句话告诉你「第几行、第几个字段起不同」。支持纯文本、CSV/TSV、INI，自动识别 UTF-8 / GBK / Big5 / UTF-16LE 编码，可导出标准 .patch。
 - [多功能文本处理](/guide/text/text-toolbox.md): 一站式文本处理工具箱。正则匹配、删行、去重、排序、合并、批量加前后缀、大小写转换、JSON 美化、智能分段都能串成一条步骤链反复执行，还能把常用的链存成预设。浏览器本地运行，敏感数据不外发。
 - [JSON 工具集](/guide/json/index.md): 七款互补的 JSON 处理工具，覆盖提取、批量编辑、节点插入、排序分组、键值互换、字段映射、跨数据集同步。全部基于 JSONPath，浏览器本地运行，原文不上传服务器。
@@ -28,6 +28,6 @@
 - [JSON 节点批量编辑使用指南](/guide/json/json-node-edit.md): 需要批量修改 JSON 节点？这款工具支持通过 JSONPath 查找节点，并进行添加前缀、添加后缀、文本替换或替换节点的值等多种批量编辑操作，简化数据处理。
 - [JSON 节点插入工具使用指南](/guide/json/json-node-inserter.md): 需要向 JSON 中批量添加新字段？本工具支持在指定节点后精确插入一个或多个新节点，轻松优化和调整数据结构，提高数据处理效率。
 - [JSON 排序与分组工具使用指南](/guide/json/json-sort-classify.md): 整理混乱的 JSON 数组。支持自定义顺序、数值升/降序排序，可额外按字段分组后在组内复用同一套排序策略。
-- [JSON 键值互换工具使用指南](/guide/json/json-value-swapper.md): 需要交换 JSON 中两个键的值？这款工具可以帮您一键完成，自动检测并显示所有可用键名，轻松实现数据重组，提高数据处理效率。
+- [JSON 字段值互换工具使用指南](/guide/json/json-value-swapper.md): 需要交换 JSON 中两个字段的值？这款工具可以帮您一键完成，自动检测并显示所有可用字段名，轻松实现数据重组，提高数据处理效率。
 - [JSON 键值映射工具使用指南](/guide/json/json-value-transformer.md): 需要在不同 JSON 结构间迁移数据？本工具支持使用 JSONPath 定义键映射关系，将源值复制到目标字段，特别适用于多语言内容转换和复杂数据重组。
 - [JSON 数据匹配与更新工具使用指南](/guide/json/json-match-update.md): 需要根据一个数据集更新另一个？本工具通过匹配两个 JSON 中的 ID 字段，将一个数据集的值精确更新到另一个数据集中对应的字段，简化数据同步与整合。

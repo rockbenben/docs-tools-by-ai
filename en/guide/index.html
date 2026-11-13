@@ -6,13 +6,13 @@
 <script>{;var defaultLang = "zh", langs = ["en","zh"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(0, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(0, 0, targetLang);} else {;newPathSegments[0] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window.location['replace'](newPathname + trailingSlash + search);};};};}</script>
 <script>{;const saved = localStorage.getItem('rspress-theme-appearance');const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;const defaultTheme = 'auto';const theme = saved === 'light' || saved === 'dark' || saved === 'auto' ? saved : defaultTheme;const isDark = theme === 'auto' ? preferDark : theme === 'dark';document.documentElement.classList.toggle('dark', isDark);document.documentElement.classList.toggle('rp-dark', isDark);document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';}</script>
 <link href="/static/css/styles.108df18aec.css" rel="stylesheet">
-<link rel="preload" href="/static/js/async/route-658d5d38aad1.fdf2c0941b.js" as="script">
+<link rel="preload" href="/static/js/async/route-658d5d38aad1.e625f882e1.js" as="script">
 <script defer src="https://s.newzone.top/tracker.js" data-website-id="fde645a1-fe64-4434-9edb-6923dbcd3614"></script>
 <script defer src="/static/js/styles.7e9cd6d5ca.js"></script>
 <script defer src="/static/js/lib-react.d9ba9eeff8.js"></script>
 <script defer src="/static/js/lib-router.3e134246c6.js"></script>
 <script defer src="/static/js/2.637385e84d.js"></script>
-<script defer src="/static/js/index.cf6b11a9ed.js"></script>
+<script defer src="/static/js/index.70a35e2021.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.23">
 <meta name="author" content="rockbenben">
@@ -33,7 +33,7 @@
 <meta name="description" content="Tools By AI is a suite of free, AI-assisted online tools covering subtitle translation, Markdown translation, i18n JSON processing, text cleanup, and more. Browser-local processing — your data never leaves your machine.">
 <meta property="og:description" content="Tools By AI is a suite of free, AI-assisted online tools covering subtitle translation, Markdown translation, i18n JSON processing, text cleanup, and more. Browser-local processing — your data never leaves your machine.">
 <meta property="og:title" content="Tools By AI Guide - Free Online Tools for Translation, JSON, Text Processing">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"WebPage","headline":"Tools By AI","name":"Tools By AI","description":"Tools By AI is a suite of free, AI-assisted online tools covering subtitle translation, Markdown translation, i18n JSON processing, text cleanup, and more. Browser-local processing — your data never leaves your machine.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/","mainEntityOfPage":"https://docs.newzone.top/en/guide/","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-10-18"}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"WebPage","headline":"Tools By AI","name":"Tools By AI","description":"Tools By AI is a suite of free, AI-assisted online tools covering subtitle translation, Markdown translation, i18n JSON processing, text cleanup, and more. Browser-local processing — your data never leaves your machine.","inLanguage":"en","url":"https://docs.newzone.top/en/guide/","mainEntityOfPage":"https://docs.newzone.top/en/guide/","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-11-14"}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://docs.newzone.top/en"},{"@type":"ListItem","position":2,"name":"Tools By AI"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/en/guide/">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/">
@@ -50,7 +50,7 @@
 <a href="https://tools.newzone.top/en" target="_blank" rel="noopener noreferrer" class="rp-link">Tools By AI</a> is a <strong>completely free, browser-local</strong> suite of online tools covering translation, JSON processing, and text cleanup. All data stays in your browser — sensitive content never gets uploaded to a server.</p></div></div>
 <h2 class="rp-toc-include" id="tool-overview"><a href="#tool-overview" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Tool Overview</h2>
 <h3 class="rp-toc-include" id="-translation-tools"><a href="#-translation-tools" class="rp-header-anchor rp-link" aria-hidden="true">#</a>🌍 Translation Tools</h3>
-<p>Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 120+ languages.</p>
+<p>Three format-specific translators (subtitle, Markdown, JSON i18n) sharing one endpoint pool (classic MT APIs plus LLMs) across 130+ languages.</p>
 <ul>
 <li><a href="/en/guide/translation/subtitle-translator.html" class="rp-link"><strong>Subtitle Translator</strong></a> — SRT / ASS / VTT / LRC with timecode alignment and bilingual output</li>
 <li><a href="/en/guide/translation/md-translator.html" class="rp-link"><strong>MD Translator</strong></a> — Markdown that preserves code blocks, LaTeX, and Front Matter</li>

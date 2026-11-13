@@ -3,7 +3,7 @@
 # JSON Translator | i18n Batch Translation with JSONPath
 
 :::tip Quick summary
-JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, specific keys, one field across all entries, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
+JsonTranslate is a multilingual JSON translation tool built for i18n localization, supporting Google, Azure, DeepL(X), Qwen-MT and other translation APIs plus mainstream LLMs (DeepSeek, Claude, GPT, Gemini, and more). It offers five modes — global translation, targeted nodes, translate only selected fields, translate per entry, and i18n mode — translating JSON files into multiple target languages at once while keeping the original JSON structure intact.
 :::
 
 :::tip 30-second quickstart
@@ -11,7 +11,7 @@ JsonTranslate is a multilingual JSON translation tool built for i18n localizatio
 1. Drag or paste your JSON file
 2. Pick a **mode**:
    - Translate every string → **Global Translation**
-   - Only translate keys like `title` / `description` → **Specific Keys**
+   - Only translate fields like `title` / `description` → **Translate Only Selected Fields**
    - i18n project (auto-adds target-language fields to each object) → **i18n Mode**
 3. Set source/target languages, click **Translate** — original JSON structure preserved
 
@@ -43,12 +43,12 @@ Use JSONPath expressions to precisely locate one or more nodes and translate onl
 - Translating only specific sections in a well-structured JSON dataset
 - Improving efficiency by narrowing the translation scope in large files
 
-### Specific Keys
+### Translate Only Selected Fields
 
-In this mode, you can specify particular key names for translation. Two input options are supported:
+In this mode, you can specify particular field names for translation. The tool features **Field Quick-Pick Chips**: it automatically scans valid string fields from the input JSON and displays them as clickable chips under the input box. Click a chip to insert it, click again to unselect/remove it. Two modes are supported:
 
-- **Simple Mode**: Enter key names separated by commas (English or Chinese), and the corresponding values will be translated.
-- **Advanced Mode**: Use a key mapping component to define input-output key pairs. Translations are written to new keys, preserving the original fields.
+- **Source Fields**: Enter field names separated by commas (or click chips below). The tool translates these fields and overwrites their values.
+- **Mapping Mode**: Toggle the switch to mapping mode to define input-output field pairs (e.g. `name` → `name_zh`). Translations are written to the target fields, preserving the original fields.
 
 **Best for:**
 
@@ -57,14 +57,14 @@ In this mode, you can specify particular key names for translation. Two input op
 
 **Notes:**
 
-- Keys are case-sensitive.
-- The number of input and output keys must match; mappings will ignore nonexistent keys. At least one valid mapping is required to proceed.
-- Pure numeric keys can conflict with array indices — this issue has been fixed, but avoid numeric-only keys to reduce ambiguity.
+- Fields are case-sensitive.
+- The number of input and output fields must match; mappings will ignore nonexistent fields. At least one valid mapping is required to proceed.
+- Pure numeric keys can conflict with array indices — avoid numeric-only keys to reduce ambiguity.
 - Keys containing dots (.) are interpreted as nested paths; avoid dots in key names or rename them to prevent misinterpretation.
 
-### One Field Across All Entries
+### Translate per Entry (By Entry / Breakpoint)
 
-Treats the JSON as a list of entries: it pulls the same field out of every entry, translates it, and leaves the rest untouched.
+Treats the JSON as a list of entries: it pulls the same field out of every entry, translates it, and leaves the rest untouched. Supports field quick-pick chips below the input box.
 
 **Structural requirement:** the JSON must be **two levels — entry → object**, i.e. each top-level key maps to an object holding the fields. For example:
 
@@ -75,12 +75,21 @@ Treats the JSON as a list of entries: it pulls the same field out of every entry
 }
 ```
 
-Set **Field to Translate** to `message` and only the two `message` values are translated; `code` is left alone.
+Set **Fields to Translate** to `message` and only the two `message` values are translated; `code` is left alone.
 
 **Configuration Options:**
 
-- **Start Key** (optional): start from this entry; leave blank to start from the first. Useful when key order is meaningful and you only want the later part
-- **Field to Translate**: the field taken from inside each entry — **separate multiple fields with commas**. Note: if any listed field is missing from every entry (or isn't a string value), the whole run aborts with an error rather than skipping that field
+- **Start Entry** (optional): start from this entry; leave blank to start from the first. Useful when key order is meaningful and you only want the later part
+- **Fields to Translate**: the field taken from inside each entry — **separate multiple fields with commas** (or click the quick-pick chips below). Note: if any listed field is missing from every entry (or isn't a string value), the whole run aborts with an error rather than skipping that field
+
+**Best for:**
+
+- Log or error-message files, translating only `message` while preserving `code`, `level`, and metadata
+- Uniform configuration files where only specific fields need localization
+
+### i18n Mode
+
+i18n mode is purpose-built for internationalization, aggregating multi-language field content directly within the original JSON structure. If the source file is missing the expected source language field, the tool provides a clear structure hint instead of failing silently.
 
 **Best for:**
 

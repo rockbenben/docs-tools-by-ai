@@ -51,14 +51,14 @@ When done, the result is auto-copied to clipboard and shown in the result card.
 
 ### 2. Content Cleaning (collapsed by default)
 
-- **Chapter Title Formatting** (on): recognize "Chapter X" / "第X章" patterns and normalize them
+- **Chapter Title Formatting** (on): recognize "Chapter X" / "第X章" patterns and normalize them, with support for complex chapter titles carrying unit affiliations
 - **Merge Duplicate Chapter Titles**: when the same chapter title appears more than once (including back-to-back repeats and near-duplicates differing only in full/half-width punctuation), collapse them into one, keeping the more complete title
 - **Strip Line-End Digits** (off): remove trailing digits only on lines ≥ 10 chars (avoids stripping years from short titles)
 - **Trim Spaces** (on): strip leading/trailing whitespace per line
 - **Remove Adjacent Duplicates** (off): drop only **consecutive** duplicate lines (not full-text dedup — preserves common short dialogue like "嗯" / "好")
 - **Special Start Text**: enter the novel title or a recurring header word — matching lines are forced into their own paragraph (prevents incorrect merging)
 - **Content Filter** + **Protect long lines**:
-  - Content Filter: comma-separated keywords (`channel,downloader`) — every matching line gets dropped
+  - Content Filter: comma-separated keywords (`channel,downloader`) — every matching line gets dropped, with built-in exemptions for author notes and banter to avoid false deletions
   - Protect long lines: lines longer than N characters are kept even if they match — protects body paragraphs. 0 disables the exemption.
 
 ### 3. Advanced Settings (collapsed by default)

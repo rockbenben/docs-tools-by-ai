@@ -30,7 +30,7 @@ yarn cli -i movie.srt -t ja -t ko -o out/
 # Mixed formats in one run
 yarn cli -i a.srt -i b.md -i c.json -t zh -o out/
 
-# Bilingual subtitles (converted to ASS by default) → movie.zh_bilingual.ass
+# Bilingual subtitles (converted to ASS by default) → movie.zh.bilingual.ass
 yarn cli -i movie.srt -t zh --bilingual
 yarn cli -i movie.srt -t zh --bilingual --bilingual-format srt
 yarn cli -i movie.srt -t zh --bilingual --original-first   # original on top
@@ -58,7 +58,7 @@ The settings file (`-s`) is exactly the JSON that the web UI's "Export settings"
 | ------------------------ | -------------------------------------------------------------------------------------------------------- |
 | Directory                | **Next to the input file** by default; `-o <dir>` overrides (created if missing)                         |
 | Filename                 | `<name>.<target>.<ext>`, e.g. `movie.srt` → `movie.zh.srt`                                               |
-| The extension may change | Decided by the format adapter — bilingual subtitles convert to ASS by default → `movie.zh_bilingual.ass` |
+| The extension may change | Decided by the format adapter — bilingual subtitles convert to ASS by default → `movie.zh.bilingual.ass` |
 | Cache                    | `~/.translate-cli-cache.json` by default; `--cache-file` relocates it, `--no-cache` disables it          |
 
 ## Parameters

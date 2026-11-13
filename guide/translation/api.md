@@ -47,10 +47,10 @@
 ## 大语言模型（LLM）
 
 
-支持的 LLM 接口共 27 个，分两组：
+支持的 LLM 接口共 26 个，分两组：
 
 - **厂商直连（16 家）**：DeepSeek、OpenAI、Claude、Gemini、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)
-- **聚合网关与自托管（11 家）**：OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)**
+- **聚合网关与自托管（10 家）**：OpenRouter、OpenCode Console、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)**
 
 末尾的 **Custom (OpenAI-compatible)** 是兜底项：任何兼容 OpenAI 协议的地址都填这一项，URL 输入框上方会列出可选的本地运行时与第三方网关快捷地址（见下文 [本地模型接入](#本地模型接入)）。
 
@@ -70,7 +70,7 @@
   - **四档（Off / Low / Medium / High）**：其余支持思考的接口，包括 Claude、OpenAI GPT-5.x / 6.x、Gemini、Qwen3、Kimi (Moonshot)、xAI Grok、Groq 与 Cerebras 的 GPT-OSS、Azure OpenAI，以及 OpenRouter 上带思考标记的模型
   - **最低档标 Min 而不是 Off**：厂商压根没给关闭值的模型，最低一档改标 **Min** —— 它照常推理、照常计费，标成 Off 是撒谎。当前是 Gemini 3.x、xAI Grok 4.5 / 4.6、Groq 与 Cerebras 上的 GPT-OSS、Kimi K3 / K2.6，外加单个 SKU **Claude Fable 5**（官方标 Always on，发显式关闭直接 400；同门的 Opus 5 / Sonnet 5 / Haiku 4.5 都关得掉）
   - **三态（Off / On / Auto）**：在支持思考的接口上填**未列出的自定义模型**时。Auto = 省略思考参数、跟随模型自带默认（用于严格 provider 对非思考 SKU 会报错时的兜底）；默认 Off
-  - **不显示思考控件**：StepFun、YandexGPT、OpenCode Zen、TokenHub、Atlas Cloud、Nvidia NIM、Custom (OpenAI-compatible)。聚合网关背后是多家上游，「能不能关思考」逐个型号不同，统一发关闭参数会打到不支持关闭的型号上，因此一律跟随上游模型的服务端默认
+  - **不显示思考控件**：StepFun、YandexGPT、OpenCode Zen、TokenHub、Nvidia NIM、Custom (OpenAI-compatible)。聚合网关背后是多家上游，「能不能关思考」逐个型号不同，统一发关闭参数会打到不支持关闭的型号上，因此一律跟随上游模型的服务端默认
 
 ### 部分接口的特别说明
 
@@ -79,7 +79,7 @@
 - **OpenCode Go**：与 OpenCode Zen **同一个 host、同一个账号、同一把 API Key**，只有三处不同——请求路径（`/zen/go/v1` 与 `/zen/v1`）、在售 SKU 集合、计费形态。Go 是 **$10/月的订阅额度**（官方按每个模型的月限额换算：跑满 5 小时 = 20%、一周 = 50%、一个月 = 100%），Zen 是充值余额——**别把 Go 写成「充值即用」**。官方限定一个 workspace 只能有一人订阅 Go。上游同样不发 CORS 头，「中转 API」**默认开启**。
 - **Cerebras**：收录它是为了**速度**而不是模型（两个公共模型在 Groq / Nvidia / SiliconFlow 上都调得到）。官方标称 gpt-oss-120b 约 3000 tokens/s，逐行翻译这类高频短请求体感明显；另有每日 100 万免费 token。
 - **YandexGPT (AI Studio)**：除 API Key 外还需填写 **Folder ID**（在 Yandex AI Studio 控制台的目录页获取）。模型字段填 SKU 名（如 `yandexgpt-5.1`，也提供 Qwen3、DeepSeek、GPT-OSS 等开源 SKU），或直接粘贴完整的 `gpt://<folder_id>/<model>/latest` URI。Yandex 官方接口无 CORS 头，浏览器无法直连，「中转 API」**默认开启**（开关可关闭，也可改填自建中转地址）。
-- **已从服务列表移除的接口**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）。**LiteLLM** 不再是独立条目，改为 Custom (OpenAI-compatible) 的一个 URL 快捷项，见下文 [自建网关与第三方推理平台](#自建网关与第三方推理平台)。
+- **已从服务列表移除的接口**：GitHub Models（2026-07-30 官方整家退役）、Perplexity Sonar（chat/completions 提前下线）、Tencent Hunyuan 旧端点（迁至 TokenHub）、Atlas Cloud（2026-11 移除）。**LiteLLM** 不再是独立条目，改为 Custom (OpenAI-compatible) 的一个 URL 快捷项，见下文 [自建网关与第三方推理平台](#自建网关与第三方推理平台)。
 
 ### 区域端点切换
 
@@ -170,9 +170,9 @@ Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自�
 ### 中转 API（可控开关）
 
 
-除 Gemini、Nvidia NIM、Azure OpenAI 之外的每个 LLM 接口（共 24 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)、OpenRouter、OpenCode Zen、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Atlas Cloud、Custom (OpenAI-compatible)）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
+除 Gemini、Nvidia NIM、Azure OpenAI 之外的每个 LLM 接口（共 23 个：DeepSeek、OpenAI、Claude、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)、OpenRouter、OpenCode Console、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Custom (OpenAI-compatible)）都在 API 设置里提供「**中转 API**」开关，开启后请求经由内置的 Cloudflare 转发（只转发请求本体与鉴权头）：
 
-YandexGPT (AI Studio)、OpenCode Zen、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
+YandexGPT (AI Studio)、OpenCode Console、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
 
 - **上面点名的例外接口没有这个开关**：Custom 与 Azure OpenAI 的地址本就是你自己填的，中转没有固定上游可写；Nvidia NIM 走的是下一节的内置代理；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
 - **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
@@ -301,29 +301,29 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ## 语言代码对照表
 
-本工具支持 120+ 种主流语言互译，按地区分组展示。批量配置多语言时，使用下方语言代码（如 `en, zh, ja, ko`）：
+本工具支持 130+ 种主流语言互译，按地区分组展示。批量配置多语言时，使用下方语言代码（如 `en, zh, ja, ko`）：
 
 
 ### 常用
 
-| Code      | Native             | English             | 中文       |
-| --------- | ------------------ | ------------------- | -------- |
-| `en`      | English            | English             | 英语       |
-| `zh`      | 简体                 | Simplified Chinese  | 中文       |
-| `zh-hant` | 繁體                 | Traditional Chinese | 繁体中文     |
-| `es`      | Español            | Spanish             | 西班牙语     |
-| `fr`      | Français           | French              | 法语       |
-| `de`      | Deutsch            | German              | 德语       |
-| `ja`      | 日本語                | Japanese            | 日语       |
-| `ko`      | 한국어                | Korean              | 韩语       |
-| `hi`      | हिन्दी             | Hindi               | 印地语      |
-| `ar`      | العربية            | Arabic              | 阿拉伯语     |
-| `ru`      | Русский            | Russian             | 俄语       |
-| `pt-br`   | Português (Brasil) | Portuguese (Brazil) | 葡萄牙语（巴西） |
-| `id`      | Bahasa Indonesia   | Indonesian          | 印尼语      |
-| `vi`      | Tiếng Việt         | Vietnamese          | 越南语      |
-| `it`      | Italiano           | Italian             | 意大利语     |
-| `yue`     | 粵語                 | Cantonese           | 粤语       |
+| Code      | Native             | English               | 中文       |
+| --------- | ------------------ | --------------------- | -------- |
+| `en`      | English            | English               | 英语       |
+| `zh`      | 简体                 | Chinese (Simplified)  | 中文       |
+| `zh-hant` | 繁體                 | Chinese (Traditional) | 繁体中文     |
+| `es`      | Español            | Spanish               | 西班牙语     |
+| `fr`      | Français           | French                | 法语       |
+| `de`      | Deutsch            | German                | 德语       |
+| `ja`      | 日本語                | Japanese              | 日语       |
+| `ko`      | 한국어                | Korean                | 韩语       |
+| `hi`      | हिन्दी             | Hindi                 | 印地语      |
+| `ar`      | العربية            | Arabic                | 阿拉伯语     |
+| `ru`      | Русский            | Russian               | 俄语       |
+| `pt-br`   | Português (Brasil) | Portuguese (Brazil)   | 葡萄牙语（巴西） |
+| `id`      | Bahasa Indonesia   | Indonesian            | 印尼语      |
+| `vi`      | Tiếng Việt         | Vietnamese            | 越南语      |
+| `it`      | Italiano           | Italian               | 意大利语     |
+| `yue`     | 粵語                 | Cantonese             | 粤语       |
 
 ### 欧洲
 
@@ -345,7 +345,7 @@ OLLAMA_ORIGINS="*" ollama serve
 | `da`    | Dansk                | Danish                | 丹麦语       |
 | `sq`    | Shqip                | Albanian              | 阿尔巴尼亚语    |
 | `fi`    | Suomi                | Finnish               | 芬兰语       |
-| `nb`    | Norsk bokmål         | Norwegian Bokmål      | 挪威语       |
+| `nb`    | Norsk bokmål         | Norwegian             | 挪威语       |
 | `sk`    | Slovenčina           | Slovak                | 斯洛伐克语     |
 | `hr`    | Hrvatski             | Croatian              | 克罗地亚语     |
 | `be`    | Беларуская           | Belarusian            | 白俄罗斯语     |
@@ -374,16 +374,16 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ### 中东
 
-| Code  | Native | English          | 中文    |
-| ----- | ------ | ---------------- | ----- |
-| `tr`  | Türkçe | Turkish          | 土耳其语  |
-| `he`  | עברית  | Hebrew           | 希伯来语  |
-| `fa`  | فارسی  | Persian          | 波斯语   |
-| `ur`  | اردو   | Urdu             | 乌尔都语  |
-| `ps`  | پښتو   | Pashto           | 普什图语  |
-| `prs` | دری    | Dari             | 达里语   |
-| `ckb` | کوردی  | Central Kurdish  | 中库尔德语 |
-| `kmr` | Kurdî  | Northern Kurdish | 北库尔德语 |
+| Code  | Native | English            | 中文    |
+| ----- | ------ | ------------------ | ----- |
+| `tr`  | Türkçe | Turkish            | 土耳其语  |
+| `he`  | עברית  | Hebrew             | 希伯来语  |
+| `fa`  | فارسی  | Persian            | 波斯语   |
+| `ur`  | اردو   | Urdu               | 乌尔都语  |
+| `ps`  | پښتو   | Pashto             | 普什图语  |
+| `prs` | دری    | Dari               | 达里语   |
+| `ckb` | کوردی  | Kurdish (Sorani)   | 中库尔德语 |
+| `kmr` | Kurdî  | Kurdish (Kurmanji) | 北库尔德语 |
 
 ### 中亚
 
@@ -402,59 +402,70 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ### 南亚
 
-| Code  | Native    | English   | 中文     |
-| ----- | --------- | --------- | ------ |
-| `bn`  | বাংলা     | Bengali   | 孟加拉语   |
-| `mr`  | मराठी     | Marathi   | 马拉地语   |
-| `te`  | తెలుగు    | Telugu    | 泰卢固语   |
-| `ta`  | தமிழ்     | Tamil     | 泰米尔语   |
-| `gu`  | ગુજરાતી   | Gujarati  | 古吉拉特语  |
-| `kn`  | ಕನ್ನಡ     | Kannada   | 卡纳达语   |
-| `pa`  | ਪੰਜਾਬੀ    | Punjabi   | 旁遮普语   |
-| `ml`  | മലയാളം    | Malayalam | 马拉雅拉姆语 |
-| `bho` | भोजपुरी   | Bhojpuri  | 博杰普尔语  |
-| `mai` | मैथिली    | Maithili  | 迈蒂利语   |
-| `ne`  | नेपाली    | Nepali    | 尼泊尔语   |
-| `si`  | සිංහල     | Sinhala   | 僧伽罗语   |
-| `as`  | অসমীয়া   | Assamese  | 阿萨姆语   |
-| `gom` | कोंकणी    | Konkani   | 孔卡尼语   |
-| `sa`  | संस्कृतम् | Sanskrit  | 梵语     |
+| Code  | Native    | English      | 中文     |
+| ----- | --------- | ------------ | ------ |
+| `bn`  | বাংলা     | Bengali      | 孟加拉语   |
+| `mr`  | मराठी     | Marathi      | 马拉地语   |
+| `te`  | తెలుగు    | Telugu       | 泰卢固语   |
+| `ta`  | தமிழ்     | Tamil        | 泰米尔语   |
+| `gu`  | ગુજરાતી   | Gujarati     | 古吉拉特语  |
+| `kn`  | ಕನ್ನಡ     | Kannada      | 卡纳达语   |
+| `pa`  | ਪੰਜਾਬੀ    | Punjabi      | 旁遮普语   |
+| `ml`  | മലയാളം    | Malayalam    | 马拉雅拉姆语 |
+| `bho` | भोजपुरी   | Bhojpuri     | 博杰普尔语  |
+| `mai` | मैथिली    | Maithili     | 迈蒂利语   |
+| `ne`  | नेपाली    | Nepali       | 尼泊尔语   |
+| `si`  | සිංහල     | Sinhala      | 僧伽罗语   |
+| `as`  | অসমীয়া   | Assamese     | 阿萨姆语   |
+| `gom` | कोंकणी    | Konkani      | 孔卡尼语   |
+| `sa`  | संस्कृतम् | Sanskrit     | 梵语     |
+| `dv`  | ދިވެހި    | Dhivehi      | 迪维希语   |
+| `or`  | ଓଡ଼ିଆ     | Odia (Oriya) | 奥里亚语   |
 
 ### 东南亚
 
-| Code  | Native             | English           | 中文         |
-| ----- | ------------------ | ----------------- | ---------- |
-| `th`  | ไทย                | Thai              | 泰语         |
-| `lo`  | ລາວ                | Lao               | 老挝语        |
-| `my`  | မြန်မာ             | Burmese           | 缅甸语        |
-| `km`  | ខ្មែរ              | Khmer             | 高棉语        |
-| `ms`  | Bahasa Melayu      | Malay             | 马来语        |
-| `fil` | Tagalog            | Filipino(Tagalog) | 菲律宾语（塔加拉语） |
-| `jv`  | Basa Jawa          | Javanese          | 爪哇语        |
-| `su`  | Basa Sunda         | Sundanese         | 巽他语        |
-| `ace` | Acèh               | Acehnese          | 亚齐语        |
-| `pag` | Salitan Pangasinan | Pangasinan        | 邦阿西楠语      |
-| `pam` | Kapampangan        | Pampangan         | 邦板牙语       |
-| `ceb` | Cebuano            | Cebuano           | 宿务语        |
+| Code  | Native             | English            | 中文         |
+| ----- | ------------------ | ------------------ | ---------- |
+| `th`  | ไทย                | Thai               | 泰语         |
+| `lo`  | ລາວ                | Lao                | 老挝语        |
+| `my`  | မြန်မာ             | Burmese            | 缅甸语        |
+| `km`  | ខ្មែរ              | Khmer              | 高棉语        |
+| `ms`  | Bahasa Melayu      | Malay              | 马来语        |
+| `fil` | Tagalog            | Filipino (Tagalog) | 菲律宾语（塔加拉语） |
+| `jv`  | Basa Jawa          | Javanese           | 爪哇语        |
+| `su`  | Basa Sunda         | Sundanese          | 巽他语        |
+| `ace` | Acèh               | Acehnese           | 亚齐语        |
+| `pag` | Salitan Pangasinan | Pangasinan         | 邦阿西楠语      |
+| `pam` | Kapampangan        | Kapampangan        | 邦板牙语       |
+| `ceb` | Cebuano            | Cebuano            | 宿务语        |
 
 ### 非洲
 
-| Code | Native            | English        | 中文    |
-| ---- | ----------------- | -------------- | ----- |
-| `sw` | Kiswahili         | Swahili        | 斯瓦希里语 |
-| `ha` | هَرْشٜىٰن هَوْسَا | Hausa          | 豪萨语   |
-| `am` | አማርኛ              | Amharic        | 阿姆哈拉语 |
-| `ig` | Igbo              | Igbo           | 伊博语   |
-| `wo` | Wolof             | Wolof          | 沃洛夫语  |
-| `xh` | isiXhosa          | Xhosa          | 科萨语   |
-| `zu` | isiZulu           | Zulu           | 祖鲁语   |
-| `af` | Afrikaans         | Afrikaans      | 南非荷兰语 |
-| `om` | Afaan Oromoo      | Oromo          | 奥罗莫语  |
-| `st` | Sesotho           | Southern Sotho | 南索托语  |
-| `tn` | Setswana          | Tswana         | 茨瓦纳语  |
-| `ts` | Xitsonga          | Tsonga         | 聪加语   |
-| `mg` | Malagasy          | Malagasy       | 马拉加西语 |
-| `ln` | Lingála           | Lingala        | 林加拉语  |
+| Code | Native            | English         | 中文    |
+| ---- | ----------------- | --------------- | ----- |
+| `sw` | Kiswahili         | Swahili         | 斯瓦希里语 |
+| `ha` | هَرْشٜىٰن هَوْسَا | Hausa           | 豪萨语   |
+| `am` | አማርኛ              | Amharic         | 阿姆哈拉语 |
+| `ig` | Igbo              | Igbo            | 伊博语   |
+| `wo` | Wolof             | Wolof           | 沃洛夫语  |
+| `xh` | isiXhosa          | Xhosa           | 科萨语   |
+| `zu` | isiZulu           | Zulu            | 祖鲁语   |
+| `af` | Afrikaans         | Afrikaans       | 南非荷兰语 |
+| `om` | Afaan Oromoo      | Oromo           | 奥罗莫语  |
+| `st` | Sesotho           | Southern Sotho  | 南索托语  |
+| `tn` | Setswana          | Tswana          | 茨瓦纳语  |
+| `ts` | Xitsonga          | Tsonga          | 聪加语   |
+| `mg` | Malagasy          | Malagasy        | 马拉加西语 |
+| `ln` | Lingála           | Lingala         | 林加拉语  |
+| `aa` | Qafar af          | Afar            | 阿法尔语  |
+| `ff` | Fulfulde          | Fulani          | 富拉语   |
+| `rw` | Ikinyarwanda      | Kinyarwanda     | 卢旺达语  |
+| `lg` | Oluganda          | Luganda         | 卢干达语  |
+| `rn` | Ikirundi          | Rundi (Kirundi) | 隆迪语   |
+| `sn` | ChiShona          | Shona           | 绍纳语   |
+| `so` | Soomaali          | Somali          | 索马里语  |
+| `tw` | Twi               | Twi             | 契维语   |
+| `yo` | Yorùbá            | Yoruba          | 约鲁巴语  |
 
 ### 美洲及大洋洲
 

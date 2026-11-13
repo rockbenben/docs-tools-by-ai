@@ -47,10 +47,10 @@ For more reliable service, apply for a commercial API key — see the [API appli
 ## Large Language Models (LLMs)
 
 
-27 LLM endpoints are supported, in two groups:
+26 LLM endpoints are supported, in two groups:
 
 - **Direct vendors (16)**: DeepSeek, OpenAI, Claude, Gemini, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio)
-- **Aggregators & self-hosted (11)**: OpenRouter, OpenCode Zen, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Nvidia NIM, Azure OpenAI, plus **Custom (OpenAI-compatible)**
+- **Aggregators & self-hosted (10)**: OpenRouter, OpenCode Console, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Nvidia NIM, Azure OpenAI, plus **Custom (OpenAI-compatible)**
 
 The **Custom (OpenAI-compatible)** entry at the end is the catch-all: any OpenAI-protocol address goes there, with quick-pick URLs for local runtimes and third-party gateways listed right above the field (see [Local Model Setup](#local-model-setup)).
 
@@ -70,7 +70,7 @@ Key parameters:
   - **Four levels (Off / Low / Medium / High)**: every other thinking-capable provider, including Claude, OpenAI GPT-5.x / 6.x, Gemini, Qwen3, Kimi (Moonshot), xAI Grok, GPT-OSS on Groq and Cerebras, Azure OpenAI, and the thinking-tagged models on OpenRouter
   - **The lowest level reads Min, not Off**: when the vendor ships no "off" value at all, the bottom entry is labelled **Min** — the model still reasons and still bills, so calling it Off would be a lie. That applies to Gemini 3.x, xAI Grok 4.5 / 4.6, GPT-OSS on Groq and Cerebras, Kimi K3 / K2.6, plus the single SKU **Claude Fable 5** (officially Always on — an explicit disable returns 400; its siblings Opus 5 / Sonnet 5 / Haiku 4.5 can be turned off)
   - **Three-state (Off / On / Auto)**: when you type an **unlisted custom model** on a thinking-capable provider. Auto omits the thinking param to follow the model's built-in default — a fallback for strict providers that error on a non-thinking SKU; defaults to Off
-  - **No thinking control at all**: StepFun, YandexGPT, OpenCode Zen, TokenHub, Atlas Cloud, Nvidia NIM, Custom (OpenAI-compatible). Aggregators front many upstreams whose "can thinking be disabled?" answer differs per model, so a blanket disable would hit models that don't accept one — they all follow the upstream model's server-side default instead
+  - **No thinking control at all**: StepFun, YandexGPT, OpenCode Zen, TokenHub, Nvidia NIM, Custom (OpenAI-compatible). Aggregators front many upstreams whose "can thinking be disabled?" answer differs per model, so a blanket disable would hit models that don't accept one — they all follow the upstream model's server-side default instead
 
 ### Provider-Specific Notes
 
@@ -79,7 +79,7 @@ Key parameters:
 - **OpenCode Go**: same host, same account, same API key as OpenCode Zen — only three things differ: the request path (`/zen/go/v1` vs `/zen/v1`), the SKUs on offer, and the billing model. Go is a **$10/month subscription allowance** (the vendor converts it per model per month: 5 hours ≈ 20%, a week ≈ 50%, a month ≈ 100%), while Zen is a prepaid balance — so never describe Go as "top up and go". One workspace can have exactly one Go subscriber. The upstream sends no CORS headers either, so **API relay is ON by default**.
 - **Cerebras**: included for **speed**, not for its catalogue (both public models are also available on Groq / Nvidia / SiliconFlow). Cerebras advertises \~3000 tokens/s on gpt-oss-120b, which is very noticeable for the short, frequent requests line-by-line translation produces; it also grants 1M free tokens per day.
 - **YandexGPT (AI Studio)**: needs a **Folder ID** in addition to the API key (grab it from the folders page in the Yandex AI Studio console). For the model field, enter a SKU name (e.g. `yandexgpt-5.1`; open-weight SKUs like Qwen3, DeepSeek, and GPT-OSS are also offered) or paste a full `gpt://<folder_id>/<model>/latest` URI. Yandex's API sends no CORS headers, so **API relay is ON by default** (the switch stays user-controllable, and you can point the URL at your own relay instead).
-- **Removed from the service list**: GitHub Models (retired by GitHub on 2026-07-30), Perplexity Sonar (chat/completions shut down ahead of schedule), and the old Tencent Hunyuan endpoint (migrated to TokenHub). **LiteLLM** is no longer a separate entry — it is now a URL quick-pick under Custom (OpenAI-compatible); see [Self-hosted gateways and third-party inference platforms](#self-hosted-gateways-and-third-party-inference-platforms).
+- **Removed from the service list**: GitHub Models (retired by GitHub on 2026-07-30), Perplexity Sonar (chat/completions shut down ahead of schedule), the old Tencent Hunyuan endpoint (migrated to TokenHub), and Atlas Cloud (removed November 2026). **LiteLLM** is no longer a separate entry — it is now a URL quick-pick under Custom (OpenAI-compatible); see [Self-hosted gateways and third-party inference platforms](#self-hosted-gateways-and-third-party-inference-platforms).
 
 ### Regional Endpoint Switcher
 
@@ -170,9 +170,9 @@ Some providers' official endpoints block direct browser calls (CORS). The tool o
 ### API relay (user-controlled)
 
 
-Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI — 24 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio), OpenRouter, OpenCode Zen, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Atlas Cloud, Custom (OpenAI-compatible) — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):
+Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI — 23 in total: DeepSeek, OpenAI, Claude, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio), OpenRouter, OpenCode Console, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Custom (OpenAI-compatible) — offers an **API relay** toggle in settings. When enabled, requests are forwarded through the built-in Cloudflare worker (request body and auth headers only):
 
-YandexGPT (AI Studio), OpenCode Zen, OpenCode Go, TokenHub (Tencent) **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.
+YandexGPT (AI Studio), OpenCode Console, OpenCode Go, TokenHub (Tencent) **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.
 
 - **The exceptions named above have no such switch**: Custom and Azure OpenAI point at an address you supply, so there is no fixed upstream for a relay to target; Nvidia NIM goes through the built-in proxy described in the next section; and Gemini puts the model name in the URL path, which a pass-through relay can't forward
 - **Self-hosted relay**: prefer your own relay? Put its address in the URL field. The precedence is fixed: **custom URL > relay switch > official direct** — with a URL filled in, the relay switch is grayed out with a note ("clear the URL to re-enable")
@@ -301,29 +301,29 @@ That's it — local models should work now. If you're still stuck, check for por
 
 ## Language code reference
 
-The tool translates between 120+ languages, grouped by region. When configuring multiple languages at once, use the codes below (e.g. `en, zh, ja, ko`):
+The tool translates between 130+ languages, grouped by region. When configuring multiple languages at once, use the codes below (e.g. `en, zh, ja, ko`):
 
 
 ### Common
 
-| Code      | Native             | English             | 中文       |
-| --------- | ------------------ | ------------------- | -------- |
-| `en`      | English            | English             | 英语       |
-| `zh`      | 简体                 | Simplified Chinese  | 中文       |
-| `zh-hant` | 繁體                 | Traditional Chinese | 繁体中文     |
-| `es`      | Español            | Spanish             | 西班牙语     |
-| `fr`      | Français           | French              | 法语       |
-| `de`      | Deutsch            | German              | 德语       |
-| `ja`      | 日本語                | Japanese            | 日语       |
-| `ko`      | 한국어                | Korean              | 韩语       |
-| `hi`      | हिन्दी             | Hindi               | 印地语      |
-| `ar`      | العربية            | Arabic              | 阿拉伯语     |
-| `ru`      | Русский            | Russian             | 俄语       |
-| `pt-br`   | Português (Brasil) | Portuguese (Brazil) | 葡萄牙语（巴西） |
-| `id`      | Bahasa Indonesia   | Indonesian          | 印尼语      |
-| `vi`      | Tiếng Việt         | Vietnamese          | 越南语      |
-| `it`      | Italiano           | Italian             | 意大利语     |
-| `yue`     | 粵語                 | Cantonese           | 粤语       |
+| Code      | Native             | English               | 中文       |
+| --------- | ------------------ | --------------------- | -------- |
+| `en`      | English            | English               | 英语       |
+| `zh`      | 简体                 | Chinese (Simplified)  | 中文       |
+| `zh-hant` | 繁體                 | Chinese (Traditional) | 繁体中文     |
+| `es`      | Español            | Spanish               | 西班牙语     |
+| `fr`      | Français           | French                | 法语       |
+| `de`      | Deutsch            | German                | 德语       |
+| `ja`      | 日本語                | Japanese              | 日语       |
+| `ko`      | 한국어                | Korean                | 韩语       |
+| `hi`      | हिन्दी             | Hindi                 | 印地语      |
+| `ar`      | العربية            | Arabic                | 阿拉伯语     |
+| `ru`      | Русский            | Russian               | 俄语       |
+| `pt-br`   | Português (Brasil) | Portuguese (Brazil)   | 葡萄牙语（巴西） |
+| `id`      | Bahasa Indonesia   | Indonesian            | 印尼语      |
+| `vi`      | Tiếng Việt         | Vietnamese            | 越南语      |
+| `it`      | Italiano           | Italian               | 意大利语     |
+| `yue`     | 粵語                 | Cantonese             | 粤语       |
 
 ### Europe
 
@@ -345,7 +345,7 @@ The tool translates between 120+ languages, grouped by region. When configuring 
 | `da`    | Dansk                | Danish                | 丹麦语       |
 | `sq`    | Shqip                | Albanian              | 阿尔巴尼亚语    |
 | `fi`    | Suomi                | Finnish               | 芬兰语       |
-| `nb`    | Norsk bokmål         | Norwegian Bokmål      | 挪威语       |
+| `nb`    | Norsk bokmål         | Norwegian             | 挪威语       |
 | `sk`    | Slovenčina           | Slovak                | 斯洛伐克语     |
 | `hr`    | Hrvatski             | Croatian              | 克罗地亚语     |
 | `be`    | Беларуская           | Belarusian            | 白俄罗斯语     |
@@ -374,16 +374,16 @@ The tool translates between 120+ languages, grouped by region. When configuring 
 
 ### Middle East
 
-| Code  | Native | English          | 中文    |
-| ----- | ------ | ---------------- | ----- |
-| `tr`  | Türkçe | Turkish          | 土耳其语  |
-| `he`  | עברית  | Hebrew           | 希伯来语  |
-| `fa`  | فارسی  | Persian          | 波斯语   |
-| `ur`  | اردو   | Urdu             | 乌尔都语  |
-| `ps`  | پښتو   | Pashto           | 普什图语  |
-| `prs` | دری    | Dari             | 达里语   |
-| `ckb` | کوردی  | Central Kurdish  | 中库尔德语 |
-| `kmr` | Kurdî  | Northern Kurdish | 北库尔德语 |
+| Code  | Native | English            | 中文    |
+| ----- | ------ | ------------------ | ----- |
+| `tr`  | Türkçe | Turkish            | 土耳其语  |
+| `he`  | עברית  | Hebrew             | 希伯来语  |
+| `fa`  | فارسی  | Persian            | 波斯语   |
+| `ur`  | اردو   | Urdu               | 乌尔都语  |
+| `ps`  | پښتو   | Pashto             | 普什图语  |
+| `prs` | دری    | Dari               | 达里语   |
+| `ckb` | کوردی  | Kurdish (Sorani)   | 中库尔德语 |
+| `kmr` | Kurdî  | Kurdish (Kurmanji) | 北库尔德语 |
 
 ### Central Asia
 
@@ -402,59 +402,70 @@ The tool translates between 120+ languages, grouped by region. When configuring 
 
 ### South Asia
 
-| Code  | Native    | English   | 中文     |
-| ----- | --------- | --------- | ------ |
-| `bn`  | বাংলা     | Bengali   | 孟加拉语   |
-| `mr`  | मराठी     | Marathi   | 马拉地语   |
-| `te`  | తెలుగు    | Telugu    | 泰卢固语   |
-| `ta`  | தமிழ்     | Tamil     | 泰米尔语   |
-| `gu`  | ગુજરાતી   | Gujarati  | 古吉拉特语  |
-| `kn`  | ಕನ್ನಡ     | Kannada   | 卡纳达语   |
-| `pa`  | ਪੰਜਾਬੀ    | Punjabi   | 旁遮普语   |
-| `ml`  | മലയാളം    | Malayalam | 马拉雅拉姆语 |
-| `bho` | भोजपुरी   | Bhojpuri  | 博杰普尔语  |
-| `mai` | मैथिली    | Maithili  | 迈蒂利语   |
-| `ne`  | नेपाली    | Nepali    | 尼泊尔语   |
-| `si`  | සිංහල     | Sinhala   | 僧伽罗语   |
-| `as`  | অসমীয়া   | Assamese  | 阿萨姆语   |
-| `gom` | कोंकणी    | Konkani   | 孔卡尼语   |
-| `sa`  | संस्कृतम् | Sanskrit  | 梵语     |
+| Code  | Native    | English      | 中文     |
+| ----- | --------- | ------------ | ------ |
+| `bn`  | বাংলা     | Bengali      | 孟加拉语   |
+| `mr`  | मराठी     | Marathi      | 马拉地语   |
+| `te`  | తెలుగు    | Telugu       | 泰卢固语   |
+| `ta`  | தமிழ்     | Tamil        | 泰米尔语   |
+| `gu`  | ગુજરાતી   | Gujarati     | 古吉拉特语  |
+| `kn`  | ಕನ್ನಡ     | Kannada      | 卡纳达语   |
+| `pa`  | ਪੰਜਾਬੀ    | Punjabi      | 旁遮普语   |
+| `ml`  | മലയാളം    | Malayalam    | 马拉雅拉姆语 |
+| `bho` | भोजपुरी   | Bhojpuri     | 博杰普尔语  |
+| `mai` | मैथिली    | Maithili     | 迈蒂利语   |
+| `ne`  | नेपाली    | Nepali       | 尼泊尔语   |
+| `si`  | සිංහල     | Sinhala      | 僧伽罗语   |
+| `as`  | অসমীয়া   | Assamese     | 阿萨姆语   |
+| `gom` | कोंकणी    | Konkani      | 孔卡尼语   |
+| `sa`  | संस्कृतम् | Sanskrit     | 梵语     |
+| `dv`  | ދިވެހި    | Dhivehi      | 迪维希语   |
+| `or`  | ଓଡ଼ିଆ     | Odia (Oriya) | 奥里亚语   |
 
 ### Southeast Asia
 
-| Code  | Native             | English           | 中文         |
-| ----- | ------------------ | ----------------- | ---------- |
-| `th`  | ไทย                | Thai              | 泰语         |
-| `lo`  | ລາວ                | Lao               | 老挝语        |
-| `my`  | မြန်မာ             | Burmese           | 缅甸语        |
-| `km`  | ខ្មែរ              | Khmer             | 高棉语        |
-| `ms`  | Bahasa Melayu      | Malay             | 马来语        |
-| `fil` | Tagalog            | Filipino(Tagalog) | 菲律宾语（塔加拉语） |
-| `jv`  | Basa Jawa          | Javanese          | 爪哇语        |
-| `su`  | Basa Sunda         | Sundanese         | 巽他语        |
-| `ace` | Acèh               | Acehnese          | 亚齐语        |
-| `pag` | Salitan Pangasinan | Pangasinan        | 邦阿西楠语      |
-| `pam` | Kapampangan        | Pampangan         | 邦板牙语       |
-| `ceb` | Cebuano            | Cebuano           | 宿务语        |
+| Code  | Native             | English            | 中文         |
+| ----- | ------------------ | ------------------ | ---------- |
+| `th`  | ไทย                | Thai               | 泰语         |
+| `lo`  | ລາວ                | Lao                | 老挝语        |
+| `my`  | မြန်မာ             | Burmese            | 缅甸语        |
+| `km`  | ខ្មែរ              | Khmer              | 高棉语        |
+| `ms`  | Bahasa Melayu      | Malay              | 马来语        |
+| `fil` | Tagalog            | Filipino (Tagalog) | 菲律宾语（塔加拉语） |
+| `jv`  | Basa Jawa          | Javanese           | 爪哇语        |
+| `su`  | Basa Sunda         | Sundanese          | 巽他语        |
+| `ace` | Acèh               | Acehnese           | 亚齐语        |
+| `pag` | Salitan Pangasinan | Pangasinan         | 邦阿西楠语      |
+| `pam` | Kapampangan        | Kapampangan        | 邦板牙语       |
+| `ceb` | Cebuano            | Cebuano            | 宿务语        |
 
 ### Africa
 
-| Code | Native            | English        | 中文    |
-| ---- | ----------------- | -------------- | ----- |
-| `sw` | Kiswahili         | Swahili        | 斯瓦希里语 |
-| `ha` | هَرْشٜىٰن هَوْسَا | Hausa          | 豪萨语   |
-| `am` | አማርኛ              | Amharic        | 阿姆哈拉语 |
-| `ig` | Igbo              | Igbo           | 伊博语   |
-| `wo` | Wolof             | Wolof          | 沃洛夫语  |
-| `xh` | isiXhosa          | Xhosa          | 科萨语   |
-| `zu` | isiZulu           | Zulu           | 祖鲁语   |
-| `af` | Afrikaans         | Afrikaans      | 南非荷兰语 |
-| `om` | Afaan Oromoo      | Oromo          | 奥罗莫语  |
-| `st` | Sesotho           | Southern Sotho | 南索托语  |
-| `tn` | Setswana          | Tswana         | 茨瓦纳语  |
-| `ts` | Xitsonga          | Tsonga         | 聪加语   |
-| `mg` | Malagasy          | Malagasy       | 马拉加西语 |
-| `ln` | Lingála           | Lingala        | 林加拉语  |
+| Code | Native            | English         | 中文    |
+| ---- | ----------------- | --------------- | ----- |
+| `sw` | Kiswahili         | Swahili         | 斯瓦希里语 |
+| `ha` | هَرْشٜىٰن هَوْسَا | Hausa           | 豪萨语   |
+| `am` | አማርኛ              | Amharic         | 阿姆哈拉语 |
+| `ig` | Igbo              | Igbo            | 伊博语   |
+| `wo` | Wolof             | Wolof           | 沃洛夫语  |
+| `xh` | isiXhosa          | Xhosa           | 科萨语   |
+| `zu` | isiZulu           | Zulu            | 祖鲁语   |
+| `af` | Afrikaans         | Afrikaans       | 南非荷兰语 |
+| `om` | Afaan Oromoo      | Oromo           | 奥罗莫语  |
+| `st` | Sesotho           | Southern Sotho  | 南索托语  |
+| `tn` | Setswana          | Tswana          | 茨瓦纳语  |
+| `ts` | Xitsonga          | Tsonga          | 聪加语   |
+| `mg` | Malagasy          | Malagasy        | 马拉加西语 |
+| `ln` | Lingála           | Lingala         | 林加拉语  |
+| `aa` | Qafar af          | Afar            | 阿法尔语  |
+| `ff` | Fulfulde          | Fulani          | 富拉语   |
+| `rw` | Ikinyarwanda      | Kinyarwanda     | 卢旺达语  |
+| `lg` | Oluganda          | Luganda         | 卢干达语  |
+| `rn` | Ikirundi          | Rundi (Kirundi) | 隆迪语   |
+| `sn` | ChiShona          | Shona           | 绍纳语   |
+| `so` | Soomaali          | Somali          | 索马里语  |
+| `tw` | Twi               | Twi             | 契维语   |
+| `yo` | Yorùbá            | Yoruba          | 约鲁巴语  |
 
 ### Americas & Oceania
 
