@@ -6,13 +6,13 @@
 <script>{;var defaultLang = "zh", langs = ["en","zh"];if (!/bot|spider|crawl|lighthouse/i.test(window.navigator.userAgent)) {;var firstVisitKey = 'rspress-visited', visited = localStorage.getItem(firstVisitKey);if (!visited) {;localStorage.setItem(firstVisitKey, '1');var targetLang = window.navigator.language.split('-')[0], { pathname, search } = window.location, pathSegments = pathname.split('/').filter(Boolean), currentLang = langs.includes(pathSegments[0]) ? pathSegments[0] : defaultLang;if (langs.includes(targetLang) && targetLang !== currentLang) {;var newPathSegments = pathSegments.slice();if (targetLang === defaultLang) {;newPathSegments.splice(0, 1);} else if (currentLang === defaultLang) {;newPathSegments.splice(0, 0, targetLang);} else {;newPathSegments[0] = targetLang;};;var newPathname = '/' + newPathSegments.join('/'), trailingSlash = newPathname !== '/' && pathname.endsWith('/') ? '/' : '';window.location['replace'](newPathname + trailingSlash + search);};};};}</script>
 <script>{;const saved = localStorage.getItem('rspress-theme-appearance');const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;const defaultTheme = 'auto';const theme = saved === 'light' || saved === 'dark' || saved === 'auto' ? saved : defaultTheme;const isDark = theme === 'auto' ? preferDark : theme === 'dark';document.documentElement.classList.toggle('dark', isDark);document.documentElement.classList.toggle('rp-dark', isDark);document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';}</script>
 <link href="/static/css/styles.108df18aec.css" rel="stylesheet">
-<link rel="preload" href="/static/js/async/route-381c18dd2632.fdb07aed6c.js" as="script">
+<link rel="preload" href="/static/js/async/route-381c18dd2632.d2ccbb409b.js" as="script">
 <script defer src="https://s.newzone.top/tracker.js" data-website-id="fde645a1-fe64-4434-9edb-6923dbcd3614"></script>
 <script defer src="/static/js/styles.7e9cd6d5ca.js"></script>
 <script defer src="/static/js/lib-react.d9ba9eeff8.js"></script>
 <script defer src="/static/js/lib-router.3e134246c6.js"></script>
 <script defer src="/static/js/2.637385e84d.js"></script>
-<script defer src="/static/js/index.70a35e2021.js"></script>
+<script defer src="/static/js/index.cd9283b72a.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.23">
 <meta name="author" content="rockbenben">
@@ -33,7 +33,7 @@
 <meta name="description" content="工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。">
 <meta property="og:description" content="工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。">
 <meta property="og:title" content="翻译工具功能说明 - 多语言、缓存与参数详解 | Tools By AI">
-<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"功能说明","name":"功能说明","description":"工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。","inLanguage":"zh-CN","url":"https://docs.newzone.top/guide/translation/info","mainEntityOfPage":"https://docs.newzone.top/guide/translation/info","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-11-14","articleSection":"翻译工具","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
+<script type="application/ld+json" data-hid="geo-primary">{"@context":"https://schema.org","@type":"TechArticle","headline":"功能说明","name":"功能说明","description":"工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。","inLanguage":"zh-CN","url":"https://docs.newzone.top/guide/translation/info","mainEntityOfPage":"https://docs.newzone.top/guide/translation/info","isPartOf":{"@id":"https://docs.newzone.top/#website"},"author":{"@id":"https://docs.newzone.top/#organization"},"publisher":{"@id":"https://docs.newzone.top/#organization"},"dateModified":"2026-11-19","articleSection":"翻译工具","speakable":{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".rspress-doc"]}}</script>
 <script type="application/ld+json" data-hid="geo-breadcrumb">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://docs.newzone.top/"},{"@type":"ListItem","position":2,"name":"指南","item":"https://docs.newzone.top/guide"},{"@type":"ListItem","position":3,"name":"翻译工具","item":"https://docs.newzone.top/guide/translation"},{"@type":"ListItem","position":4,"name":"功能说明"}]}</script>
 <link rel="canonical" href="https://docs.newzone.top/guide/translation/info">
 <link rel="alternate" hreflang="zh-CN" href="https://docs.newzone.top/guide/translation/info">
@@ -43,7 +43,7 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:title" content="功能说明">
 <meta name="twitter:description" content="工具的核心特性介绍——多语言批量翻译、本地缓存、术语表、上下文优化、失败行重试，以及高级参数的调优建议。">
-<meta property="article:modified_time" content="2026-11-14">
+<meta property="article:modified_time" content="2026-11-19">
 <meta property="article:section" content="翻译工具"></head>
 
   <body>
@@ -172,6 +172,7 @@ JSON Translate 仅支持单文件模式。</p></div></div>
 <ul>
 <li>浏览器不允许把「桌面 / 文档 / 下载」这些用户目录本身选为导出目录，请选它们的子文件夹或任意其他文件夹</li>
 <li>Firefox / Safari 没有这个接口，按钮不会出现，导出照旧走默认下载目录</li>
+<li>该接口依赖浏览器的<strong>安全上下文（Secure Context）</strong>：仅在 <code>HTTPS</code> 或 <code>http://localhost</code> 下生效。若通过局域网 IP（如 <code>http://192.168.x.x</code>）访问，浏览器安全策略会禁用该接口，按钮将自动隐藏。如需内网静默保存，建议配置 HTTPS 反向代理或参考 <a href="/guide/translation/faq.html#docker-%E9%83%A8%E7%BD%B2%E5%90%8E%E5%A6%82%E4%BD%95%E4%BF%9D%E5%AD%98%E7%BF%BB%E8%AF%91%E6%96%87%E4%BB%B6%E6%8C%82%E8%BD%BD%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%9C%89%E6%95%88%E5%90%97%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B1%80%E5%9F%9F%E7%BD%91%E8%AE%BF%E9%97%AE%E4%BC%9A%E6%AF%8F%E6%AC%A1%E5%BC%B9%E7%AA%97%E8%AF%A2%E9%97%AE%E4%BF%9D%E5%AD%98" class="rp-link">FAQ 中的 Docker/局域网保存说明</a></li>
 </ul>
 <hr/>
 <h2 class="rp-toc-include" id="高级设置"><a href="#高级设置" class="rp-header-anchor rp-link" aria-hidden="true">#</a>高级设置</h2>

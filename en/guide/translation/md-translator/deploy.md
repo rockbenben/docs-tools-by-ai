@@ -85,3 +85,10 @@ services:
 ```
 
 Run the command `docker-compose up -d` to start the service.
+
+:::tip About Volume Mounts and File Saving
+
+- **No volume mount needed**: The application runs entirely client-side inside your web browser. The Docker container stores no translation files on the server.
+- **LAN IP access & save prompts**: When accessed over a LAN IP (`http://192.168.x.x:3000`), the browser disables the File System Access API due to insecure context restrictions, hiding the "Export folder" button and falling back to standard downloads. If your browser has "Ask where to save each file before downloading" turned on, it will prompt for every single file.
+- **Silent folder saving**: We recommend setting up an HTTPS reverse proxy (or browsing from `localhost` on the host machine) to enable the **📁 Export folder** button in the header. Alternatively, disable the download prompt in your browser settings. See [FAQ → Docker deployment file saving](/en/guide/translation/faq.md#how-are-files-saved-in-docker-deployment-does-mounting-a-volume-work-and-why-does-it-ask-to-save-every-file-on-a-lan-ip).
+  :::

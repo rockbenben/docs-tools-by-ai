@@ -179,3 +179,31 @@ On the web, combine these existing features to cut down repetitive manual steps:
 - **Batch mode**: drag in multiple files at once — they queue automatically and download as a bundle
 - **Import settings**: pre-configure target languages, API config, and every other parameter from a JSON file (see [Feature Guide → Settings Import/Export](/en/guide/translation/info.md#settings-importexport))
 - **Quick language-code entry**: in multi-language mode, paste a string of codes (e.g. `zh, de, ru`) instead of clicking through the picker
+
+## How are files saved in Docker deployment? Does mounting a volume work, and why does it ask to save every file on a LAN IP?
+
+Users running containers on home servers (NAS / Homelab) frequently encounter these questions:
+
+### 1. Why doesn't mounting a Docker volume save output files?
+
+**The tools use a client-side architecture.** The Docker container only serves static web assets and proxies API requests. Subtitle/text parsing, model calls, and output file generation **all execute directly inside your web browser**. The container itself never writes or stores translated files to the host filesystem, so mounting a Docker volume will not capture translations.
+
+### 2. Why does it ask to save every file when accessed via a LAN IP?
+
+The app provides a built-in **"Export folder"** feature that directly writes files to a selected local folder without download prompts. However, this feature relies on the browser's File System Access API, which modern browsers restrict strictly to **Secure Contexts**:
+
+- **Secure Context**: `https://...` or `http://localhost` / `http://127.0.0.1`
+- **Insecure Context**: Accessing via a LAN IP (e.g. `http://192.168.x.x:3000`)
+
+In an insecure context (LAN IP over HTTP), the browser completely disables this API. The app detects this and automatically hides the "Export folder" button, falling back to standard browser downloads. If your browser setting **"Ask where to save each file before downloading"** is turned on, the browser will open a file save dialog for every single file.
+
+### Solutions
+
+- **Enable Secure Context for silent direct folder saving (Recommended)**:
+  - **Set up HTTPS with a domain**: Route traffic through a reverse proxy (Nginx Proxy Manager, Caddy, Traefik, or Cloudflare Tunnel) with SSL. Over HTTPS, the **📁 Export folder** button appears in the page header; select a local folder once and all files will be saved silently without prompts.
+  - **Access via localhost**: If browsing directly on the machine hosting Docker, use `http://localhost:port`.
+  - **Whitelist your LAN IP in Chrome / Edge**: Open `chrome://flags/#unsafely-treat-insecure-origin-as-secure`, enter your LAN URL (e.g. `http://192.168.1.100:3000`), enable it, and restart the browser.
+- **Disable the browser download prompt (Quickest)**:
+  - In browser Settings, search for "Downloads" and turn off **"Ask where to save each file before downloading"**. Files will be automatically saved to your default Downloads folder using the formatted filename template without prompting.
+- **Enable "Download as one ZIP" (Multi-language)**:
+  - In translation settings, turn on **"Download as one ZIP"** so all language outputs for a file are bundled into a single download.
