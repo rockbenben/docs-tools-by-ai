@@ -48,6 +48,9 @@ yarn cli -i README.md -t ja -s ~/translate-settings.json
 # Point straight at a local LM Studio / Ollama
 yarn cli -i locale.json -t zh -m llm --url http://localhost:11434/v1 --model qwen3
 
+# Any third-party OpenAI-compatible API / aggregator (Node has no browser CORS restriction)
+yarn cli -i movie.srt -t zh -m llm --url https://api.example.com/v1 --api-key sk-xxx --model provider/model-name
+
 # Dedicated local MT models (translategemma / milmmt) have no auto-detect, so -f is required
 yarn cli -i movie.srt -f en -t zh -m milmmt --url http://localhost:1234/v1 --model MiLMMT-46-4B-v1.0
 

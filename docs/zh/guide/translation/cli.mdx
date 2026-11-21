@@ -48,6 +48,9 @@ yarn cli -i README.md -t ja -s ~/translate-settings.json
 # 直接指定本地 LM Studio / Ollama
 yarn cli -i locale.json -t zh -m llm --url http://localhost:11434/v1 --model qwen3
 
+# 第三方 OpenAI 兼容 API / 聚合平台（Node 无浏览器 CORS 限制）
+yarn cli -i movie.srt -t zh -m llm --url https://api.example.com/v1 --api-key sk-xxx --model provider/model-name
+
 # 本地翻译专用模型（translategemma / milmmt）—— 它们没有自动检测，必须 -f
 yarn cli -i movie.srt -f en -t zh -m milmmt --url http://localhost:1234/v1 --model MiLMMT-46-4B-v1.0
 
