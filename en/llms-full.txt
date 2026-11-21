@@ -153,7 +153,7 @@ To address issues in the market such as slow translation speeds, lack of batch p
 - **Subtitle Extraction**: One click extracts the original dialogue with timecodes and cue numbers stripped (auto-copied to clipboard) — for AI summarization, derivative works, or pairing with the translation to have an AI proofread/revise it.
 - **Side-by-side Review & Live Sync**: In single-file mode, open the Bilingual Review Panel after translation to compare and edit lines side by side. Edits sync back to the main result, copy/export are blocked while edits remain unapplied to prevent stale files, and narrow screens use a responsive fixed two-column layout.
 - **Post-Translation QC**: After translating, each cue is automatically checked for reading speed (CPS, characters per second), characters per line, line count, and duration, with violations highlighted — catching subtitles that flash by too fast or run too long. Switch between General / CJK thresholds.
-- **Multiple API Options**: Built-in free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs.
+- **Multiple API Options**: Built-in free and commercial translation APIs plus AI LLM endpoints (including local Ollama / LM Studio / llama.cpp / koboldcpp, and the translation-specialized TranslateGemma / MiLMMT) — pick by budget and privacy needs. Unlisted OpenAI-compatible third-party platforms can also be connected via **Custom (OpenAI-compatible)**; see [Custom Third-Party APIs](/en/guide/translation/api.md#custom-third-party-apis).
 - **Multi-language Support & Internationalization**: Supports 130+ major languages (English, Chinese, Japanese, Korean, French, German, Spanish, etc.) and can translate the same subtitle file into multiple languages simultaneously to meet internationalization needs.
 
 ## Subtitle Format Support
@@ -1257,7 +1257,7 @@ For more reliable service, apply for a commercial API key — see the [API appli
 - **Direct vendors (16)**: DeepSeek, OpenAI, Claude, Gemini, Qwen, Kimi (Moonshot), Doubao (Volcengine), Xiaomi MiMo, Zhipu GLM, MiniMax, StepFun (阶跃星辰), Baidu ERNIE (Qianfan), Mistral, xAI (Grok), Cohere, YandexGPT (AI Studio)
 - **Aggregators & self-hosted (10)**: OpenRouter, OpenCode Console, OpenCode Go, TokenHub (Tencent), Groq, Cerebras, SiliconFlow, Nvidia NIM, Azure OpenAI, plus **Custom (OpenAI-compatible)**
 
-The **Custom (OpenAI-compatible)** entry at the end is the catch-all: any OpenAI-protocol address goes there, with quick-pick URLs for local runtimes and third-party gateways listed right above the field (see [Local Model Setup](#local-model-setup)).
+The **Custom (OpenAI-compatible)** entry at the end is the catch-all: any OpenAI-protocol third-party aggregator, relay, or local runtime can be configured there, with quick-pick URLs listed right above the field (see [Custom Third-Party APIs](#custom-third-party-apis) and [Local Model Setup](#local-model-setup)).
 
 LLMs work best for:
 
@@ -1379,13 +1379,62 @@ Every LLM provider except Gemini, Nvidia NIM, Azure OpenAI — 23 in total: Deep
 
 YandexGPT (AI Studio), OpenCode Console, OpenCode Go, TokenHub (Tencent) **default to ON** because upstream sends no CORS headers or fails preflight. The rest start on direct and can be switched on when you hit a CORS wall.
 
-- **The exceptions named above have no such switch**: Custom and Azure OpenAI point at an address you supply, so there is no fixed upstream for a relay to target; Nvidia NIM goes through the built-in proxy described in the next section; and Gemini puts the model name in the URL path, which a pass-through relay can't forward
-- **Self-hosted relay**: prefer your own relay? Put its address in the URL field. The precedence is fixed: **custom URL > relay switch > official direct** — with a URL filled in, the relay switch is grayed out with a note ("clear the URL to re-enable")
+- **The exceptions named above have no such switch**: Azure OpenAI points at your own resource root, so there is no fixed upstream for a relay to target; Nvidia NIM goes through the built-in proxy described in the next section; and Gemini puts the model name in the URL path, which a pass-through relay can't forward
+- **Custom (OpenAI-compatible) has the switch, but does not relay arbitrary URLs**: the built-in public relay is not an open proxy — for `llm` it only forwards the two declared public quick-picks (**Together AI** and **Fireworks AI**). Custom third-party URLs you enter and local/private addresses (`127.0.0.1`, etc.) are never sent to the built-in relay and go direct instead
+- **Self-hosted relay**: the relay switch is never grayed out — turning on **API relay** reveals the global **Relay address** field below it. Enter the origin of your own [`scripts/llm-proxy-worker.js`](https://github.com/rockbenben/web-tools-by-ai/blob/main/scripts/llm-proxy-worker.js) deployment to apply it across all relay-enabled services (to relay an unlisted third-party endpoint, add its chat-completions URL to `PROVIDER_URLS.llm` in your Worker). You can also point a provider's **API URL** directly at your own reverse proxy
 - The relay passes through the server's `Retry-After` header, so rate-limit auto-slowdown is exactly as precise as direct calls
 
 ### Built-in Proxy (no switch)
 
 DeepL and Nvidia NIM route through a separate built-in proxy by default. If you specify a custom API URL in settings, the proxy is bypassed and requests go directly to your URL.
+
+## Custom Third-Party APIs
+
+If a third-party model aggregator, API gateway, or self-hosted endpoint isn't in the built-in service list, configure it under **Custom (OpenAI-compatible)** — any endpoint that speaks `POST /v1/chat/completions` works here.
+
+### Configuration example
+
+Open **Translation Settings** → **Select translation service**, pick **Custom (OpenAI-compatible)** at the bottom of **Aggregators & Self-hosted**, and fill in the four fields:
+
+| Field         | How to fill it                                                                                                                                                                                             | Example                                                          |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Service**   | Pick `Custom (OpenAI-compatible)`                                                                                                                                                                          | `Custom (OpenAI-compatible)`                                     |
+| **API URL**   | Paste the provider's Base URL (auto-completes to `/v1/chat/completions` when focus leaves the field); if the provider uses a non-standard path (e.g. `/inference/v1/chat/completions`), paste the full URL | `https://api.example.com/v1`                                     |
+| **API Key**   | Key from the provider's dashboard (sent as `Authorization: Bearer <key>`; leave empty for unauthenticated local servers)                                                                                   | `sk-...`                                                         |
+| **LLM Model** | Paste the exact **API model ID** from the provider's model catalog (not the UI display name). Multi-model aggregators usually require a vendor prefix                                                      | `vendor/model-name` or `meta-llama/Llama-3.3-70B-Instruct-Turbo` |
+
+Click **Test API** to verify connectivity. If you switch between multiple custom endpoints, use **Save as new preset** at the top of the card to store each URL, key, and model set.
+
+### CORS & timeout notes for third-party APIs
+
+Web translation runs directly inside your browser. If an unlisted third-party API does not return browser CORS headers (`Access-Control-Allow-Origin` or fails `OPTIONS` preflight with 404/405), direct calls will fail with a network/CORS error — and turning on **API relay** with the **built-in public relay** will not help, because the built-in relay only forwards declared allowlisted endpoints and never relays arbitrary custom URLs.
+
+Three ways to use such an API:
+
+1. **Use the CLI (`yarn cli`, easiest)**: Node.js has no browser CORS restriction — pass `-m llm --url ... --api-key ... --model ...` directly (or export your web settings and load them with `-s`); see [Command-line translation](/en/guide/translation/cli.md)
+2. **Deploy your own Cloudflare Worker relay**: host [`scripts/llm-proxy-worker.js`](https://github.com/rockbenben/web-tools-by-ai/blob/main/scripts/llm-proxy-worker.js), add the target's `/chat/completions` URL to `PROVIDER_URLS.llm`, then enable **API relay** and enter your Worker origin in **Relay address**
+3. **Front it with a local CORS-enabled gateway**: route requests through LiteLLM / 9Router / OmniRoute or a local reverse proxy that adds CORS headers, then point Custom to `http://127.0.0.1:...`
+
+:::tip Non-streaming requests & timeouts
+**Custom (OpenAI-compatible)** sends `stream: false` and omits thinking parameters (following the server's own default). If a third-party gateway enforces a short timeout on non-streaming calls, prefer faster non-reasoning models or lower **Context lines** and **Concurrent lines**.
+:::
+
+### Self-hosted gateways and third-party inference platforms
+
+Besides the local runtimes, **Custom (OpenAI-compatible)** offers five non-local / gateway quick-pick URLs — click to fill, no typing:
+
+| Quick pick   | Default address                                          | Notes                                                                                                                                                     |
+| ------------ | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LiteLLM      | `http://127.0.0.1:4000/v1/chat/completions`              | Self-hosted proxy fronting 100+ upstream models behind one OpenAI-compatible API; allows browser cross-origin requests by default, so no extra CORS setup |
+| 9Router      | `http://127.0.0.1:20127/v1/chat/completions`             | Self-hosted OpenAI-compatible gateway                                                                                                                     |
+| OmniRoute    | `http://127.0.0.1:20128/v1/chat/completions`             | A TypeScript fork of 9Router — same idea, different default port                                                                                          |
+| Together AI  | `https://api.together.ai/v1/chat/completions`            | Third-party inference platform hosting many open-weight models (also included in the built-in relay allowlist)                                            |
+| Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | Same idea                                                                                                                                                 |
+
+LiteLLM used to be its own service entry; it has been folded into Custom, because like Together and Fireworks it is simply "an OpenAI-protocol address" and doesn't need a dedicated slot. Everything about using it still holds:
+
+- **The URL is the credential**, and the **API key is optional** (skip it for a bare local proxy; fill it in if your proxy has a master / virtual key)
+- **Model can stay empty**: when started with `litellm --model X` (the official quick-start) or with a `completion_model` server default, an empty model field follows the server's default; for multi-model config.yaml deployments, enter the model alias
 
 ## Local Model Setup
 
@@ -1405,7 +1454,7 @@ Lower "Call Parameters → Concurrent lines" to **2-4** (or match your server's 
 | :-------- | :------------------------------------------- |
 | LM Studio | `http://127.0.0.1:1234/v1/chat/completions`  |
 | Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
-| llama.cpp | `http://127.0.0.1:8080/v1/chat/completions`  |
+| llama.cpp | `http://127.0.0.1:9931/v1/chat/completions`  |
 | koboldcpp | `http://127.0.0.1:5001/v1/chat/completions`  |
 
 These appear as quick-pick chips next to the URL field. Selecting one also surfaces that runtime's official docs link below the field — provider-level docs can't tell you how to get the server itself running.
@@ -1423,23 +1472,6 @@ So the carefully pre-rendered prompt gets wrapped a second time — in whatever 
 :::
 
 > **koboldcpp** is a single-file llama.cpp wrapper (no install, one .exe, built-in web UI). On its default port 5001 it serves both the KoboldAI API and an OpenAI-compatible one.
-
-### Self-hosted gateways and third-party inference platforms
-
-Besides the four local runtimes, **Custom (OpenAI-compatible)** offers five non-local quick-pick URLs — click to fill, no typing:
-
-| Quick pick   | Default address                                          | Notes                                                                                                                                                     |
-| ------------ | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| LiteLLM      | `http://127.0.0.1:4000/v1/chat/completions`              | Self-hosted proxy fronting 100+ upstream models behind one OpenAI-compatible API; allows browser cross-origin requests by default, so no extra CORS setup |
-| 9Router      | `http://127.0.0.1:20127/v1/chat/completions`             | Self-hosted OpenAI-compatible gateway                                                                                                                     |
-| OmniRoute    | `http://127.0.0.1:20128/v1/chat/completions`             | A TypeScript fork of 9Router — same idea, different default port                                                                                          |
-| Together AI  | `https://api.together.xyz/v1/chat/completions`           | Third-party inference platform hosting many open-weight models                                                                                            |
-| Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | Same idea                                                                                                                                                 |
-
-LiteLLM used to be its own service entry; it has been folded into Custom, because like Together and Fireworks it is simply "an OpenAI-protocol address" and doesn't need a dedicated slot. Everything about using it still holds:
-
-- **The URL is the credential**, and the **API key is optional** (skip it for a bare local proxy; fill it in if your proxy has a master / virtual key)
-- **Model can stay empty**: when started with `litellm --model X` (the official quick-start) or with a `completion_model` server default, an empty model field follows the server's default; for multi-model config.yaml deployments, enter the model alias
 
 ### TranslateGemma
 
@@ -1854,6 +1886,18 @@ DeepL's official API can't be called directly from a web page (a browser CORS re
 
 Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own relay) — it takes precedence over every built-in channel and requests go straight to your endpoint. See [Translation API Guide → API relay & Built-in Proxy](/en/guide/translation/api.md#api-relay--built-in-proxy).
 
+## What if the third-party AI API or model aggregator I want isn't in the service list?
+
+As long as the provider offers an OpenAI-compatible `/v1/chat/completions` endpoint, connect it under **Custom (OpenAI-compatible)**:
+
+1. In Translation Settings → **Select translation service**, pick **Custom (OpenAI-compatible)** at the bottom;
+2. Paste the platform's Base URL into **API URL** (e.g. `https://api.example.com/v1` — auto-completes to `/v1/chat/completions` when focus leaves the field);
+3. Enter your **API Key** from the provider's dashboard;
+4. Paste the exact **API model ID** into **LLM Model** (not the display title; multi-model aggregators usually require a `vendor/model` prefix);
+5. Click **Test API** to verify, and use **Save as new preset** if you switch between endpoints.
+
+If testing fails with a network or CORS error because the third-party API doesn't send browser CORS headers, enabling **API relay** with the **built-in public relay** will not work either (it only forwards allowlisted endpoints, never arbitrary custom URLs). Use one of three workarounds: run via [Command-line translation](/en/guide/translation/cli.md) (`yarn cli -m llm ...`, Node has no CORS), deploy your own `scripts/llm-proxy-worker.js` relay and enter it under **Relay address**, or route through a local CORS-enabled gateway such as LiteLLM / 9Router / OmniRoute. Full configuration example: [Translation API Guide → Custom Third-Party APIs](/en/guide/translation/api.md#custom-third-party-apis).
+
 ## Is my API Key saved on a server?
 
 No. The API Key and all settings are stored only in the local browser; no server can access them.
@@ -1946,6 +1990,9 @@ yarn cli -i README.md -t ja -s ~/translate-settings.json
 
 # Point straight at a local LM Studio / Ollama
 yarn cli -i locale.json -t zh -m llm --url http://localhost:11434/v1 --model qwen3
+
+# Any third-party OpenAI-compatible API / aggregator (Node has no browser CORS restriction)
+yarn cli -i movie.srt -t zh -m llm --url https://api.example.com/v1 --api-key sk-xxx --model provider/model-name
 
 # Dedicated local MT models (translategemma / milmmt) have no auto-detect, so -f is required
 yarn cli -i movie.srt -f en -t zh -m milmmt --url http://localhost:1234/v1 --model MiLMMT-46-4B-v1.0

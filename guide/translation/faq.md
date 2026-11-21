@@ -164,6 +164,18 @@ DeepL 官方不允许网页直接调用它的 API（浏览器跨域限制），�
 
 介意经过第三方？在设置里填自定义 API URL（如自建中转），请求就会直连你填的地址、优先级高于一切内置通道。详见 [翻译接口指南 → 中转 API 与内置代理](/guide/translation/api.md#中转-api-与内置代理)。
 
+## 服务列表里没有我想用的第三方 AI API / 聚合平台怎么办？
+
+只要对方提供 OpenAI 兼容的 `/v1/chat/completions` 接口，都可以通过 **Custom (OpenAI-compatible)** 接入：
+
+1. 在翻译设置 →「选择翻译服务」底部选 **Custom (OpenAI-compatible)**；
+2. **API 接口地址**填平台文档给出的 Base URL（如 `https://api.example.com/v1`，光标移开会自动补全为 `/v1/chat/completions`）；
+3. **API Key** 填平台控制台生成的密钥；
+4. **LLM 模型**填文档里真正的 **API 模型 ID**（不是网页展示名称；多模型聚合平台通常需要带 `vendor/model` 前缀）；
+5. 点「**测试 API**」验证连通性，常用的配置可点「另存为新预设」保存。
+
+如果测试时报网络或跨域（CORS）错误，而对方接口未对浏览器放行跨域请求，打开「中转 API」使用**内置公共中转**也无法代转（内置中转只转发白名单内的服务，不转发任意自定义 URL）。此时可改用三种方式之一：跑 [命令行翻译](/guide/translation/cli.md)（`yarn cli -m llm ...`，Node 无 CORS 限制）、自建 `scripts/llm-proxy-worker.js` 中转并在「中转地址」填入自己的 Worker 域名，或先通过 LiteLLM / 9Router / OmniRoute 等本地网关转发。完整配置样例见 [翻译接口指南 → 自定义第三方接口](/guide/translation/api.md#自定义第三方接口)。
+
 ## API Key 会被保存到服务器吗？
 
 不会。API Key 与所有设置都只存储在本地浏览器，任何服务器都无法读取。

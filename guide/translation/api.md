@@ -52,7 +52,7 @@
 - **厂商直连（16 家）**：DeepSeek、OpenAI、Claude、Gemini、Qwen、Kimi (Moonshot)、Doubao (Volcengine)、Xiaomi MiMo、Zhipu GLM、MiniMax、StepFun (阶跃星辰)、Baidu ERNIE (Qianfan)、Mistral、xAI (Grok)、Cohere、YandexGPT (AI Studio)
 - **聚合网关与自托管（10 家）**：OpenRouter、OpenCode Console、OpenCode Go、TokenHub (Tencent)、Groq、Cerebras、SiliconFlow、Nvidia NIM、Azure OpenAI，以及 **Custom (OpenAI-compatible)**
 
-末尾的 **Custom (OpenAI-compatible)** 是兜底项：任何兼容 OpenAI 协议的地址都填这一项，URL 输入框上方会列出可选的本地运行时与第三方网关快捷地址（见下文 [本地模型接入](#本地模型接入)）。
+末尾的 **Custom (OpenAI-compatible)** 是兜底项：任何兼容 OpenAI 协议的第三方聚合平台、中转站或本地运行时都可以填在这里，URL 输入框上方也列出了常用的快捷地址（见下文 [自定义第三方接口](#自定义第三方接口) 与 [本地模型接入](#本地模型接入)）。
 
 适合处理：
 
@@ -174,13 +174,62 @@ Qwen-MT 官方约 92 种语言，部分低资源语言暂未覆盖，UI 会自�
 
 YandexGPT (AI Studio)、OpenCode Console、OpenCode Go、TokenHub (Tencent) 的上游不发 CORS 头或预检就失败，所以**默认开启**。其余家默认直连，遇到跨域问题时按提示自行打开。
 
-- **上面点名的例外接口没有这个开关**：Custom 与 Azure OpenAI 的地址本就是你自己填的，中转没有固定上游可写；Nvidia NIM 走的是下一节的内置代理；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
-- **自建中转**：不想走共享中转，把自己部署的转发地址填入 URL 字段即可。优先级固定为 **自定义 URL > 中转开关 > 官方直连**——URL 已填时中转开关会置灰，并提示「清空 URL 后恢复」
+- **上面点名的例外接口没有这个开关**：Azure OpenAI 的地址本就是你自己的资源根，中转没有固定上游可写；Nvidia NIM 走的是下一节的内置代理；Gemini 把模型名拼在 URL 路径里，pass-through 转发不了
+- **Custom (OpenAI-compatible) 有中转开关，但不转发任意地址**：内置公共中转不是开放代理，它只转发 `llm` 白名单里声明的那两个公开快捷项（**Together AI** 与 **Fireworks AI**）；你手动填入的第三方地址以及本地/内网地址（`127.0.0.1` 等）都不会发往内置公共中转，而是直接请求目标地址
+- **自建中转**：中转开关永不置灰——开启「**中转 API**」后下方会出现全局「**中转地址**」输入框，填入你自己部署的 [`scripts/llm-proxy-worker.js`](https://github.com/rockbenben/web-tools-by-ai/blob/main/scripts/llm-proxy-worker.js) 域名即可对所有开启中转的服务生效（若要转发自定义第三方地址，在自己部署的 Worker 代码 `PROVIDER_URLS.llm` 中加入对应端点即可）；也可以直接把服务自身的「API 接口地址」指向你的反向代理走直连
 - 中转会透传服务器的 `Retry-After` 响应头，限流时的自动降速与直连一样精确
 
 ### 内置代理（无开关）
 
 DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了自定义 API URL 时代理被绕过，请求直接发到你填的地址。
+
+## 自定义第三方接口
+
+如果某个第三方模型聚合平台、API 中转站或自建服务不在内置列表里，只要它提供标准的 OpenAI `POST /v1/chat/completions` 接口，都可以直接在 **Custom (OpenAI-compatible)** 里配置使用。
+
+### 配置样例
+
+在右上角打开「翻译设置」→「选择翻译服务」，在 **Aggregators & Self-hosted** 分组末尾选择 **Custom (OpenAI-compatible)**，按下面四项填写：
+
+| 设置项          | 填写方式                                                                                                            | 示例                                                              |
+| ------------ | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| **翻译服务**     | 选 `Custom (OpenAI-compatible)`                                                                                  | `Custom (OpenAI-compatible)`                                    |
+| **API 接口地址** | 填平台文档给出的 Base URL（聚焦移开后自动补全 `/v1/chat/completions`）；若平台路径不是标准 `/v1`（如 `/inference/v1/chat/completions`），直接贴完整地址 | `https://api.example.com/v1`                                    |
+| **API Key**  | 在平台控制台生成的密钥，请求时按 `Authorization: Bearer <key>` 发送（本地无鉴权服务可留空）                                                   | `sk-...`                                                        |
+| **LLM 模型**   | 贴该平台模型列表里的 **API 模型 ID**（不是网页上的展示名称）。多模型聚合平台通常需要带上厂商前缀                                                          | `vendor/model-name` 或 `meta-llama/Llama-3.3-70B-Instruct-Turbo` |
+
+填好后点右上角「**测试 API**」验证连通性；经常在多个自定义平台之间切换时，可以点上方预设栏的「**另存为新预设**」保存整套地址、密钥和模型配置。
+
+### 第三方接口遇到跨域（CORS）或超时怎么办
+
+网页版翻译直接在你的浏览器里发起请求。如果一家第三方平台**没有返回浏览器跨域头**（`Access-Control-Allow-Origin` 或在 `OPTIONS` 预检返回 404/405），且官方文档本身只面向服务端调用，浏览器直连就会报网络 / CORS 错误；此时把「中转 API」开关打开也没用（内置公共中转只转发声明过的白名单地址，不代转任意自定义 URL）。
+
+有三种方式可以正常使用这类接口：
+
+1. **改用命令行翻译（`yarn cli`，最省事）**：Node.js 环境没有浏览器 CORS 限制，直接通过 `-m llm --url ... --api-key ... --model ...` 调用（也可先在网页端导出设置再用 `-s` 读取），详见 [命令行翻译](/guide/translation/cli.md)
+2. **自建 Cloudflare Worker 中转**：部署仓库自带的 [`scripts/llm-proxy-worker.js`](https://github.com/rockbenben/web-tools-by-ai/blob/main/scripts/llm-proxy-worker.js)，把目标平台的完整 `/chat/completions` 地址加入 `PROVIDER_URLS.llm`，然后在网页端打开「**中转 API**」并在「**中转地址**」填入你的 Worker 域名
+3. **通过本地兼容网关转发**：用 LiteLLM / 9Router / OmniRoute 或本地反向代理在前端加上跨域头，再把 Custom 的地址指向 `http://127.0.0.1:...`
+
+:::tip 非流式请求与超时提示
+**Custom (OpenAI-compatible)** 默认发送 `stream: false`（非流式响应），且不附带思考参数（完全跟随服务端默认）。如果第三方网关对非流式请求设了较短的超时时间，建议优先选非推理 / 响应较快的模型，或适当调小「上下文行数」和「并发行数」。
+:::
+
+### 自建网关与第三方推理平台
+
+除了本地运行时，**Custom (OpenAI-compatible)** 的 URL 快捷项里还内置了五个非本地/网关地址，选中即填、不必手打：
+
+| 快捷项          | 默认地址                                                     | 说明                                                   |
+| ------------ | -------------------------------------------------------- | ---------------------------------------------------- |
+| LiteLLM      | `http://127.0.0.1:4000/v1/chat/completions`              | 把 100+ 上游模型统一成 OpenAI 协议的自建代理；默认放行浏览器跨域，无需额外 CORS 配置 |
+| 9Router      | `http://127.0.0.1:20127/v1/chat/completions`             | 自托管 OpenAI 兼容网关                                      |
+| OmniRoute    | `http://127.0.0.1:20128/v1/chat/completions`             | 9Router 的 TypeScript 分支，同为自托管网关，默认端口不同               |
+| Together AI  | `https://api.together.ai/v1/chat/completions`            | 第三方推理平台，托管大量开源权重（同时已加入内置公共中转白名单）                     |
+| Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | 同上                                                   |
+
+LiteLLM 曾经是独立的服务条目，现已并入 Custom —— 它和 Together / Fireworks 一样只是「一个 OpenAI 协议地址」，独占一个服务槽位没有意义。原来那些用法照旧成立：
+
+- **URL 即凭证**，**API Key 可选**（本地裸跑不填；代理配置了 master / virtual key 时填上）
+- **模型名可留空**：用 `litellm --model X` 启动（官方 quick start 方式）或设置了 `completion_model` 服务端默认时，留空即走服务端默认模型；config.yaml 多模型部署则填模型别名
 
 ## 本地模型接入
 
@@ -200,7 +249,7 @@ DeepL 与 Nvidia NIM 默认经另一组内置代理转发；在设置里填了�
 | --------- | -------------------------------------------- |
 | LM Studio | `http://127.0.0.1:1234/v1/chat/completions`  |
 | Ollama    | `http://127.0.0.1:11434/v1/chat/completions` |
-| llama.cpp | `http://127.0.0.1:8080/v1/chat/completions`  |
+| llama.cpp | `http://127.0.0.1:9931/v1/chat/completions`  |
 | koboldcpp | `http://127.0.0.1:5001/v1/chat/completions`  |
 
 URL 输入框旁会列出这些地址作为快捷选项；点中哪个，下方就出现那个运行时的官方文档链接（先把服务跑起来、把模型名弄对，这一步的问题官方文档才答得了）。
@@ -218,23 +267,6 @@ URL 输入框旁会列出这些地址作为快捷选项；点中哪个，下方�
 :::
 
 > **koboldcpp** 是单文件 exe 的 llama.cpp 封装（不用安装、双击就跑、自带网页界面），默认 5001 端口同时提供 KoboldAI 与 OpenAI 两套接口。
-
-### 自建网关与第三方推理平台
-
-除了四个本地运行时，**Custom (OpenAI-compatible)** 的 URL 快捷项里还有五个非本地地址，选中即填、不必手打：
-
-| 快捷项          | 默认地址                                                     | 说明                                                   |
-| ------------ | -------------------------------------------------------- | ---------------------------------------------------- |
-| LiteLLM      | `http://127.0.0.1:4000/v1/chat/completions`              | 把 100+ 上游模型统一成 OpenAI 协议的自建代理；默认放行浏览器跨域，无需额外 CORS 配置 |
-| 9Router      | `http://127.0.0.1:20127/v1/chat/completions`             | 自托管 OpenAI 兼容网关                                      |
-| OmniRoute    | `http://127.0.0.1:20128/v1/chat/completions`             | 9Router 的 TypeScript 分支，同为自托管网关，默认端口不同               |
-| Together AI  | `https://api.together.xyz/v1/chat/completions`           | 第三方推理平台，托管大量开源权重                                     |
-| Fireworks AI | `https://api.fireworks.ai/inference/v1/chat/completions` | 同上                                                   |
-
-LiteLLM 曾经是独立的服务条目，现已并入 Custom —— 它和 Together / Fireworks 一样只是「一个 OpenAI 协议地址」，独占一个服务槽位没有意义。原来那些用法照旧成立：
-
-- **URL 即凭证**，**API Key 可选**（本地裸跑不填；代理配置了 master / virtual key 时填上）
-- **模型名可留空**：用 `litellm --model X` 启动（官方 quick start 方式）或设置了 `completion_model` 服务端默认时，留空即走服务端默认模型；config.yaml 多模型部署则填模型别名
 
 ### TranslateGemma
 

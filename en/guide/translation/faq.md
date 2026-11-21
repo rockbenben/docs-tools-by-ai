@@ -164,6 +164,18 @@ DeepL's official API can't be called directly from a web page (a browser CORS re
 
 Prefer not to route through a third party? Enter a custom API URL in settings (e.g. your own relay) — it takes precedence over every built-in channel and requests go straight to your endpoint. See [Translation API Guide → API relay & Built-in Proxy](/en/guide/translation/api.md#api-relay--built-in-proxy).
 
+## What if the third-party AI API or model aggregator I want isn't in the service list?
+
+As long as the provider offers an OpenAI-compatible `/v1/chat/completions` endpoint, connect it under **Custom (OpenAI-compatible)**:
+
+1. In Translation Settings → **Select translation service**, pick **Custom (OpenAI-compatible)** at the bottom;
+2. Paste the platform's Base URL into **API URL** (e.g. `https://api.example.com/v1` — auto-completes to `/v1/chat/completions` when focus leaves the field);
+3. Enter your **API Key** from the provider's dashboard;
+4. Paste the exact **API model ID** into **LLM Model** (not the display title; multi-model aggregators usually require a `vendor/model` prefix);
+5. Click **Test API** to verify, and use **Save as new preset** if you switch between endpoints.
+
+If testing fails with a network or CORS error because the third-party API doesn't send browser CORS headers, enabling **API relay** with the **built-in public relay** will not work either (it only forwards allowlisted endpoints, never arbitrary custom URLs). Use one of three workarounds: run via [Command-line translation](/en/guide/translation/cli.md) (`yarn cli -m llm ...`, Node has no CORS), deploy your own `scripts/llm-proxy-worker.js` relay and enter it under **Relay address**, or route through a local CORS-enabled gateway such as LiteLLM / 9Router / OmniRoute. Full configuration example: [Translation API Guide → Custom Third-Party APIs](/en/guide/translation/api.md#custom-third-party-apis).
+
 ## Is my API Key saved on a server?
 
 No. The API Key and all settings are stored only in the local browser; no server can access them.
